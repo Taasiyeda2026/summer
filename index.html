@@ -1,562 +1,572 @@
-html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>קטלוג פעילויות A4</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>קטלוג סדנאות תעשיידע</title>
 
-<style>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --line: #d9deea;
+      --primary: #2f4fdf;
+      --primary-soft: #eef2ff;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+    }
 
-:root{
-  --bg:#eef3f8;
-  --card:#ffffff;
-  --text:#172033;
-  --muted:#667085;
-  --line:#dbe3ee;
-  --blue:#203b7a;
-  --cyan:#34c3d5;
-  --pink:#d82f78;
-  --green:#1a9c74;
-  --shadow:0 10px 35px rgba(15,25,45,.08);
-  --radius:24px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-body{
-  margin:0;
-  background:var(--bg);
-  font-family:"Heebo",sans-serif;
-  color:var(--text);
-}
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 40px;
+    }
 
-.catalog-shell{
-  width:min(1400px,calc(100% - 40px));
-  margin:auto;
-  padding:30px 0 60px;
-}
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
 
-/* ---------------- TOP PANEL ---------------- */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-.top-panel{
-  background:white;
-  border-radius:30px;
-  padding:24px;
-  margin-bottom:30px;
-  box-shadow:var(--shadow);
-}
+    .logo {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
 
-.top-panel h1{
-  margin:0 0 10px;
-  font-size:42px;
-}
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
 
-.top-panel p{
-  margin:0 0 24px;
-  color:var(--muted);
-  line-height:1.7;
-}
+    .subtitle {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
-.controls{
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:20px;
-}
+    .summary {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
 
-.search-box input{
-  width:100%;
-  height:52px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  padding:0 18px;
-  font-size:16px;
-}
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
 
-.activity-selector{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-.select-card{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:18px;
-  padding:12px;
-  cursor:pointer;
-}
+    label {
+      font-size: 12px;
+      color: var(--muted);
+    }
 
-.select-card input{
-  margin-left:8px;
-}
+    select,
+    input,
+    button {
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0 10px;
+      font-size: 13px;
+      background: #fff;
+      color: var(--text);
+    }
 
-.select-card strong{
-  display:block;
-  margin-bottom:6px;
-}
+    button {
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      font-weight: 700;
+    }
 
-.select-card span{
-  color:var(--muted);
-  font-size:13px;
-}
+    button.secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--line);
+    }
 
-/* ---------------- A4 PAGE ---------------- */
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+    }
 
-.a4-page{
-  width:210mm;
-  min-height:297mm;
-  background:white;
-  margin:0 auto 30px;
-  padding:14mm;
-  box-shadow:0 10px 40px rgba(0,0,0,.08);
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
+    .list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
 
-.page-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  margin-bottom:14px;
-  border-bottom:2px solid #dfe6f0;
-  padding-bottom:10px;
-}
+    .activity-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-.page-header h2{
-  margin:0;
-  font-size:28px;
-}
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
 
-.page-header p{
-  margin:6px 0 0;
-  color:var(--muted);
-}
+    .activity-title {
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 800;
+      margin: 0;
+    }
 
-/* ---------------- MAGAZINE GRID ---------------- */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
 
-.magazine-grid{
-  flex:1;
-  display:grid;
-  grid-template-columns:1.4fr .9fr;
-  grid-template-rows:220px 220px 180px 180px;
-  gap:14px;
-}
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-/* ---------------- CARDS ---------------- */
+    .product {
+      font-size: 13px;
+      line-height: 1.45;
+      background: #f8f9fd;
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
 
-.card{
-  background:var(--card);
-  border:1px solid #e2e8f0;
-  border-radius:26px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
+    .description {
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin: 0;
+    }
 
-.card.large{
-  grid-row:1 / span 2;
-}
+    .goals {
+      margin: 0;
+      padding-right: 18px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
 
-.card.wide{
-  grid-column:1 / -1;
-  flex-direction:row;
-}
+    .empty {
+      background: var(--card);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
 
-.card-image{
-  aspect-ratio:1 / 1;
-  width:100%;
-  overflow:hidden;
-  background:#f3f6fb;
-}
+    .print-panel {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
 
-.card.wide .card-image{
-  width:240px;
-  min-width:240px;
-  height:240px;
-}
+    @media (max-width: 900px) {
+      .toolbar {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-.card-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+      .list {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-.card-body{
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
 
-.badge{
-  display:inline-flex;
-  align-self:flex-start;
-  padding:6px 12px;
-  border-radius:999px;
-  background:#eef3ff;
-  color:var(--blue);
-  font-size:12px;
-  font-weight:800;
-}
+      .summary {
+        white-space: normal;
+      }
+    }
 
-.card h3{
-  margin:0;
-  font-size:24px;
-  line-height:1.15;
-}
+    @media (max-width: 620px) {
+      .toolbar,
+      .list {
+        grid-template-columns: 1fr;
+      }
+    }
 
-.meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
+    @media print {
+      body {
+        background: white;
+      }
 
-.meta span{
-  background:#f4f7fb;
-  border-radius:999px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:700;
-}
+      .page {
+        width: 100%;
+        padding: 0;
+      }
 
-.card p{
-  margin:0;
-  line-height:1.75;
-  font-size:14px;
-}
+      .toolbar,
+      .print-panel {
+        display: none;
+      }
 
-.goals{
-  margin:0;
-  padding-right:18px;
-}
+      header,
+      .activity-card {
+        box-shadow: none;
+      }
 
-.goals li{
-  margin:6px 0;
-  line-height:1.5;
-  font-size:13px;
-}
+      .list {
+        grid-template-columns: 1fr;
+        gap: 8mm;
+      }
 
-/* ---------------- ESCAPE ROOM PAGE ---------------- */
-
-.escape-page{
-  width:210mm;
-  min-height:297mm;
-  background:white;
-  margin:0 auto 30px;
-  padding:14mm;
-  box-shadow:0 10px 40px rgba(0,0,0,.08);
-}
-
-.escape-hero{
-  width:100%;
-  aspect-ratio:16 / 8;
-  overflow:hidden;
-  border-radius:28px;
-  margin:20px 0;
-}
-
-.escape-hero img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.escape-title{
-  font-size:44px;
-  margin:0;
-}
-
-.escape-description{
-  font-size:17px;
-  line-height:2;
-  margin:20px 0;
-}
-
-.escape-section{
-  margin-top:24px;
-  padding:18px;
-  border-radius:22px;
-  background:#f7f9fc;
-}
-
-.escape-section h4{
-  margin:0 0 10px;
-}
-
-/* ---------------- PRINT ---------------- */
-
-@media print{
-
-  @page{
-    size:A4;
-    margin:0;
-  }
-
-  body{
-    background:white;
-  }
-
-  .top-panel{
-    display:none;
-  }
-
-  .a4-page,
-  .escape-page{
-    margin:0;
-    box-shadow:none;
-    break-after:page;
-    page-break-after:always;
-  }
-
-}
-
-</style>
+      .activity-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <main class="page">
+    <header>
+      <div class="brand">
+        <img class="logo" src="logo.png" alt="לוגו תעשיידע" />
+        <div>
+          <h1>קטלוג סדנאות ופעילויות</h1>
+          <div class="subtitle">בחירה לפי שכבת גיל, תחום, סדנאות וחדרי בריחה</div>
+        </div>
+      </div>
+      <div class="summary" id="summaryText">טוען נתונים...</div>
+    </header>
 
-<div class="catalog-shell">
-
-  <!-- TOP PANEL -->
-
-  <section class="top-panel">
-
-    <h1>קטלוג פעילויות STEM</h1>
-
-    <p>
-      בחרו אילו פעילויות יופיעו בקטלוג.
-      חדרי בריחה תמיד יוצגו בעמוד עצמאי.
-    </p>
-
-    <div class="controls">
-
-      <div class="search-box">
-        <input type="search" placeholder="חיפוש פעילות...">
+    <section class="toolbar" aria-label="סינון פעילויות">
+      <div class="field">
+        <label for="gradeFilter">שכבת גיל</label>
+        <select id="gradeFilter">
+          <option value="">הכול</option>
+        </select>
       </div>
 
-      <div class="activity-selector">
-
-        <label class="select-card">
-          <input type="checkbox" checked>
-          <strong>טלסקופ קפלר</strong>
-          <span>אופטיקה · סדנה</span>
-        </label>
-
-        <label class="select-card">
-          <input type="checkbox" checked>
-          <strong>מצפן</strong>
-          <span>פיזיקה · סדנה</span>
-        </label>
-
-        <label class="select-card">
-          <input type="checkbox" checked>
-          <strong>משימת מים 2050</strong>
-          <span>קיימות · חדר בריחה</span>
-        </label>
-
+      <div class="field">
+        <label for="domainFilter">תחום</label>
+        <select id="domainFilter">
+          <option value="">הכול</option>
+        </select>
       </div>
 
-    </div>
-
-  </section>
-
-  <!-- A4 PAGE -->
-
-  <section class="a4-page">
-
-    <div class="page-header">
-      <div>
-        <h2>סדנאות מדע וטכנולוגיה</h2>
-        <p>כיתות א׳–ו׳</p>
+      <div class="field">
+        <label for="typeFilter">סוג פעילות</label>
+        <select id="typeFilter">
+          <option value="">הכול</option>
+          <option value="סדנה">סדנאות</option>
+          <option value="חדר בריחה">חדרי בריחה</option>
+        </select>
       </div>
-    </div>
 
-    <div class="magazine-grid">
+      <div class="field">
+        <label for="countFilter">כמות להצגה</label>
+        <select id="countFilter">
+          <option value="1">סדנה בודדת</option>
+          <option value="3">3 פעילויות</option>
+          <option value="6">6 פעילויות</option>
+          <option value="all" selected>הכול</option>
+        </select>
+      </div>
 
-      <!-- LARGE -->
-
-      <article class="card large">
-
-        <div class="card-image">
-          <img src="images/005.png">
-        </div>
-
-        <div class="card-body">
-
-          <span class="badge">אופטיקה</span>
-
-          <h3>טלסקופ קפלר</h3>
-
-          <div class="meta">
-            <span>א׳–ו׳</span>
-            <span>45 דקות</span>
-            <span>סדנה</span>
-          </div>
-
-          <p>
-            התלמידים בונים טלסקופ אישי ומתנסים בצפייה למרחקים שונים.
-            דרך ההרכבה הם מגלים כיצד עדשות משנות את הדרך שבה האור עובר,
-            כיצד נוצרים מיקוד והגדלה, וכיצד כלי תצפית פשוט יכול לפתוח חלון לעולם רחוק.
-          </p>
-
-          <ul class="goals">
-            <li>להבין כיצד עדשות יוצרות הגדלה ומיקוד</li>
-            <li>לחבר בין אופטיקה לבין חקר החלל</li>
-            <li>להתנסות בבנייה של כלי מדעי אישי</li>
-          </ul>
-
-        </div>
-
-      </article>
-
-      <!-- SMALL -->
-
-      <article class="card">
-
-        <div class="card-image">
-          <img src="images/016.png">
-        </div>
-
-        <div class="card-body">
-          <span class="badge">פיזיקה</span>
-          <h3>מצפן</h3>
-          <p>
-            התלמידים בונים מצפן אישי ולומדים כיצד ניתן למצוא כיוון גם בלי מפה או טלפון.
-          </p>
-        </div>
-
-      </article>
-
-      <article class="card">
-
-        <div class="card-image">
-          <img src="images/013.png">
-        </div>
-
-        <div class="card-body">
-          <span class="badge">אופטיקה</span>
-          <h3>קלידוסקופ</h3>
-          <p>
-            התלמידים בונים קלידוסקופ אישי וצופים בתבניות צבעוניות משתנות.
-          </p>
-        </div>
-
-      </article>
-
-      <!-- WIDE -->
-
-      <article class="card wide">
-
-        <div class="card-image">
-          <img src="images/020.png">
-        </div>
-
-        <div class="card-body">
-
-          <span class="badge">הנדסה</span>
-
-          <h3>גשר לאונרדו</h3>
-
-          <p>
-            התלמידים בונים דגם מוקטן של גשר שמחזיק את עצמו ללא דבק,
-            ומגלים כיצד תכנון נכון יוצר יציבות.
-          </p>
-
-          <ul class="goals">
-            <li>להכיר עקרונות של יציבות</li>
-            <li>לפתח חשיבה הנדסית</li>
-          </ul>
-
-        </div>
-
-      </article>
-
-      <article class="card">
-
-        <div class="card-image">
-          <img src="images/017.png">
-        </div>
-
-        <div class="card-body">
-          <span class="badge">פיזיקה</span>
-          <h3>מכונית תנע</h3>
-          <p>
-            מכונית הנעה באמצעות בלון.
-          </p>
-        </div>
-
-      </article>
-
-      <article class="card">
-
-        <div class="card-image">
-          <img src="images/014.png">
-        </div>
-
-        <div class="card-body">
-          <span class="badge">ביולוגיה</span>
-          <h3>ג׳וני השלד</h3>
-          <p>
-            דגם שלד אנושי מעץ.
-          </p>
-        </div>
-
-      </article>
-
-    </div>
-
-  </section>
-
-  <!-- ESCAPE ROOM PAGE -->
-
-  <section class="escape-page">
-
-    <h1 class="escape-title">
-      משימת מים 2050
-    </h1>
-
-    <div class="escape-hero">
-      <img src="images/009.png">
-    </div>
-
-    <div class="meta">
-      <span>חדר בריחה</span>
-      <span>קיימות</span>
-      <span>ג׳–ו׳</span>
-      <span>45 דקות</span>
-    </div>
-
-    <div class="escape-description">
-      האם תוכלו להציל את עתיד המים של כדור הארץ?
-      בחדר הבריחה המשתתפים נכנסים לעולם עתידני שבו האנושות מתמודדת עם אתגר מים גדול.
-      בתוך סיפור של משבר, חלל, משאבים וטכנולוגיה,
-      הם נדרשים לחשוב כמו צוות משימה:
-      לזהות בעיות, לפענח מידע, לקבל החלטות ולחפש פתרונות יצירתיים.
-      הפעילות מחברת בין דמיון למציאות,
-      ומציגה את עולם הקיימות בצורה חווייתית, מסקרנת וטכנולוגית.
-    </div>
-
-    <section class="escape-section">
-
-      <h4>מטרות מרכזיות</h4>
-
-      <ul class="goals">
-        <li>ליצור שיח על אתגרי העתיד</li>
-        <li>לפתח חשיבה הנדסית ואחריות סביבתית</li>
-        <li>לחזק עבודת צוות ויכולת פתרון בעיות</li>
-      </ul>
-
+      <div class="actions">
+        <button type="button" id="resetBtn" class="secondary">איפוס</button>
+        <button type="button" onclick="window.print()">הדפסה</button>
+      </div>
     </section>
 
-  </section>
+    <section class="toolbar" aria-label="חיפוש">
+      <div class="field" style="grid-column: 1 / -1;">
+        <label for="searchInput">חיפוש לפי שם, תחום, תוצר או תיאור</label>
+        <input id="searchInput" type="search" placeholder="לדוגמה: חלל, מגנטים, טלסקופ..." />
+      </div>
+    </section>
 
-</div>
+    <section class="list" id="activitiesList"></section>
 
+    <div class="print-panel">
+      <span>הקובץ מיועד להעלאה לריפו לצד הקבצים: <strong>activities_complete_full_he.json</strong> ו־<strong>logo.png</strong></span>
+      <span id="selectedCount"></span>
+    </div>
+  </main>
+
+  <script>
+    const DATA_FILE = "activities_complete_full_he.json";
+
+    const state = {
+      activities: [],
+      filtered: []
+    };
+
+    const els = {
+      grade: document.getElementById("gradeFilter"),
+      domain: document.getElementById("domainFilter"),
+      type: document.getElementById("typeFilter"),
+      count: document.getElementById("countFilter"),
+      search: document.getElementById("searchInput"),
+      list: document.getElementById("activitiesList"),
+      summary: document.getElementById("summaryText"),
+      selectedCount: document.getElementById("selectedCount"),
+      reset: document.getElementById("resetBtn")
+    };
+
+    function normalizeText(value) {
+      return String(value || "").trim();
+    }
+
+    function getActivityValue(activity, keys) {
+      for (const key of keys) {
+        if (activity[key] !== undefined && activity[key] !== null && String(activity[key]).trim() !== "") {
+          return activity[key];
+        }
+      }
+      return "";
+    }
+
+    function flattenActivities(data) {
+      if (Array.isArray(data)) return data;
+
+      if (Array.isArray(data.activities)) return data.activities;
+      if (Array.isArray(data["פעילויות"])) return data["פעילויות"];
+      if (Array.isArray(data.items)) return data.items;
+
+      const groups = data.groups || data["קבוצות"] || data.byGrade || data["לפי_כיתה"] || data["חלוקה_לפי_קבוצות_גיל"];
+      if (Array.isArray(groups)) {
+        return groups.flatMap(group => {
+          const groupItems = group.activities || group["פעילויות"] || group.items || [];
+          return groupItems.map(item => ({
+            ...item,
+            groupTitle: item.groupTitle || group.title || group["כותרת"] || group.name || group["שם"]
+          }));
+        });
+      }
+
+      return [];
+    }
+
+    function mapActivity(raw, index) {
+      const title = getActivityValue(raw, ["שם סדנה", "שם_סדנה", "name", "title", "שם"]);
+      const domain = getActivityValue(raw, ["תחום", "domain"]);
+      const grade = getActivityValue(raw, ["כיתה", "שכבת גיל", "שכבת_גיל", "grade", "ageGroup", "groupTitle"]);
+      const type = getActivityValue(raw, ["סוג פעילות", "סוג_פעילות", "type"]) || (domain.includes("חדר") ? "חדר בריחה" : "סדנה");
+      const duration = getActivityValue(raw, ["משך הפעילות", "משך_הפעילות", "duration"]);
+      const product = getActivityValue(raw, ["תוצר אישי", "תוצר_אישי", "תוצר", "product"]);
+      const description = getActivityValue(raw, ["תיאור הסדנה", "תיאור_הסדנה", "description", "תיאור"]);
+      const goals = getActivityValue(raw, ["מטרות", "goals"]) || [];
+
+      return {
+        id: raw.id || index + 1,
+        title,
+        domain,
+        grade,
+        type,
+        duration,
+        product,
+        description,
+        goals: Array.isArray(goals) ? goals : String(goals).split(/\n|•|-/).map(x => x.trim()).filter(Boolean),
+        raw
+      };
+    }
+
+    function uniqueValues(items, key) {
+      return [...new Set(items.map(item => normalizeText(item[key])).filter(Boolean))].sort((a, b) => a.localeCompare(b, "he"));
+    }
+
+    function fillSelect(select, values) {
+      const first = select.querySelector("option");
+      select.innerHTML = "";
+      select.appendChild(first);
+      values.forEach(value => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
+    }
+
+    function renderCard(activity) {
+      const goalsHtml = activity.goals.slice(0, 3).map(goal => `<li>${escapeHtml(goal)}</li>`).join("");
+
+      return `
+        <article class="activity-card">
+          <div class="card-top">
+            <h2 class="activity-title">${escapeHtml(activity.title)}</h2>
+            <span class="tag">${escapeHtml(activity.domain)}</span>
+          </div>
+
+          <div class="meta">
+            <span>${escapeHtml(activity.grade)}</span>
+            <span>•</span>
+            <span>${escapeHtml(activity.type)}</span>
+            ${activity.duration ? `<span>•</span><span>${escapeHtml(activity.duration)}</span>` : ""}
+          </div>
+
+          <div class="product"><strong>תוצר אישי:</strong> ${escapeHtml(activity.product)}</div>
+
+          <p class="description">${escapeHtml(activity.description)}</p>
+
+          <ol class="goals">${goalsHtml}</ol>
+        </article>
+      `;
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function applyFilters() {
+      const grade = els.grade.value;
+      const domain = els.domain.value;
+      const type = els.type.value;
+      const query = normalizeText(els.search.value).toLowerCase();
+
+      let results = state.activities.filter(activity => {
+        const text = [
+          activity.title,
+          activity.domain,
+          activity.grade,
+          activity.type,
+          activity.product,
+          activity.description,
+          activity.goals.join(" ")
+        ].join(" ").toLowerCase();
+
+        return (!grade || activity.grade === grade)
+          && (!domain || activity.domain === domain)
+          && (!type || activity.type === type)
+          && (!query || text.includes(query));
+      });
+
+      const count = els.count.value;
+      if (count !== "all") {
+        results = results.slice(0, Number(count));
+      }
+
+      state.filtered = results;
+      render();
+    }
+
+    function render() {
+      if (!state.filtered.length) {
+        els.list.innerHTML = `<div class="empty">לא נמצאו פעילויות לפי הסינון הנוכחי.</div>`;
+      } else {
+        els.list.innerHTML = state.filtered.map(renderCard).join("");
+      }
+
+      els.summary.textContent = `${state.filtered.length} מתוך ${state.activities.length} פעילויות מוצגות`;
+      els.selectedCount.textContent = `נבחרו להצגה: ${state.filtered.length}`;
+    }
+
+    function resetFilters() {
+      els.grade.value = "";
+      els.domain.value = "";
+      els.type.value = "";
+      els.count.value = "all";
+      els.search.value = "";
+      applyFilters();
+    }
+
+    async function init() {
+      try {
+        const response = await fetch(DATA_FILE);
+        if (!response.ok) throw new Error("JSON file was not found");
+        const data = await response.json();
+
+        state.activities = flattenActivities(data).map(mapActivity).filter(activity => activity.title);
+        fillSelect(els.grade, uniqueValues(state.activities, "grade"));
+        fillSelect(els.domain, uniqueValues(state.activities, "domain"));
+
+        applyFilters();
+      } catch (error) {
+        els.summary.textContent = "לא ניתן לטעון את קובץ הנתונים";
+        els.list.innerHTML = `
+          <div class="empty">
+            לא נמצא הקובץ <strong>${DATA_FILE}</strong> באותה תיקייה.<br>
+            יש להעלות לריפו את הקבצים: <strong>index.html</strong>, <strong>${DATA_FILE}</strong>, <strong>logo.png</strong>.
+          </div>
+        `;
+      }
+    }
+
+    [els.grade, els.domain, els.type, els.count, els.search].forEach(el => {
+      el.addEventListener("input", applyFilters);
+      el.addEventListener("change", applyFilters);
+    });
+
+    els.reset.addEventListener("click", resetFilters);
+
+    init();
+  </script>
 </body>
 </html>
-```
