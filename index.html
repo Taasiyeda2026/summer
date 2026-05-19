@@ -1,572 +1,1272 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>קטלוג סדנאות תעשיידע</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>חוברת פעילויות A4 | בחירת סדנאות</title>
   <style>
     :root {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --text: #172033;
+      --ink: #172033;
       --muted: #667085;
-      --line: #d9deea;
-      --primary: #2f4fdf;
-      --primary-soft: #eef2ff;
-      --radius: 14px;
-      --shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+      --paper: #fffdf7;
+      --line: rgba(23, 32, 51, 0.12);
+      --blue: #203b7a;
+      --cyan: #34c3d5;
+      --pink: #d82f78;
+      --purple: #6c4de6;
+      --green: #1a9c74;
+      --cream: #fff7e8;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, "Noto Sans Hebrew", sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: "Heebo", "Rubik", "Assistant", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(52,195,213,.18), transparent 32%),
+        radial-gradient(circle at 92% 3%, rgba(216,47,120,.16), transparent 32%),
+        linear-gradient(180deg, #f7fbff 0%, #eef3f9 55%, #f8f1e6 100%);
     }
 
-    .page {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 20px 0 40px;
+    button,
+    input { font: inherit; }
+
+    .screen-controls {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 24px;
+      padding: 18px 0 0;
     }
 
-    header {
-      display: flex;
+    .control-hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 12px 16px;
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
+      padding: 18px 20px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.92);
+      box-shadow: 0 18px 45px rgba(20,34,66,.12);
+      backdrop-filter: blur(10px);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .logo {
-      width: 54px;
-      height: 54px;
-      object-fit: contain;
-      flex: 0 0 auto;
-    }
-
-    h1 {
+    .control-hero h1 {
       margin: 0;
       font-size: 22px;
-      line-height: 1.2;
+      line-height: 1.18;
+      letter-spacing: -.03em;
     }
 
-    .subtitle {
-      margin-top: 4px;
-      font-size: 13px;
+    .control-hero p {
+      margin: 6px 0 0;
       color: var(--muted);
-    }
-
-    .summary {
-      font-size: 13px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .toolbar {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(120px, 1fr));
-      gap: 8px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 10px;
-      margin-bottom: 14px;
-      box-shadow: var(--shadow);
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    label {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    select,
-    input,
-    button {
-      height: 34px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 0 10px;
-      font-size: 13px;
-      background: #fff;
-      color: var(--text);
-    }
-
-    button {
-      cursor: pointer;
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+      font-size: 14px;
+      line-height: 1.55;
       font-weight: 700;
     }
 
-    button.secondary {
-      background: #fff;
-      color: var(--text);
-      border-color: var(--line);
+    .print-btn,
+    .action-btn {
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 15px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: 900;
+      color: #172033;
+      background: white;
     }
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      align-items: end;
+    .print-btn {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 24px rgba(108,77,230,.22);
+      white-space: nowrap;
     }
 
-    .list {
+    .selector-panel {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 14px 36px rgba(20,34,66,.09);
+    }
+
+    .selector-top {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .selector-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .selector-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .selected-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 112px;
+      min-height: 40px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .selector-tools {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
       gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .filters-panel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .filter-group {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      padding: 10px;
+    }
+
+    .filter-label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .filter-chip input { accent-color: var(--blue); }
+
+    .search-box {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 15px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .action-btn {
+      min-height: 40px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .activity-picker {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      max-height: 310px;
+      overflow: auto;
+      padding: 2px 2px 4px;
+    }
+
+    .activity-option {
+      position: relative;
+      display: block;
+      min-height: 74px;
+      cursor: pointer;
+    }
+
+    .activity-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option-card {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 10px;
+      border-radius: 17px;
+      background: white;
+      border: 1px solid rgba(23,32,51,.11);
+      transition: .16s ease;
+    }
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
+      border: 2px solid rgba(23,32,51,.2);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 900;
+      color: white;
+    }
+
+    .activity-option.selected .option-card {
+      border-color: color-mix(in srgb, var(--option-accent) 70%, white);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--option-accent) 10%, white), white 68%);
+      box-shadow: 0 8px 18px rgba(20,34,66,.08);
+    }
+
+    .activity-option.selected .checkmark {
+      border-color: transparent;
+      background: var(--option-accent);
+    }
+
+    .activity-option.selected .checkmark::before { content: "✓"; }
+
+    .option-title {
+      display: block;
+      font-size: 13px;
+      line-height: 1.24;
+      font-weight: 900;
+      color: #172033;
+    }
+
+    .option-meta {
+      display: block;
+      margin-top: 5px;
+      font-size: 11px;
+      line-height: 1.35;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .booklet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      padding: 0 0 60px;
+    }
+
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      position: relative;
+      overflow: hidden;
+      padding: 9mm 9mm 8mm;
+      background:
+        radial-gradient(circle at 12% 7%, rgba(52,195,213,.15), transparent 29%),
+        radial-gradient(circle at 92% 10%, rgba(216,47,120,.13), transparent 27%),
+        linear-gradient(180deg, #fffdf8 0%, #ffffff 48%, #fff8eb 100%);
+      border-radius: 5mm;
+      box-shadow: 0 18px 55px rgba(20,34,66,.18);
+      border: 1px solid rgba(23,32,51,.08);
+    }
+
+    .a4-page::before {
+      content: "";
+      position: absolute;
+      inset: 4.5mm;
+      border: 1px solid rgba(32,59,122,.16);
+      border-radius: 4mm;
+      pointer-events: none;
+    }
+
+    .page-header {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 12px;
+      height: 24mm;
+      padding: 0 1mm 4mm;
+      border-bottom: 1.4pt solid rgba(32,59,122,.88);
+      margin-bottom: 4mm;
+    }
+
+    .page-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 1.8mm;
+      color: #203b7a;
+      font-size: 10.5px;
+      font-weight: 900;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+
+    .page-subtitle {
+      margin: 1.8mm 0 0;
+      color: var(--muted);
+      font-size: 10.6px;
+      line-height: 1.45;
+      font-weight: 700;
+      max-width: 138mm;
+    }
+
+    .page-badge {
+      min-width: 29mm;
+      text-align: center;
+      padding: 2.5mm 3mm;
+      border-radius: 99px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      font-size: 10px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(32,59,122,.18);
+    }
+
+    .page-grid {
+      position: relative;
+      z-index: 1;
+      height: 245mm;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 50mm 50mm 63mm 70mm;
+      gap: 3mm;
+      grid-template-areas:
+        "lead lead lead lead lead lead lead side1 side1 side1 side1 side1"
+        "lead lead lead lead lead lead lead side2 side2 side2 side2 side2"
+        "wide wide wide wide wide wide wide wide wide wide wide wide"
+        "bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom";
     }
 
     .activity-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: var(--shadow);
-      min-height: 220px;
+      --accent: #203b7a;
+      position: relative;
+      display: grid;
+      overflow: hidden;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(23,32,51,.11);
+      border-radius: 4mm;
+      box-shadow: 0 9px 22px rgba(20,34,66,.09);
+    }
+
+    .activity-card::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0;
+      bottom: 0;
+      width: 1.7mm;
+      background: var(--accent);
+    }
+
+    .slot-1 {
+      grid-area: lead;
+      grid-template-rows: auto 1fr;
+      padding: 4mm 4mm 4mm 5mm;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.97), rgba(255,253,247,.93)),
+        radial-gradient(circle at 10% 5%, rgba(52,195,213,.18), transparent 42%);
+    }
+    .slot-2 { grid-area: side1; }
+    .slot-3 { grid-area: side2; }
+    .slot-4 { grid-area: wide; }
+    .slot-5 { grid-area: bottom; }
+
+    .slot-2,
+    .slot-3 {
+      grid-template-columns: 31mm 1fr;
+      padding: 3mm 3mm 3mm 4mm;
+      gap: 3mm;
+      align-items: start;
+    }
+
+    .slot-4,
+    .slot-5 {
+      grid-template-columns: 42mm 1fr;
+      padding: 4mm 4mm 4mm 5mm;
+      gap: 4mm;
+      align-items: start;
+    }
+
+    .image-box {
+      aspect-ratio: 1 / 1;
+      border-radius: 3mm;
+      overflow: hidden;
+      background: #eef2f8;
+      border: 1px solid rgba(23,32,51,.08);
+      flex: none;
+    }
+
+    .slot-1 .image-box { width: 48mm; margin-bottom: 3mm; }
+    .slot-2 .image-box,
+    .slot-3 .image-box { width: 31mm; }
+    .slot-4 .image-box,
+    .slot-5 .image-box { width: 42mm; }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 3mm;
+      color: #8a99b4;
+      font-size: 8px;
+      text-align: center;
+      font-weight: 800;
+      background: linear-gradient(135deg, #eef2f8, #e4e9f4);
+    }
+
+    .card-content {
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
     }
 
-    .card-top {
+    .slot-1 .card-content { min-height: 0; }
+
+    .card-topline {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .activity-title {
-      font-size: 18px;
-      line-height: 1.2;
-      font-weight: 800;
-      margin: 0;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.4mm;
+      margin-bottom: 1.7mm;
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 24px;
-      padding: 3px 8px;
+      min-height: 6mm;
+      padding: 1.1mm 2.2mm;
       border-radius: 999px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
+      font-size: 8.8px;
+      line-height: 1;
+      font-weight: 900;
+      color: #162033;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(23,32,51,.10);
     }
 
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 12px;
+    .tag.accent {
+      color: white;
+      background: var(--accent);
+      border-color: transparent;
     }
+
+    .activity-card h2 {
+      margin: 0;
+      letter-spacing: -.035em;
+      color: #151c2e;
+    }
+
+    .slot-1 h2 { font-size: 24px; line-height: 1.08; }
+    .slot-2 h2,
+    .slot-3 h2 { font-size: 15.5px; line-height: 1.12; }
+    .slot-4 h2,
+    .slot-5 h2 { font-size: 20px; line-height: 1.1; }
 
     .product {
-      font-size: 13px;
-      line-height: 1.45;
-      background: #f8f9fd;
-      border-radius: 10px;
-      padding: 8px 10px;
+      margin: 1.6mm 0 0;
+      font-size: 10px;
+      line-height: 1.35;
+      font-weight: 900;
+      color: #233044;
     }
 
-    .description {
-      font-size: 13.5px;
-      line-height: 1.55;
-      margin: 0;
+    .text {
+      margin: 1.8mm 0 0;
+      color: #344054;
+      font-weight: 600;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
+
+    .slot-1 .text { font-size: 11.4px; -webkit-line-clamp: 7; }
+    .slot-2 .text,
+    .slot-3 .text { font-size: 9.2px; line-height: 1.35; -webkit-line-clamp: 3; }
+    .slot-4 .text,
+    .slot-5 .text { font-size: 10.6px; -webkit-line-clamp: 4; }
 
     .goals {
+      margin-top: auto;
+      padding-top: 2mm;
+    }
+
+    .goals-title {
+      margin: 0 0 1mm;
+      font-size: 9.2px;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .goals ul {
       margin: 0;
-      padding-right: 18px;
-      font-size: 13px;
-      line-height: 1.45;
+      padding: 0 4mm 0 0;
     }
 
-    .empty {
-      background: var(--card);
-      border: 1px dashed var(--line);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-align: center;
-      color: var(--muted);
-      grid-column: 1 / -1;
+    .goals li {
+      margin: .65mm 0;
+      color: #475467;
+      font-size: 9.2px;
+      line-height: 1.25;
+      font-weight: 800;
     }
 
-    .print-panel {
-      margin-top: 14px;
+    .slot-2 .goals,
+    .slot-3 .goals { display: none; }
+    .slot-4 .goals li:nth-child(n+3),
+    .slot-5 .goals li:nth-child(n+3) { display: none; }
+    .slot-1 .goals li { font-size: 9.8px; line-height: 1.28; }
+
+    .page-footer {
+      position: absolute;
+      left: 9mm;
+      right: 9mm;
+      bottom: 5.3mm;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
+      color: #6b7280;
+      font-size: 8.8px;
+      font-weight: 800;
+      border-top: 1px solid rgba(23,32,51,.10);
+      padding-top: 2mm;
+    }
+
+    .page-number {
+      color: white;
+      background: #172033;
+      border-radius: 999px;
+      padding: 1mm 2.5mm;
+      font-size: 8.5px;
+    }
+
+    .empty-booklet {
+      width: min(740px, calc(100% - 40px));
+      margin: 26px auto 70px;
+      padding: 34px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 14px 36px rgba(20,34,66,.09);
+      text-align: center;
+      font-weight: 800;
       color: var(--muted);
-      font-size: 13px;
+    }
+
+    .catalog-mode .screen-controls {
+      display: none;
+    }
+
+    .empty-booklet strong {
+      display: block;
+      color: var(--ink);
+      font-size: 24px;
+      margin-bottom: 8px;
     }
 
     @media (max-width: 900px) {
-      .toolbar {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .list {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .summary {
-        white-space: normal;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .toolbar,
-      .list {
-        grid-template-columns: 1fr;
-      }
+      .control-hero,
+      .selector-top,
+      .selector-tools { grid-template-columns: 1fr; }
+      .action-row { justify-content: flex-start; }
+      .filters-panel { grid-template-columns: 1fr; }
+      .activity-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .a4-page { transform: scale(.62); transform-origin: top center; margin-bottom: -112mm; }
     }
 
     @media print {
-      body {
-        background: white;
+      @page {
+        size: A4 portrait;
+        margin: 0;
       }
 
-      .page {
-        width: 100%;
-        padding: 0;
+      html, body {
+        width: 210mm;
+        min-height: auto;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
-      .toolbar,
-      .print-panel {
-        display: none;
+      .screen-controls,
+      .empty-booklet { display: none !important; }
+
+      .booklet {
+        display: block;
+        padding: 0 !important;
+        margin: 0 !important;
       }
 
-      header,
-      .activity-card {
-        box-shadow: none;
+      .a4-page {
+        width: 210mm !important;
+        height: 297mm !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        break-after: page;
+        page-break-after: always;
       }
 
-      .list {
-        grid-template-columns: 1fr;
-        gap: 8mm;
+      .a4-page:last-child {
+        break-after: auto;
+        page-break-after: auto;
       }
 
       .activity-card {
         break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none !important;
       }
     }
   </style>
 </head>
-
 <body>
-  <main class="page">
-    <header>
-      <div class="brand">
-        <img class="logo" src="logo.png" alt="לוגו תעשיידע" />
-        <div>
-          <h1>קטלוג סדנאות ופעילויות</h1>
-          <div class="subtitle">בחירה לפי שכבת גיל, תחום, סדנאות וחדרי בריחה</div>
+  <header class="screen-controls">
+    <section class="control-hero">
+      <div>
+        <h1>תצוגת A4 לא סימטרית — חוברת פעילויות</h1>
+        <p>בחר אילו פעילויות ייכנסו לקטלוג. המבנה העיצובי נשאר קבוע בכל מצב — הבחירה משנה רק את התוכן שמופיע בתוך העמודים.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+        <button class="action-btn" id="catalogModeBtn" type="button">הפקת קטלוג מעוצב</button>
+        <button class="print-btn" type="button" onclick="window.print()">הדפסה / שמירה ל־PDF</button>
+      </div>
+    </section>
+
+    <section class="selector-panel" aria-label="בחירת פעילויות לקטלוג">
+      <div class="selector-top">
+        <div class="selector-title">
+          <h2>בחירת סדנאות ופעילויות לקטלוג</h2>
+          <p>סמן או בטל פעילויות. הסדר נשאר לפי הסדר המקורי, והעמודים נבנים מחדש אוטומטית.</p>
+        </div>
+        <div class="selected-count" id="selectedCount">0 נבחרו</div>
+      </div>
+
+      <div class="selector-tools">
+        <label class="search-box">
+          <span>⌕</span>
+          <input id="pickerSearch" type="search" placeholder="חיפוש פעילות לפי שם, תחום, גיל או סוג..." />
+        </label>
+        <div class="action-row">
+          <button class="action-btn" type="button" data-action="all">בחר הכול</button>
+          <button class="action-btn" type="button" data-action="none">נקה הכול</button>
+          <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
+          <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
         </div>
       </div>
-      <div class="summary" id="summaryText">טוען נתונים...</div>
-    </header>
 
-    <section class="toolbar" aria-label="סינון פעילויות">
-      <div class="field">
-        <label for="gradeFilter">שכבת גיל</label>
-        <select id="gradeFilter">
-          <option value="">הכול</option>
-        </select>
+      
+      <div class="filters-panel">
+        <div class="filter-group">
+          <p class="filter-label">סינון לפי כיתות (בחירה מרובה)</p>
+          <div id="gradeFilters" class="filter-options"></div>
+        </div>
+        <div class="filter-group">
+          <p class="filter-label">סינון לפי תחומים (בחירה מרובה)</p>
+          <div id="domainFilters" class="filter-options"></div>
+        </div>
       </div>
 
-      <div class="field">
-        <label for="domainFilter">תחום</label>
-        <select id="domainFilter">
-          <option value="">הכול</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="typeFilter">סוג פעילות</label>
-        <select id="typeFilter">
-          <option value="">הכול</option>
-          <option value="סדנה">סדנאות</option>
-          <option value="חדר בריחה">חדרי בריחה</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="countFilter">כמות להצגה</label>
-        <select id="countFilter">
-          <option value="1">סדנה בודדת</option>
-          <option value="3">3 פעילויות</option>
-          <option value="6">6 פעילויות</option>
-          <option value="all" selected>הכול</option>
-        </select>
-      </div>
-
-      <div class="actions">
-        <button type="button" id="resetBtn" class="secondary">איפוס</button>
-        <button type="button" onclick="window.print()">הדפסה</button>
-      </div>
+      <div id="activityPicker" class="activity-picker"></div>
     </section>
+  </header>
 
-    <section class="toolbar" aria-label="חיפוש">
-      <div class="field" style="grid-column: 1 / -1;">
-        <label for="searchInput">חיפוש לפי שם, תחום, תוצר או תיאור</label>
-        <input id="searchInput" type="search" placeholder="לדוגמה: חלל, מגנטים, טלסקופ..." />
-      </div>
-    </section>
-
-    <section class="list" id="activitiesList"></section>
-
-    <div class="print-panel">
-      <span>הקובץ מיועד להעלאה לריפו לצד הקבצים: <strong>activities_complete_full_he.json</strong> ו־<strong>logo.png</strong></span>
-      <span id="selectedCount"></span>
-    </div>
-  </main>
+  <main id="booklet" class="booklet" aria-label="חוברת פעילויות A4"></main>
 
   <script>
-    const DATA_FILE = "activities_complete_full_he.json";
-
-    const state = {
-      activities: [],
-      filtered: []
-    };
-
-    const els = {
-      grade: document.getElementById("gradeFilter"),
-      domain: document.getElementById("domainFilter"),
-      type: document.getElementById("typeFilter"),
-      count: document.getElementById("countFilter"),
-      search: document.getElementById("searchInput"),
-      list: document.getElementById("activitiesList"),
-      summary: document.getElementById("summaryText"),
-      selectedCount: document.getElementById("selectedCount"),
-      reset: document.getElementById("resetBtn")
-    };
-
-    function normalizeText(value) {
-      return String(value || "").trim();
-    }
-
-    function getActivityValue(activity, keys) {
-      for (const key of keys) {
-        if (activity[key] !== undefined && activity[key] !== null && String(activity[key]).trim() !== "") {
-          return activity[key];
-        }
+    const activities = [
+      {
+        title: "אסטרונאוט על חוטים",
+        image: "images/001.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "חלל",
+        accent: "#203b7a",
+        duration: "45 דקות",
+        product: "בובת אסטרונאוט נעה באמצעות חוטים",
+        text: "בסדנה זו התלמידים בונים בובת אסטרונאוט אישית, משלבים צביעה, גזירה, חיבור חלקים והפעלת מנגנון חוטים. דרך ההרכבה הם מגלים כיצד חלקים נפרדים יכולים להתחבר לדמות אחת בעלת תנועה, וכיצד משיכה פשוטה יוצרת פעולה נראית לעין. הפעילות מחברת בין עולם החלל לבין עקרונות ראשוניים של תנועה, מפרקים ותכנון מכני.",
+        goals: ["להבין כיצד חיבור בין חלקים יוצר תנועה", "לפתח דיוק, מוטוריקה עדינה ועבודה בשלבים", "ליצור תוצר אישי המחבר בין דמיון, חלל ומנגנון פעולה"]
+      },
+      {
+        title: "מעבורת חלל תלת־ממדית",
+        image: "images/002.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "חלל",
+        accent: "#203b7a",
+        duration: "45 דקות",
+        product: "דגם אישי של מעבורת חלל",
+        text: "בסדנה זו התלמידים יוצרים דגם תלת־ממדי של מעבורת חלל באמצעות צביעה, גזירה, קיפול והרכבה. במהלך הפעילות הם עוברים מדף שטוח לתוצר בנוי, ומגלים כיצד צורות, זוויות וחלקים שונים מתחברים למבנה של כלי טיס חללי. הסדנה מחזקת חשיבה מרחבית, תכנון מוקדם והבנה בסיסית של מבנה הנדסי.",
+        goals: ["להבין כיצד פריסה שטוחה הופכת לדגם תלת־ממדי", "להכיר מרכיבים בסיסיים במבנה של כלי חלל", "לפתח חשיבה מרחבית, דיוק וסבלנות בתהליך בנייה"]
+      },
+      {
+        title: "חללית בראשית",
+        image: "images/003.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "חלל",
+        accent: "#203b7a",
+        duration: "45 דקות",
+        product: "דגם אישי של חללית בראשית",
+        text: "הסדנה מחברת את התלמידים לסיפורה של חללית בראשית — רעיון ישראלי שאפתני שהפך למשימת חלל אמיתית. במהלך הפעילות הם בונים דגם אישי של החללית ונחשפים לעולם של תכנון, ניסוי, אתגר, תקלה והפקת לקחים. דרך הבנייה והשיח התלמידים מבינים שמאחורי כל משימה טכנולוגית עומדים חזון, התמדה, עבודת צוות ויכולת ללמוד גם מהצלחות וגם מאתגרים.",
+        goals: ["להכיר את סיפורה של חללית בראשית", "להבין שמאחורי משימת חלל עומדים תכנון, ניסוי ושיפור", "לחזק תחושת מסוגלות דרך בניית דגם אישי"]
+      },
+      {
+        title: "מערכת השמש בתלת־ממד",
+        image: "images/004.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "אסטרונומיה",
+        accent: "#6c4de6",
+        duration: "45 דקות",
+        product: "מודל תלת־ממדי של מערכת השמש",
+        text: "בסדנה זו התלמידים מרכיבים מודל תלת־ממדי של מערכת השמש ויוצאים למסע בין השמש, כוכבי הלכת והמרחבים שסביבנו. באמצעות הדגם הם לומדים על מסלולים, מרחקים, תנועה בחלל ומקומו של כדור הארץ במערכת רחבה יותר. הפעילות הופכת מושגים אסטרונומיים גדולים למשהו מוחשי, נגיש וברור.",
+        goals: ["להכיר את מרכיבי מערכת השמש", "להבין תנועה ומסלולים בחלל באופן מוחשי", "לפתח חשיבה מרחבית וסקרנות אסטרונומית"]
+      },
+      {
+        title: "טלסקופ קפלר",
+        image: "images/005.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "אופטיקה",
+        accent: "#34c3d5",
+        duration: "45 דקות",
+        product: "טלסקופ אישי",
+        text: "התלמידים בונים טלסקופ אישי ומתנסים בצפייה למרחקים שונים. דרך ההרכבה הם מגלים כיצד עדשות משנות את הדרך שבה האור עובר, כיצד נוצרים מיקוד והגדלה, וכיצד כלי תצפית פשוט יכול לפתוח חלון לעולם רחוק. הסדנה מחברת בין אופטיקה, סקרנות מדעית וחקר החלל.",
+        goals: ["להבין כיצד עדשות יוצרות הגדלה ומיקוד", "לחבר בין אופטיקה לבין תצפית וחקר החלל", "להתנסות בבנייה של כלי מדעי אישי"]
+      },
+      {
+        title: "רוטוקופטר",
+        image: "images/006.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "תעופה",
+        accent: "#f39b2f",
+        duration: "45 דקות",
+        product: "דגם רוטוקופטר אישי",
+        text: "בסדנה זו התלמידים בונים רוטוקופטר, משגרים אותו ובודקים כיצד הוא מסתובב בזמן ירידה באוויר. הם חוקרים כיצד צורת הלהבים, הכיוון והמבנה משפיעים על התנועה, היציבות ומשך הסיבוב. הפעילות מזמינה אותם לחשוב כמו מהנדסים צעירים: לבנות, לבדוק, לשנות ולנסות שוב.",
+        goals: ["להכיר עקרונות בסיסיים של תעופה וזרימת אוויר", "להבין את הקשר בין צורת הדגם לבין אופן התנועה שלו", "לפתח חשיבה ניסויית ושיפור בעקבות תצפית"]
+      },
+      {
+        title: "פרפרטוס / פרפרוש",
+        image: "images/007.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "תעופה",
+        accent: "#f39b2f",
+        duration: "45 דקות",
+        product: "דגם פרפר מעופף עם מנגנון גומי",
+        text: "התלמידים בונים וצובעים פרפר דו־צדדי המופעל באמצעות מנגנון גומי. לאחר ההרכבה הם מפעילים את הדגם וצופים כיצד אנרגיה שנאגרה בגומייה משתחררת והופכת לתנועה. הפעילות מחברת בין תעופה בטבע, מבנה כנפיים, יציבות ותנועה באוויר, ומראה כיצד גם תופעה טבעית עדינה יכולה להוביל להבנה מדעית וטכנולוגית.",
+        goals: ["להכיר את הקשר בין אנרגיה לתנועה", "להבין כיצד מבנה כנף משפיע על תעופה", "לחבר בין תופעות בטבע לבין רעיונות טכנולוגיים"]
+      },
+      {
+        title: "מחפשים את השער אל עולם הביומימיקרי הסודי",
+        image: "images/008.png",
+        grades: ["ג׳–ו׳", "ד׳–ו׳"],
+        type: "חדר בריחה",
+        domain: "ביומימיקרי",
+        accent: "#1a9c74",
+        duration: "45 דקות",
+        product: "חדר בריחה דיגיטלי בנושא טבע, חדשנות ופתרונות בהשראת יצורים חיים",
+        text: "מה מסתתר מאחורי הדלת — ואיזה סוד חכם הטבע עומד לחשוף? בחדר הבריחה זה המשתתפים יוצאים למסע מסתורי בעקבות יצורים חיים, תכונות מיוחדות ורעיונות חכמים שמסתתרים בטבע. הבחירה בדלת, הגילוי ההדרגתי והמעבר בין שלבי המשחק יוצרים חוויה של סקרנות, חקר ופענוח. הפעילות מציגה את הטבע מזווית חדשה: לא רק כעולם יפה ומסקרן, אלא כמקור השראה לפתרונות, המצאות וחדשנות. המשתתפים לומדים להתבונן בפרטים, לזהות מאפיינים, להבין התאמות לסביבה ולשאול כיצד עקרונות מהטבע יכולים לעזור לבני אדם לפתור בעיות. לאורך המשחק נבנית הבנה בסיסית של ביומימיקרי: למידה מן הטבע, זיהוי רעיון חכם, וחיבור בין תופעה טבעית לבין פתרון טכנולוגי. הכול נעשה דרך מסלול משחקי, קליל ומסקרן, ששומר על תחושת גילוי עד לסיום.",
+        goals: ["לעודד חשיבה יצירתית והתבוננות מדעית", "לפתח סקרנות חקרנית", "לחבר בין טבע, טכנולוגיה וחדשנות"]
+      },
+      {
+        title: "משימת מים 2050",
+        image: "images/009.png",
+        grades: ["ג׳–ו׳", "ד׳–ו׳"],
+        type: "חדר בריחה",
+        domain: "קיימות",
+        accent: "#1a9c74",
+        duration: "45 דקות",
+        product: "חדר בריחה בנושא מים, מדע ואתגרי העתיד",
+        text: "האם תוכלו להציל את עתיד המים של כדור הארץ? בחדר הבריחה זה המשתתפים נכנסים לעולם עתידני שבו האנושות מתמודדת עם אתגר מים גדול. בתוך סיפור של משבר, חלל, משאבים וטכנולוגיה, הם נדרשים לחשוב כמו צוות משימה: לזהות בעיות, לפענח מידע, לקבל החלטות ולחפש פתרונות יצירתיים. הפעילות מחברת בין דמיון למציאות. מצד אחד — משימה עתידנית ומסקרנת. מצד שני — נושא קרוב וחשוב מחיי היומיום: מים כמשאב חיוני שצריך לשמור עליו, לתכנן את השימוש בו ולהבין את המערכות שמאפשרות לו להגיע אלינו. לאורך המשחק המשתתפים נחשפים לעולמות של קיימות, מדע, טכנולוגיה, חשיבה הנדסית ואחריות סביבתית. הם מגלים שמים אינם דבר מובן מאליו, ושמאחורי כל פתרון גדול עומדים ידע, תכנון, שיתוף פעולה וחשיבה קדימה.",
+        goals: ["ליצור שיח על אתגרי העתיד, משאבים וחדשנות", "לפתח חשיבה הנדסית ואחריות סביבתית", "לחזק עבודת צוות ויכולת פתרון בעיות מורכבות"]
+      },
+      {
+        title: "כדור מולקולה",
+        image: "images/010.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "כימיה",
+        accent: "#7b61ff",
+        duration: "45 דקות",
+        product: "דגם תלת־ממדי של מולקולה / כדור באקי",
+        text: "בסדנה זו התלמידים בונים דגם תלת־ממדי של מולקולה באמצעות מחברים וצינוריות. תוך כדי ההרכבה הם מגלים כיצד חלקיקים קטנים יכולים להתחבר למבנים מורכבים, וכיצד מושגים מופשטים כמו אטומים וקשרים כימיים יכולים להפוך לדגם מוחשי. הפעילות מנגישה את עולם הכימיה דרך בנייה, דיוק וחשיבה מרחבית.",
+        goals: ["להכיר מושגים בסיסיים בכימיה: אטום, מולקולה וקשר", "להבין כיצד חיבורים יוצרים מבנה מולקולרי", "לפתח חשיבה מרחבית ודיוק בהרכבה"]
+      },
+      {
+        title: "צמידי שמש",
+        image: "images/011.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "אופטיקה",
+        accent: "#34c3d5",
+        duration: "45 דקות",
+        product: "צמיד אישי מחרוזים מחליפי צבע",
+        text: "התלמידים יוצרים צמיד אישי מחרוזים מיוחדים המשנים את צבעם בחשיפה לשמש. השינוי בצבע מוביל לשיחה מסקרנת על אור בלתי נראה ועל קרינת UV, שאינה נראית לעין אך משפיעה על חומרים ועל הגוף שלנו. הסדנה מחברת בין מדע יומיומי, אופטיקה ומודעות להתנהגות חכמה בשמש.",
+        goals: ["להכיר את קרינת UV באופן מוחשי", "להבין כיצד חומרים מגיבים לאור", "לעודד מודעות להתנהגות חכמה בשמש"]
+      },
+      {
+        title: "משקפת מתקפלת",
+        image: "images/012.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "אופטיקה",
+        accent: "#34c3d5",
+        duration: "45 דקות",
+        product: "משקפת מתקפלת אישית",
+        text: "התלמידים בונים משקפת אישית בעזרת עדשות ורכיבים להרכבה. במהלך הפעילות הם מתנסים בצפייה דרך המשקפת ובודקים כיצד האור עובר דרך עדשות ומשפיע על מה שאנחנו רואים. הסדנה מחברת בין בנייה מדויקת לבין הבנה של מיקוד, הגדלה, ראיית עומק וטכנולוגיות ראייה.",
+        goals: ["להכיר עקרונות בסיסיים באופטיקה", "להבין כיצד עדשות משפיעות על ראייה", "לפתח מיומנות הרכבה ותצפית מדעית"]
+      },
+      {
+        title: "קלידוסקופ",
+        image: "images/013.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "אופטיקה",
+        accent: "#34c3d5",
+        duration: "45 דקות",
+        product: "קלידוסקופ אישי",
+        text: "התלמידים בונים קלידוסקופ אישי באמצעות גליל, מראות וחרוזים צבעוניים. כאשר הם מביטים פנימה ומסובבים את הדגם, נוצרים דגמים צבעוניים משתנים ומפתיעים. הפעילות מחברת בין אור, השתקפות, סימטריה ודמיון, ומראה כיצד תופעה אופטית פשוטה יכולה ליצור עולם חזותי עשיר ומרהיב.",
+        goals: ["להכיר תופעות של השתקפות וסימטריה", "לפתח התבוננות, דמיון ודיוק", "ליצור תוצר אישי שמחבר בין אור, צבע ומדע"]
+      },
+      {
+        title: "ג׳וני השלד",
+        image: "images/014.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "ביולוגיה",
+        accent: "#e05260",
+        duration: "45 דקות",
+        product: "דגם שלד אנושי מעץ",
+        text: "התלמידים בונים דגם של שלד אנושי ומכירים את חלקי הגוף המרכזיים דרך הרכבה מוחשית. הסדנה מזמינה אותם להבין מה נמצא מתחת לעור, כיצד העצמות מעניקות לגוף תמיכה וצורה, ואיך מבנה השלד קשור לתנועה. הפעילות הופכת את הלמידה על גוף האדם לחוויה פעילה, ברורה ומסקרנת.",
+        goals: ["להכיר את מערכת השלד ותפקידה", "להבין את הקשר בין מבנה הגוף לתנועה", "לעודד התבוננות מדעית בגוף האדם"]
+      },
+      {
+        title: "נשכן מפרקים",
+        image: "images/015.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "ביולוגיה",
+        accent: "#e05260",
+        duration: "45 דקות",
+        product: "דגם לסת נעה המדגים פעולת מפרק",
+        text: "התלמידים בונים דגם של לסת נעה ובודקים כיצד חיבור בין חלקים מאפשר תנועה. דרך הדגם הם מבינים כיצד מפרק פועל, מדוע הגוף זקוק לחיבורים גמישים, ואיך מבנה נכון מאפשר פעולה יומיומית כמו פתיחה וסגירה. הסדנה מנגישה את גוף האדם דרך דגם פשוט, ברור ומוחשי.",
+        goals: ["להבין מהו מפרק וכיצד הוא מאפשר תנועה", "לחבר בין מבנה הגוף לבין פעולה", "לפתח סקרנות כלפי הגוף האנושי"]
+      },
+      {
+        title: "מצפן",
+        image: "images/016.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "מצפן אישי",
+        text: "התלמידים בונים מצפן אישי ולומדים כיצד ניתן למצוא כיוון גם בלי מפה או טלפון. דרך ניסוי והתבוננות בתנועת המחט הם נחשפים למגנטיות ולשדה המגנטי של כדור הארץ. הפעילות מחברת בין פיזיקה, טבע והתמצאות במרחב, ומראה כיצד כוח בלתי נראה יכול להפוך לכלי שימושי.",
+        goals: ["להכיר תכונות של מגנטים ושדה מגנטי", "להבין כיצד מצפן מסייע בניווט", "לבנות כלי מדעי אישי ושימושי"]
+      },
+      {
+        title: "מכונית תנע",
+        image: "images/017.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "מכונית הנעה באמצעות בלון",
+        text: "התלמידים בונים מכונית קטנה המונעת בעזרת בלון. לאחר ההרכבה הם מפעילים את הדגם וצופים כיצד אוויר שמשתחרר לאחור גורם למכונית לנוע קדימה. הפעילות ממחישה באופן פשוט וחווייתי את עקרון הפעולה והתגובה, ומחברת בין כוח, דחיפה, תנועה ותכנון מכני.",
+        goals: ["להכיר את עקרון הפעולה והתגובה", "להבין כיצד כוח יוצר תנועה", "לפתח תכנון והרכבה טכנית"]
+      },
+      {
+        title: "פרוגי המקפצת",
+        image: "images/018.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "צפרדע קופצת עם מנגנון מגנטי",
+        text: "התלמידים מרכיבים דגם של צפרדע קופצת ומפעילים אותו באמצעות מגנטים. הקפיצה המפתיעה מובילה לחקר של כוח בלתי נראה — דחייה מגנטית — וכיצד הוא יכול ליצור תנועה ללא מגע ישיר. הפעילות משלבת משחק, ניסוי והשוואה בין כיוון, מרחק ועוצמת הקפיצה.",
+        goals: ["להכיר את תופעת הדחייה בין מגנטים", "להבין כיצד נוצרת תנועה ללא מגע", "לפתח חשיבה ניסויית דרך משחק"]
+      },
+      {
+        title: "מכונית מגנטית",
+        image: "images/019.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "מכונית מעץ המונעת באמצעות מגנט",
+        text: "התלמידים בונים מכונית קטנה ומניעים אותה באמצעות מגנט חיצוני, בלי לדחוף אותה ביד. התנועה שנוצרת מאפשרת לחקור משיכה, דחייה ושדה מגנטי, ולהבין כיצד כוח בלתי נראה יכול להשפיע על חפץ ממשי. הפעילות מרגישה כמעט כמו קסם, אך מוסברת באמצעות מדע פשוט וברור.",
+        goals: ["להבין עקרונות של משיכה ודחייה מגנטית", "לחקור תנועה ללא מגע ישיר", "לפתח דיוק והרכבה טכנית"]
+      },
+      {
+        title: "גשר לאונרדו",
+        image: "images/020.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "הנדסה",
+        accent: "#996c31",
+        duration: "45 דקות",
+        product: "דגם אישי של גשר לאונרדו",
+        text: "התלמידים בונים דגם מוקטן של גשר לאונרדו — מבנה שמחזיק את עצמו ללא דבק, חוטים או מסמרים. באמצעות סידור נכון של קורות, הם מגלים כיצד חלקים בודדים יכולים לתמוך זה בזה וליצור מבנה יציב. הפעילות מציבה אתגר הנדסי ברור ומלמדת שיציבות נוצרת לא רק מחומר חזק, אלא גם מתכנון חכם.",
+        goals: ["להכיר עקרונות בסיסיים של יציבות ומבנים", "לפתח חשיבה הנדסית ומרחבית", "להתמודד עם אתגר בנייה מדויק ומספק"]
+      },
+      {
+        title: "ציפור שיווי משקל",
+        image: "images/021.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "ציפור שיווי משקל אישית",
+        text: "התלמידים בונים דגם של ציפור שמצליחה לעמוד על נקודה קטנה מבלי ליפול. התוצאה מפתיעה ומזמינה חקירה של השאלה: איך היא נשארת מאוזנת? דרך הדגם הם לומדים על מרכז כובד, חלוקת משקל ויציבות, ומגלים כיצד שינוי קטן במבנה משפיע על האיזון.",
+        goals: ["להבין את מושג מרכז הכובד", "לחקור כיצד חלוקת משקל יוצרת איזון", "לפתח התבוננות מדעית בתופעה יומיומית"]
+      },
+      {
+        title: "גלגל הקסם",
+        image: "images/022.png",
+        grades: ["א׳–ג׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "גלגל קסם מסתובב אישי",
+        text: "התלמידים יוצרים גלגל מסתובב, מקשטים אותו ומפעילים אותו באמצעות דחיפה או סיבוב. תוך כדי המשחק הם מתבוננים במהירות, בצבעים המשתנים ובקשר בין פעולה קטנה לבין תנועה מתמשכת. הפעילות מתאימה כהיכרות ראשונית עם עולם הפיזיקה דרך צבע, משחק ותוצר אישי.",
+        goals: ["להכיר קשר בין דחיפה לתנועה", "להתנסות בתנועה סיבובית", "לשלב יצירה אישית עם חקר בסיסי"]
+      },
+      {
+        title: "ספינר",
+        image: "images/023.png",
+        grades: ["א׳–ג׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "ספינר אישי להרכבה והפעלה",
+        text: "התלמידים בונים ספינר אישי, מפעילים אותו ובודקים מה משפיע על משך הסיבוב ועל יציבותו. דרך ההתנסות הם חוקרים תנועה סיבובית, חיכוך, איזון וחלוקת משקל. הפעילות לוקחת חפץ משחקי ומוכר, והופכת אותו להזדמנות אמיתית לחקר פיזיקלי נגיש.",
+        goals: ["להבין עקרונות של סיבוב ואיזון", "לבדוק מה משפיע על משך התנועה", "לפתח חקר דרך משחק והתנסות"]
+      },
+      {
+        title: "קטפולטה",
+        image: "images/024.png",
+        grades: ["ג׳–ו׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "הנדסה",
+        accent: "#996c31",
+        duration: "45 דקות",
+        product: "דגם קטפולטה להפעלה וניסוי",
+        text: "התלמידים בונים קטפולטה ומתנסים בשיגור חפצים קטנים. לאחר ההפעלה הם בודקים כיצד שינוי בזווית, בעוצמה או במיקום משפיע על המרחק והדיוק. הפעילות מחברת בין בנייה הנדסית לבין ניסוי פיזיקלי, ומעודדת חשיבה של תכנון, בדיקה ושיפור.",
+        goals: ["להבין את הקשר בין כוח, זווית ותנועה", "לפתח חשיבה הנדסית דרך בנייה ושיפור", "לעודד ניסוי, מדידה והסקת מסקנות"]
+      },
+      {
+        title: "כדורי ברנולי",
+        image: "images/025.png",
+        grades: ["ג׳–ו׳", "ד׳–ו׳"],
+        type: "סדנה",
+        domain: "פיזיקה",
+        accent: "#2f6fed",
+        duration: "45 דקות",
+        product: "התנסות חקר עם כדור ברנולי / מערכת הדגמה",
+        text: "בסדנה זו התלמידים מתנסים בפעילות חקר שבה כדור קל מושפע מזרימת אוויר ונשאר בתנועה או באיזון באופן מפתיע. הם בודקים כיצד שינוי בכיוון האוויר או בעוצמת הזרימה משפיע על הכדור, ונחשפים לקשר בין מהירות זרימת אוויר, לחץ ותנועה. הפעילות מחברת בין ניסוי פשוט לבין עקרונות מעולם התעופה.",
+        goals: ["להכיר את הקשר בין זרימת אוויר ללחץ", "להבין כיצד אוויר משפיע על תנועה ויציבות", "לחבר בין פיזיקה יומיומית לבין עקרונות תעופה"]
       }
-      return "";
-    }
+    ];
 
-    function flattenActivities(data) {
-      if (Array.isArray(data)) return data;
+    const booklet = document.getElementById("booklet");
+    const picker = document.getElementById("activityPicker");
+    const searchInput = document.getElementById("pickerSearch");
+    const selectedCount = document.getElementById("selectedCount");
+    const gradeFilters = document.getElementById("gradeFilters");
+    const domainFilters = document.getElementById("domainFilters");
+    const catalogModeBtn = document.getElementById("catalogModeBtn");
+    const pageSize = 5;
+    const selected = new Set(activities.map((_, index) => index));
+    let pickerQuery = "";
+    const selectedGrades = new Set();
+    const selectedDomains = new Set();
 
-      if (Array.isArray(data.activities)) return data.activities;
-      if (Array.isArray(data["פעילויות"])) return data["פעילויות"];
-      if (Array.isArray(data.items)) return data.items;
-
-      const groups = data.groups || data["קבוצות"] || data.byGrade || data["לפי_כיתה"] || data["חלוקה_לפי_קבוצות_גיל"];
-      if (Array.isArray(groups)) {
-        return groups.flatMap(group => {
-          const groupItems = group.activities || group["פעילויות"] || group.items || [];
-          return groupItems.map(item => ({
-            ...item,
-            groupTitle: item.groupTitle || group.title || group["כותרת"] || group.name || group["שם"]
-          }));
-        });
+    function chunkActivities(items, size) {
+      const result = [];
+      for (let i = 0; i < items.length; i += size) {
+        result.push(items.slice(i, i + size));
       }
-
-      return [];
+      return result;
     }
 
-    function mapActivity(raw, index) {
-      const title = getActivityValue(raw, ["שם סדנה", "שם_סדנה", "name", "title", "שם"]);
-      const domain = getActivityValue(raw, ["תחום", "domain"]);
-      const grade = getActivityValue(raw, ["כיתה", "שכבת גיל", "שכבת_גיל", "grade", "ageGroup", "groupTitle"]);
-      const type = getActivityValue(raw, ["סוג פעילות", "סוג_פעילות", "type"]) || (domain.includes("חדר") ? "חדר בריחה" : "סדנה");
-      const duration = getActivityValue(raw, ["משך הפעילות", "משך_הפעילות", "duration"]);
-      const product = getActivityValue(raw, ["תוצר אישי", "תוצר_אישי", "תוצר", "product"]);
-      const description = getActivityValue(raw, ["תיאור הסדנה", "תיאור_הסדנה", "description", "תיאור"]);
-      const goals = getActivityValue(raw, ["מטרות", "goals"]) || [];
-
-      return {
-        id: raw.id || index + 1,
-        title,
-        domain,
-        grade,
-        type,
-        duration,
-        product,
-        description,
-        goals: Array.isArray(goals) ? goals : String(goals).split(/\n|•|-/).map(x => x.trim()).filter(Boolean),
-        raw
-      };
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-    function uniqueValues(items, key) {
-      return [...new Set(items.map(item => normalizeText(item[key])).filter(Boolean))].sort((a, b) => a.localeCompare(b, "he"));
-    }
-
-    function fillSelect(select, values) {
-      const first = select.querySelector("option");
-      select.innerHTML = "";
-      select.appendChild(first);
-      values.forEach(value => {
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
-        select.appendChild(option);
-      });
-    }
-
-    function renderCard(activity) {
-      const goalsHtml = activity.goals.slice(0, 3).map(goal => `<li>${escapeHtml(goal)}</li>`).join("");
-
+    function imageMarkup(activity) {
       return `
-        <article class="activity-card">
-          <div class="card-top">
-            <h2 class="activity-title">${escapeHtml(activity.title)}</h2>
-            <span class="tag">${escapeHtml(activity.domain)}</span>
-          </div>
-
-          <div class="meta">
-            <span>${escapeHtml(activity.grade)}</span>
-            <span>•</span>
-            <span>${escapeHtml(activity.type)}</span>
-            ${activity.duration ? `<span>•</span><span>${escapeHtml(activity.duration)}</span>` : ""}
-          </div>
-
-          <div class="product"><strong>תוצר אישי:</strong> ${escapeHtml(activity.product)}</div>
-
-          <p class="description">${escapeHtml(activity.description)}</p>
-
-          <ol class="goals">${goalsHtml}</ol>
-        </article>
-      `;
+        <div class="image-box">
+          <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+        </div>`;
     }
 
-    function escapeHtml(value) {
-      return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    function createImagePlaceholder() {
+      const placeholder = document.createElement("div");
+      placeholder.className = "image-placeholder";
+      placeholder.textContent = "תמונה תתווסף כאן";
+      return placeholder;
     }
 
-    function applyFilters() {
-      const grade = els.grade.value;
-      const domain = els.domain.value;
-      const type = els.type.value;
-      const query = normalizeText(els.search.value).toLowerCase();
+    function renderCard(activity, slotIndex) {
+      const goals = activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
+      const card = document.createElement("article");
+      card.className = `activity-card slot-${slotIndex + 1}`;
+      card.style.setProperty("--accent", activity.accent || "#203b7a");
+      card.innerHTML = `
+        ${imageMarkup(activity)}
+        <div class="card-content">
+          <div class="card-topline">
+            <span class="tag accent">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)}</span>
+            <span class="tag">${escapeHTML(activity.duration)}</span>
+            <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
+          </div>
+          <h2>${escapeHTML(activity.title)}</h2>
+          <p class="product">תוצר: ${escapeHTML(activity.product)}</p>
+          <p class="text">${escapeHTML(activity.text)}</p>
+          <div class="goals">
+            <p class="goals-title">מטרות מרכזיות</p>
+            <ul>${goals}</ul>
+          </div>
+        </div>`;
+      return card;
+    }
 
-      let results = state.activities.filter(activity => {
-        const text = [
-          activity.title,
-          activity.domain,
-          activity.grade,
-          activity.type,
-          activity.product,
-          activity.description,
-          activity.goals.join(" ")
-        ].join(" ").toLowerCase();
+    function renderPage(items, pageIndex, totalPages) {
+      const page = document.createElement("section");
+      page.className = "a4-page";
+      page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
 
-        return (!grade || activity.grade === grade)
-          && (!domain || activity.domain === domain)
-          && (!type || activity.type === type)
-          && (!query || text.includes(query));
+      page.innerHTML = `
+        <header class="page-header">
+          <div>
+            <div class="page-kicker">✦ חוברת פעילויות מדע, חלל, הנדסה וטכנולוגיה</div>
+            <h1 class="page-title">סדנאות STEM חווייתיות</h1>
+            <p class="page-subtitle">עמוד פעילויות בסגנון מגזין: כל פעילות מוצגת ככרטיס עצמאי, עם תוצר, תחום, גיל יעד ומטרות מרכזיות.</p>
+          </div>
+          <div class="page-badge">עמוד ${pageIndex + 1} / ${totalPages}</div>
+        </header>
+        <div class="page-grid"></div>
+        <footer class="page-footer">
+          <span>תעשיידע · למידה דרך עשייה, חקר ויצירה</span>
+          <span class="page-number">${pageIndex + 1}</span>
+        </footer>`;
+
+      const grid = page.querySelector(".page-grid");
+      items.forEach((activity, index) => grid.appendChild(renderCard(activity, index)));
+      return page;
+    }
+
+    function getSelectedActivities() {
+      return activities
+        .map((activity, index) => ({ ...activity, originalIndex: index }))
+        .filter(activity => selected.has(activity.originalIndex) && matchesAdvancedFilters(activity));
+    }
+
+    function renderBooklet() {
+      const chosen = getSelectedActivities();
+      selectedCount.textContent = `${chosen.length} נבחרו`;
+      booklet.innerHTML = "";
+
+      if (!chosen.length) {
+        booklet.innerHTML = `<section class="empty-booklet"><strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.</section>`;
+        return;
+      }
+
+      const pages = chunkActivities(chosen, pageSize);
+      pages.forEach((items, index) => booklet.appendChild(renderPage(items, index, pages.length)));
+    }
+
+    
+
+    function uniqueValues(extractor) {
+      return [...new Set(activities.flatMap(extractor))];
+    }
+
+    function renderFilterChips(container, values, key) {
+      container.innerHTML = "";
+      values.forEach(value => {
+        const isChecked = key === "grade" ? selectedGrades.has(value) : selectedDomains.has(value);
+        const label = document.createElement("label");
+        label.className = "filter-chip";
+        label.innerHTML = `<input type="checkbox" data-filter-key="${key}" data-filter-value="${escapeHTML(value)}" ${isChecked ? "checked" : ""} />${escapeHTML(value)}`;
+        container.appendChild(label);
       });
-
-      const count = els.count.value;
-      if (count !== "all") {
-        results = results.slice(0, Number(count));
-      }
-
-      state.filtered = results;
-      render();
     }
 
-    function render() {
-      if (!state.filtered.length) {
-        els.list.innerHTML = `<div class="empty">לא נמצאו פעילויות לפי הסינון הנוכחי.</div>`;
-      } else {
-        els.list.innerHTML = state.filtered.map(renderCard).join("");
-      }
-
-      els.summary.textContent = `${state.filtered.length} מתוך ${state.activities.length} פעילויות מוצגות`;
-      els.selectedCount.textContent = `נבחרו להצגה: ${state.filtered.length}`;
+    function renderFilters() {
+      renderFilterChips(gradeFilters, uniqueValues(activity => activity.grades), "grade");
+      renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]), "domain");
     }
 
-    function resetFilters() {
-      els.grade.value = "";
-      els.domain.value = "";
-      els.type.value = "";
-      els.count.value = "all";
-      els.search.value = "";
-      applyFilters();
+    function matchesPickerSearch(activity) {
+      const q = pickerQuery.trim().toLowerCase();
+      if (!q) return true;
+      const haystack = [
+        activity.title,
+        activity.domain,
+        activity.type,
+        activity.product,
+        activity.grades.join(" ")
+      ].join(" ").toLowerCase();
+      return haystack.includes(q);
     }
 
-    async function init() {
-      try {
-        const response = await fetch(DATA_FILE);
-        if (!response.ok) throw new Error("JSON file was not found");
-        const data = await response.json();
-
-        state.activities = flattenActivities(data).map(mapActivity).filter(activity => activity.title);
-        fillSelect(els.grade, uniqueValues(state.activities, "grade"));
-        fillSelect(els.domain, uniqueValues(state.activities, "domain"));
-
-        applyFilters();
-      } catch (error) {
-        els.summary.textContent = "לא ניתן לטעון את קובץ הנתונים";
-        els.list.innerHTML = `
-          <div class="empty">
-            לא נמצא הקובץ <strong>${DATA_FILE}</strong> באותה תיקייה.<br>
-            יש להעלות לריפו את הקבצים: <strong>index.html</strong>, <strong>${DATA_FILE}</strong>, <strong>logo.png</strong>.
-          </div>
-        `;
-      }
+    function matchesAdvancedFilters(activity) {
+      const gradeMatch = !selectedGrades.size || activity.grades.some(grade => selectedGrades.has(grade));
+      const domainMatch = !selectedDomains.size || selectedDomains.has(activity.domain);
+      return gradeMatch && domainMatch;
     }
 
-    [els.grade, els.domain, els.type, els.count, els.search].forEach(el => {
-      el.addEventListener("input", applyFilters);
-      el.addEventListener("change", applyFilters);
+    function renderPicker() {
+      picker.innerHTML = "";
+      activities.forEach((activity, index) => {
+        if (!matchesPickerSearch(activity) || !matchesAdvancedFilters(activity)) return;
+        const label = document.createElement("label");
+        label.className = "activity-option" + (selected.has(index) ? " selected" : "");
+        label.style.setProperty("--option-accent", activity.accent || "#203b7a");
+        label.innerHTML = `
+          <input type="checkbox" data-index="${index}" ${selected.has(index) ? "checked" : ""} />
+          <span class="option-card">
+            <span class="checkmark" aria-hidden="true"></span>
+            <span>
+              <span class="option-title">${escapeHTML(activity.title)}</span>
+              <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.join(", "))}</span>
+            </span>
+          </span>`;
+        picker.appendChild(label);
+      });
+    }
+
+    function renderAll() {
+      renderFilters();
+      renderPicker();
+      renderBooklet();
+    }
+
+    picker.addEventListener("change", event => {
+      const checkbox = event.target.closest('input[type="checkbox"][data-index]');
+      if (!checkbox) return;
+      const index = Number(checkbox.dataset.index);
+      checkbox.checked ? selected.add(index) : selected.delete(index);
+      renderAll();
     });
 
-    els.reset.addEventListener("click", resetFilters);
+    document.addEventListener("change", event => {
+      const filterInput = event.target.closest("input[data-filter-key]");
+      if (!filterInput) return;
+      const { filterKey, filterValue } = filterInput.dataset;
+      const bucket = filterKey === "grade" ? selectedGrades : selectedDomains;
+      filterInput.checked ? bucket.add(filterValue) : bucket.delete(filterValue);
+      renderAll();
+    });
 
-    init();
+    catalogModeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("catalog-mode");
+    });
+
+    searchInput.addEventListener("input", event => {
+      pickerQuery = event.target.value;
+      renderPicker();
+    });
+
+    document.addEventListener("click", event => {
+      const actionButton = event.target.closest("[data-action]");
+      if (!actionButton) return;
+      const action = actionButton.dataset.action;
+      selected.clear();
+
+      if (action === "all") {
+        activities.forEach((_, index) => selected.add(index));
+      } else if (action === "workshops") {
+        activities.forEach((activity, index) => { if (activity.type === "סדנה") selected.add(index); });
+      } else if (action === "escapes") {
+        activities.forEach((activity, index) => { if (activity.type === "חדר בריחה") selected.add(index); });
+      }
+
+      renderAll();
+    });
+
+    renderAll();
   </script>
 </body>
 </html>
