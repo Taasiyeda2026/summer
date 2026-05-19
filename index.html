@@ -603,6 +603,29 @@
       font-size: 8.5px;
     }
 
+    .section-divider {
+      width: 210mm;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    @media print {
+      .section-divider { display: none; }
+    }
+
     .empty-booklet {
       width: min(740px, calc(100% - 40px));
       margin: 26px auto 70px;
@@ -1153,6 +1176,17 @@
       return page;
     }
 
+    const gradeOrder = { "א": 1, "ב": 2, "ג": 3, "ד": 4, "ה": 5, "ו": 6 };
+
+    function minGrade(activity) {
+      let min = 99;
+      for (const g of activity.grades) {
+        const firstLetter = g[0];
+        if (gradeOrder[firstLetter] !== undefined) min = Math.min(min, gradeOrder[firstLetter]);
+      }
+      return min;
+    }
+
     function getSelectedActivities() {
       return activities
         .map((activity, index) => ({ ...activity, originalIndex: index }))
@@ -1169,8 +1203,23 @@
         return;
       }
 
-      const pages = chunkActivities(chosen, pageSize);
-      pages.forEach((items, index) => booklet.appendChild(renderPage(items, index, pages.length)));
+      const workshops = chosen.filter(a => a.type !== "חדר בריחה").sort((a, b) => minGrade(a) - minGrade(b));
+      const escapes   = chosen.filter(a => a.type === "חדר בריחה").sort((a, b) => minGrade(a) - minGrade(b));
+
+      const workshopPages = chunkActivities(workshops, pageSize);
+      const escapePages   = chunkActivities(escapes, pageSize);
+      const totalPages    = workshopPages.length + escapePages.length;
+      let pageIndex = 0;
+
+      workshopPages.forEach(items => booklet.appendChild(renderPage(items, pageIndex++, totalPages)));
+
+      if (escapePages.length) {
+        const divider = document.createElement("div");
+        divider.className = "section-divider";
+        divider.innerHTML = `<span>חדרי בריחה</span>`;
+        booklet.appendChild(divider);
+        escapePages.forEach(items => booklet.appendChild(renderPage(items, pageIndex++, totalPages)));
+      }
     }
 
     
