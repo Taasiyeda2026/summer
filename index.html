@@ -41,7 +41,7 @@
 
     .control-hero {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       gap: 18px;
       align-items: center;
       padding: 18px 20px;
@@ -328,13 +328,20 @@
     .page-header {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       align-items: end;
       gap: 12px;
       height: 24mm;
       padding: 0 1mm 4mm;
       border-bottom: 1.4pt solid rgba(32,59,122,.88);
       margin-bottom: 4mm;
+    }
+
+    .page-header-logo {
+      height: 14mm;
+      width: auto;
+      object-fit: contain;
+      align-self: center;
     }
 
     .page-kicker {
@@ -697,6 +704,7 @@
 <body>
   <header class="screen-controls">
     <section class="control-hero">
+      <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
       <div>
         <h1>תצוגת A4 לא סימטרית — חוברת פעילויות</h1>
         <p>בחר אילו פעילויות ייכנסו לקטלוג. המבנה העיצובי נשאר קבוע בכל מצב — הבחירה משנה רק את התוכן שמופיע בתוך העמודים.</p>
@@ -1126,6 +1134,7 @@
 
       page.innerHTML = `
         <header class="page-header">
+          <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
             <div class="page-kicker">✦ חוברת פעילויות מדע, חלל, הנדסה וטכנולוגיה</div>
             <h1 class="page-title">סדנאות STEM חווייתיות</h1>
