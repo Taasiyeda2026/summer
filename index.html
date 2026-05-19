@@ -41,7 +41,7 @@
 
     .control-hero {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       gap: 18px;
       align-items: center;
       padding: 18px 20px;
@@ -303,9 +303,9 @@
 
     .a4-page {
       width: 210mm;
-      height: 297mm;
+      min-height: 297mm;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       padding: 9mm 9mm 8mm;
       background:
         radial-gradient(circle at 12% 7%, rgba(52,195,213,.15), transparent 29%),
@@ -328,13 +328,20 @@
     .page-header {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr auto;
       align-items: end;
       gap: 12px;
       height: 24mm;
       padding: 0 1mm 4mm;
       border-bottom: 1.4pt solid rgba(32,59,122,.88);
       margin-bottom: 4mm;
+    }
+
+    .page-header-logo {
+      height: 14mm;
+      width: auto;
+      object-fit: contain;
+      align-self: center;
     }
 
     .page-kicker {
@@ -378,10 +385,10 @@
     .page-grid {
       position: relative;
       z-index: 1;
-      height: 245mm;
+      height: auto;
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 50mm 50mm 63mm 70mm;
+      grid-template-rows: auto auto auto auto;
       gap: 3mm;
       grid-template-areas:
         "lead lead lead lead lead lead lead side1 side1 side1 side1 side1"
@@ -537,16 +544,13 @@
       color: #344054;
       font-weight: 600;
       line-height: 1.45;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
-    .slot-1 .text { font-size: 11.4px; -webkit-line-clamp: 7; }
+    .slot-1 .text { font-size: 11.4px; }
     .slot-2 .text,
-    .slot-3 .text { font-size: 9.2px; line-height: 1.35; -webkit-line-clamp: 3; }
+    .slot-3 .text { font-size: 9.2px; line-height: 1.35; }
     .slot-4 .text,
-    .slot-5 .text { font-size: 10.6px; -webkit-line-clamp: 4; }
+    .slot-5 .text { font-size: 10.6px; }
 
     .goals {
       margin-top: auto;
@@ -573,10 +577,6 @@
       font-weight: 800;
     }
 
-    .slot-2 .goals,
-    .slot-3 .goals { display: none; }
-    .slot-4 .goals li:nth-child(n+3),
-    .slot-5 .goals li:nth-child(n+3) { display: none; }
     .slot-1 .goals li { font-size: 9.8px; line-height: 1.28; }
 
     .page-footer {
@@ -595,12 +595,45 @@
       padding-top: 2mm;
     }
 
+    .page-footer-org {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8px;
+      font-weight: 700;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
     .page-number {
       color: white;
       background: #172033;
       border-radius: 999px;
       padding: 1mm 2.5mm;
       font-size: 8.5px;
+    }
+
+    .section-divider {
+      width: 210mm;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    @media print {
+      .section-divider { display: none; }
     }
 
     .empty-booklet {
@@ -645,7 +678,6 @@
 
       html, body {
         width: 210mm;
-        min-height: auto;
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
@@ -664,8 +696,11 @@
 
       .a4-page {
         width: 210mm !important;
-        height: 297mm !important;
+        min-height: auto !important;
+        height: auto !important;
+        overflow: visible !important;
         margin: 0 !important;
+        padding: 9mm !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         border: none !important;
@@ -678,10 +713,23 @@
         page-break-after: auto;
       }
 
+      .page-grid {
+        height: auto !important;
+      }
+
       .activity-card {
         break-inside: avoid;
         page-break-inside: avoid;
         box-shadow: none !important;
+        overflow: visible !important;
+      }
+
+      .page-footer {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        margin-top: 4mm;
       }
     }
   </style>
@@ -689,6 +737,7 @@
 <body>
   <header class="screen-controls">
     <section class="control-hero">
+      <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
       <div>
         <h1>תצוגת A4 לא סימטרית — חוברת פעילויות</h1>
         <p>בחר אילו פעילויות ייכנסו לקטלוג. המבנה העיצובי נשאר קבוע בכל מצב — הבחירה משנה רק את התוכן שמופיע בתוך העמודים.</p>
@@ -1118,6 +1167,7 @@
 
       page.innerHTML = `
         <header class="page-header">
+          <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
             <div class="page-kicker">✦ חוברת פעילויות מדע, חלל, הנדסה וטכנולוגיה</div>
             <h1 class="page-title">סדנאות STEM חווייתיות</h1>
@@ -1128,12 +1178,24 @@
         <div class="page-grid"></div>
         <footer class="page-footer">
           <span>תעשיידע · למידה דרך עשייה, חקר ויצירה</span>
+          <span class="page-footer-org">תעשיידע - תעשייה למען חינוך מתקדם ע"ר</span>
           <span class="page-number">${pageIndex + 1}</span>
         </footer>`;
 
       const grid = page.querySelector(".page-grid");
       items.forEach((activity, index) => grid.appendChild(renderCard(activity, index)));
       return page;
+    }
+
+    const gradeOrder = { "א": 1, "ב": 2, "ג": 3, "ד": 4, "ה": 5, "ו": 6 };
+
+    function minGrade(activity) {
+      let min = 99;
+      for (const g of activity.grades) {
+        const firstLetter = g[0];
+        if (gradeOrder[firstLetter] !== undefined) min = Math.min(min, gradeOrder[firstLetter]);
+      }
+      return min;
     }
 
     function getSelectedActivities() {
@@ -1152,8 +1214,23 @@
         return;
       }
 
-      const pages = chunkActivities(chosen, pageSize);
-      pages.forEach((items, index) => booklet.appendChild(renderPage(items, index, pages.length)));
+      const workshops = chosen.filter(a => a.type !== "חדר בריחה").sort((a, b) => minGrade(a) - minGrade(b));
+      const escapes   = chosen.filter(a => a.type === "חדר בריחה").sort((a, b) => minGrade(a) - minGrade(b));
+
+      const workshopPages = chunkActivities(workshops, pageSize);
+      const escapePages   = chunkActivities(escapes, pageSize);
+      const totalPages    = workshopPages.length + escapePages.length;
+      let pageIndex = 0;
+
+      workshopPages.forEach(items => booklet.appendChild(renderPage(items, pageIndex++, totalPages)));
+
+      if (escapePages.length) {
+        const divider = document.createElement("div");
+        divider.className = "section-divider";
+        divider.innerHTML = `<span>חדרי בריחה</span>`;
+        booklet.appendChild(divider);
+        escapePages.forEach(items => booklet.appendChild(renderPage(items, pageIndex++, totalPages)));
+      }
     }
 
     
