@@ -135,8 +135,50 @@
       grid-template-columns: minmax(260px, 1fr) auto;
       gap: 12px;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
+
+    .filters-panel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .filter-group {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      padding: 10px;
+    }
+
+    .filter-label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .filter-chip input { accent-color: var(--blue); }
 
     .search-box {
       height: 46px;
@@ -574,6 +616,10 @@
       color: var(--muted);
     }
 
+    .catalog-mode .screen-controls {
+      display: none;
+    }
+
     .empty-booklet strong {
       display: block;
       color: var(--ink);
@@ -586,6 +632,7 @@
       .selector-top,
       .selector-tools { grid-template-columns: 1fr; }
       .action-row { justify-content: flex-start; }
+      .filters-panel { grid-template-columns: 1fr; }
       .activity-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .a4-page { transform: scale(.62); transform-origin: top center; margin-bottom: -112mm; }
     }
@@ -646,7 +693,10 @@
         <h1>תצוגת A4 לא סימטרית — חוברת פעילויות</h1>
         <p>בחר אילו פעילויות ייכנסו לקטלוג. המבנה העיצובי נשאר קבוע בכל מצב — הבחירה משנה רק את התוכן שמופיע בתוך העמודים.</p>
       </div>
-      <button class="print-btn" type="button" onclick="window.print()">הדפסה / שמירה ל־PDF</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+        <button class="action-btn" id="catalogModeBtn" type="button">הפקת קטלוג מעוצב</button>
+        <button class="print-btn" type="button" onclick="window.print()">הדפסה / שמירה ל־PDF</button>
+      </div>
     </section>
 
     <section class="selector-panel" aria-label="בחירת פעילויות לקטלוג">
@@ -668,6 +718,18 @@
           <button class="action-btn" type="button" data-action="none">נקה הכול</button>
           <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
           <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
+        </div>
+      </div>
+
+      
+      <div class="filters-panel">
+        <div class="filter-group">
+          <p class="filter-label">סינון לפי כיתות (בחירה מרובה)</p>
+          <div id="gradeFilters" class="filter-options"></div>
+        </div>
+        <div class="filter-group">
+          <p class="filter-label">סינון לפי תחומים (בחירה מרובה)</p>
+          <div id="domainFilters" class="filter-options"></div>
         </div>
       </div>
 
@@ -985,9 +1047,14 @@
     const picker = document.getElementById("activityPicker");
     const searchInput = document.getElementById("pickerSearch");
     const selectedCount = document.getElementById("selectedCount");
+    const gradeFilters = document.getElementById("gradeFilters");
+    const domainFilters = document.getElementById("domainFilters");
+    const catalogModeBtn = document.getElementById("catalogModeBtn");
     const pageSize = 5;
     const selected = new Set(activities.map((_, index) => index));
     let pickerQuery = "";
+    const selectedGrades = new Set();
+    const selectedDomains = new Set();
 
     function chunkActivities(items, size) {
       const result = [];
@@ -1072,7 +1139,7 @@
     function getSelectedActivities() {
       return activities
         .map((activity, index) => ({ ...activity, originalIndex: index }))
-        .filter(activity => selected.has(activity.originalIndex));
+        .filter(activity => selected.has(activity.originalIndex) && matchesAdvancedFilters(activity));
     }
 
     function renderBooklet() {
@@ -1089,6 +1156,28 @@
       pages.forEach((items, index) => booklet.appendChild(renderPage(items, index, pages.length)));
     }
 
+    
+
+    function uniqueValues(extractor) {
+      return [...new Set(activities.flatMap(extractor))];
+    }
+
+    function renderFilterChips(container, values, key) {
+      container.innerHTML = "";
+      values.forEach(value => {
+        const isChecked = key === "grade" ? selectedGrades.has(value) : selectedDomains.has(value);
+        const label = document.createElement("label");
+        label.className = "filter-chip";
+        label.innerHTML = `<input type="checkbox" data-filter-key="${key}" data-filter-value="${escapeHTML(value)}" ${isChecked ? "checked" : ""} />${escapeHTML(value)}`;
+        container.appendChild(label);
+      });
+    }
+
+    function renderFilters() {
+      renderFilterChips(gradeFilters, uniqueValues(activity => activity.grades), "grade");
+      renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]), "domain");
+    }
+
     function matchesPickerSearch(activity) {
       const q = pickerQuery.trim().toLowerCase();
       if (!q) return true;
@@ -1102,10 +1191,16 @@
       return haystack.includes(q);
     }
 
+    function matchesAdvancedFilters(activity) {
+      const gradeMatch = !selectedGrades.size || activity.grades.some(grade => selectedGrades.has(grade));
+      const domainMatch = !selectedDomains.size || selectedDomains.has(activity.domain);
+      return gradeMatch && domainMatch;
+    }
+
     function renderPicker() {
       picker.innerHTML = "";
       activities.forEach((activity, index) => {
-        if (!matchesPickerSearch(activity)) return;
+        if (!matchesPickerSearch(activity) || !matchesAdvancedFilters(activity)) return;
         const label = document.createElement("label");
         label.className = "activity-option" + (selected.has(index) ? " selected" : "");
         label.style.setProperty("--option-accent", activity.accent || "#203b7a");
@@ -1123,6 +1218,7 @@
     }
 
     function renderAll() {
+      renderFilters();
       renderPicker();
       renderBooklet();
     }
@@ -1133,6 +1229,19 @@
       const index = Number(checkbox.dataset.index);
       checkbox.checked ? selected.add(index) : selected.delete(index);
       renderAll();
+    });
+
+    document.addEventListener("change", event => {
+      const filterInput = event.target.closest("input[data-filter-key]");
+      if (!filterInput) return;
+      const { filterKey, filterValue } = filterInput.dataset;
+      const bucket = filterKey === "grade" ? selectedGrades : selectedDomains;
+      filterInput.checked ? bucket.add(filterValue) : bucket.delete(filterValue);
+      renderAll();
+    });
+
+    catalogModeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("catalog-mode");
     });
 
     searchInput.addEventListener("input", event => {
