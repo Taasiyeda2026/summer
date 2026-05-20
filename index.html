@@ -1147,7 +1147,7 @@ function chunkActivities(items, size) {
       const isEscape = activity.type === "חדר בריחה";
       const productHTML = isEscape ? "" : `
           <div class="product-box">
-            <p class="product-line">תוצר <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+            <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
           </div>`;
       return `
         <div class="media-column">
