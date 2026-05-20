@@ -416,6 +416,7 @@
 
     .activity-card {
       grid-template-columns: 35% minmax(0, 1fr);
+      grid-template-rows: auto auto;
       padding: 2.7mm 2.7mm 2.7mm 4.3mm;
       gap: 2.3mm;
       align-items: stretch;
@@ -428,6 +429,7 @@
 
     .media-column {
       grid-column: 1;
+      grid-row: 1;
       display: flex;
       flex-direction: column;
       gap: 1.2mm;
@@ -473,6 +475,7 @@
 
     .card-content {
       grid-column: 2;
+      grid-row: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -538,19 +541,16 @@
         linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, #f6f3ff), #f2f8ff 85%);
     }
 
-    .product-label {
+    .product-line {
       margin: 0;
-      font-size: 9.1px;
-      line-height: 1.2;
-      font-weight: 950;
+      font-size: 9px;
+      line-height: 1.3;
       color: #24324a;
+      font-weight: 700;
     }
 
-    .product-text {
-      margin: 0;
-      font-size: 9.2px;
-      line-height: 1.26;
-      font-weight: 850;
+    .product-name {
+      font-weight: 950;
       color: #1f2a3d;
     }
 
@@ -558,33 +558,37 @@
       margin: 0;
       color: #344054;
       font-weight: 700;
+      font-size: 9px;
+      line-height: 1.42;
     }
 
-    .card-description { font-size: 9px; line-height: 1.42; }
-
     .goals-box {
-      margin-top: auto;
+      grid-column: 1 / -1;
+      grid-row: 2;
       padding-top: 1.3mm;
       border-top: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(23,32,51,.08));
+      direction: rtl;
+      text-align: right;
     }
 
     .goals-title {
-      margin: 0 0 .8mm;
-      font-size: 8.3px;
+      margin: 0 0 1mm;
+      font-size: 10px;
       font-weight: 900;
       color: var(--accent);
+      letter-spacing: -.01em;
     }
 
     .goals ul {
       margin: 0;
-      padding: 0 4mm 0 0;
+      padding: 0 3.5mm 0 0;
     }
 
     .goals li {
       margin: .45mm 0;
       color: #475467;
-      font-size: 8.2px;
-      line-height: 1.22;
+      font-size: 9px;
+      line-height: 1.42;
       font-weight: 800;
     }
 
@@ -890,8 +894,7 @@ function chunkActivities(items, size) {
             <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
           </div>
           <div class="product-box">
-            <p class="product-label">תוצר אישי:</p>
-            <p class="product-text">${escapeHTML(activity.product)}</p>
+            <p class="product-line">תוצר אישי <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
           </div>
         </div>`;
     }
@@ -921,10 +924,10 @@ function chunkActivities(items, size) {
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
           <p class="card-description">${escapeHTML(activity.text)}</p>
-          <div class="goals-box">
-            <p class="goals-title">מטרות מרכזיות</p>
-            <ul>${goals}</ul>
-          </div>
+        </div>
+        <div class="goals-box">
+          <p class="goals-title">מטרות מרכזיות</p>
+          <ul>${goals}</ul>
         </div>`;
       return card;
     }
