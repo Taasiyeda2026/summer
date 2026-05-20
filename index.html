@@ -915,7 +915,14 @@ function chunkActivities(items, size) {
         return;
       }
 
-      const pages = chunkActivities(filteredActivities, ACTIVITIES_PER_PAGE);
+      const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
+      const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
+
+      const pages = [
+        ...chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE),
+        ...chunkActivities(escapeRoomActivities, ACTIVITIES_PER_PAGE)
+      ];
+
       const totalPages = pages.length;
       pages.forEach((items, pageIndex) => booklet.appendChild(renderPage(items, pageIndex, totalPages)));
     }
