@@ -367,10 +367,10 @@
       grid-template-columns: auto 1fr auto;
       align-items: end;
       gap: 12px;
-      height: 24mm;
-      padding: 0 1mm 4mm;
+      height: 20mm;
+      padding: 0 1mm 2.2mm;
       border-bottom: 1.4pt solid rgba(32,59,122,.88);
-      margin-bottom: 4mm;
+      margin-bottom: 2.5mm;
     }
 
     .page-header-logo {
@@ -539,7 +539,7 @@
       position: relative;
       border: 1px solid rgba(32,59,122,.16);
       border-radius: 4mm;
-      padding: 4mm 5mm 3.4mm;
+      padding: 2.8mm 4.5mm 2.6mm;
       background: linear-gradient(180deg, rgba(252,254,255,.96), rgba(245,250,255,.94));
       direction: rtl;
       text-align: right;
@@ -555,17 +555,8 @@
       background: linear-gradient(90deg, rgba(30,58,138,.16), rgba(34,211,238,.18), rgba(30,58,138,.16));
     }
 
-    .escape-hero-title {
-      margin: 0;
-      font-size: 27px;
-      letter-spacing: -.03em;
-      color: #13254d;
-      line-height: 1.15;
-      font-weight: 900;
-    }
-
     .escape-hero-subtitle {
-      margin: 1.2mm 0 0;
+      margin: 0;
       font-size: 14px;
       color: #1e3a8a;
       font-weight: 800;
@@ -637,8 +628,8 @@
     }
 
     .escape-room-card .image-box {
-      aspect-ratio: 16 / 9;
-      min-height: 49mm;
+      aspect-ratio: 1 / 1;
+      min-height: 0;
     }
 
     .escape-room-card--bio {
@@ -711,7 +702,7 @@
       text-align: right;
     }
 
-    .card-content { min-height: 0; }
+    .card-content { min-height: 10mm; }
 
     .card-header {
       display: flex;
@@ -786,6 +777,7 @@
 
     .card-description {
       margin: 0;
+      min-height: 1.45em;
       color: #374151;
       font-weight: 500;
       font-size: 13px;
@@ -1274,7 +1266,6 @@ function chunkActivities(items, size) {
         </header>
         <div class="page-grid">
           <div class="escape-hero">
-            <h2 class="escape-hero-title">חדרי בריחה דיגיטליים</h2>
             <p class="escape-hero-subtitle">כאן הלמידה הופכת למשימה, והידע נפתח דרך חידות, רמזים וסיפור.</p>
           </div>
           <div class="escape-intro">
