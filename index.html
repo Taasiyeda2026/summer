@@ -904,9 +904,8 @@ function chunkActivities(items, size) {
             <p class="product-line">תוצר <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
           </div>
           <div class="card-topline">
-            <span class="tag accent">${escapeHTML(activity.type)}</span>
             <span class="tag">${escapeHTML(activity.domain)}</span>
-            <span class="tag">${escapeHTML(activity.duration)}</span>
+            <span class="tag" dir="ltr">${escapeHTML(activity.duration)}</span>
             <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
           </div>
         </div>`;
