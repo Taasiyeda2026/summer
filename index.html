@@ -98,6 +98,18 @@
       box-shadow: 0 14px 36px rgba(20,34,66,.09);
     }
 
+    .selector-body {
+      display: block;
+    }
+
+    .selector-panel.collapsed .selector-body {
+      display: none;
+    }
+
+    .selector-panel.collapsed .selector-top {
+      margin-bottom: 0;
+    }
+
     .selector-top {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -889,15 +901,19 @@
       </div>
     </section>
 
-    <section class="selector-panel" aria-label="בחירת פעילויות לקטלוג">
+    <section class="selector-panel collapsed" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
       <div class="selector-top">
         <div class="selector-title">
           <h2>בחירת סדנאות ופעילויות לקטלוג</h2>
           <p>סמן או בטל פעילויות. הסדר נשאר לפי הסדר המקורי, והעמודים נבנים מחדש אוטומטית.</p>
         </div>
-        <div class="selected-count" id="selectedCount">0 נבחרו</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="selected-count" id="selectedCount">0 נבחרו</div>
+          <button class="action-btn" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
+        </div>
       </div>
 
+      <div class="selector-body">
       <div class="selector-tools">
         <label class="search-box">
           <span>⌕</span>
@@ -924,6 +940,7 @@
       </div>
 
       <div id="activityPicker" class="activity-picker"></div>
+      </div>
     </section>
   </header>
 
@@ -1248,6 +1265,13 @@ function chunkActivities(items, size) {
 
     document.getElementById("backBtn").addEventListener("click", () => {
       document.body.classList.remove("catalog-mode");
+    });
+
+    const selectorPanel = document.getElementById("selectorPanel");
+    const togglePickerBtn = document.getElementById("togglePickerBtn");
+    togglePickerBtn.addEventListener("click", () => {
+      const isCollapsed = selectorPanel.classList.toggle("collapsed");
+      togglePickerBtn.textContent = isCollapsed ? "▾ בחר פעילויות" : "▴ סגור";
     });
 
     searchInput.addEventListener("input", event => {
