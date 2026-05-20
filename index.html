@@ -701,6 +701,31 @@
       display: none;
     }
 
+    .back-btn {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 999;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: #172033;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    }
+
+    .catalog-mode .back-btn {
+      display: block;
+    }
+
+    @media print {
+      .back-btn { display: none !important; }
+    }
+
     .empty-booklet strong {
       display: block;
       color: var(--ink);
@@ -781,6 +806,7 @@
   </style>
 </head>
 <body>
+  <button class="back-btn" id="backBtn" type="button">← חזרה לבחירה</button>
   <header class="screen-controls">
     <section class="control-hero">
       <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
@@ -1103,6 +1129,10 @@ function chunkActivities(items, size) {
 
     catalogModeBtn.addEventListener("click", () => {
       document.body.classList.toggle("catalog-mode");
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      document.body.classList.remove("catalog-mode");
     });
 
     searchInput.addEventListener("input", event => {
