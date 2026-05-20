@@ -426,8 +426,15 @@
       text-align: right;
     }
 
-    .image-box {
+    .media-column {
       grid-column: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6mm;
+      align-items: stretch;
+    }
+
+    .image-box {
       height: 100%;
       min-height: 100%;
       border-radius: 3mm;
@@ -439,7 +446,9 @@
 
     .image-box {
       width: 100%;
-      aspect-ratio: auto;
+      aspect-ratio: 4 / 3;
+      height: auto;
+      min-height: 0;
     }
 
     .image-box img {
@@ -510,12 +519,22 @@
 
     .activity-card h2 { font-size: 13.6px; line-height: 1.2; }
 
-     .product {
+    .product {
       margin: 1.3mm 0 0;
       font-size: 9.3px;
       line-height: 1.35;
       font-weight: 900;
       color: #233044;
+    }
+
+    .product.product-under-image {
+      margin: 0;
+      text-align: center;
+      background: rgba(255, 255, 255, .85);
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 2mm;
+      padding: 1.2mm 1.6mm;
+      font-size: 8.8px;
     }
 
     .text {
@@ -848,8 +867,11 @@ function chunkActivities(items, size) {
 
     function imageMarkup(activity) {
       return `
-        <div class="image-box">
-          <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+        <div class="media-column">
+          <div class="image-box">
+            <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+          </div>
+          <p class="product product-under-image">תוצר אישי: ${escapeHTML(activity.product)}</p>
         </div>`;
     }
 
@@ -874,7 +896,6 @@ function chunkActivities(items, size) {
             <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
           </div>
           <h2>${escapeHTML(activity.title)}</h2>
-          <p class="product">תוצר: ${escapeHTML(activity.product)}</p>
           <p class="text">${escapeHTML(activity.text)}</p>
           <div class="goals">
             <p class="goals-title">מטרות מרכזיות</p>
