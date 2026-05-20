@@ -475,13 +475,12 @@
     .escape-room-card {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: 42% minmax(0, 1fr);
+      grid-template-columns: 34% minmax(0, 1fr);
       grid-template-rows: auto auto;
       gap: 3mm;
       align-items: stretch;
       direction: ltr;
       text-align: right;
-      min-height: 66mm;
     }
 
     .escape-room-card .media-column {
@@ -510,7 +509,7 @@
     }
 
     .escape-room-card--mirrored {
-      grid-template-columns: minmax(0, 1fr) 42%;
+      grid-template-columns: minmax(0, 1fr) 34%;
     }
 
     .escape-room-card--mirrored .media-column {
@@ -535,10 +534,15 @@
       letter-spacing: -.04em;
     }
 
+    .escape-room-page {
+      padding-top: 7mm;
+      padding-bottom: 6mm;
+    }
+
     .escape-room-page .page-grid {
       display: flex;
       flex-direction: column;
-      gap: 4mm;
+      gap: 2.5mm;
       grid-template-columns: unset;
       grid-template-rows: unset;
       align-content: unset;
@@ -637,7 +641,7 @@
 
     .escape-room-card .image-box {
       aspect-ratio: 1 / 1;
-      min-height: 58mm;
+      min-height: 46mm;
     }
 
     .escape-room-card--bio {
@@ -1278,10 +1282,10 @@ function chunkActivities(items, size) {
           </div>
           <div class="escape-intro">
             <div class="escape-intro-body">
-              <p>חדרי הבריחה הדיגיטליים של תעשיידע מזמינים את התלמידים לחוויית למידה אחרת: מסע אינטראקטיבי שבו סיפור, אתגר, חידות, מדע וטכנולוגיה מתחברים לעולם אחד מסקרן, פעיל ומלא גילוי. כבר מהרגע הראשון התלמידים נכנסים לסיטואציה שמעוררת שאלה, מציבה אתגר ומזמינה אותם לגלות מה מסתתר מאחורי הדלת הבאה.</p>
+              <p>חדרי הבריחה הדיגיטליים של תעשיידע מזמינים את התלמידים לחוויית למידה אחרת: מסע אינטראקטיבי שבו סיפור, אתגר, חידות, מדע וטכנולוגיה מתחברים לעולם מסקרן, פעיל ומלא גילוי. כבר מהרגע הראשון התלמידים נכנסים לסיטואציה שמעוררת שאלה ומזמינה אותם לגלות מה מסתתר מאחורי הדלת הבאה.</p>
               <p>במקום לפגוש את הידע רק דרך הסבר, המשתתפים נכנסים לתוך סיפור דיגיטלי חי. הם מפענחים רמזים, פותרים אתגרים, מקבלים החלטות, עובדים יחד ומגלים בהדרגה את הידע שמסתתר מאחורי העלילה. כל פתרון חושף פרט נוסף ומקדם את הקבוצה להמשך הדרך.</p>
-              <p>לאורך הפעילות התלמידים מתבוננים בפרטים, שואלים שאלות, משווים בין אפשרויות ומחברים בין מידע ורעיונות. הם נדרשים להקשיב זה לזה, לחלק תפקידים, להסביר את דרך החשיבה שלהם ולתרגל תקשורת ועבודת צוות בדרך לפתרון משותף.</p>
-              <p>כל חדר בריחה דיגיטלי נבנה סביב עולם תוכן ייחודי ומאפשר לתלמידים לחוות למידה דרך אתגר, סיפור, עבודת צוות ותחושת גילוי. התוצאה היא פעילות סוחפת שמחברת בין ידע, חוויה וחשיבה פעילה ומעניקה לתלמידים דרך טבעית ומשמעותית ללמוד, לחקור ולהיות חלק מהמשימה.</p>
+              <p>לאורך הפעילות התלמידים מתבוננים בפרטים, שואלים שאלות, משווים בין אפשרויות ומחברים בין מידע ורעיונות. הם נדרשים להקשיב זה לזה, לחלק תפקידים, להסביר את דרך החשיבה שלהם ולתרגל עבודת צוות בדרך לפתרון משותף.</p>
+              <p>כל חדר בריחה דיגיטלי נבנה סביב עולם תוכן ייחודי ומאפשר לתלמידים לחוות למידה דרך אתגר, סיפור ותחושת גילוי. התוצאה היא פעילות סוחפת שמחברת בין ידע, חוויה וחשיבה פעילה ומעניקה לתלמידים דרך טבעית ומשמעותית ללמוד, לחקור ולהיות חלק מהמשימה.</p>
             </div>
           </div>
           <div class="escape-cards-row"></div>
@@ -1298,6 +1302,7 @@ function chunkActivities(items, size) {
         const title = activity.title || "";
         if (title.includes("ביומימיקרי")) card.classList.add("escape-room-card--bio");
         if (title.includes("אסטרואיד")) card.classList.add("escape-room-card--astro");
+        if (i === 0) card.classList.add("escape-room-card--mirrored");
         cardsRow.appendChild(card);
       });
       return page;
