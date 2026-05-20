@@ -810,8 +810,9 @@
       const grades = Array.isArray(rawActivity.grades)
         ? rawActivity.grades.filter(Boolean)
         : (gradeGroup ? [gradeGroup] : []);
-      const image = rawActivity.image
-        ?? (rawActivity.id ? `assets/activities/${rawActivity.id}.png` : "");
+      const manualImage = rawActivity.image ?? rawActivity.imageUrl ?? rawActivity.imagePath ?? "";
+      const paddedId = String(rawActivity.id ?? "").padStart(3, "0");
+      const image = manualImage || (rawActivity.id ? `images/${paddedId}.png` : "");
 
       return {
         ...rawActivity,
