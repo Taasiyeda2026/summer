@@ -390,6 +390,15 @@
       font-weight: 900;
     }
 
+    .page-grade-label {
+      margin: 0 0 1mm;
+      font-size: 9px;
+      font-weight: 700;
+      color: #9ca3af;
+      letter-spacing: 0.03em;
+      direction: rtl;
+    }
+
     .page-title {
       margin: 0;
       font-size: 24px;
@@ -1219,19 +1228,24 @@ function chunkActivities(items, size) {
       return page;
     }
 
-    function renderPage(items, pageIndex, totalPages, isEscapePage = false) {
+    function formatGradeGroup(g) {
+      return ({ "א-ג": "כיתות א׳–ג׳", "ד-ו": "כיתות ד׳–ו׳", "א-ו": "כיתות א׳–ו׳" })[g] || g;
+    }
+
+    function renderPage(items, pageIndex, totalPages, isEscapePage = false, gradeLabel = "") {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
       const pageTitle = isEscapePage ? "חדרי בריחה" : "סדנאות STEM חווייתיות";
+      const gradeLabelHTML = gradeLabel ? `<p class="page-grade-label">${escapeHTML(gradeLabel)}</p>` : "";
 
       page.innerHTML = `
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
-
+            ${gradeLabelHTML}
             <h1 class="page-title">${pageTitle}</h1>
-                   </div>
+          </div>
         </header>
         <div class="page-grid"></div>
         <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
@@ -1268,7 +1282,11 @@ function chunkActivities(items, size) {
       const hasEscape = escapeRoomActivities.length > 0;
       const totalPages = workshopPages.length + (hasEscape ? 1 : 0);
 
-      workshopPages.forEach((items, pageIndex) => booklet.appendChild(renderPage(items, pageIndex, totalPages, false)));
+      workshopPages.forEach((items, pageIndex) => {
+        const groups = [...new Set(items.map(a => a.gradeGroup).filter(Boolean))];
+        const gradeLabel = groups.map(formatGradeGroup).join(" | ");
+        booklet.appendChild(renderPage(items, pageIndex, totalPages, false, gradeLabel));
+      });
       if (hasEscape) {
         booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, workshopPages.length, totalPages));
       }
