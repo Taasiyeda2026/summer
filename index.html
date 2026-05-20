@@ -947,14 +947,17 @@ function chunkActivities(items, size) {
     }
 
     function imageMarkup(activity) {
+      const isEscape = activity.type === "חדר בריחה";
+      const productHTML = isEscape ? "" : `
+          <div class="product-box">
+            <p class="product-line">תוצר <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+          </div>`;
       return `
         <div class="media-column">
           <div class="image-box">
             <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
           </div>
-          <div class="product-box">
-            <p class="product-line">תוצר <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
-          </div>
+          ${productHTML}
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
             <span class="tag" dir="ltr">${escapeHTML(activity.duration)}</span>
