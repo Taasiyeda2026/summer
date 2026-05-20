@@ -430,6 +430,32 @@
       text-align: right;
     }
 
+    .escape-room-card {
+      grid-column: 1 / -1;
+      grid-template-columns: 42% minmax(0, 1fr);
+      grid-template-rows: 1fr auto;
+    }
+
+    .escape-room-card .media-column {
+      grid-row: 1 / 3;
+    }
+
+    .escape-room-card .image-box {
+      aspect-ratio: unset;
+      height: 100%;
+      flex: 1;
+      margin-top: 0;
+    }
+
+    .escape-room-card .card-content {
+      grid-row: 1;
+    }
+
+    .escape-room-card .goals-box {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
     .media-column {
       grid-column: 1;
       grid-row: 1;
@@ -921,7 +947,8 @@ function chunkActivities(items, size) {
     function renderCard(activity) {
       const goals = activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
       const card = document.createElement("article");
-      card.className = "activity-card";
+      const isEscape = activity.type === "חדר בריחה";
+      card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
       card.innerHTML = `
         ${imageMarkup(activity)}
@@ -983,7 +1010,7 @@ function chunkActivities(items, size) {
 
       const pages = [
         ...chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE),
-        ...chunkActivities(escapeRoomActivities, ACTIVITIES_PER_PAGE)
+        ...chunkActivities(escapeRoomActivities, 2)
       ];
 
       const totalPages = pages.length;
