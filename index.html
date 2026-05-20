@@ -416,8 +416,8 @@
 
     .activity-card {
       grid-template-columns: 35% minmax(0, 1fr);
-      padding: 3mm 3mm 3mm 4.4mm;
-      gap: 2.8mm;
+      padding: 2.7mm 2.7mm 2.7mm 4.3mm;
+      gap: 2.3mm;
       align-items: stretch;
       min-height: 0;
       break-inside: avoid;
@@ -430,7 +430,7 @@
       grid-column: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.6mm;
+      gap: 1.2mm;
       align-items: stretch;
     }
 
@@ -476,28 +476,34 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
+      gap: 1.2mm;
       direction: rtl;
       text-align: right;
     }
 
     .card-content { min-height: 0; }
 
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1mm;
+    }
+
     .card-topline {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 1.4mm;
-      margin-bottom: 1.7mm;
+      align-items: flex-start;
+      gap: 1mm;
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 6mm;
-      padding: 1.1mm 2.2mm;
+      min-height: 5.2mm;
+      padding: 1mm 1.8mm;
       border-radius: 999px;
-      font-size: 8.8px;
+      font-size: 8.3px;
       line-height: 1;
       font-weight: 900;
       color: #162033;
@@ -517,43 +523,54 @@
       color: #151c2e;
     }
 
-    .activity-card h2 { font-size: 13.6px; line-height: 1.2; }
+    .activity-card h2 { font-size: 15px; line-height: 1.16; font-weight: 950; }
 
-    .product {
-      margin: 1.3mm 0 0;
-      font-size: 9.3px;
-      line-height: 1.35;
-      font-weight: 900;
-      color: #233044;
-    }
-
-    .product.product-under-image {
+    .product-box {
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .35mm;
       text-align: center;
-      background: rgba(255, 255, 255, .85);
-      border: 1px solid rgba(23,32,51,.12);
-      border-radius: 2mm;
-      padding: 1.2mm 1.6mm;
-      font-size: 8.8px;
+      border-radius: 2.2mm;
+      padding: 1.3mm 1.6mm;
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, rgba(23,32,51,.1));
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, #f6f3ff), #f2f8ff 85%);
     }
 
-    .text {
-      margin: 1.8mm 0 0;
+    .product-label {
+      margin: 0;
+      font-size: 9.1px;
+      line-height: 1.2;
+      font-weight: 950;
+      color: #24324a;
+    }
+
+    .product-text {
+      margin: 0;
+      font-size: 9.2px;
+      line-height: 1.26;
+      font-weight: 850;
+      color: #1f2a3d;
+    }
+
+    .card-description {
+      margin: 0;
       color: #344054;
-      font-weight: 600;
-      line-height: 1.45;
+      font-weight: 700;
     }
 
-    .text { font-size: 8.8px; line-height: 1.34; }
+    .card-description { font-size: 9px; line-height: 1.42; }
 
-    .goals {
+    .goals-box {
       margin-top: auto;
-      padding-top: 2mm;
+      padding-top: 1.3mm;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(23,32,51,.08));
     }
 
     .goals-title {
-      margin: 0 0 1mm;
-      font-size: 9.2px;
+      margin: 0 0 .8mm;
+      font-size: 8.3px;
       font-weight: 900;
       color: var(--accent);
     }
@@ -564,14 +581,12 @@
     }
 
     .goals li {
-      margin: .65mm 0;
+      margin: .45mm 0;
       color: #475467;
-      font-size: 9.2px;
-      line-height: 1.25;
+      font-size: 8.2px;
+      line-height: 1.22;
       font-weight: 800;
     }
-
-    .goals li { font-size: 8.4px; line-height: 1.2; }
 
     .page-footer {
       position: absolute;
@@ -631,15 +646,17 @@
     }
 
     .empty-booklet {
-      width: min(740px, calc(100% - 40px));
+      width: min(620px, calc(100% - 40px));
       margin: 26px auto 70px;
-      padding: 34px;
-      border-radius: 28px;
+      padding: 20px 24px;
+      border-radius: 20px;
       background: rgba(255,255,255,.88);
       border: 1px solid rgba(255,255,255,.9);
       box-shadow: 0 14px 36px rgba(20,34,66,.09);
       text-align: center;
       font-weight: 800;
+      font-size: 14px;
+      line-height: 1.45;
       color: var(--muted);
     }
 
@@ -650,8 +667,8 @@
     .empty-booklet strong {
       display: block;
       color: var(--ink);
-      font-size: 24px;
-      margin-bottom: 8px;
+      font-size: 19px;
+      margin-bottom: 6px;
     }
 
     @media screen and (max-width: 900px) {
@@ -872,7 +889,10 @@ function chunkActivities(items, size) {
           <div class="image-box">
             <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
           </div>
-          <p class="product product-under-image">תוצר אישי: ${escapeHTML(activity.product)}</p>
+          <div class="product-box">
+            <p class="product-label">תוצר אישי:</p>
+            <p class="product-text">${escapeHTML(activity.product)}</p>
+          </div>
         </div>`;
     }
 
@@ -891,14 +911,17 @@ function chunkActivities(items, size) {
       card.innerHTML = `
         ${imageMarkup(activity)}
         <div class="card-content">
-          <div class="card-topline">
-            <span class="tag accent">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)}</span>
-            <span class="tag">${escapeHTML(activity.duration)}</span>
-            <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
+          <div class="card-header">
+            <div class="card-topline">
+              <span class="tag accent">${escapeHTML(activity.type)}</span>
+              <span class="tag">${escapeHTML(activity.domain)}</span>
+              <span class="tag">${escapeHTML(activity.duration)}</span>
+              <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
+            </div>
+            <h2>${escapeHTML(activity.title)}</h2>
           </div>
-          <h2>${escapeHTML(activity.title)}</h2>
-          <p class="text">${escapeHTML(activity.text)}</p>
-          <div class="goals">
+          <p class="card-description">${escapeHTML(activity.text)}</p>
+          <div class="goals-box">
             <p class="goals-title">מטרות מרכזיות</p>
             <ul>${goals}</ul>
           </div>
