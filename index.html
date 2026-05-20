@@ -229,7 +229,6 @@
     .activity-option {
       position: relative;
       display: block;
-      min-height: 74px;
       cursor: pointer;
     }
 
@@ -242,27 +241,28 @@
     .option-card {
       height: 100%;
       display: grid;
-      grid-template-columns: 22px 1fr;
-      gap: 8px;
-      align-items: start;
-      padding: 10px;
-      border-radius: 17px;
+      grid-template-columns: 16px 1fr;
+      gap: 7px;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 10px;
       background: white;
       border: 1px solid rgba(23,32,51,.11);
       transition: .16s ease;
     }
 
     .checkmark {
-      width: 20px;
-      height: 20px;
-      border-radius: 7px;
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
       border: 2px solid rgba(23,32,51,.2);
       background: #fff;
       display: grid;
       place-items: center;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 900;
       color: white;
+      flex-shrink: 0;
     }
 
     .activity-option.selected .option-card {
@@ -281,18 +281,18 @@
 
     .option-title {
       display: block;
-      font-size: 13px;
-      line-height: 1.24;
+      font-size: 12px;
+      line-height: 1.2;
       font-weight: 900;
       color: #172033;
     }
 
     .option-meta {
       display: block;
-      margin-top: 5px;
-      font-size: 11px;
-      line-height: 1.35;
-      font-weight: 800;
+      margin-top: 2px;
+      font-size: 10px;
+      line-height: 1.3;
+      font-weight: 700;
       color: var(--muted);
     }
 
@@ -1275,7 +1275,6 @@ function chunkActivities(items, size) {
     async function init() {
       try {
         activities = await loadActivities();
-        activities.forEach((_, index) => selected.add(index));
         renderAll();
       } catch (error) {
         console.error(error);
