@@ -826,6 +826,72 @@
       font-weight: 400;
     }
 
+
+    /* עטיפת טקסט סביב תמונה — מיועד לכרטיסי סדנאות רגילים בלבד */
+    .activity-card:not(.escape-room-card) {
+      display: block;
+      direction: rtl;
+      text-align: right;
+      padding: 2.7mm 4.3mm 2.7mm 2.7mm;
+    }
+
+    .activity-card:not(.escape-room-card) .card-content {
+      display: block;
+      min-height: 0;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .activity-card:not(.escape-room-card) .card-header {
+      margin-bottom: 1.2mm;
+    }
+
+    .workshop-float-media {
+      float: left;
+      width: 35%;
+      max-width: 38mm;
+      min-width: 29mm;
+      margin: 0 3mm 1.6mm 0;
+      direction: rtl;
+      text-align: center;
+    }
+
+    .workshop-float-media .image-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      min-height: 0;
+      margin-top: 0;
+      border-radius: 3mm;
+    }
+
+    .workshop-float-media .product-box {
+      margin-top: 1.2mm;
+    }
+
+    .workshop-float-media .card-topline {
+      margin-top: 1.2mm;
+      justify-content: center;
+      gap: .8mm;
+    }
+
+    .workshop-float-media .tag {
+      min-height: 4.8mm;
+      padding: .9mm 1.5mm;
+      font-size: 7.9px;
+    }
+
+    .activity-card:not(.escape-room-card) .card-description {
+      min-height: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .activity-card:not(.escape-room-card) .goals-box {
+      clear: both;
+      margin-top: 1.5mm;
+    }
+
     .page-contact {
       position: absolute;
       left: 9mm;
@@ -1017,7 +1083,73 @@
         overflow: visible !important;
       }
 
-      .page-contact {
+  
+    /* עטיפת טקסט סביב תמונה — מיועד לכרטיסי סדנאות רגילים בלבד */
+    .activity-card:not(.escape-room-card) {
+      display: block;
+      direction: rtl;
+      text-align: right;
+      padding: 2.7mm 4.3mm 2.7mm 2.7mm;
+    }
+
+    .activity-card:not(.escape-room-card) .card-content {
+      display: block;
+      min-height: 0;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .activity-card:not(.escape-room-card) .card-header {
+      margin-bottom: 1.2mm;
+    }
+
+    .workshop-float-media {
+      float: left;
+      width: 35%;
+      max-width: 38mm;
+      min-width: 29mm;
+      margin: 0 3mm 1.6mm 0;
+      direction: rtl;
+      text-align: center;
+    }
+
+    .workshop-float-media .image-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      min-height: 0;
+      margin-top: 0;
+      border-radius: 3mm;
+    }
+
+    .workshop-float-media .product-box {
+      margin-top: 1.2mm;
+    }
+
+    .workshop-float-media .card-topline {
+      margin-top: 1.2mm;
+      justify-content: center;
+      gap: .8mm;
+    }
+
+    .workshop-float-media .tag {
+      min-height: 4.8mm;
+      padding: .9mm 1.5mm;
+      font-size: 7.9px;
+    }
+
+    .activity-card:not(.escape-room-card) .card-description {
+      min-height: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .activity-card:not(.escape-room-card) .goals-box {
+      clear: both;
+      margin-top: 1.5mm;
+    }
+
+    .page-contact {
         position: relative !important;
         left: auto !important;
         right: auto !important;
@@ -1231,6 +1363,24 @@ function chunkActivities(items, size) {
         </div>`;
     }
 
+
+    function workshopImageMarkup(activity) {
+      return `
+        <div class="workshop-float-media">
+          <div class="image-box">
+            <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+          </div>
+          <div class="product-box">
+            <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+          </div>
+          <div class="card-topline">
+            <span class="tag">${escapeHTML(activity.domain)}</span>
+            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+          </div>
+        </div>`;
+    }
+
     function createImagePlaceholder() {
       const placeholder = document.createElement("div");
       placeholder.className = "image-placeholder";
@@ -1252,11 +1402,11 @@ function chunkActivities(items, size) {
           </div>
           <p class="card-description">${escapeHTML(activity.text)}</p>
         </div>` : `
-        ${imageMarkup(activity)}
         <div class="card-content">
           <div class="card-header">
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
+          ${workshopImageMarkup(activity)}
           <p class="card-description">${escapeHTML(activity.text)}</p>
         </div>
         <div class="goals-box">
