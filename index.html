@@ -991,17 +991,18 @@ function chunkActivities(items, size) {
       return card;
     }
 
-    function renderPage(items, pageIndex, totalPages) {
+    function renderPage(items, pageIndex, totalPages, isEscapePage = false) {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
+      const pageTitle = isEscapePage ? "חדרי בריחה" : "סדנאות STEM חווייתיות";
 
       page.innerHTML = `
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
 
-            <h1 class="page-title">סדנאות STEM חווייתיות</h1>
+            <h1 class="page-title">${pageTitle}</h1>
                    </div>
         </header>
         <div class="page-grid"></div>
@@ -1034,13 +1035,12 @@ function chunkActivities(items, size) {
       const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
       const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
 
-      const pages = [
-        ...chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE),
-        ...chunkActivities(escapeRoomActivities, 2)
-      ];
+      const workshopPages = chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE).map(p => ({ items: p, isEscape: false }));
+      const escapePages = chunkActivities(escapeRoomActivities, 2).map(p => ({ items: p, isEscape: true }));
+      const pages = [...workshopPages, ...escapePages];
 
       const totalPages = pages.length;
-      pages.forEach((items, pageIndex) => booklet.appendChild(renderPage(items, pageIndex, totalPages)));
+      pages.forEach(({ items, isEscape }, pageIndex) => booklet.appendChild(renderPage(items, pageIndex, totalPages, isEscape)));
     }
 
     
