@@ -465,48 +465,48 @@
 
     .escape-room-card {
       grid-column: 1 / -1;
-      grid-template-columns: 42% minmax(0, 1fr);
-      grid-template-rows: 1fr auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2mm;
+      direction: rtl;
+    }
+
+    .escape-room-card .card-content,
+    .escape-room-card .media-column,
+    .escape-room-card .goals-box {
+      width: 100%;
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .escape-room-card .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.8mm;
+    }
+
+    .escape-room-card .card-header,
+    .escape-room-card .card-description {
+      width: 100%;
+      text-align: right;
     }
 
     .escape-room-card .media-column {
-      grid-row: 1 / 3;
+      align-items: center;
+      gap: 1.4mm;
     }
 
     .escape-room-card .image-box {
       aspect-ratio: 1 / 1;
+      width: 84%;
       height: auto;
-      width: 100%;
-      flex: none;
       margin-top: 0;
     }
 
-    .escape-room-card .card-content {
-      grid-row: 1;
-    }
-
-    .escape-room-card .goals-box {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
     .escape-room-card--mirrored {
-      grid-template-columns: minmax(0, 1fr) 42%;
-    }
-
-    .escape-room-card--mirrored .media-column {
-      grid-column: 2;
-      grid-row: 1 / 3;
-    }
-
-    .escape-room-card--mirrored .card-content {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .escape-room-card--mirrored .goals-box {
-      grid-column: 1;
-      grid-row: 2;
+      grid-template-columns: unset;
     }
 
     .escape-room-page .page-grid {
@@ -528,7 +528,7 @@
     }
 
     .escape-intro-tagline {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       color: #203b7a;
       margin: 0 0 2.5mm;
@@ -554,6 +554,7 @@
     .escape-cards-row {
       flex: 1;
       display: flex;
+      flex-direction: column;
       gap: 3.5mm;
       min-height: 0;
     }
@@ -565,6 +566,11 @@
 
     .escape-cards-row .escape-room-card {
       grid-column: auto;
+    }
+
+    .escape-cards-row .escape-room-card + .escape-room-card {
+      border-top: 1px solid rgba(23,32,51,.14);
+      padding-top: 3.5mm;
     }
 
     .media-column {
@@ -1123,7 +1129,20 @@ function chunkActivities(items, size) {
       const isEscape = activity.type === "חדר בריחה";
       card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
-      card.innerHTML = `
+      card.innerHTML = isEscape ? `
+        <div class="card-content">
+          <div class="card-header">
+            <h2>${escapeHTML(activity.title)}</h2>
+          </div>
+        </div>
+        ${imageMarkup(activity)}
+        <div class="card-content">
+          <p class="card-description">${escapeHTML(activity.text)}</p>
+        </div>
+        <div class="goals-box">
+          <p class="goals-title">מטרות מרכזיות</p>
+          <ul>${goals}</ul>
+        </div>` : `
         ${imageMarkup(activity)}
         <div class="card-content">
           <div class="card-header">
