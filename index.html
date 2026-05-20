@@ -959,6 +959,10 @@ function chunkActivities(items, size) {
         .replace(/'/g, "&#039;");
     }
 
+    function formatGrade(grade) {
+      return String(grade ?? "").replace(/[\u05D0-\u05EA]/g, "$&׳");
+    }
+
     function imageMarkup(activity) {
       const isEscape = activity.type === "חדר בריחה";
       const productHTML = isEscape ? "" : `
@@ -974,7 +978,7 @@ function chunkActivities(items, size) {
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
             <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
-            <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
+            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
           </div>
         </div>`;
     }
@@ -1072,7 +1076,8 @@ function chunkActivities(items, size) {
         const isChecked = key === "grade" ? selectedGrades.has(value) : selectedDomains.has(value);
         const label = document.createElement("label");
         label.className = "filter-chip";
-        label.innerHTML = `<input type="checkbox" data-filter-key="${key}" data-filter-value="${escapeHTML(value)}" ${isChecked ? "checked" : ""} />${escapeHTML(value)}`;
+        const displayValue = key === "grade" ? formatGrade(value) : value;
+        label.innerHTML = `<input type="checkbox" data-filter-key="${key}" data-filter-value="${escapeHTML(value)}" ${isChecked ? "checked" : ""} />${escapeHTML(displayValue)}`;
         container.appendChild(label);
       });
     }
@@ -1114,7 +1119,7 @@ function chunkActivities(items, size) {
             <span class="checkmark" aria-hidden="true"></span>
             <span>
               <span class="option-title">${escapeHTML(activity.title)}</span>
-              <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.join(", "))}</span>
+              <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
             </span>
           </span>`;
         picker.appendChild(label);
