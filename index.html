@@ -750,8 +750,8 @@
 
   <main id="booklet" class="booklet" aria-label="חוברת פעילויות A4"></main>
 
- 
-    ];
+  <script>
+    let activities = [];
 
     const booklet = document.getElementById("booklet");
     const picker = document.getElementById("activityPicker");
@@ -761,12 +761,64 @@
     const domainFilters = document.getElementById("domainFilters");
     const catalogModeBtn = document.getElementById("catalogModeBtn");
     const ACTIVITIES_PER_PAGE = 3;
-    const selected = new Set(activities.map((_, index) => index));
+    const selected = new Set();
     let pickerQuery = "";
     const selectedGrades = new Set();
     const selectedDomains = new Set();
 
-    function chunkActivities(items, size) {
+    function normalizeActivity(rawActivity = {}, gradeGroup = "") {
+      const title = rawActivity.workshopName ?? rawActivity.title ?? "";
+      const domain = rawActivity.domain ?? "";
+      const type = rawActivity.activityType ?? rawActivity.type ?? "סדנה";
+      const durationMinutes = Number(rawActivity.durationMinutes);
+      const duration = Number.isFinite(durationMinutes) && durationMinutes > 0
+        ? `${durationMinutes} דקות`
+        : (rawActivity.duration ?? "");
+      const product = rawActivity.personalProduct ?? rawActivity.product ?? "";
+      const text = rawActivity.description ?? rawActivity.text ?? "";
+      const goals = Array.isArray(rawActivity.goals) ? rawActivity.goals.filter(Boolean) : [];
+      const grades = Array.isArray(rawActivity.grades)
+        ? rawActivity.grades.filter(Boolean)
+        : (gradeGroup ? [gradeGroup] : []);
+      const image = rawActivity.image
+        ?? (rawActivity.id ? `assets/activities/${rawActivity.id}.png` : "");
+
+      return {
+        ...rawActivity,
+        title,
+        domain,
+        type,
+        duration,
+        product,
+        text,
+        goals,
+        grades,
+        image,
+        accent: rawActivity.accent || "#203b7a"
+      };
+    }
+
+    async function loadActivities() {
+      const response = await fetch("activities.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Failed to load activities.json (${response.status})`);
+      const data = await response.json();
+
+      if (Array.isArray(data?.gradeGroups)) {
+        return data.gradeGroups.flatMap(group => {
+          const groupGrade = group?.gradeGroup ?? "";
+          const groupActivities = Array.isArray(group?.activities) ? group.activities : [];
+          return groupActivities.map(activity => normalizeActivity(activity, groupGrade));
+        });
+      }
+
+      if (Array.isArray(data?.activities)) {
+        return data.activities.map(activity => normalizeActivity(activity));
+      }
+
+      return [];
+    }
+
+function chunkActivities(items, size) {
       const result = [];
       for (let i = 0; i < items.length; i += size) {
         result.push(items.slice(i, i + size));
@@ -978,7 +1030,20 @@
       renderAll();
     });
 
-    renderAll();
+    async function init() {
+      try {
+        activities = await loadActivities();
+        activities.forEach((_, index) => selected.add(index));
+        renderAll();
+      } catch (error) {
+        console.error(error);
+        selectedCount.textContent = "0 נבחרו";
+        picker.innerHTML = "";
+        booklet.innerHTML = `<section class="empty-booklet"><strong>שגיאה בטעינת פעילויות</strong>לא ניתן היה לטעון את activities.json.</section>`;
+      }
+    }
+
+    init();
   </script>
 </body>
 </html>
