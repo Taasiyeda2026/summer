@@ -1056,6 +1056,19 @@
     const selectedGrades = new Set();
     const selectedDomains = new Set();
 
+    const DOMAIN_COLORS = {
+      "חלל":        "#1e3a8a",
+      "אסטרונומיה": "#5b21b6",
+      "אופטיקה":    "#0e7490",
+      "תעופה":      "#1d4ed8",
+      "ביומימיקרי": "#065f46",
+      "קיימות":     "#047857",
+      "כימיה":      "#c2410c",
+      "ביולוגיה":   "#9d174d",
+      "פיזיקה":     "#78350f",
+      "הנדסה":      "#4338ca",
+    };
+
     function normalizeActivity(rawActivity = {}, gradeGroup = "") {
       const title = rawActivity.workshopName ?? rawActivity.title ?? "";
       const domain = rawActivity.domain ?? "";
@@ -1085,7 +1098,7 @@
         goals,
         grades,
         image,
-        accent: rawActivity.accent || "#203b7a"
+        accent: DOMAIN_COLORS[rawActivity.domain ?? ""] || rawActivity.accent || "#203b7a"
       };
     }
 
