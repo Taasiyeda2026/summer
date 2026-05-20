@@ -1137,13 +1137,11 @@ function chunkActivities(items, size) {
       card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
       card.innerHTML = isEscape ? `
+        ${imageMarkup(activity)}
         <div class="card-content">
           <div class="card-header">
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
-        </div>
-        ${imageMarkup(activity)}
-        <div class="card-content">
           <p class="card-description">${escapeHTML(activity.text)}</p>
         </div>
         <div class="goals-box">
