@@ -230,12 +230,33 @@
     }
 
     .activity-picker {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 9px;
-      max-height: 310px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 380px;
       overflow: auto;
       padding: 2px 2px 4px;
+    }
+
+    .picker-section-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--muted);
+      padding: 2px 0 0;
+      letter-spacing: .03em;
+    }
+
+    .picker-grid {
+      display: grid;
+      gap: 7px;
+    }
+
+    .picker-grid.workshops {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .picker-grid.escapes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .activity-option {
@@ -1218,6 +1239,12 @@ function chunkActivities(items, size) {
 
     function renderPicker() {
       picker.innerHTML = "";
+
+      const workshopGrid = document.createElement("div");
+      workshopGrid.className = "picker-grid workshops";
+      const escapeGrid = document.createElement("div");
+      escapeGrid.className = "picker-grid escapes";
+
       activities.forEach((activity, index) => {
         if (!matchesPickerSearch(activity) || !matchesAdvancedFilters(activity)) return;
         const label = document.createElement("label");
@@ -1232,8 +1259,27 @@ function chunkActivities(items, size) {
               <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
             </span>
           </span>`;
-        picker.appendChild(label);
+        if (activity.type === "חדר בריחה") {
+          escapeGrid.appendChild(label);
+        } else {
+          workshopGrid.appendChild(label);
+        }
       });
+
+      if (workshopGrid.children.length) {
+        const lbl = document.createElement("p");
+        lbl.className = "picker-section-label";
+        lbl.textContent = "סדנאות";
+        picker.appendChild(lbl);
+        picker.appendChild(workshopGrid);
+      }
+      if (escapeGrid.children.length) {
+        const lbl = document.createElement("p");
+        lbl.className = "picker-section-label";
+        lbl.textContent = "חדרי בריחה";
+        picker.appendChild(lbl);
+        picker.appendChild(escapeGrid);
+      }
     }
 
     function renderAll() {
