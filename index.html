@@ -896,6 +896,12 @@ function chunkActivities(items, size) {
           <div class="image-box">
             <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
           </div>
+          <div class="card-topline">
+            <span class="tag accent">${escapeHTML(activity.type)}</span>
+            <span class="tag">${escapeHTML(activity.domain)}</span>
+            <span class="tag">${escapeHTML(activity.duration)}</span>
+            <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
+          </div>
           <div class="product-box">
             <p class="product-line">תוצר אישי <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
           </div>
@@ -918,12 +924,6 @@ function chunkActivities(items, size) {
         ${imageMarkup(activity)}
         <div class="card-content">
           <div class="card-header">
-            <div class="card-topline">
-              <span class="tag accent">${escapeHTML(activity.type)}</span>
-              <span class="tag">${escapeHTML(activity.domain)}</span>
-              <span class="tag">${escapeHTML(activity.duration)}</span>
-              <span class="tag">${escapeHTML(activity.grades.join(", "))}</span>
-            </div>
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
           <p class="card-description">${escapeHTML(activity.text)}</p>
