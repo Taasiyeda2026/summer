@@ -303,9 +303,9 @@
 
     .a4-page {
       width: 210mm;
-      min-height: 297mm;
+      height: 297mm;
       position: relative;
-      overflow: visible;
+      overflow: hidden;
       padding: 9mm 9mm 8mm;
       background:
         radial-gradient(circle at 12% 7%, rgba(52,195,213,.15), transparent 29%),
@@ -385,16 +385,11 @@
     .page-grid {
       position: relative;
       z-index: 1;
-      height: auto;
+      height: calc(100% - 40mm);
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto auto auto auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
       gap: 3mm;
-      grid-template-areas:
-        "lead lead lead lead lead lead lead side1 side1 side1 side1 side1"
-        "lead lead lead lead lead lead lead side2 side2 side2 side2 side2"
-        "wide wide wide wide wide wide wide wide wide wide wide wide"
-        "bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom";
     }
 
     .activity-card {
@@ -418,33 +413,14 @@
       background: var(--accent);
     }
 
-    .slot-1 {
-      grid-area: lead;
-      grid-template-rows: auto 1fr;
-      padding: 4mm 4mm 4mm 5mm;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.97), rgba(255,253,247,.93)),
-        radial-gradient(circle at 10% 5%, rgba(52,195,213,.18), transparent 42%);
-    }
-    .slot-2 { grid-area: side1; }
-    .slot-3 { grid-area: side2; }
-    .slot-4 { grid-area: wide; }
-    .slot-5 { grid-area: bottom; }
-
-    .slot-2,
-    .slot-3 {
-      grid-template-columns: 31mm 1fr;
-      padding: 3mm 3mm 3mm 4mm;
-      gap: 3mm;
+    .activity-card {
+      grid-template-columns: 34mm 1fr;
+      padding: 3.5mm 3.5mm 3.5mm 5mm;
+      gap: 3.5mm;
       align-items: start;
-    }
-
-    .slot-4,
-    .slot-5 {
-      grid-template-columns: 42mm 1fr;
-      padding: 4mm 4mm 4mm 5mm;
-      gap: 4mm;
-      align-items: start;
+      min-height: 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     .image-box {
@@ -456,11 +432,7 @@
       flex: none;
     }
 
-    .slot-1 .image-box { width: 48mm; margin-bottom: 3mm; }
-    .slot-2 .image-box,
-    .slot-3 .image-box { width: 31mm; }
-    .slot-4 .image-box,
-    .slot-5 .image-box { width: 42mm; }
+    .image-box { width: 34mm; }
 
     .image-box img {
       width: 100%;
@@ -488,7 +460,7 @@
       flex-direction: column;
     }
 
-    .slot-1 .card-content { min-height: 0; }
+    .card-content { min-height: 0; }
 
     .card-topline {
       display: flex;
@@ -525,11 +497,7 @@
       color: #151c2e;
     }
 
-    .slot-1 h2 { font-size: 24px; line-height: 1.08; }
-    .slot-2 h2,
-    .slot-3 h2 { font-size: 15.5px; line-height: 1.12; }
-    .slot-4 h2,
-    .slot-5 h2 { font-size: 20px; line-height: 1.1; }
+    .activity-card h2 { font-size: 16px; line-height: 1.16; }
 
     .product {
       margin: 1.6mm 0 0;
@@ -546,11 +514,7 @@
       line-height: 1.45;
     }
 
-    .slot-1 .text { font-size: 11.4px; }
-    .slot-2 .text,
-    .slot-3 .text { font-size: 9.2px; line-height: 1.35; }
-    .slot-4 .text,
-    .slot-5 .text { font-size: 10.6px; }
+    .text { font-size: 9.4px; line-height: 1.36; }
 
     .goals {
       margin-top: auto;
@@ -577,7 +541,7 @@
       font-weight: 800;
     }
 
-    .slot-1 .goals li { font-size: 9.8px; line-height: 1.28; }
+    .goals li { font-size: 8.7px; line-height: 1.2; }
 
     .page-footer {
       position: absolute;
@@ -694,11 +658,11 @@
         margin: 0 !important;
       }
 
-      .a4-page {
+      .a4-page,
+      .catalog-page {
         width: 210mm !important;
-        min-height: auto !important;
-        height: auto !important;
-        overflow: visible !important;
+        height: 297mm !important;
+        overflow: hidden !important;
         margin: 0 !important;
         padding: 9mm !important;
         border-radius: 0 !important;
@@ -713,9 +677,7 @@
         page-break-after: auto;
       }
 
-      .page-grid {
-        height: auto !important;
-      }
+      .page-grid { height: calc(100% - 40mm) !important; }
 
       .activity-card {
         break-inside: avoid;
@@ -1099,7 +1061,7 @@
     const gradeFilters = document.getElementById("gradeFilters");
     const domainFilters = document.getElementById("domainFilters");
     const catalogModeBtn = document.getElementById("catalogModeBtn");
-    const pageSize = 5;
+    const ACTIVITIES_PER_PAGE = 3;
     const selected = new Set(activities.map((_, index) => index));
     let pickerQuery = "";
     const selectedGrades = new Set();
@@ -1136,10 +1098,10 @@
       return placeholder;
     }
 
-    function renderCard(activity, slotIndex) {
+    function renderCard(activity) {
       const goals = activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
       const card = document.createElement("article");
-      card.className = `activity-card slot-${slotIndex + 1}`;
+      card.className = "activity-card";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
       card.innerHTML = `
         ${imageMarkup(activity)}
@@ -1162,7 +1124,7 @@
 
     function renderPage(items, pageIndex, totalPages) {
       const page = document.createElement("section");
-      page.className = "a4-page";
+      page.className = "a4-page catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
 
       page.innerHTML = `
@@ -1183,19 +1145,8 @@
         </footer>`;
 
       const grid = page.querySelector(".page-grid");
-      items.forEach((activity, index) => grid.appendChild(renderCard(activity, index)));
+      items.forEach(activity => grid.appendChild(renderCard(activity)));
       return page;
-    }
-
-    const gradeOrder = { "א": 1, "ב": 2, "ג": 3, "ד": 4, "ה": 5, "ו": 6 };
-
-    function minGrade(activity) {
-      let min = 99;
-      for (const g of activity.grades) {
-        const firstLetter = g[0];
-        if (gradeOrder[firstLetter] !== undefined) min = Math.min(min, gradeOrder[firstLetter]);
-      }
-      return min;
     }
 
     function getSelectedActivities() {
@@ -1204,33 +1155,18 @@
         .filter(activity => selected.has(activity.originalIndex) && matchesAdvancedFilters(activity));
     }
 
-    function renderBooklet() {
-      const chosen = getSelectedActivities();
-      selectedCount.textContent = `${chosen.length} נבחרו`;
+    function renderCatalog(filteredActivities) {
+      selectedCount.textContent = `${filteredActivities.length} נבחרו`;
       booklet.innerHTML = "";
 
-      if (!chosen.length) {
+      if (!filteredActivities.length) {
         booklet.innerHTML = `<section class="empty-booklet"><strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.</section>`;
         return;
       }
 
-      const workshops = chosen.filter(a => a.type !== "חדר בריחה").sort((a, b) => minGrade(a) - minGrade(b));
-      const escapes   = chosen.filter(a => a.type === "חדר בריחה").sort((a, b) => minGrade(a) - minGrade(b));
-
-      const workshopPages = chunkActivities(workshops, pageSize);
-      const escapePages   = chunkActivities(escapes, pageSize);
-      const totalPages    = workshopPages.length + escapePages.length;
-      let pageIndex = 0;
-
-      workshopPages.forEach(items => booklet.appendChild(renderPage(items, pageIndex++, totalPages)));
-
-      if (escapePages.length) {
-        const divider = document.createElement("div");
-        divider.className = "section-divider";
-        divider.innerHTML = `<span>חדרי בריחה</span>`;
-        booklet.appendChild(divider);
-        escapePages.forEach(items => booklet.appendChild(renderPage(items, pageIndex++, totalPages)));
-      }
+      const pages = chunkActivities(filteredActivities, ACTIVITIES_PER_PAGE);
+      const totalPages = pages.length;
+      pages.forEach((items, pageIndex) => booklet.appendChild(renderPage(items, pageIndex, totalPages)));
     }
 
     
@@ -1297,7 +1233,7 @@
     function renderAll() {
       renderFilters();
       renderPicker();
-      renderBooklet();
+      renderCatalog(getSelectedActivities());
     }
 
     picker.addEventListener("change", event => {
