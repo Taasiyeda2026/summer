@@ -618,37 +618,44 @@
       line-height: 1.45;
     }
 
-    .escape-intro {
+    .escape-intro-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
       flex: 0 0 auto;
+    }
+
+    .escape-info-card {
       background: linear-gradient(180deg, rgba(254,255,255,.96), rgba(246,251,255,.96));
       border: 1px solid rgba(148,163,184,.34);
       border-radius: 3.2mm;
-      padding: 4.4mm 5mm;
+      padding: 3.5mm 4mm;
       direction: rtl;
+      text-align: right;
     }
 
-    .escape-intro-tagline {
-      font-size: 14px;
-      font-weight: 700;
+    .escape-info-card-title {
+      font-size: 11.5px;
+      font-weight: 800;
       color: #203b7a;
-      margin: 0 0 2.5mm;
-      font-style: normal;
+      margin: 0 0 1.8mm;
       line-height: 1.3;
     }
 
-    .escape-intro-body {
-      font-size: 12.8px;
+    .escape-info-card-body {
+      font-size: 10px;
       color: #374151;
-      line-height: 1.75;
+      line-height: 1.65;
       font-weight: 400;
-    }
-
-    .escape-intro-body p {
-      margin: 0 0 1.5mm;
-    }
-
-    .escape-intro-body p:last-child {
       margin: 0;
+    }
+
+    .duration-inline {
+      font-size: 0.62em;
+      font-weight: 500;
+      color: #667085;
+      margin-inline-start: 1.5mm;
+      white-space: nowrap;
     }
 
     .escape-cards-row {
@@ -1623,12 +1630,18 @@ function chunkActivities(items, size) {
           <div class="escape-hero">
             <p class="escape-hero-subtitle">כאן הלמידה הופכת למשימה, והידע נפתח דרך חידות, רמזים וסיפור.</p>
           </div>
-          <div class="escape-intro">
-            <div class="escape-intro-body">
-              <p>חדרי הבריחה הדיגיטליים של תעשיידע מזמינים את התלמידים לחוויית למידה אחרת: מסע אינטראקטיבי שבו סיפור, אתגר, חידות, מדע וטכנולוגיה מתחברים לעולם מסקרן, פעיל ומלא גילוי. כבר מהרגע הראשון התלמידים נכנסים לסיטואציה שמעוררת שאלה ומזמינה אותם לגלות מה מסתתר מאחורי הדלת הבאה.</p>
-              <p>במקום לפגוש את הידע רק דרך הסבר, המשתתפים נכנסים לתוך סיפור דיגיטלי חי. הם מפענחים רמזים, פותרים אתגרים, מקבלים החלטות, עובדים יחד ומגלים בהדרגה את הידע שמסתתר מאחורי העלילה. כל פתרון חושף פרט נוסף ומקדם את הקבוצה להמשך הדרך.</p>
-              <p>לאורך הפעילות התלמידים מתבוננים בפרטים, שואלים שאלות, משווים בין אפשרויות ומחברים בין מידע ורעיונות. הם נדרשים להקשיב זה לזה, לחלק תפקידים, להסביר את דרך החשיבה שלהם ולתרגל עבודת צוות בדרך לפתרון משותף.</p>
-              <p>כל חדר בריחה דיגיטלי נבנה סביב עולם תוכן ייחודי ומאפשר לתלמידים לחוות למידה דרך אתגר, סיפור ותחושת גילוי. התוצאה היא פעילות סוחפת שמחברת בין ידע, חוויה וחשיבה פעילה ומעניקה לתלמידים דרך טבעית ומשמעותית ללמוד, לחקור ולהיות חלק מהמשימה.</p>
+          <div class="escape-intro-cards">
+            <div class="escape-info-card">
+              <p class="escape-info-card-title">חוויית למידה אחרת</p>
+              <p class="escape-info-card-body">חדרי הבריחה של תעשיידע מזמינים את התלמידים למסע אינטראקטיבי שבו סיפור, חידות, מדע וטכנולוגיה מתחברים לעולם מסקרן ומלא גילוי. מהרגע הראשון התלמידים נכנסים למשימה שמעוררת שאלה ומזמינה לגלות מה מסתתר מאחורי הדלת הבאה.</p>
+            </div>
+            <div class="escape-info-card">
+              <p class="escape-info-card-title">לומדים דרך משימה</p>
+              <p class="escape-info-card-body">במקום לפגוש את הידע רק דרך הסבר, המשתתפים נכנסים לתוך סיפור דיגיטלי חי. הם מפענחים רמזים, פותרים אתגרים, מקבלים החלטות, עובדים יחד ומגלים בהדרגה את הידע שמסתתר מאחורי העלילה. כל פתרון חושף פרט נוסף ומקדם את הקבוצה להמשך הדרך.</p>
+            </div>
+            <div class="escape-info-card">
+              <p class="escape-info-card-title">חשיבה, שיתוף פעולה וגילוי</p>
+              <p class="escape-info-card-body">לאורך הפעילות התלמידים מתבוננים בפרטים, שואלים שאלות ומחברים בין מידע ורעיונות. הם נדרשים להקשיב זה לזה, לחלק תפקידים ולתרגל עבודת צוות בדרך לפתרון משותף. כל חדר בריחה נבנה סביב עולם תוכן ייחודי ומאפשר למידה דרך אתגר, סיפור וגילוי.</p>
             </div>
           </div>
           <div class="escape-cards-row"></div>
@@ -1663,7 +1676,7 @@ function chunkActivities(items, size) {
       const durationLabel = items?.[0]?.duration || "";
       const pageTitleHTML = isEscapePage
         ? "חדרי בריחה"
-        : `סדנאות ${stemHTML} חווייתיות${gradeLabel ? ` | ${escapeHTML(gradeLabel)}` : ""}${durationLabel ? ` | ${escapeHTML(durationLabel)}` : ""}`;
+        : `סדנאות ${stemHTML} חווייתיות${gradeLabel ? ` | ${escapeHTML(gradeLabel)}` : ""}${durationLabel ? ` <span class="duration-inline">(${escapeHTML(durationLabel)})</span>` : ""}`;
 
       page.innerHTML = `
         <header class="page-header">
