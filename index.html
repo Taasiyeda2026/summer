@@ -433,9 +433,30 @@
       height: calc(100% - 40mm);
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      gap: 5mm;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 3.2mm;
       align-content: start;
+    }
+
+    .page-grid.page-layout-bottom {
+      grid-template-areas:
+        "a b"
+        "c d"
+        "e e";
+    }
+
+    .page-grid.page-layout-middle {
+      grid-template-areas:
+        "a b"
+        "c c"
+        "d e";
+    }
+
+    .page-grid.page-layout-top {
+      grid-template-areas:
+        "a a"
+        "b c"
+        "d e";
     }
 
     .activity-card {
@@ -835,7 +856,7 @@
       display: block;
       direction: rtl;
       text-align: right;
-      padding: 2.7mm 4.3mm 2.7mm 2.7mm;
+      padding: 2.1mm 3.5mm 2.1mm 2.3mm;
     }
 
     .activity-card:not(.escape-room-card) .card-content {
@@ -846,7 +867,7 @@
     }
 
     .activity-card:not(.escape-room-card) .card-header {
-      margin-bottom: 1.2mm;
+      margin-bottom: .8mm;
     }
 
     .workshop-float-media {
@@ -854,7 +875,7 @@
       width: 35%;
       max-width: 38mm;
       min-width: 29mm;
-      margin: 0 3mm 1.6mm 0;
+      margin: 0 2.3mm 1.1mm 0;
       direction: rtl;
       text-align: center;
     }
@@ -869,11 +890,11 @@
     }
 
     .workshop-float-media .product-box {
-      margin-top: 1.2mm;
+      margin-top: .8mm;
     }
 
     .workshop-float-media .card-topline {
-      margin-top: 1.2mm;
+      margin-top: .8mm;
       justify-content: center;
       gap: .8mm;
     }
@@ -892,7 +913,57 @@
 
     .activity-card:not(.escape-room-card) .goals-box {
       clear: both;
-      margin-top: 1.5mm;
+      margin-top: 1mm;
+    }
+
+    .activity-card.horizontal-card {
+      display: grid !important;
+      grid-template-columns: 42% minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      gap: 1.6mm 2.2mm;
+      align-items: start;
+      direction: ltr;
+      padding: 2.1mm 2.7mm 2.1mm 4mm !important;
+      min-height: 0;
+    }
+
+    .activity-card.horizontal-card .card-content {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      gap: .9mm;
+    }
+
+    .activity-card.horizontal-card .card-header {
+      margin-bottom: .3mm;
+    }
+
+    .activity-card.horizontal-card .media-column {
+      grid-column: 1;
+      grid-row: 2;
+      float: none;
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .activity-card.horizontal-card .workshop-float-media .image-box {
+      aspect-ratio: 16 / 9;
+      margin-top: 0;
+    }
+
+    .activity-card.horizontal-card .workshop-float-media .product-box,
+    .activity-card.horizontal-card .workshop-float-media .card-topline {
+      margin-top: .6mm;
+    }
+
+    .activity-card.horizontal-card .goals-box {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      margin-top: .5mm;
+      padding-top: .9mm;
+      clear: none;
     }
 
     .page-contact {
@@ -1263,7 +1334,13 @@
     const gradeFilters = document.getElementById("gradeFilters");
     const domainFilters = document.getElementById("domainFilters");
     const catalogModeBtn = document.getElementById("catalogModeBtn");
-    const ACTIVITIES_PER_PAGE = 4;
+    const ACTIVITIES_PER_PAGE = 5;
+    const PAGE_LAYOUT_SEQUENCE = ["bottom", "middle", "top", "middle", "bottom"];
+    const LAYOUT_HORIZONTAL_INDEX = {
+      top: 0,
+      middle: 2,
+      bottom: 4
+    };
     const selected = new Set();
     let pickerQuery = "";
     const selectedGrades = new Set();
@@ -1505,7 +1582,16 @@ function chunkActivities(items, size) {
         </footer>`;
 
       const grid = page.querySelector(".page-grid");
-      items.forEach(activity => grid.appendChild(renderCard(activity)));
+      const layoutKey = PAGE_LAYOUT_SEQUENCE[pageIndex % PAGE_LAYOUT_SEQUENCE.length];
+      grid.classList.add(`page-layout-${layoutKey}`);
+      const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
+      const areaNames = ["a", "b", "c", "d", "e"];
+      items.forEach((activity, index) => {
+        const card = renderCard(activity);
+        if (index < areaNames.length) card.style.gridArea = areaNames[index];
+        if (index === horizontalIndex) card.classList.add("horizontal-card");
+        grid.appendChild(card);
+      });
       return page;
     }
 
