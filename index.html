@@ -847,16 +847,24 @@
 
     .escape-room-card .card-description {
       font-size: 14px;
+      flex: 1 1 auto;
+    }
+
+    .escape-room-card .card-content {
+      display: flex;
+      flex-direction: column;
     }
 
     .escape-room-summary-line {
-      margin: 3.5mm 0 0;
+      margin-top: auto;
+      padding-top: 3mm;
       font-size: 1.28em;
       font-weight: 800;
       line-height: 1.35;
       color: var(--accent);
       direction: rtl;
-      text-align: right;
+      text-align: center;
+      width: 100%;
     }
 
     .goals-box {
