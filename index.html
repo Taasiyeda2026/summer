@@ -864,7 +864,7 @@
 
     .horizontal-body {
       display: grid;
-      grid-template-columns: 26mm minmax(0, 1fr);
+      grid-template-columns: 26mm minmax(0, 1fr) 20mm;
       gap: 3mm;
       min-height: 0;
       direction: rtl;
@@ -892,16 +892,6 @@
 
     .horizontal-media .product-box {
       padding: .9mm 1.2mm;
-    }
-
-    .horizontal-media .card-topline {
-      gap: .7mm;
-    }
-
-    .horizontal-media .tag {
-      min-height: 4.5mm;
-      padding: .8mm 1.25mm;
-      font-size: 7.8px;
     }
 
     .horizontal-text {
@@ -937,6 +927,33 @@
       font-size: 12.2px;
       line-height: 1.35;
       margin: .3mm 0;
+    }
+
+    .horizontal-meta {
+      display: flex;
+      flex-direction: column;
+      gap: .8mm;
+      align-self: start;
+      min-width: 20mm;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .horizontal-meta .meta-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 4.8mm;
+      padding: .75mm 1.1mm;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 26%, #ffffff);
+      background: color-mix(in srgb, var(--accent) 9%, #ffffff);
+      color: var(--accent);
+      font-size: 8.2px;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
     .page-contact {
@@ -1160,7 +1177,7 @@
 
     .horizontal-body {
       display: grid;
-      grid-template-columns: 26mm minmax(0, 1fr);
+      grid-template-columns: 26mm minmax(0, 1fr) 20mm;
       gap: 3mm;
       min-height: 0;
       direction: rtl;
@@ -1188,16 +1205,6 @@
 
     .horizontal-media .product-box {
       padding: .9mm 1.2mm;
-    }
-
-    .horizontal-media .card-topline {
-      gap: .7mm;
-    }
-
-    .horizontal-media .tag {
-      min-height: 4.5mm;
-      padding: .8mm 1.25mm;
-      font-size: 7.8px;
     }
 
     .horizontal-text {
@@ -1495,11 +1502,6 @@ function chunkActivities(items, size) {
             <div class="product-box">
               <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
             </div>
-            <div class="card-topline">
-              <span class="tag">${escapeHTML(activity.domain)}</span>
-              <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
-              <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
-            </div>
           </div>
           <div class="horizontal-text">
             <p class="card-description">${escapeHTML(activity.text)}</p>
@@ -1508,6 +1510,11 @@ function chunkActivities(items, size) {
               <ul>${goals}</ul>
             </div>
           </div>
+          <aside class="horizontal-meta" aria-label="פרטי פעילות">
+            <span class="meta-item">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)}</span>
+            <span class="meta-item" dir="rtl">${escapeHTML(activity.duration)}</span>
+            <span class="meta-item">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+          </aside>
         </div>`;
         return card;
       }
