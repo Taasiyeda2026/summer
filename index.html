@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -434,7 +435,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-rows: repeat(3, minmax(0, 1fr));
-      gap: 2.7mm;
+      gap: 3.2mm;
       align-content: start;
     }
 
@@ -856,7 +857,7 @@
       display: block;
       direction: rtl;
       text-align: right;
-      padding: 1.8mm 3.2mm 1.8mm 2.1mm;
+      padding: 2.1mm 3.5mm 2.1mm 2.3mm;
     }
 
     .activity-card:not(.escape-room-card) .card-content {
@@ -867,7 +868,7 @@
     }
 
     .activity-card:not(.escape-room-card) .card-header {
-      margin-bottom: .55mm;
+      margin-bottom: .8mm;
     }
 
     .workshop-float-media {
@@ -913,7 +914,7 @@
 
     .activity-card:not(.escape-room-card) .goals-box {
       clear: both;
-      margin-top: .65mm;
+      margin-top: 1mm;
     }
 
     .activity-card.horizontal-card {
@@ -968,125 +969,115 @@
 
 
 
-    /* תיקון שמרני לכרטיס רוחבי: מבנה עצמאי, בלי float ובלי ירושה מהכרטיס הרגיל */
-    .activity-card.horizontal-workshop-card {
+    /* FIX v3: כרטיס רוחבי נקי ללא float + ניצול טוב יותר של עמוד מלא */
+    .activity-card.horizontal-card {
       display: grid !important;
-      grid-template-columns: 34% minmax(0, 1fr);
       grid-template-rows: auto minmax(0, 1fr);
-      grid-template-areas:
-        "title title"
-        "media text";
-      column-gap: 3mm;
-      row-gap: 1.4mm;
-      align-items: stretch;
-      direction: ltr;
-      padding: 2.2mm 3.2mm 2.2mm 4.3mm !important;
-      min-height: 0;
-      height: 100%;
+      grid-template-columns: 1fr;
+      gap: 1.4mm;
+      direction: rtl;
+      text-align: right;
+      padding: 2.2mm 3.2mm 2.2mm 3.2mm !important;
       overflow: hidden;
     }
 
-    .horizontal-workshop-card .horizontal-title {
-      grid-area: title;
+    .activity-card.horizontal-card .horizontal-title {
+      grid-row: 1;
       margin: 0;
-      direction: rtl;
-      text-align: right;
       font-size: 16.5px;
-      line-height: 1.13;
+      line-height: 1.12;
       font-weight: 950;
       color: #0f766e;
       padding-bottom: 1mm;
       border-bottom: 1px solid rgba(15, 118, 110, 0.25);
     }
 
-    .horizontal-workshop-card .horizontal-media {
-      grid-area: media;
+    .activity-card.horizontal-card .horizontal-body {
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 34% minmax(0, 1fr);
+      gap: 2.4mm;
+      min-height: 0;
+      align-items: stretch;
+      direction: ltr;
+    }
+
+    .activity-card.horizontal-card .horizontal-media {
       display: flex;
       flex-direction: column;
-      gap: .75mm;
+      gap: .8mm;
       min-width: 0;
-      min-height: 0;
       direction: rtl;
       text-align: center;
     }
 
-    .horizontal-workshop-card .horizontal-media .image-box {
+    .activity-card.horizontal-card .horizontal-media .image-box {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 9;
       height: auto;
       min-height: 0;
-      margin-top: 0;
+      margin: 0;
       border-radius: 3mm;
-      flex: none;
     }
 
-    .horizontal-workshop-card .horizontal-media .product-box {
-      margin: 0;
-      padding: 1mm 1.4mm;
+    .activity-card.horizontal-card .horizontal-media .product-box,
+    .activity-card.horizontal-card .horizontal-media .card-topline {
+      margin-top: 0;
     }
 
-    .horizontal-workshop-card .horizontal-media .product-line {
-      font-size: 8.8px;
-      line-height: 1.22;
-    }
-
-    .horizontal-workshop-card .horizontal-media .card-topline {
+    .activity-card.horizontal-card .horizontal-media .card-topline {
       justify-content: center;
-      gap: .7mm;
-      margin: 0;
+      gap: .75mm;
     }
 
-    .horizontal-workshop-card .horizontal-media .tag {
-      min-height: 4.4mm;
-      padding: .75mm 1.25mm;
-      font-size: 7.6px;
+    .activity-card.horizontal-card .horizontal-media .tag {
+      min-height: 4.6mm;
+      padding: .8mm 1.45mm;
+      font-size: 7.8px;
     }
 
-    .horizontal-workshop-card .horizontal-text {
-      grid-area: text;
-      min-width: 0;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
+    .activity-card.horizontal-card .horizontal-text {
+      display: grid;
+      grid-template-rows: auto 1fr;
       gap: 1mm;
+      min-width: 0;
       direction: rtl;
       text-align: right;
-      overflow: hidden;
     }
 
-    .horizontal-workshop-card .card-description {
+    .activity-card.horizontal-card .horizontal-text .card-description {
       margin: 0;
-      min-height: 0;
       font-size: 13px;
       line-height: 1.48;
-      font-weight: 500;
-      color: #374151;
+      min-height: 0;
     }
 
-    .horizontal-workshop-card .goals-box {
+    .activity-card.horizontal-card .horizontal-text .goals-box {
       grid-column: auto;
       grid-row: auto;
-      margin-top: 0;
-      padding-top: .85mm;
-      border-top: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(23,32,51,.08));
       clear: none;
-    }
-
-    .horizontal-workshop-card .goals-title {
-      margin: 0 0 .7mm;
-      font-size: 14.6px;
-      line-height: 1.1;
-    }
-
-    .horizontal-workshop-card .goals-box ul {
       margin: 0;
-      padding: 0 3.2mm 0 0;
+      padding-top: .9mm;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(23,32,51,.08));
     }
 
-    .horizontal-workshop-card .goals-box li {
+    .activity-card.horizontal-card .horizontal-text .goals-title {
+      margin-bottom: .6mm;
+    }
+
+    .activity-card.horizontal-card .horizontal-text li {
       margin: .25mm 0;
-      font-size: 12.3px;
-      line-height: 1.28;
+      line-height: 1.34;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) {
+      padding-top: 1.9mm;
+      padding-bottom: 1.9mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .goals-box {
+      margin-top: .7mm;
+      padding-top: .9mm;
     }
 
     .page-contact {
@@ -1356,129 +1347,6 @@
       margin-top: 1.5mm;
     }
 
-
-
-    /* תיקון שמרני לכרטיס רוחבי: מבנה עצמאי, בלי float ובלי ירושה מהכרטיס הרגיל */
-    .activity-card.horizontal-workshop-card {
-      display: grid !important;
-      grid-template-columns: 34% minmax(0, 1fr);
-      grid-template-rows: auto minmax(0, 1fr);
-      grid-template-areas:
-        "title title"
-        "media text";
-      column-gap: 3mm;
-      row-gap: 1.4mm;
-      align-items: stretch;
-      direction: ltr;
-      padding: 2.2mm 3.2mm 2.2mm 4.3mm !important;
-      min-height: 0;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .horizontal-workshop-card .horizontal-title {
-      grid-area: title;
-      margin: 0;
-      direction: rtl;
-      text-align: right;
-      font-size: 16.5px;
-      line-height: 1.13;
-      font-weight: 950;
-      color: #0f766e;
-      padding-bottom: 1mm;
-      border-bottom: 1px solid rgba(15, 118, 110, 0.25);
-    }
-
-    .horizontal-workshop-card .horizontal-media {
-      grid-area: media;
-      display: flex;
-      flex-direction: column;
-      gap: .75mm;
-      min-width: 0;
-      min-height: 0;
-      direction: rtl;
-      text-align: center;
-    }
-
-    .horizontal-workshop-card .horizontal-media .image-box {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      height: auto;
-      min-height: 0;
-      margin-top: 0;
-      border-radius: 3mm;
-      flex: none;
-    }
-
-    .horizontal-workshop-card .horizontal-media .product-box {
-      margin: 0;
-      padding: 1mm 1.4mm;
-    }
-
-    .horizontal-workshop-card .horizontal-media .product-line {
-      font-size: 8.8px;
-      line-height: 1.22;
-    }
-
-    .horizontal-workshop-card .horizontal-media .card-topline {
-      justify-content: center;
-      gap: .7mm;
-      margin: 0;
-    }
-
-    .horizontal-workshop-card .horizontal-media .tag {
-      min-height: 4.4mm;
-      padding: .75mm 1.25mm;
-      font-size: 7.6px;
-    }
-
-    .horizontal-workshop-card .horizontal-text {
-      grid-area: text;
-      min-width: 0;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1mm;
-      direction: rtl;
-      text-align: right;
-      overflow: hidden;
-    }
-
-    .horizontal-workshop-card .card-description {
-      margin: 0;
-      min-height: 0;
-      font-size: 13px;
-      line-height: 1.48;
-      font-weight: 500;
-      color: #374151;
-    }
-
-    .horizontal-workshop-card .goals-box {
-      grid-column: auto;
-      grid-row: auto;
-      margin-top: 0;
-      padding-top: .85mm;
-      border-top: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(23,32,51,.08));
-      clear: none;
-    }
-
-    .horizontal-workshop-card .goals-title {
-      margin: 0 0 .7mm;
-      font-size: 14.6px;
-      line-height: 1.1;
-    }
-
-    .horizontal-workshop-card .goals-box ul {
-      margin: 0;
-      padding: 0 3.2mm 0 0;
-    }
-
-    .horizontal-workshop-card .goals-box li {
-      margin: .25mm 0;
-      font-size: 12.3px;
-      line-height: 1.28;
-    }
-
     .page-contact {
         position: relative !important;
         left: auto !important;
@@ -1496,28 +1364,6 @@
         margin-top: 2mm;
       }
 
-
-
-      .activity-card.horizontal-workshop-card {
-        display: grid !important;
-        grid-template-columns: 34% minmax(0, 1fr) !important;
-        grid-template-rows: auto minmax(0, 1fr) !important;
-        grid-template-areas:
-          "title title"
-          "media text" !important;
-        column-gap: 3mm !important;
-        row-gap: 1.4mm !important;
-        padding: 2.2mm 3.2mm 2.2mm 4.3mm !important;
-        overflow: hidden !important;
-        direction: ltr !important;
-      }
-
-      .horizontal-workshop-card .horizontal-title { grid-area: title !important; }
-      .horizontal-workshop-card .horizontal-media { grid-area: media !important; float: none !important; width: auto !important; margin: 0 !important; }
-      .horizontal-workshop-card .horizontal-text { grid-area: text !important; }
-      .horizontal-workshop-card .image-box { margin-top: 0 !important; aspect-ratio: 4 / 3 !important; }
-      .horizontal-workshop-card .goals-box { clear: none !important; margin-top: 0 !important; }
-
       h1, h2, h3,
       .page-title,
       .activity-card h2,
@@ -1527,6 +1373,23 @@
         letter-spacing: 0 !important;
       }
     }
+  
+
+    @media print {
+      .activity-card.horizontal-card {
+        display: grid !important;
+        overflow: hidden !important;
+      }
+      .activity-card.horizontal-card .horizontal-body {
+        display: grid !important;
+        grid-template-columns: 34% minmax(0, 1fr) !important;
+      }
+      .activity-card.horizontal-card .horizontal-media .image-box {
+        aspect-ratio: 16 / 9 !important;
+        margin: 0 !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1746,57 +1609,57 @@ function chunkActivities(items, size) {
       return placeholder;
     }
 
-
-
-    function renderGoalsList(activity) {
-      return activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
-    }
-
-    function renderHorizontalCard(activity) {
-      const goals = renderGoalsList(activity);
-      const card = document.createElement("article");
-      card.className = "activity-card horizontal-workshop-card";
-      card.style.setProperty("--accent", activity.accent || "#203b7a");
-      card.innerHTML = `
-        <h2 class="horizontal-title">${escapeHTML(activity.title)}</h2>
-        <div class="horizontal-media">
-          <div class="image-box">
-            <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
-          </div>
-          <div class="product-box">
-            <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
-          </div>
-          <div class="card-topline">
-            <span class="tag">${escapeHTML(activity.domain)}</span>
-            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
-            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
-          </div>
-        </div>
-        <div class="horizontal-text">
-          <p class="card-description">${escapeHTML(activity.text)}</p>
-          <div class="goals-box">
-            <p class="goals-title">מטרות מרכזיות</p>
-            <ul>${goals}</ul>
-          </div>
-        </div>`;
-      return card;
-    }
-
-    function renderCard(activity, options = {}) {
-      if (options.horizontal && activity.type !== "חדר בריחה") return renderHorizontalCard(activity);
+    function renderCard(activity, variant = "regular") {
       const goals = activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
       const card = document.createElement("article");
       const isEscape = activity.type === "חדר בריחה";
-      card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
+      const isHorizontal = variant === "horizontal" && !isEscape;
+      card.className = isEscape
+        ? "activity-card escape-room-card"
+        : (isHorizontal ? "activity-card horizontal-card" : "activity-card");
       card.style.setProperty("--accent", activity.accent || "#203b7a");
-      card.innerHTML = isEscape ? `
+
+      if (isEscape) {
+        card.innerHTML = `
         ${imageMarkup(activity)}
         <div class="card-content">
           <div class="card-header">
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
           <p class="card-description">${escapeHTML(activity.text)}</p>
-        </div>` : `
+        </div>`;
+        return card;
+      }
+
+      if (isHorizontal) {
+        card.innerHTML = `
+          <h2 class="horizontal-title">${escapeHTML(activity.title)}</h2>
+          <div class="horizontal-body">
+            <div class="horizontal-media">
+              <div class="image-box">
+                <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+              </div>
+              <div class="product-box">
+                <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+              </div>
+              <div class="card-topline">
+                <span class="tag">${escapeHTML(activity.domain)}</span>
+                <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+                <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+              </div>
+            </div>
+            <div class="horizontal-text">
+              <p class="card-description">${escapeHTML(activity.text)}</p>
+              <div class="goals-box">
+                <p class="goals-title">מטרות מרכזיות</p>
+                <ul>${goals}</ul>
+              </div>
+            </div>
+          </div>`;
+        return card;
+      }
+
+      card.innerHTML = `
         <div class="card-content">
           <div class="card-header">
             <h2>${escapeHTML(activity.title)}</h2>
@@ -1892,8 +1755,7 @@ function chunkActivities(items, size) {
       const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
       const areaNames = ["a", "b", "c", "d", "e"];
       items.forEach((activity, index) => {
-        const shouldUseHorizontal = index === horizontalIndex && activity.type !== "חדר בריחה";
-        const card = renderCard(activity, { horizontal: shouldUseHorizontal });
+        const card = renderCard(activity, index === horizontalIndex ? "horizontal" : "regular");
         if (index < areaNames.length) card.style.gridArea = areaNames[index];
         grid.appendChild(card);
       });
@@ -1928,19 +1790,17 @@ function chunkActivities(items, size) {
       const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
       const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
 
-      const workshopsByDomain = groupByDomain(workshopActivities);
-      const workshopPageModels = [];
-      workshopsByDomain.forEach((domainItems, domain) => {
-        const chunks = chunkActivities(domainItems, ACTIVITIES_PER_PAGE);
-        chunks.forEach(chunk => workshopPageModels.push({ domain, items: chunk }));
-      });
+      // FIX v3: לא מחלקים עמודים לפי תחום. החלוקה לפי תחום יצרה עמודים כמעט ריקים.
+      // שומרים על הסדר המקורי של הפעילויות וממלאים כל עמוד עד 5 כרטיסים.
+      const workshopPageModels = chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE).map(items => ({ items }));
       const hasEscape = escapeRoomActivities.length > 0;
       const totalPages = workshopPageModels.length + (hasEscape ? 1 : 0);
 
-      workshopPageModels.forEach(({ domain, items }, pageIndex) => {
-        const groups = [...new Set(items.map(a => a.gradeGroup).filter(Boolean))];
+      workshopPageModels.forEach(({ items }, pageIndex) => {
+        const groups = [...new Set(items.flatMap(a => a.grades || []).filter(Boolean))];
+        const domains = [...new Set(items.map(a => a.domain).filter(Boolean))];
         const gradeLabelParts = groups.map(formatGradeGroup).filter(Boolean);
-        gradeLabelParts.unshift(`תחום: ${domain}`);
+        if (domains.length) gradeLabelParts.unshift(`תחומים: ${domains.join(", ")}`);
         const gradeLabel = gradeLabelParts.join(" | ");
         booklet.appendChild(renderPage(items, pageIndex, totalPages, false, gradeLabel));
       });
@@ -1948,8 +1808,6 @@ function chunkActivities(items, size) {
         booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, workshopPageModels.length, totalPages));
       }
     }
-
-    
 
     function uniqueValues(extractor) {
       return [...new Set(activities.flatMap(extractor))];
