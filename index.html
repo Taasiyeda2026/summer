@@ -852,19 +852,20 @@
     .escape-room-card .card-content {
       display: flex;
       flex-direction: column;
-      height: 100%;
     }
 
     .escape-room-summary-line {
-      margin-top: auto;
+      grid-column: 1 / -1;
+      grid-row: 3;
+      margin: 0;
       padding-top: 3mm;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
       font-size: 1.28em;
       font-weight: 800;
       line-height: 1.35;
       color: var(--accent);
       direction: rtl;
       text-align: center;
-      width: 100%;
     }
 
     .goals-box {
@@ -1594,8 +1595,8 @@ function chunkActivities(items, size) {
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
           <p class="card-description">${escapeHTML(activity.text)}</p>
-          ${summaryHTML}
-        </div>`;
+        </div>
+        ${summaryHTML}`;
         return card;
       }
 
