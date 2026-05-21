@@ -963,6 +963,16 @@
       .section-divider { display: none; }
     }
 
+    .domain-heading {
+      margin: 0;
+      padding: 2px 0 1px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #1f2a44;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
     .empty-booklet {
       width: min(620px, calc(100% - 40px));
       margin: 26px auto 70px;
@@ -1505,6 +1515,16 @@ function chunkActivities(items, size) {
         .filter(activity => selected.has(activity.originalIndex) && matchesAdvancedFilters(activity));
     }
 
+    function groupByDomain(items) {
+      const grouped = new Map();
+      items.forEach(item => {
+        const key = item.domain || "ללא תחום";
+        if (!grouped.has(key)) grouped.set(key, []);
+        grouped.get(key).push(item);
+      });
+      return grouped;
+    }
+
     function renderCatalog(filteredActivities) {
       selectedCount.textContent = `${filteredActivities.length} נבחרו`;
       booklet.innerHTML = "";
@@ -1517,17 +1537,24 @@ function chunkActivities(items, size) {
       const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
       const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
 
-      const workshopPages = chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE);
+      const workshopsByDomain = groupByDomain(workshopActivities);
+      const workshopPageModels = [];
+      workshopsByDomain.forEach((domainItems, domain) => {
+        const chunks = chunkActivities(domainItems, ACTIVITIES_PER_PAGE);
+        chunks.forEach(chunk => workshopPageModels.push({ domain, items: chunk }));
+      });
       const hasEscape = escapeRoomActivities.length > 0;
-      const totalPages = workshopPages.length + (hasEscape ? 1 : 0);
+      const totalPages = workshopPageModels.length + (hasEscape ? 1 : 0);
 
-      workshopPages.forEach((items, pageIndex) => {
+      workshopPageModels.forEach(({ domain, items }, pageIndex) => {
         const groups = [...new Set(items.map(a => a.gradeGroup).filter(Boolean))];
-        const gradeLabel = groups.map(formatGradeGroup).join(" | ");
+        const gradeLabelParts = groups.map(formatGradeGroup).filter(Boolean);
+        gradeLabelParts.unshift(`תחום: ${domain}`);
+        const gradeLabel = gradeLabelParts.join(" | ");
         booklet.appendChild(renderPage(items, pageIndex, totalPages, false, gradeLabel));
       });
       if (hasEscape) {
-        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, workshopPages.length, totalPages));
+        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, workshopPageModels.length, totalPages));
       }
     }
 
@@ -1575,11 +1602,8 @@ function chunkActivities(items, size) {
 
     function renderPicker() {
       picker.innerHTML = "";
-
-      const workshopGrid = document.createElement("div");
-      workshopGrid.className = "picker-grid workshops";
-      const escapeGrid = document.createElement("div");
-      escapeGrid.className = "picker-grid escapes";
+      const workshopByDomain = new Map();
+      const escapeByDomain = new Map();
 
       activities.forEach((activity, index) => {
         if (!matchesPickerSearch(activity) || !matchesAdvancedFilters(activity)) return;
@@ -1595,27 +1619,32 @@ function chunkActivities(items, size) {
               <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
             </span>
           </span>`;
-        if (activity.type === "חדר בריחה") {
-          escapeGrid.appendChild(label);
-        } else {
-          workshopGrid.appendChild(label);
-        }
+        const bucket = activity.type === "חדר בריחה" ? escapeByDomain : workshopByDomain;
+        const domainKey = activity.domain || "ללא תחום";
+        if (!bucket.has(domainKey)) bucket.set(domainKey, []);
+        bucket.get(domainKey).push(label);
       });
 
-      if (workshopGrid.children.length) {
-        const lbl = document.createElement("p");
-        lbl.className = "picker-section-label";
-        lbl.textContent = "סדנאות";
-        picker.appendChild(lbl);
-        picker.appendChild(workshopGrid);
-      }
-      if (escapeGrid.children.length) {
-        const lbl = document.createElement("p");
-        lbl.className = "picker-section-label";
-        lbl.textContent = "חדרי בריחה";
-        picker.appendChild(lbl);
-        picker.appendChild(escapeGrid);
-      }
+      const appendGroupedSection = (title, groups, gridClass) => {
+        if (!groups.size) return;
+        const sectionLabel = document.createElement("p");
+        sectionLabel.className = "picker-section-label";
+        sectionLabel.textContent = title;
+        picker.appendChild(sectionLabel);
+        groups.forEach((labels, domain) => {
+          const domainHeading = document.createElement("p");
+          domainHeading.className = "domain-heading";
+          domainHeading.textContent = domain;
+          picker.appendChild(domainHeading);
+          const grid = document.createElement("div");
+          grid.className = `picker-grid ${gridClass}`;
+          labels.forEach(label => grid.appendChild(label));
+          picker.appendChild(grid);
+        });
+      };
+
+      appendGroupedSection("סדנאות", workshopByDomain, "workshops");
+      appendGroupedSection("חדרי בריחה דיגיטליים", escapeByDomain, "escapes");
     }
 
     function renderAll() {
