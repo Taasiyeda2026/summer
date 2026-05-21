@@ -1375,6 +1375,77 @@
       .page-badge {
         letter-spacing: 0 !important;
       }
+
+      /* ── עמוד חדרי בריחה ── */
+      .escape-room-page .page-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2.5mm !important;
+        grid-template-columns: unset !important;
+        grid-template-rows: unset !important;
+      }
+
+      .escape-intro-cards {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 3mm !important;
+        flex: 0 0 auto !important;
+      }
+
+      .escape-info-card {
+        background: rgba(246,251,255,.96) !important;
+        border: 1px solid rgba(148,163,184,.34) !important;
+        border-radius: 3.2mm !important;
+        padding: 3.5mm 4mm !important;
+      }
+
+      .escape-cards-row {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5mm !important;
+        min-height: 0 !important;
+      }
+
+      .escape-cards-row .activity-card {
+        flex: 1 !important;
+        min-height: 0 !important;
+      }
+
+      .escape-room-card {
+        display: grid !important;
+        grid-template-columns: 40% minmax(0, 1fr) !important;
+        grid-template-rows: auto auto auto !important;
+        gap: 3mm !important;
+        border-radius: 4.2mm !important;
+        border: 1px solid rgba(100,116,139,.24) !important;
+        padding: 4.2mm 4.2mm 4.2mm 5.8mm !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .escape-room-card--mirrored {
+        grid-template-columns: minmax(0, 1fr) 40% !important;
+      }
+
+      .escape-room-card--bio {
+        background: linear-gradient(145deg, rgba(254,255,250,.98), rgba(236,250,245,.96)) !important;
+      }
+
+      .escape-room-card--astro {
+        background: linear-gradient(145deg, rgba(252,254,255,.98), rgba(237,244,255,.96)) !important;
+      }
+
+      .escape-room-summary-line {
+        grid-column: 1 / -1 !important;
+        grid-row: 3 !important;
+        text-align: center !important;
+        font-size: 1.15em !important;
+        font-weight: 800 !important;
+        padding-top: 3mm !important;
+        border-top: 1px solid rgba(0,0,0,.1) !important;
+        color: var(--accent) !important;
+      }
     }
   </style>
 </head>
