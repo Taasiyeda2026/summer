@@ -432,13 +432,15 @@
     }
 
     .page-grid {
+      --grid-gap: 3.2mm;
+      --horizontal-card-height: 52mm;
+      --regular-card-row-height: calc((100% - var(--horizontal-card-height) - (2 * var(--grid-gap))) / 2);
       position: relative;
       z-index: 1;
       min-height: 0;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(3, minmax(0, 1fr));
-      gap: 3.2mm;
+      gap: var(--grid-gap);
       align-content: stretch;
     }
 
@@ -447,6 +449,7 @@
         "h h"
         "a b"
         "c d";
+      grid-template-rows: var(--horizontal-card-height) var(--regular-card-row-height) var(--regular-card-row-height);
     }
 
     .page-grid.page-layout-middle {
@@ -454,6 +457,7 @@
         "a b"
         "h h"
         "c d";
+      grid-template-rows: var(--regular-card-row-height) var(--horizontal-card-height) var(--regular-card-row-height);
     }
 
     .page-grid.page-layout-bottom {
@@ -461,6 +465,7 @@
         "a b"
         "c d"
         "h h";
+      grid-template-rows: var(--regular-card-row-height) var(--regular-card-row-height) var(--horizontal-card-height);
     }
 
     .activity-card {
@@ -851,7 +856,8 @@
       font-weight: 400;
     }
 
-    .activity-card.horizontal-card {
+    .activity-card.horizontal-card,
+    .activity-card.side-card {
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: 1fr;
@@ -860,7 +866,9 @@
       padding: 2.2mm 2.8mm 2.2mm 4mm;
       direction: rtl;
       text-align: right;
-      min-height: 47mm;
+      height: 52mm;
+      min-height: 52mm;
+      max-height: 52mm;
       overflow: hidden;
     }
 
@@ -986,6 +994,11 @@
 
     .page-grid .activity-card {
       height: 100%;
+    }
+
+    .page-grid .activity-card.horizontal-card,
+    .page-grid .activity-card.side-card {
+      height: 52mm;
     }
 
     .page-contact {
@@ -1174,8 +1187,11 @@
       }
 
       .page-grid {
+        --grid-gap: 3mm;
+        --horizontal-card-height: 52mm;
+        --regular-card-row-height: calc((100% - var(--horizontal-card-height) - (2 * var(--grid-gap))) / 2);
         min-height: 0 !important;
-        gap: 3mm !important;
+        gap: var(--grid-gap) !important;
       }
 
 
@@ -1186,7 +1202,8 @@
         overflow: visible !important;
       }
 
-      .activity-card.horizontal-card {
+      .activity-card.horizontal-card,
+      .activity-card.side-card {
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: 1fr;
@@ -1195,7 +1212,9 @@
       padding: 2.2mm 2.8mm 2.2mm 4mm;
       direction: rtl;
       text-align: right;
-      min-height: 47mm;
+      height: 52mm;
+      min-height: 52mm;
+      max-height: 52mm;
       overflow: hidden;
     }
 
