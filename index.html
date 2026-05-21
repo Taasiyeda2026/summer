@@ -1535,7 +1535,6 @@ function chunkActivities(items, size) {
           ${productHTML}
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
-            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
           </div>
         </div>`;
     }
@@ -1573,7 +1572,6 @@ function chunkActivities(items, size) {
           <h2>${escapeHTML(activity.title)}</h2>
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
-            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
           </div>
         </div>
         <div class="horizontal-body">
@@ -1662,9 +1660,10 @@ function chunkActivities(items, size) {
       page.className = "a4-page catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
       const stemHTML = `<span class="stem-word" dir="ltr"><span class="stem-s">S</span><span class="stem-t">T</span><span class="stem-e">E</span><span class="stem-m">M</span></span>`;
+      const durationLabel = items?.[0]?.duration || "";
       const pageTitleHTML = isEscapePage
         ? "חדרי בריחה"
-        : (gradeLabel ? `סדנאות ${stemHTML} חווייתיות | ${escapeHTML(gradeLabel)}` : `סדנאות ${stemHTML} חווייתיות`);
+        : `סדנאות ${stemHTML} חווייתיות${gradeLabel ? ` | ${escapeHTML(gradeLabel)}` : ""}${durationLabel ? ` | ${escapeHTML(durationLabel)}` : ""}`;
 
       page.innerHTML = `
         <header class="page-header">
