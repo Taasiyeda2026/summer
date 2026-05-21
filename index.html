@@ -517,7 +517,7 @@
     .escape-room-card {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: 34% minmax(0, 1fr);
+      grid-template-columns: 40% minmax(0, 1fr);
       grid-template-rows: auto auto;
       gap: 3mm;
       align-items: stretch;
@@ -551,7 +551,7 @@
     }
 
     .escape-room-card--mirrored {
-      grid-template-columns: minmax(0, 1fr) 34%;
+      grid-template-columns: minmax(0, 1fr) 40%;
     }
 
     .escape-room-card--mirrored .media-column {
@@ -690,7 +690,7 @@
 
     .escape-room-card .image-box {
       aspect-ratio: 1 / 1;
-      min-height: 46mm;
+      min-height: 56mm;
     }
 
     .escape-room-card--bio {
@@ -803,9 +803,9 @@
     .activity-card h2 {
       margin: 0 0 .8mm;
       letter-spacing: -.035em;
-      color: #0f766e;
+      color: var(--ink);
       padding-bottom: .9mm;
-      border-bottom: 1px solid rgba(15, 118, 110, 0.25);
+      border-bottom: 1px solid rgba(23, 32, 51, 0.18);
     }
 
     .activity-card h2 { font-size: 16.5px; line-height: 1.16; font-weight: 950; }
@@ -1713,6 +1713,33 @@ function chunkActivities(items, size) {
       return page;
     }
 
+
+
+    function mixActivitiesByDomain(items) {
+      const buckets = new Map();
+      items.forEach(activity => {
+        const key = (activity.domain || "ללא תחום").trim();
+        if (!buckets.has(key)) buckets.set(key, []);
+        buckets.get(key).push(activity);
+      });
+
+      const domains = [...buckets.keys()].sort((a, b) => a.localeCompare(b, "he"));
+      const mixed = [];
+
+      while (domains.some(domain => buckets.get(domain).length > 0)) {
+        let pickedInRound = false;
+        domains.forEach(domain => {
+          const bucket = buckets.get(domain);
+          if (!bucket.length) return;
+          mixed.push(bucket.shift());
+          pickedInRound = true;
+        });
+        if (!pickedInRound) break;
+      }
+
+      return mixed;
+    }
+
     function getSelectedActivities() {
       return activities
         .map((activity, index) => ({ ...activity, originalIndex: index }))
@@ -1737,7 +1764,7 @@ function chunkActivities(items, size) {
         .map(group => ({
           group,
           label: formatGradeGroup(group),
-          pages: chunkActivities(workshopActivities.filter(a => a.gradeGroup === group), ACTIVITIES_PER_PAGE)
+          pages: chunkActivities(mixActivitiesByDomain(workshopActivities.filter(a => a.gradeGroup === group)), ACTIVITIES_PER_PAGE)
         }))
         .filter(g => g.pages.length > 0);
 
