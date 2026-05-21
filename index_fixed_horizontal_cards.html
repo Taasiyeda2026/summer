@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>חוברת פעילויות A4 | בחירת סדנאות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --paper: #fffdf7;
+      --line: rgba(23, 32, 51, 0.12);
+      --blue: #203b7a;
+      --cyan: #34c3d5;
+      --pink: #d82f78;
+      --purple: #6c4de6;
+      --green: #1a9c74;
+      --cream: #fff7e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Assistant", "Heebo", "Rubik", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(52,195,213,.18), transparent 32%),
+        radial-gradient(circle at 92% 3%, rgba(216,47,120,.16), transparent 32%),
+        linear-gradient(180deg, #f7fbff 0%, #eef3f9 55%, #f8f1e6 100%);
+    }
+
+    button,
+    input { font: inherit; }
+
+    .screen-controls {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 24px;
+      padding: 18px 0 0;
+    }
+
+    .control-hero {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 20px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.92);
+      box-shadow: 0 18px 45px rgba(20,34,66,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .control-hero h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.18;
+      letter-spacing: -.03em;
+    }
+
+    .control-hero p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .print-btn,
+    .action-btn {
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 15px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: 900;
+      color: #172033;
+      background: white;
+    }
+
+    .print-btn {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 24px rgba(108,77,230,.22);
+      white-space: nowrap;
+    }
+
+    .selector-panel {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 14px 36px rgba(20,34,66,.09);
+    }
+
+    .selector-body {
+      display: block;
+    }
+
+    .selector-panel.collapsed .selector-body {
+      display: none;
+    }
+
+    .selector-panel.collapsed .selector-top {
+      margin-bottom: 0;
+    }
+
+    .selector-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .selector-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .selector-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .selected-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 112px;
+      min-height: 40px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .selector-tools {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .filters-panel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .filter-group {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      padding: 10px;
+    }
+
+    .filter-label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .filter-chip input { accent-color: var(--blue); }
+
+    .search-box {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 15px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .action-btn {
+      min-height: 40px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .activity-picker {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 380px;
+      overflow: auto;
+      padding: 2px 2px 4px;
+    }
+
+    .picker-section-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--muted);
+      padding: 2px 0 0;
+      letter-spacing: .03em;
+    }
+
+    .picker-grid {
+      display: grid;
+      gap: 7px;
+    }
+
+    .picker-grid.workshops {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .picker-grid.escapes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .activity-option {
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+
+    .activity-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option-card {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 7px;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid rgba(23,32,51,.11);
+      transition: .16s ease;
+    }
+
+    .checkmark {
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      border: 2px solid rgba(23,32,51,.2);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .activity-option.selected .option-card {
+      border-color: color-mix(in srgb, var(--option-accent) 70%, white);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--option-accent) 10%, white), white 68%);
+      box-shadow: 0 8px 18px rgba(20,34,66,.08);
+    }
+
+    .activity-option.selected .checkmark {
+      border-color: transparent;
+      background: var(--option-accent);
+    }
+
+    .activity-option.selected .checkmark::before { content: "✓"; }
+
+    .option-title {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 900;
+      color: #172033;
+    }
+
+    .option-meta {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      line-height: 1.3;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .booklet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      padding: 0 0 60px;
+    }
+
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      position: relative;
+      overflow: hidden;
+      padding: 9mm 9mm 8mm;
+      background:
+        radial-gradient(circle at 12% 7%, rgba(52,195,213,.15), transparent 29%),
+        radial-gradient(circle at 92% 10%, rgba(216,47,120,.13), transparent 27%),
+        linear-gradient(180deg, #fffdf8 0%, #ffffff 48%, #fff8eb 100%);
+      border-radius: 5mm;
+      box-shadow: 0 18px 55px rgba(20,34,66,.18);
+      border: 1px solid rgba(23,32,51,.08);
+    }
+
+    .a4-page::before {
+      content: "";
+      position: absolute;
+      inset: 4.5mm;
+      border: 1px solid rgba(32,59,122,.16);
+      border-radius: 4mm;
+      pointer-events: none;
+    }
+
+    .page-header {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: end;
+      gap: 12px;
+      height: 18.5mm;
+      padding: 0 1mm 1.8mm;
+      border-bottom: 1.4pt solid rgba(32,59,122,.88);
+      margin-bottom: 2mm;
+    }
+
+    .page-header-logo {
+      height: 14mm;
+      width: auto;
+      object-fit: contain;
+      align-self: center;
+    }
+
+    .page-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 1.8mm;
+      color: #203b7a;
+      font-size: 10.5px;
+      font-weight: 900;
+    }
+
+    .page-grade-label {
+      margin: 0 0 1mm;
+      font-size: 9px;
+      font-weight: 700;
+      color: #9ca3af;
+      letter-spacing: 0.03em;
+      direction: rtl;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+
+    .page-subtitle {
+      margin: 1.8mm 0 0;
+      color: var(--muted);
+      font-size: 10.6px;
+      line-height: 1.45;
+      font-weight: 700;
+      max-width: 138mm;
+    }
+
+    .page-badge {
+      min-width: 29mm;
+      text-align: center;
+      padding: 2.5mm 3mm;
+      border-radius: 99px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      font-size: 10px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(32,59,122,.18);
+    }
+
+    .page-grid {
+      position: relative;
+      z-index: 1;
+      height: calc(100% - 40mm);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 3.2mm;
+      align-content: start;
+    }
+
+    .page-grid.page-layout-bottom {
+      grid-template-areas:
+        "a b"
+        "c d"
+        "e e";
+    }
+
+    .page-grid.page-layout-middle {
+      grid-template-areas:
+        "a b"
+        "c c"
+        "d e";
+    }
+
+    .page-grid.page-layout-top {
+      grid-template-areas:
+        "a a"
+        "b c"
+        "d e";
+    }
+
+    .activity-card {
+      --accent: #203b7a;
+      position: relative;
+      display: grid;
+      overflow: hidden;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(23,32,51,.11);
+      border-radius: 4mm;
+      box-shadow: 0 9px 22px rgba(20,34,66,.09);
+    }
+
+    .activity-card::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0;
+      bottom: 0;
+      width: 1.7mm;
+      background: var(--accent);
+    }
+
+    .activity-card {
+      grid-template-columns: 35% minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      padding: 2.7mm 2.7mm 2.7mm 4.3mm;
+      gap: 2.3mm;
+      align-items: stretch;
+      min-height: 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .escape-room-card {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 34% minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      gap: 3mm;
+      align-items: stretch;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .escape-room-card .media-column {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      margin-top: 0;
+      align-self: center;
+    }
+
+    .escape-room-card .image-box {
+      aspect-ratio: 1 / 1;
+      height: auto;
+      width: 100%;
+      flex: none;
+      margin-top: 0;
+    }
+
+    .escape-room-card .card-content {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .escape-room-card .goals-box {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .escape-room-card--mirrored {
+      grid-template-columns: minmax(0, 1fr) 34%;
+    }
+
+    .escape-room-card--mirrored .media-column {
+      grid-column: 2;
+      grid-row: 1 / 3;
+    }
+
+    .escape-room-card--mirrored .card-content {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .escape-room-card--mirrored .goals-box {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+
+    .escape-room-page .page-title {
+      font-size: 29px;
+      line-height: 1.02;
+      letter-spacing: -.04em;
+    }
+
+    .escape-room-page {
+      padding-top: 7mm;
+      padding-bottom: 6mm;
+    }
+
+    .escape-room-page .page-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5mm;
+      grid-template-columns: unset;
+      grid-template-rows: unset;
+      align-content: unset;
+    }
+
+    .escape-hero {
+      position: relative;
+      border: 1px solid rgba(32,59,122,.14);
+      border-radius: 3.6mm;
+      padding: 2.6mm 4.5mm;
+      background: rgba(247, 252, 255, 0.95);
+      direction: rtl;
+      text-align: right;
+    }
+
+    .escape-hero::after {
+      content: "";
+      position: absolute;
+      inset-inline: 5mm;
+      bottom: 0;
+      height: .8mm;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(30,58,138,.16), rgba(34,211,238,.18), rgba(30,58,138,.16));
+    }
+
+    .escape-hero-subtitle {
+      margin: 0;
+      font-size: 15px;
+      color: #1e3a8a;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .escape-intro-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3.2mm;
+      direction: rtl;
+      align-items: stretch;
+    }
+
+    .escape-info-card {
+      border: 1px solid rgba(148,163,184,.3);
+      border-radius: 3mm;
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,251,255,.95));
+      padding: 3.6mm 3.8mm;
+      box-shadow: 0 8px 16px rgba(15,23,42,.06);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .escape-info-card h3 {
+      margin: 0 0 1.8mm;
+      color: #1e3a8a;
+      font-size: 14.2px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .escape-info-card p {
+      margin: 0;
+      font-size: 12.2px;
+      line-height: 1.62;
+      color: #374151;
+    }
+
+    .escape-cards-row {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5mm;
+      min-height: 0;
+    }
+
+    .escape-cards-row .activity-card {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .escape-cards-row .escape-room-card {
+      grid-column: auto;
+    }
+
+    .escape-cards-row .escape-room-card + .escape-room-card {
+      margin-top: .8mm;
+    }
+
+    .escape-cards-row .escape-room-card {
+      border-radius: 4.2mm;
+      border: 1px solid rgba(100,116,139,.24);
+      padding: 4.2mm 4.2mm 4.2mm 5.8mm;
+      box-shadow: 0 10px 22px rgba(15,23,42,.08);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .escape-room-card .image-box {
+      aspect-ratio: 1 / 1;
+      min-height: 46mm;
+    }
+
+    .escape-room-card--bio {
+      background: linear-gradient(145deg, rgba(254,255,250,.98), rgba(236,250,245,.96));
+      border-color: rgba(22,163,74,.3);
+      --accent: #0f766e;
+    }
+
+    .escape-room-card--astro {
+      background: linear-gradient(145deg, rgba(252,254,255,.98), rgba(237,244,255,.96));
+      border-color: rgba(99,102,241,.3);
+      --accent: #1d4ed8;
+    }
+
+    .media-column {
+      grid-column: 1;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
+      align-items: stretch;
+    }
+
+    .image-box {
+      height: 100%;
+      min-height: 100%;
+      border-radius: 3mm;
+      overflow: hidden;
+      background: #eef2f8;
+      border: 1px solid rgba(23,32,51,.08);
+      flex: none;
+    }
+
+    .image-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      min-height: 0;
+      margin-top: 9mm;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 3mm;
+      color: #8a99b4;
+      font-size: 8px;
+      text-align: center;
+      font-weight: 800;
+      background: linear-gradient(135deg, #eef2f8, #e4e9f4);
+    }
+
+    .card-content {
+      grid-column: 2;
+      grid-row: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .card-content { min-height: 13.5mm; }
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1mm;
+    }
+
+    .card-topline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1mm;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 5.2mm;
+      padding: 1mm 1.8mm;
+      border-radius: 999px;
+      font-size: 8.3px;
+      line-height: 1;
+      font-weight: 900;
+      color: #162033;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(23,32,51,.10);
+    }
+
+    .tag.accent {
+      color: white;
+      background: var(--accent);
+      border-color: transparent;
+    }
+
+    .activity-card h2 {
+      margin: 0 0 1.2mm;
+      letter-spacing: -.035em;
+      color: #0f766e;
+      padding-bottom: 1.2mm;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.25);
+    }
+
+    .activity-card h2 { font-size: 16.5px; line-height: 1.16; font-weight: 950; }
+
+    .product-box {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .35mm;
+      text-align: center;
+      border-radius: 2.2mm;
+      padding: 1.3mm 1.6mm;
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, rgba(23,32,51,.1));
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, #f6f3ff), #f2f8ff 85%);
+    }
+
+    .product-line {
+      margin: 0;
+      font-size: 9px;
+      line-height: 1.3;
+      color: #24324a;
+      font-weight: 700;
+    }
+
+    .product-name {
+      font-weight: 950;
+      color: #1f2a3d;
+    }
+
+    .card-description {
+      margin: 0;
+      min-height: 2.9em;
+      color: #374151;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .goals-box {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      padding-top: 1.3mm;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 14%, rgba(23,32,51,.08));
+      direction: rtl;
+      text-align: right;
+    }
+
+    .goals-title {
+      margin: 0 0 1mm;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -.01em;
+    }
+
+    .goals-box ul {
+      margin: 0;
+      padding: 0 3.5mm 0 0;
+    }
+
+    .goals-box li {
+      margin: .45mm 0;
+      color: #374151;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 400;
+    }
+
+
+    /* עטיפת טקסט סביב תמונה — מיועד לכרטיסי סדנאות רגילים בלבד */
+    .activity-card:not(.escape-room-card) {
+      display: block;
+      direction: rtl;
+      text-align: right;
+      padding: 2.1mm 3.5mm 2.1mm 2.3mm;
+    }
+
+    .activity-card:not(.escape-room-card) .card-content {
+      display: block;
+      min-height: 0;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .activity-card:not(.escape-room-card) .card-header {
+      margin-bottom: .8mm;
+    }
+
+    .workshop-float-media {
+      float: left;
+      width: 35%;
+      max-width: 38mm;
+      min-width: 29mm;
+      margin: 0 2.3mm 1.1mm 0;
+      direction: rtl;
+      text-align: center;
+    }
+
+    .workshop-float-media .image-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      min-height: 0;
+      margin-top: 0;
+      border-radius: 3mm;
+    }
+
+    .workshop-float-media .product-box {
+      margin-top: .8mm;
+    }
+
+    .workshop-float-media .card-topline {
+      margin-top: .8mm;
+      justify-content: center;
+      gap: .8mm;
+    }
+
+    .workshop-float-media .tag {
+      min-height: 4.8mm;
+      padding: .9mm 1.5mm;
+      font-size: 7.9px;
+    }
+
+    .activity-card:not(.escape-room-card) .card-description {
+      min-height: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .activity-card:not(.escape-room-card) .goals-box {
+      clear: both;
+      margin-top: 1mm;
+    }
+
+    .activity-card.horizontal-card {
+      display: grid !important;
+      grid-template-columns: 42% minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      gap: 1.6mm 2.2mm;
+      align-items: start;
+      direction: ltr;
+      padding: 2.1mm 2.7mm 2.1mm 4mm !important;
+      min-height: 0;
+    }
+
+    .activity-card.horizontal-card .card-content {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      gap: .9mm;
+    }
+
+    .activity-card.horizontal-card .card-header {
+      margin-bottom: .3mm;
+    }
+
+    .activity-card.horizontal-card .media-column {
+      grid-column: 1;
+      grid-row: 2;
+      float: none;
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .activity-card.horizontal-card .workshop-float-media .image-box {
+      aspect-ratio: 16 / 9;
+      margin-top: 0;
+    }
+
+    .activity-card.horizontal-card .workshop-float-media .product-box,
+    .activity-card.horizontal-card .workshop-float-media .card-topline {
+      margin-top: .6mm;
+    }
+
+    .activity-card.horizontal-card .goals-box {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      margin-top: .5mm;
+      padding-top: .9mm;
+      clear: none;
+    }
+
+
+
+    /* כרטיס רוחבי נקי — מופרד מהכרטיסים הרגילים, ללא float */
+    .activity-card.horizontal-card {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto minmax(0, 1fr) !important;
+      gap: 1.4mm !important;
+      padding: 2mm 3mm 2mm 4.2mm !important;
+      direction: rtl !important;
+      text-align: right !important;
+      overflow: hidden !important;
+      align-items: stretch !important;
+    }
+
+    .activity-card.horizontal-card .horizontal-title {
+      grid-row: 1;
+      margin: 0 !important;
+      padding-bottom: 1mm !important;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.25);
+      font-size: 16.5px;
+      line-height: 1.16;
+      font-weight: 950;
+      color: #0f766e;
+      letter-spacing: -.035em;
+    }
+
+    .activity-card.horizontal-card .horizontal-body {
+      grid-row: 2;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 34% minmax(0, 1fr);
+      gap: 2.2mm;
+      align-items: stretch;
+      direction: ltr;
+    }
+
+    .activity-card.horizontal-card .horizontal-media {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .8mm;
+      direction: rtl;
+      text-align: center;
+    }
+
+    .activity-card.horizontal-card .horizontal-media .image-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      min-height: 0;
+      margin: 0;
+      border-radius: 3mm;
+    }
+
+    .activity-card.horizontal-card .horizontal-media .product-box {
+      margin: 0;
+      padding: 1mm 1.4mm;
+    }
+
+    .activity-card.horizontal-card .horizontal-media .card-topline {
+      justify-content: center;
+      gap: .7mm;
+      margin: 0;
+    }
+
+    .activity-card.horizontal-card .horizontal-text {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1mm;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .activity-card.horizontal-card .card-description {
+      margin: 0;
+      min-height: 0;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .activity-card.horizontal-card .goals-box {
+      grid-column: auto;
+      grid-row: auto;
+      clear: none;
+      margin: 0;
+      padding-top: 1mm;
+    }
+
+    .activity-card.horizontal-card .goals-title {
+      margin-bottom: .8mm;
+    }
+
+    .activity-card.horizontal-card .goals-box li {
+      margin: .35mm 0;
+      line-height: 1.38;
+    }
+
+    /* הידוק הכרטיסים הרגילים בלי הקטנת פונטים */
+    .activity-card:not(.escape-room-card):not(.horizontal-card) {
+      padding: 1.8mm 3.2mm 1.8mm 2.1mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .card-header {
+      margin-bottom: .6mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .goals-box {
+      margin-top: .8mm;
+      padding-top: 1mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .goals-box li {
+      margin: .35mm 0;
+    }
+
+    .page-contact {
+      position: absolute;
+      left: 9mm;
+      right: 9mm;
+      bottom: 13mm;
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #1e3a5f;
+      direction: rtl;
+      letter-spacing: 0.01em;
+    }
+
+    .page-footer {
+      position: absolute;
+      left: 9mm;
+      right: 9mm;
+      bottom: 5.3mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #6b7280;
+      font-size: 8.8px;
+      font-weight: 800;
+      border-top: 1px solid rgba(23,32,51,.10);
+      padding-top: 2mm;
+    }
+
+    .page-footer-org {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8px;
+      font-weight: 700;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    .page-number {
+      color: #9ca3af;
+      font-size: 8.5px;
+      font-weight: 600;
+    }
+
+    .section-divider {
+      width: 210mm;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    @media print {
+      .section-divider { display: none; }
+    }
+
+    .domain-heading {
+      margin: 0;
+      padding: 2px 0 1px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #1f2a44;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .empty-booklet {
+      width: min(620px, calc(100% - 40px));
+      margin: 26px auto 70px;
+      padding: 20px 24px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 14px 36px rgba(20,34,66,.09);
+      text-align: center;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .catalog-mode .screen-controls {
+      display: none;
+    }
+
+    .back-bar {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 999;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .catalog-mode .back-bar {
+      display: flex;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: #172033;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    }
+
+    .print-catalog-btn {
+      background: #0f766e;
+    }
+
+    @media print {
+      .back-bar { display: none !important; }
+    }
+
+    .empty-booklet strong {
+      display: block;
+      color: var(--ink);
+      font-size: 19px;
+      margin-bottom: 6px;
+    }
+
+    @media screen and (max-width: 900px) {
+      .control-hero,
+      .selector-top,
+      .selector-tools { grid-template-columns: 1fr; }
+      .action-row { justify-content: flex-start; }
+      .filters-panel { grid-template-columns: 1fr; }
+      .activity-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .a4-page { transform: scale(.62); transform-origin: top center; margin-bottom: -112mm; }
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+
+      html, body {
+        width: 210mm;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .screen-controls,
+      .empty-booklet { display: none !important; }
+
+      .booklet {
+        display: block;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .a4-page,
+      .catalog-page {
+        width: 210mm !important;
+        height: 297mm !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 9mm !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .a4-page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .page-grid { height: calc(100% - 40mm) !important; }
+
+      .activity-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        overflow: visible !important;
+      }
+
+  
+    /* עטיפת טקסט סביב תמונה — מיועד לכרטיסי סדנאות רגילים בלבד */
+    .activity-card:not(.escape-room-card) {
+      display: block;
+      direction: rtl;
+      text-align: right;
+      padding: 2.7mm 4.3mm 2.7mm 2.7mm;
+    }
+
+    .activity-card:not(.escape-room-card) .card-content {
+      display: block;
+      min-height: 0;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .activity-card:not(.escape-room-card) .card-header {
+      margin-bottom: 1.2mm;
+    }
+
+    .workshop-float-media {
+      float: left;
+      width: 35%;
+      max-width: 38mm;
+      min-width: 29mm;
+      margin: 0 3mm 1.6mm 0;
+      direction: rtl;
+      text-align: center;
+    }
+
+    .workshop-float-media .image-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      min-height: 0;
+      margin-top: 0;
+      border-radius: 3mm;
+    }
+
+    .workshop-float-media .product-box {
+      margin-top: 1.2mm;
+    }
+
+    .workshop-float-media .card-topline {
+      margin-top: 1.2mm;
+      justify-content: center;
+      gap: .8mm;
+    }
+
+    .workshop-float-media .tag {
+      min-height: 4.8mm;
+      padding: .9mm 1.5mm;
+      font-size: 7.9px;
+    }
+
+    .activity-card:not(.escape-room-card) .card-description {
+      min-height: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .activity-card:not(.escape-room-card) .goals-box {
+      clear: both;
+      margin-top: 1.5mm;
+    }
+
+    .page-contact {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        margin-top: auto;
+        padding-top: 3mm;
+      }
+
+      .page-footer {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        margin-top: 2mm;
+      }
+
+
+
+      .activity-card.horizontal-card {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto minmax(0, 1fr) !important;
+        gap: 1.4mm !important;
+        padding: 2mm 3mm 2mm 4.2mm !important;
+        direction: rtl !important;
+        text-align: right !important;
+        overflow: hidden !important;
+      }
+
+      .activity-card.horizontal-card .horizontal-body {
+        display: grid !important;
+        grid-template-columns: 34% minmax(0, 1fr) !important;
+        gap: 2.2mm !important;
+        align-items: stretch !important;
+        direction: ltr !important;
+      }
+
+      .activity-card.horizontal-card .horizontal-media {
+        float: none !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: .8mm !important;
+      }
+
+      .activity-card.horizontal-card .image-box {
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+      }
+
+      .activity-card.horizontal-card .goals-box {
+        clear: none !important;
+        margin: 0 !important;
+        padding-top: 1mm !important;
+      }
+
+      h1, h2, h3,
+      .page-title,
+      .activity-card h2,
+      .goals-title,
+      .page-footer-org,
+      .page-badge {
+        letter-spacing: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="back-bar" id="backBar">
+    <button class="back-btn" id="backBtn" type="button">← חזרה לבחירה</button>
+    <button class="back-btn print-catalog-btn" type="button" onclick="window.print()">🖨 הדפסה / PDF</button>
+  </div>
+  <header class="screen-controls">
+    <section class="control-hero">
+      <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
+      <div>
+        <h1>תצוגת A4 מגוונת — חוברת פעילויות</h1>
+        <p>בחר אילו פעילויות ייכנסו לקטלוג. המבנה העיצובי נשאר קבוע בכל מצב — הבחירה משנה רק את התוכן שמופיע בתוך העמודים.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+        <button class="action-btn" id="catalogModeBtn" type="button">הפקת קטלוג מעוצב</button>
+        <button class="print-btn" type="button" onclick="window.print()">הדפסה / שמירה ל־PDF</button>
+      </div>
+    </section>
+
+    <section class="selector-panel collapsed" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
+      <div class="selector-top">
+        <div class="selector-title">
+          <h2>בחירת סדנאות ופעילויות לקטלוג</h2>
+          <p>סמן או בטל פעילויות. הסדר נשאר לפי הסדר המקורי, והעמודים נבנים מחדש אוטומטית.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="selected-count" id="selectedCount">0 נבחרו</div>
+          <button class="action-btn" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
+        </div>
+      </div>
+
+      <div class="selector-body">
+      <div class="selector-tools">
+        <label class="search-box">
+          <span>⌕</span>
+          <input id="pickerSearch" type="search" placeholder="חיפוש פעילות לפי שם, תחום, גיל או סוג..." />
+        </label>
+        <div class="action-row">
+          <button class="action-btn" type="button" data-action="all">בחר הכול</button>
+          <button class="action-btn" type="button" data-action="none">נקה הכול</button>
+          <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
+          <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
+        </div>
+      </div>
+
+      
+      <div class="filters-panel">
+        <div class="filter-group">
+          <p class="filter-label">סינון לפי כיתות (בחירה מרובה)</p>
+          <div id="gradeFilters" class="filter-options"></div>
+        </div>
+        <div class="filter-group">
+          <p class="filter-label">סינון לפי תחומים (בחירה מרובה)</p>
+          <div id="domainFilters" class="filter-options"></div>
+        </div>
+      </div>
+
+      <div id="activityPicker" class="activity-picker"></div>
+      </div>
+    </section>
+  </header>
+
+  <main id="booklet" class="booklet" aria-label="חוברת פעילויות A4"></main>
+
+  <script>
+    let activities = [];
+
+    const booklet = document.getElementById("booklet");
+    const picker = document.getElementById("activityPicker");
+    const searchInput = document.getElementById("pickerSearch");
+    const selectedCount = document.getElementById("selectedCount");
+    const gradeFilters = document.getElementById("gradeFilters");
+    const domainFilters = document.getElementById("domainFilters");
+    const catalogModeBtn = document.getElementById("catalogModeBtn");
+    const ACTIVITIES_PER_PAGE = 5;
+    const PAGE_LAYOUT_SEQUENCE = ["bottom", "middle", "top", "middle", "bottom"];
+    const LAYOUT_HORIZONTAL_INDEX = {
+      top: 0,
+      middle: 2,
+      bottom: 4
+    };
+    const selected = new Set();
+    let pickerQuery = "";
+    const selectedGrades = new Set();
+    const selectedDomains = new Set();
+
+    const DOMAIN_COLORS = {
+      "חלל":        "#1e3a8a",
+      "אסטרונומיה": "#5b21b6",
+      "אופטיקה":    "#0e7490",
+      "תעופה":      "#1d4ed8",
+      "ביומימיקרי": "#065f46",
+      "קיימות":     "#047857",
+      "כימיה":      "#c2410c",
+      "ביולוגיה":   "#9d174d",
+      "פיזיקה":     "#78350f",
+      "הנדסה":      "#4338ca",
+    };
+
+    function normalizeActivity(rawActivity = {}, gradeGroup = "") {
+      const title = rawActivity.workshopName ?? rawActivity.title ?? "";
+      const domain = rawActivity.domain ?? "";
+      const type = rawActivity.activityType ?? rawActivity.type ?? "סדנה";
+      const durationMinutes = Number(rawActivity.durationMinutes);
+      const duration = Number.isFinite(durationMinutes) && durationMinutes > 0
+        ? `${durationMinutes} דקות`
+        : (rawActivity.duration ?? "");
+      const product = rawActivity.personalProduct ?? rawActivity.product ?? "";
+      const text = rawActivity.description ?? rawActivity.text ?? "";
+      const goals = Array.isArray(rawActivity.goals) ? rawActivity.goals.filter(Boolean) : [];
+      const grades = Array.isArray(rawActivity.grades)
+        ? rawActivity.grades.filter(Boolean)
+        : (gradeGroup ? [gradeGroup] : []);
+      const manualImage = rawActivity.image ?? rawActivity.imageUrl ?? rawActivity.imagePath ?? "";
+      const paddedId = String(rawActivity.id ?? "").padStart(3, "0");
+      const image = manualImage || (rawActivity.id ? `image/${paddedId}.png` : "");
+
+      return {
+        ...rawActivity,
+        title,
+        domain,
+        type,
+        duration,
+        product,
+        text,
+        goals,
+        grades,
+        image,
+        accent: DOMAIN_COLORS[rawActivity.domain ?? ""] || rawActivity.accent || "#203b7a"
+      };
+    }
+
+    async function loadActivities() {
+      const response = await fetch("activities.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Failed to load activities.json (${response.status})`);
+      const data = await response.json();
+
+      if (Array.isArray(data?.gradeGroups)) {
+        return data.gradeGroups.flatMap(group => {
+          const groupGrade = group?.gradeGroup ?? "";
+          const groupActivities = Array.isArray(group?.activities) ? group.activities : [];
+          return groupActivities.map(activity => normalizeActivity(activity, groupGrade));
+        });
+      }
+
+      if (Array.isArray(data?.activities)) {
+        return data.activities.map(activity => normalizeActivity(activity));
+      }
+
+      return [];
+    }
+
+function chunkActivities(items, size) {
+      const result = [];
+      for (let i = 0; i < items.length; i += size) {
+        result.push(items.slice(i, i + size));
+      }
+      return result;
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatGrade(grade) {
+      return String(grade ?? "").replace(/[\u05D0-\u05EA]/g, "$&׳");
+    }
+
+    function imageMarkup(activity) {
+      const isEscape = activity.type === "חדר בריחה";
+      const productHTML = isEscape ? "" : `
+          <div class="product-box">
+            <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+          </div>`;
+      return `
+        <div class="media-column">
+          <div class="image-box">
+            <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+          </div>
+          ${productHTML}
+          <div class="card-topline">
+            <span class="tag">${escapeHTML(activity.domain)}</span>
+            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+          </div>
+        </div>`;
+    }
+
+
+    function workshopImageMarkup(activity) {
+      return `
+        <div class="workshop-float-media">
+          <div class="image-box">
+            <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+          </div>
+          <div class="product-box">
+            <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+          </div>
+          <div class="card-topline">
+            <span class="tag">${escapeHTML(activity.domain)}</span>
+            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+          </div>
+        </div>`;
+    }
+
+    function createImagePlaceholder() {
+      const placeholder = document.createElement("div");
+      placeholder.className = "image-placeholder";
+      placeholder.textContent = "תמונה תתווסף כאן";
+      return placeholder;
+    }
+
+    function renderGoalsList(activity) {
+      return activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
+    }
+
+    function renderHorizontalCard(activity) {
+      const goals = renderGoalsList(activity);
+      const card = document.createElement("article");
+      card.className = "activity-card horizontal-card";
+      card.style.setProperty("--accent", activity.accent || "#203b7a");
+      card.innerHTML = `
+        <h2 class="horizontal-title">${escapeHTML(activity.title)}</h2>
+        <div class="horizontal-body">
+          <div class="horizontal-media">
+            <div class="image-box">
+              <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+            </div>
+            <div class="product-box">
+              <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+            </div>
+            <div class="card-topline">
+              <span class="tag">${escapeHTML(activity.domain)}</span>
+              <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+              <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+            </div>
+          </div>
+          <div class="horizontal-text">
+            <p class="card-description">${escapeHTML(activity.text)}</p>
+            <div class="goals-box">
+              <p class="goals-title">מטרות מרכזיות</p>
+              <ul>${goals}</ul>
+            </div>
+          </div>
+        </div>`;
+      return card;
+    }
+
+    function renderCard(activity, options = {}) {
+      if (options.horizontal && activity.type !== "חדר בריחה") {
+        return renderHorizontalCard(activity);
+      }
+
+      const goals = renderGoalsList(activity);
+      const card = document.createElement("article");
+      const isEscape = activity.type === "חדר בריחה";
+      card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
+      card.style.setProperty("--accent", activity.accent || "#203b7a");
+      card.innerHTML = isEscape ? `
+        ${imageMarkup(activity)}
+        <div class="card-content">
+          <div class="card-header">
+            <h2>${escapeHTML(activity.title)}</h2>
+          </div>
+          <p class="card-description">${escapeHTML(activity.text)}</p>
+        </div>` : `
+        <div class="card-content">
+          <div class="card-header">
+            <h2>${escapeHTML(activity.title)}</h2>
+          </div>
+          ${workshopImageMarkup(activity)}
+          <p class="card-description">${escapeHTML(activity.text)}</p>
+        </div>
+        <div class="goals-box">
+          <p class="goals-title">מטרות מרכזיות</p>
+          <ul>${goals}</ul>
+        </div>`;
+      return card;
+    }
+
+    function renderEscapeRoomPage(escapeActivities, pageIndex, totalPages) {
+      const page = document.createElement("section");
+      page.className = "a4-page catalog-page escape-room-page";
+      page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
+
+      page.innerHTML = `
+        <header class="page-header">
+          <img class="page-header-logo" src="logo.png" alt="לוגו" />
+          <div><h1 class="page-title">חדרי בריחה דיגיטליים</h1></div>
+        </header>
+        <div class="page-grid">
+          <div class="escape-hero">
+            <p class="escape-hero-subtitle">כאן הלמידה הופכת למשימה, והידע נפתח דרך חידות, רמזים וסיפור.</p>
+          </div>
+          <div class="escape-intro-cards">
+            <article class="escape-info-card">
+              <h3>חוויית למידה אחרת</h3>
+              <p>חדרי הבריחה של תעשיידע מזמינים את התלמידים לחוויית למידה אחרת: מסע אינטראקטיבי שבו סיפור, חידות, מדע וטכנולוגיה מתחברים לעולם מסקרן ומלא גילוי. מהרגע הראשון התלמידים נכנסים למשימה שמעוררת שאלה ומזמינה לגלות מה מסתתר מאחורי הדלת הבאה.</p>
+            </article>
+            <article class="escape-info-card">
+              <h3>לומדים דרך משימה</h3>
+              <p>במקום לפגוש את הידע רק דרך הסבר, המשתתפים נכנסים לתוך סיפור דיגיטלי חי. הם מפענחים רמזים, פותרים אתגרים, מקבלים החלטות, עובדים יחד ומגלים בהדרגה את הידע שמסתתר מאחורי העלילה. כל פתרון חושף פרט נוסף ומקדם את הקבוצה להמשך הדרך.</p>
+            </article>
+            <article class="escape-info-card">
+              <h3>חשיבה, שיתוף פעולה וגילוי</h3>
+              <p>לאורך הפעילות התלמידים מתבוננים בפרטים, שואלים שאלות ומחברים בין מידע ורעיונות. הם נדרשים להקשיב זה לזה, לחלק תפקידים ולתרגל עבודת צוות בדרך לפתרון משותף. כל חדר בריחה נבנה סביב עולם תוכן ייחודי ומאפשר למידה דרך אתגר, סיפור וגילוי.</p>
+            </article>
+          </div>
+          <div class="escape-cards-row"></div>
+        </div>
+        <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
+        <footer class="page-footer">
+          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
+          <span class="page-number">${pageIndex + 1}</span>
+        </footer>`;
+
+      const cardsRow = page.querySelector(".escape-cards-row");
+      escapeActivities.forEach((activity, i) => {
+        const card = renderCard(activity);
+        const title = activity.title || "";
+        if (title.includes("ביומימיקרי")) card.classList.add("escape-room-card--bio");
+        if (title.includes("אסטרואיד")) card.classList.add("escape-room-card--astro");
+        if (i === 0) card.classList.add("escape-room-card--mirrored");
+        cardsRow.appendChild(card);
+      });
+      return page;
+    }
+
+    function formatGradeGroup(g) {
+      return ({ "א-ג": "כיתות א׳–ג׳", "ד-ו": "כיתות ד׳–ו׳", "א-ו": "כיתות א׳–ו׳" })[g] || g;
+    }
+
+    function renderPage(items, pageIndex, totalPages, isEscapePage = false, gradeLabel = "") {
+      const page = document.createElement("section");
+      page.className = "a4-page catalog-page";
+      page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
+      const pageTitle = isEscapePage ? "חדרי בריחה" : "סדנאות STEM חווייתיות";
+      const gradeLabelHTML = gradeLabel ? `<p class="page-grade-label">${escapeHTML(gradeLabel)}</p>` : "";
+
+      page.innerHTML = `
+        <header class="page-header">
+          <img class="page-header-logo" src="logo.png" alt="לוגו" />
+          <div>
+            ${gradeLabelHTML}
+            <h1 class="page-title">${pageTitle}</h1>
+          </div>
+        </header>
+        <div class="page-grid"></div>
+        <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
+        <footer class="page-footer">
+
+          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
+          <span class="page-number">${pageIndex + 1}</span>
+        </footer>`;
+
+      const grid = page.querySelector(".page-grid");
+      const layoutKey = PAGE_LAYOUT_SEQUENCE[pageIndex % PAGE_LAYOUT_SEQUENCE.length];
+      grid.classList.add(`page-layout-${layoutKey}`);
+      const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
+      const areaNames = ["a", "b", "c", "d", "e"];
+      items.forEach((activity, index) => {
+        const isHorizontal = index === horizontalIndex;
+        const card = renderCard(activity, { horizontal: isHorizontal });
+        if (index < areaNames.length) card.style.gridArea = areaNames[index];
+        grid.appendChild(card);
+      });
+      return page;
+    }
+
+    function getSelectedActivities() {
+      return activities
+        .map((activity, index) => ({ ...activity, originalIndex: index }))
+        .filter(activity => selected.has(activity.originalIndex) && matchesAdvancedFilters(activity));
+    }
+
+    function groupByDomain(items) {
+      const grouped = new Map();
+      items.forEach(item => {
+        const key = item.domain || "ללא תחום";
+        if (!grouped.has(key)) grouped.set(key, []);
+        grouped.get(key).push(item);
+      });
+      return grouped;
+    }
+
+    function renderCatalog(filteredActivities) {
+      selectedCount.textContent = `${filteredActivities.length} נבחרו`;
+      booklet.innerHTML = "";
+
+      if (!filteredActivities.length) {
+        booklet.innerHTML = `<section class="empty-booklet"><strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.</section>`;
+        return;
+      }
+
+      const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
+      const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
+
+      const workshopsByDomain = groupByDomain(workshopActivities);
+      const workshopPageModels = [];
+      workshopsByDomain.forEach((domainItems, domain) => {
+        const chunks = chunkActivities(domainItems, ACTIVITIES_PER_PAGE);
+        chunks.forEach(chunk => workshopPageModels.push({ domain, items: chunk }));
+      });
+      const hasEscape = escapeRoomActivities.length > 0;
+      const totalPages = workshopPageModels.length + (hasEscape ? 1 : 0);
+
+      workshopPageModels.forEach(({ domain, items }, pageIndex) => {
+        const groups = [...new Set(items.map(a => a.gradeGroup).filter(Boolean))];
+        const gradeLabelParts = groups.map(formatGradeGroup).filter(Boolean);
+        gradeLabelParts.unshift(`תחום: ${domain}`);
+        const gradeLabel = gradeLabelParts.join(" | ");
+        booklet.appendChild(renderPage(items, pageIndex, totalPages, false, gradeLabel));
+      });
+      if (hasEscape) {
+        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, workshopPageModels.length, totalPages));
+      }
+    }
+
+    
+
+    function uniqueValues(extractor) {
+      return [...new Set(activities.flatMap(extractor))];
+    }
+
+    function renderFilterChips(container, values, key) {
+      container.innerHTML = "";
+      values.forEach(value => {
+        const isChecked = key === "grade" ? selectedGrades.has(value) : selectedDomains.has(value);
+        const label = document.createElement("label");
+        label.className = "filter-chip";
+        const displayValue = key === "grade" ? formatGrade(value) : value;
+        label.innerHTML = `<input type="checkbox" data-filter-key="${key}" data-filter-value="${escapeHTML(value)}" ${isChecked ? "checked" : ""} />${escapeHTML(displayValue)}`;
+        container.appendChild(label);
+      });
+    }
+
+    function renderFilters() {
+      renderFilterChips(gradeFilters, uniqueValues(activity => activity.grades), "grade");
+      renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]), "domain");
+    }
+
+    function matchesPickerSearch(activity) {
+      const q = pickerQuery.trim().toLowerCase();
+      if (!q) return true;
+      const haystack = [
+        activity.title,
+        activity.domain,
+        activity.type,
+        activity.product,
+        activity.grades.join(" ")
+      ].join(" ").toLowerCase();
+      return haystack.includes(q);
+    }
+
+    function matchesAdvancedFilters(activity) {
+      const gradeMatch = !selectedGrades.size || activity.grades.some(grade => selectedGrades.has(grade));
+      const domainMatch = !selectedDomains.size || selectedDomains.has(activity.domain);
+      return gradeMatch && domainMatch;
+    }
+
+    function renderPicker() {
+      picker.innerHTML = "";
+      const workshopByDomain = new Map();
+      const escapeByDomain = new Map();
+
+      activities.forEach((activity, index) => {
+        if (!matchesPickerSearch(activity) || !matchesAdvancedFilters(activity)) return;
+        const label = document.createElement("label");
+        label.className = "activity-option" + (selected.has(index) ? " selected" : "");
+        label.style.setProperty("--option-accent", activity.accent || "#203b7a");
+        label.innerHTML = `
+          <input type="checkbox" data-index="${index}" ${selected.has(index) ? "checked" : ""} />
+          <span class="option-card">
+            <span class="checkmark" aria-hidden="true"></span>
+            <span>
+              <span class="option-title">${escapeHTML(activity.title)}</span>
+              <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+            </span>
+          </span>`;
+        const bucket = activity.type === "חדר בריחה" ? escapeByDomain : workshopByDomain;
+        const domainKey = activity.domain || "ללא תחום";
+        if (!bucket.has(domainKey)) bucket.set(domainKey, []);
+        bucket.get(domainKey).push(label);
+      });
+
+      const appendGroupedSection = (title, groups, gridClass) => {
+        if (!groups.size) return;
+        const sectionLabel = document.createElement("p");
+        sectionLabel.className = "picker-section-label";
+        sectionLabel.textContent = title;
+        picker.appendChild(sectionLabel);
+        groups.forEach((labels, domain) => {
+          const domainHeading = document.createElement("p");
+          domainHeading.className = "domain-heading";
+          domainHeading.textContent = domain;
+          picker.appendChild(domainHeading);
+          const grid = document.createElement("div");
+          grid.className = `picker-grid ${gridClass}`;
+          labels.forEach(label => grid.appendChild(label));
+          picker.appendChild(grid);
+        });
+      };
+
+      appendGroupedSection("סדנאות", workshopByDomain, "workshops");
+      appendGroupedSection("חדרי בריחה דיגיטליים", escapeByDomain, "escapes");
+    }
+
+    function renderAll() {
+      renderFilters();
+      renderPicker();
+      renderCatalog(getSelectedActivities());
+    }
+
+    picker.addEventListener("change", event => {
+      const checkbox = event.target.closest('input[type="checkbox"][data-index]');
+      if (!checkbox) return;
+      const index = Number(checkbox.dataset.index);
+      checkbox.checked ? selected.add(index) : selected.delete(index);
+      renderAll();
+    });
+
+    document.addEventListener("change", event => {
+      const filterInput = event.target.closest("input[data-filter-key]");
+      if (!filterInput) return;
+      const { filterKey, filterValue } = filterInput.dataset;
+      const bucket = filterKey === "grade" ? selectedGrades : selectedDomains;
+      filterInput.checked ? bucket.add(filterValue) : bucket.delete(filterValue);
+      renderAll();
+    });
+
+    catalogModeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("catalog-mode");
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      document.body.classList.remove("catalog-mode");
+    });
+
+    const selectorPanel = document.getElementById("selectorPanel");
+    const togglePickerBtn = document.getElementById("togglePickerBtn");
+    togglePickerBtn.addEventListener("click", () => {
+      const isCollapsed = selectorPanel.classList.toggle("collapsed");
+      togglePickerBtn.textContent = isCollapsed ? "▾ בחר פעילויות" : "▴ סגור";
+    });
+
+    searchInput.addEventListener("input", event => {
+      pickerQuery = event.target.value;
+      renderPicker();
+    });
+
+    document.addEventListener("click", event => {
+      const actionButton = event.target.closest("[data-action]");
+      if (!actionButton) return;
+      const action = actionButton.dataset.action;
+      selected.clear();
+
+      if (action === "all") {
+        activities.forEach((_, index) => selected.add(index));
+      } else if (action === "workshops") {
+        activities.forEach((activity, index) => { if (activity.type === "סדנה") selected.add(index); });
+      } else if (action === "escapes") {
+        activities.forEach((activity, index) => { if (activity.type === "חדר בריחה") selected.add(index); });
+      }
+
+      renderAll();
+    });
+
+    async function init() {
+      try {
+        activities = await loadActivities();
+        renderAll();
+      } catch (error) {
+        console.error(error);
+        selectedCount.textContent = "0 נבחרו";
+        picker.innerHTML = "";
+        booklet.innerHTML = `<section class="empty-booklet"><strong>שגיאה בטעינת פעילויות</strong>לא ניתן היה לטעון את activities.json.</section>`;
+      }
+    }
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js");
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
