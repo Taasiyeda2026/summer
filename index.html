@@ -1523,7 +1523,6 @@ function chunkActivities(items, size) {
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
             <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
-            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
           </div>
         </div>`;
     }
@@ -1562,7 +1561,6 @@ function chunkActivities(items, size) {
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
             <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
-            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
           </div>
         </div>
         <div class="horizontal-body">
@@ -1646,18 +1644,18 @@ function chunkActivities(items, size) {
       return ({ "א-ג": "כיתות א׳–ג׳", "ד-ו": "כיתות ד׳–ו׳", "א-ו": "כיתות א׳–ו׳" })[g] || g;
     }
 
-    function renderPage(items, pageIndex, totalPages, isEscapePage = false, gradeLabel = "") {
+    function renderPage(items, pageIndex, totalPages, isEscapePage = false, gradeLabel = "", layoutIndex = pageIndex) {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
-      const pageTitle = isEscapePage ? "חדרי בריחה" : "סדנאות STEM חווייתיות";
-      const gradeLabelHTML = gradeLabel ? `<p class="page-grade-label">${escapeHTML(gradeLabel)}</p>` : "";
+      const pageTitle = isEscapePage
+        ? "חדרי בריחה"
+        : (gradeLabel ? `סדנאות STEM חווייתיות | ${gradeLabel}` : "סדנאות STEM חווייתיות");
 
       page.innerHTML = `
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
-            ${gradeLabelHTML}
             <h1 class="page-title">${pageTitle}</h1>
           </div>
         </header>
@@ -1670,7 +1668,7 @@ function chunkActivities(items, size) {
         </footer>`;
 
       const grid = page.querySelector(".page-grid");
-      const layoutKey = PAGE_LAYOUT_SEQUENCE[pageIndex % PAGE_LAYOUT_SEQUENCE.length];
+      const layoutKey = PAGE_LAYOUT_SEQUENCE[layoutIndex % PAGE_LAYOUT_SEQUENCE.length];
       grid.classList.add(`page-layout-${layoutKey}`);
       const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
       const areaNames = ["a", "b", "c", "d"];
@@ -1704,20 +1702,32 @@ function chunkActivities(items, size) {
         return;
       }
 
+      const gradeGroupsOrder = ["א-ג", "ד-ו"];
       const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
       const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
-
-      const workshopPages = chunkActivities(workshopActivities, ACTIVITIES_PER_PAGE);
       const hasEscape = escapeRoomActivities.length > 0;
-      const totalPages = workshopPages.length + (hasEscape ? 1 : 0);
 
-      workshopPages.forEach((items, pageIndex) => {
-        const groups = [...new Set(items.map(a => a.gradeGroup).filter(Boolean))];
-        const gradeLabel = groups.map(formatGradeGroup).join(" | ");
-        booklet.appendChild(renderPage(items, pageIndex, totalPages, false, gradeLabel));
+      const allGroupPages = gradeGroupsOrder
+        .map(group => ({
+          group,
+          label: formatGradeGroup(group),
+          pages: chunkActivities(workshopActivities.filter(a => a.gradeGroup === group), ACTIVITIES_PER_PAGE)
+        }))
+        .filter(g => g.pages.length > 0);
+
+      const totalWorkshopPages = allGroupPages.reduce((sum, g) => sum + g.pages.length, 0);
+      const totalPages = totalWorkshopPages + (hasEscape ? 1 : 0);
+
+      let globalPageIndex = 0;
+      allGroupPages.forEach(({ label, pages }) => {
+        pages.forEach((items, localIndex) => {
+          booklet.appendChild(renderPage(items, globalPageIndex, totalPages, false, label, localIndex));
+          globalPageIndex++;
+        });
       });
+
       if (hasEscape) {
-        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, workshopPages.length, totalPages));
+        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages));
       }
     }
 
