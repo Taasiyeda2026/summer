@@ -431,33 +431,29 @@
     .page-grid {
       position: relative;
       z-index: 1;
-      height: calc(100% - 40mm);
+      height: calc(100% - 105mm);
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: minmax(0, 1fr) 54mm minmax(0, 1fr);
+      grid-template-rows: repeat(2, minmax(0, 1fr));
       gap: 3.2mm;
       align-content: start;
     }
 
-    .page-grid.page-layout-bottom {
-      grid-template-areas:
-        "a b"
-        "c d"
-        "e e";
-    }
-
-    .page-grid.page-layout-middle {
-      grid-template-areas:
-        "a b"
-        "c c"
-        "d e";
-    }
-
+    .page-grid.page-layout-bottom,
+    .page-grid.page-layout-middle,
     .page-grid.page-layout-top {
       grid-template-areas:
-        "a a"
-        "b c"
-        "d e";
+        "a b"
+        "c d";
+    }
+
+    .horizontal-card-slot {
+      position: absolute;
+      bottom: 20mm;
+      left: 9mm;
+      right: 9mm;
+      height: 60mm;
+      z-index: 1;
     }
 
     .activity-card {
@@ -858,7 +854,7 @@
       direction: rtl;
       text-align: right;
       min-height: 0;
-      height: 30mm;
+      height: 60mm;
       overflow: hidden;
     }
 
@@ -1126,7 +1122,16 @@
         page-break-after: auto;
       }
 
-      .page-grid { height: calc(100% - 40mm) !important; }
+      .page-grid { height: calc(100% - 105mm) !important; }
+
+      .horizontal-card-slot {
+        position: absolute;
+        bottom: 20mm;
+        left: 9mm;
+        right: 9mm;
+        height: 60mm;
+        z-index: 1;
+      }
 
       .activity-card {
         break-inside: avoid;
@@ -1145,7 +1150,7 @@
       direction: rtl;
       text-align: right;
       min-height: 0;
-      height: 30mm;
+      height: 60mm;
       overflow: hidden;
     }
 
@@ -1585,6 +1590,7 @@ function chunkActivities(items, size) {
           </div>
         </header>
         <div class="page-grid"></div>
+        <div class="horizontal-card-slot"></div>
         <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
         <footer class="page-footer">
 
@@ -1593,14 +1599,22 @@ function chunkActivities(items, size) {
         </footer>`;
 
       const grid = page.querySelector(".page-grid");
+      const slot = page.querySelector(".horizontal-card-slot");
       const layoutKey = PAGE_LAYOUT_SEQUENCE[pageIndex % PAGE_LAYOUT_SEQUENCE.length];
       grid.classList.add(`page-layout-${layoutKey}`);
       const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
-      const areaNames = ["a", "b", "c", "d", "e"];
+      const areaNames = ["a", "b", "c", "d"];
+      let gridIndex = 0;
       items.forEach((activity, index) => {
-        const card = renderCard(activity, index === horizontalIndex);
-        if (index < areaNames.length) card.style.gridArea = areaNames[index];
-        grid.appendChild(card);
+        if (index === horizontalIndex) {
+          const card = renderCard(activity, true);
+          slot.appendChild(card);
+        } else {
+          const card = renderCard(activity, false);
+          if (gridIndex < areaNames.length) card.style.gridArea = areaNames[gridIndex];
+          grid.appendChild(card);
+          gridIndex++;
+        }
       });
       return page;
     }
