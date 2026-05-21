@@ -857,9 +857,22 @@
       overflow: hidden;
     }
 
+    .horizontal-card .horizontal-title {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 3mm;
+      padding-bottom: .9mm;
+    }
+
     .horizontal-card .horizontal-title h2 {
       margin: 0;
-      padding-bottom: .9mm;
+      flex: 1;
+    }
+
+    .horizontal-card .horizontal-title .card-topline {
+      flex-shrink: 0;
+      gap: 1.5mm;
     }
 
     .horizontal-body {
@@ -1182,9 +1195,22 @@
       overflow: hidden;
     }
 
+    .horizontal-card .horizontal-title {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 3mm;
+      padding-bottom: .9mm;
+    }
+
     .horizontal-card .horizontal-title h2 {
       margin: 0;
-      padding-bottom: .9mm;
+      flex: 1;
+    }
+
+    .horizontal-card .horizontal-title .card-topline {
+      flex-shrink: 0;
+      gap: 1.5mm;
     }
 
     .horizontal-body {
@@ -1510,6 +1536,11 @@ function chunkActivities(items, size) {
         card.innerHTML = `
         <div class="horizontal-title">
           <h2>${escapeHTML(activity.title)}</h2>
+          <div class="card-topline">
+            <span class="tag">${escapeHTML(activity.domain)}</span>
+            <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+            <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+          </div>
         </div>
         <div class="horizontal-body">
           <div class="horizontal-media">
@@ -1519,11 +1550,6 @@ function chunkActivities(items, size) {
             <div class="product-box">
               <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
             </div>
-            <aside class="horizontal-meta" aria-label="פרטי פעילות">
-              <span class="meta-item">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)}</span>
-              <span class="meta-item" dir="rtl">${escapeHTML(activity.duration)}</span>
-              <span class="meta-item">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
-            </aside>
           </div>
           <div class="horizontal-text">
             <p class="card-description">${escapeHTML(activity.text)}</p>
