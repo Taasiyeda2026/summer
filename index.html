@@ -864,11 +864,12 @@
 
     .horizontal-body {
       display: grid;
-      grid-template-columns: 26mm minmax(0, 1fr) 20mm;
+      grid-template-columns: 28mm minmax(0, 1fr);
       gap: 3mm;
       min-height: 0;
       direction: rtl;
-      align-items: start;
+      align-items: stretch;
+      height: 100%;
     }
 
     .horizontal-media {
@@ -879,7 +880,8 @@
       direction: rtl;
       text-align: center;
       min-width: 0;
-      width: 26mm;
+      width: 28mm;
+      justify-content: flex-start;
     }
 
     .horizontal-media .image-box {
@@ -888,6 +890,7 @@
       aspect-ratio: 1 / 1;
       min-height: 0;
       margin: 0;
+      align-self: center;
     }
 
     .horizontal-media .product-box {
@@ -901,12 +904,14 @@
       direction: rtl;
       text-align: right;
       min-height: 0;
+      align-items: stretch;
     }
 
     .horizontal-text .card-description {
       font-size: 13px;
       line-height: 1.5;
       min-height: 0;
+      height: 100%;
     }
 
     .horizontal-text .goals-box {
@@ -931,29 +936,36 @@
 
     .horizontal-meta {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
       gap: .8mm;
-      align-self: start;
-      min-width: 20mm;
+      align-self: flex-start;
+      min-width: 0;
       direction: rtl;
       text-align: right;
+      margin-top: .4mm;
+      justify-content: flex-start;
     }
 
     .horizontal-meta .meta-item {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: auto;
       min-height: 4.8mm;
-      padding: .75mm 1.1mm;
+      padding: .75mm 1.7mm;
       border-radius: 999px;
       border: 1px solid color-mix(in srgb, var(--accent) 26%, #ffffff);
       background: color-mix(in srgb, var(--accent) 9%, #ffffff);
       color: var(--accent);
-      font-size: 8.2px;
+      font-size: 8.6px;
       font-weight: 800;
       line-height: 1.2;
       white-space: nowrap;
+    }
+
+    .page-grid .activity-card {
+      height: 100%;
     }
 
     .page-contact {
@@ -1177,11 +1189,12 @@
 
     .horizontal-body {
       display: grid;
-      grid-template-columns: 26mm minmax(0, 1fr) 20mm;
+      grid-template-columns: 28mm minmax(0, 1fr);
       gap: 3mm;
       min-height: 0;
       direction: rtl;
-      align-items: start;
+      align-items: stretch;
+      height: 100%;
     }
 
     .horizontal-media {
@@ -1192,7 +1205,8 @@
       direction: rtl;
       text-align: center;
       min-width: 0;
-      width: 26mm;
+      width: 28mm;
+      justify-content: flex-start;
     }
 
     .horizontal-media .image-box {
@@ -1201,6 +1215,7 @@
       aspect-ratio: 1 / 1;
       min-height: 0;
       margin: 0;
+      align-self: center;
     }
 
     .horizontal-media .product-box {
@@ -1214,12 +1229,14 @@
       direction: rtl;
       text-align: right;
       min-height: 0;
+      align-items: stretch;
     }
 
     .horizontal-text .card-description {
       font-size: 13px;
       line-height: 1.5;
       min-height: 0;
+      height: 100%;
     }
 
     .horizontal-text .goals-box {
@@ -1502,6 +1519,11 @@ function chunkActivities(items, size) {
             <div class="product-box">
               <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
             </div>
+            <aside class="horizontal-meta" aria-label="פרטי פעילות">
+              <span class="meta-item">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)}</span>
+              <span class="meta-item" dir="rtl">${escapeHTML(activity.duration)}</span>
+              <span class="meta-item">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+            </aside>
           </div>
           <div class="horizontal-text">
             <p class="card-description">${escapeHTML(activity.text)}</p>
@@ -1510,11 +1532,6 @@ function chunkActivities(items, size) {
               <ul>${goals}</ul>
             </div>
           </div>
-          <aside class="horizontal-meta" aria-label="פרטי פעילות">
-            <span class="meta-item">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)}</span>
-            <span class="meta-item" dir="rtl">${escapeHTML(activity.duration)}</span>
-            <span class="meta-item">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
-          </aside>
         </div>`;
         return card;
       }
