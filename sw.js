@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-21-horizontal-card-52mm-v7";
+const CACHE_NAME = "summer-catalog-v2026-05-21-bottom-separate-block-v8";
 const ASSETS = [
   "./",
   "./index.html",

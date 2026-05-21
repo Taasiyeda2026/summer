@@ -460,12 +460,26 @@
       grid-template-rows: var(--regular-card-row-height) var(--horizontal-card-height) var(--regular-card-row-height);
     }
 
+    .a4-page.has-horizontal-block {
+      grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+    }
+
     .page-grid.page-layout-bottom {
       grid-template-areas:
         "a b"
-        "c d"
-        "h h";
-      grid-template-rows: var(--regular-card-row-height) var(--regular-card-row-height) var(--horizontal-card-height);
+        "c d";
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    .page-horizontal-block {
+      margin-top: 5mm;
+      height: 52mm;
+      min-height: 0;
+    }
+
+    .page-horizontal-block .horizontal-card {
+      height: 100%;
+      min-height: 0;
     }
 
     .activity-card {
@@ -1181,6 +1195,21 @@
         row-gap: 2.4mm !important;
       }
 
+      .a4-page.has-horizontal-block {
+        grid-template-rows: auto minmax(0, 1fr) auto auto auto !important;
+      }
+
+      .page-horizontal-block {
+        margin-top: 5mm;
+        height: 52mm;
+        min-height: 0;
+      }
+
+      .page-horizontal-block .horizontal-card {
+        height: 100%;
+        min-height: 0;
+      }
+
       .a4-page:last-child {
         break-after: auto;
         page-break-after: auto;
@@ -1675,16 +1704,34 @@ function chunkActivities(items, size) {
       const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
       const areaNames = ["a", "b", "c", "d"];
       let gridIndex = 0;
-      items.forEach((activity, index) => {
-        const isHorizontal = index === horizontalIndex;
-        const card = renderCard(activity, isHorizontal);
-        if (isHorizontal) {
-          card.style.gridArea = "h";
-        } else if (gridIndex < areaNames.length) {
-          card.style.gridArea = areaNames[gridIndex++];
-        }
-        grid.appendChild(card);
-      });
+
+      if (layoutKey === "bottom") {
+        page.classList.add("has-horizontal-block");
+        const horizontalBlock = document.createElement("div");
+        horizontalBlock.className = "page-horizontal-block";
+        items.forEach((activity, index) => {
+          if (index === horizontalIndex) {
+            horizontalBlock.appendChild(renderCard(activity, true));
+          } else if (gridIndex < areaNames.length) {
+            const card = renderCard(activity, false);
+            card.style.gridArea = areaNames[gridIndex++];
+            grid.appendChild(card);
+          }
+        });
+        const contact = page.querySelector(".page-contact");
+        page.insertBefore(horizontalBlock, contact);
+      } else {
+        items.forEach((activity, index) => {
+          const isHorizontal = index === horizontalIndex;
+          const card = renderCard(activity, isHorizontal);
+          if (isHorizontal) {
+            card.style.gridArea = "h";
+          } else if (gridIndex < areaNames.length) {
+            card.style.gridArea = areaNames[gridIndex++];
+          }
+          grid.appendChild(card);
+        });
+      }
       return page;
     }
 
