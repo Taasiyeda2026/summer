@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-21-grid-gap-2.2mm-v10";
+const CACHE_NAME = "summer-catalog-v2026-05-21-tag-spacing-v11";
 const ASSETS = [
   "./",
   "./index.html",
