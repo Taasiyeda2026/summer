@@ -966,6 +966,124 @@
       clear: none;
     }
 
+
+
+    /* כרטיס רוחבי נקי — מופרד מהכרטיסים הרגילים, ללא float */
+    .activity-card.horizontal-card {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto minmax(0, 1fr) !important;
+      gap: 1.4mm !important;
+      padding: 2mm 3mm 2mm 4.2mm !important;
+      direction: rtl !important;
+      text-align: right !important;
+      overflow: hidden !important;
+      align-items: stretch !important;
+    }
+
+    .activity-card.horizontal-card .horizontal-title {
+      grid-row: 1;
+      margin: 0 !important;
+      padding-bottom: 1mm !important;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.25);
+      font-size: 16.5px;
+      line-height: 1.16;
+      font-weight: 950;
+      color: #0f766e;
+      letter-spacing: -.035em;
+    }
+
+    .activity-card.horizontal-card .horizontal-body {
+      grid-row: 2;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 34% minmax(0, 1fr);
+      gap: 2.2mm;
+      align-items: stretch;
+      direction: ltr;
+    }
+
+    .activity-card.horizontal-card .horizontal-media {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .8mm;
+      direction: rtl;
+      text-align: center;
+    }
+
+    .activity-card.horizontal-card .horizontal-media .image-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      min-height: 0;
+      margin: 0;
+      border-radius: 3mm;
+    }
+
+    .activity-card.horizontal-card .horizontal-media .product-box {
+      margin: 0;
+      padding: 1mm 1.4mm;
+    }
+
+    .activity-card.horizontal-card .horizontal-media .card-topline {
+      justify-content: center;
+      gap: .7mm;
+      margin: 0;
+    }
+
+    .activity-card.horizontal-card .horizontal-text {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1mm;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .activity-card.horizontal-card .card-description {
+      margin: 0;
+      min-height: 0;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .activity-card.horizontal-card .goals-box {
+      grid-column: auto;
+      grid-row: auto;
+      clear: none;
+      margin: 0;
+      padding-top: 1mm;
+    }
+
+    .activity-card.horizontal-card .goals-title {
+      margin-bottom: .8mm;
+    }
+
+    .activity-card.horizontal-card .goals-box li {
+      margin: .35mm 0;
+      line-height: 1.38;
+    }
+
+    /* הידוק הכרטיסים הרגילים בלי הקטנת פונטים */
+    .activity-card:not(.escape-room-card):not(.horizontal-card) {
+      padding: 1.8mm 3.2mm 1.8mm 2.1mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .card-header {
+      margin-bottom: .6mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .goals-box {
+      margin-top: .8mm;
+      padding-top: 1mm;
+    }
+
+    .activity-card:not(.escape-room-card):not(.horizontal-card) .goals-box li {
+      margin: .35mm 0;
+    }
+
     .page-contact {
       position: absolute;
       left: 9mm;
@@ -1250,6 +1368,52 @@
         margin-top: 2mm;
       }
 
+
+
+      .activity-card.horizontal-card {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto minmax(0, 1fr) !important;
+        gap: 1.4mm !important;
+        padding: 2mm 3mm 2mm 4.2mm !important;
+        direction: rtl !important;
+        text-align: right !important;
+        overflow: hidden !important;
+      }
+
+      .activity-card.horizontal-card .horizontal-body {
+        display: grid !important;
+        grid-template-columns: 34% minmax(0, 1fr) !important;
+        gap: 2.2mm !important;
+        align-items: stretch !important;
+        direction: ltr !important;
+      }
+
+      .activity-card.horizontal-card .horizontal-media {
+        float: none !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: .8mm !important;
+      }
+
+      .activity-card.horizontal-card .image-box {
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+      }
+
+      .activity-card.horizontal-card .goals-box {
+        clear: none !important;
+        margin: 0 !important;
+        padding-top: 1mm !important;
+      }
+
       h1, h2, h3,
       .page-title,
       .activity-card h2,
@@ -1270,7 +1434,7 @@
     <section class="control-hero">
       <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
       <div>
-        <h1>תצוגת A4 לא סימטרית — חוברת פעילויות</h1>
+        <h1>תצוגת A4 מגוונת — חוברת פעילויות</h1>
         <p>בחר אילו פעילויות ייכנסו לקטלוג. המבנה העיצובי נשאר קבוע בכל מצב — הבחירה משנה רק את התוכן שמופיע בתוך העמודים.</p>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
@@ -1478,8 +1642,48 @@ function chunkActivities(items, size) {
       return placeholder;
     }
 
-    function renderCard(activity) {
-      const goals = activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
+    function renderGoalsList(activity) {
+      return activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
+    }
+
+    function renderHorizontalCard(activity) {
+      const goals = renderGoalsList(activity);
+      const card = document.createElement("article");
+      card.className = "activity-card horizontal-card";
+      card.style.setProperty("--accent", activity.accent || "#203b7a");
+      card.innerHTML = `
+        <h2 class="horizontal-title">${escapeHTML(activity.title)}</h2>
+        <div class="horizontal-body">
+          <div class="horizontal-media">
+            <div class="image-box">
+              <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+            </div>
+            <div class="product-box">
+              <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
+            </div>
+            <div class="card-topline">
+              <span class="tag">${escapeHTML(activity.domain)}</span>
+              <span class="tag" dir="rtl">${escapeHTML(activity.duration)}</span>
+              <span class="tag">${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+            </div>
+          </div>
+          <div class="horizontal-text">
+            <p class="card-description">${escapeHTML(activity.text)}</p>
+            <div class="goals-box">
+              <p class="goals-title">מטרות מרכזיות</p>
+              <ul>${goals}</ul>
+            </div>
+          </div>
+        </div>`;
+      return card;
+    }
+
+    function renderCard(activity, options = {}) {
+      if (options.horizontal && activity.type !== "חדר בריחה") {
+        return renderHorizontalCard(activity);
+      }
+
+      const goals = renderGoalsList(activity);
       const card = document.createElement("article");
       const isEscape = activity.type === "חדר בריחה";
       card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
@@ -1587,9 +1791,9 @@ function chunkActivities(items, size) {
       const horizontalIndex = LAYOUT_HORIZONTAL_INDEX[layoutKey];
       const areaNames = ["a", "b", "c", "d", "e"];
       items.forEach((activity, index) => {
-        const card = renderCard(activity);
+        const isHorizontal = index === horizontalIndex;
+        const card = renderCard(activity, { horizontal: isHorizontal });
         if (index < areaNames.length) card.style.gridArea = areaNames[index];
-        if (index === horizontalIndex) card.classList.add("horizontal-card");
         grid.appendChild(card);
       });
       return page;
