@@ -860,12 +860,16 @@
       margin: 0;
       padding-top: 3mm;
       border-top: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
-      font-size: 1.15em;
+      font-size: 1em;
       font-weight: 800;
       line-height: 1.35;
       color: var(--accent);
       direction: rtl;
       text-align: center;
+      align-self: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .goals-box {
@@ -1453,11 +1457,15 @@
         grid-column: 1 / -1 !important;
         grid-row: 3 !important;
         text-align: center !important;
-        font-size: 1.15em !important;
+        font-size: 1em !important;
         font-weight: 800 !important;
         padding-top: 3mm !important;
         border-top: 1px solid rgba(0,0,0,.1) !important;
         color: var(--accent) !important;
+        align-self: center !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
     }
   </style>
