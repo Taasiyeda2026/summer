@@ -2010,7 +2010,7 @@ function chunkActivities(items, size) {
         bucket.add(filterValue);
         activities.forEach((activity, index) => {
           const matches = filterKey === "grade"
-            ? activity.grades.includes(filterValue)
+            ? activity.grades.includes(filterValue) && activity.type !== "חדר בריחה"
             : activity.domain === filterValue;
           if (matches) selected.add(index);
         });
@@ -2018,7 +2018,7 @@ function chunkActivities(items, size) {
         bucket.delete(filterValue);
         activities.forEach((activity, index) => {
           const matches = filterKey === "grade"
-            ? activity.grades.includes(filterValue)
+            ? activity.grades.includes(filterValue) && activity.type !== "חדר בריחה"
             : activity.domain === filterValue;
           if (!matches) return;
           const coveredByGrade = activity.grades.some(g => selectedGrades.has(g));
