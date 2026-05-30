@@ -1971,7 +1971,27 @@ function chunkActivities(items, size) {
       if (!filterInput) return;
       const { filterKey, filterValue } = filterInput.dataset;
       const bucket = filterKey === "grade" ? selectedGrades : selectedDomains;
-      filterInput.checked ? bucket.add(filterValue) : bucket.delete(filterValue);
+
+      if (filterInput.checked) {
+        bucket.add(filterValue);
+        activities.forEach((activity, index) => {
+          const matches = filterKey === "grade"
+            ? activity.grades.includes(filterValue)
+            : activity.domain === filterValue;
+          if (matches) selected.add(index);
+        });
+      } else {
+        bucket.delete(filterValue);
+        activities.forEach((activity, index) => {
+          const matches = filterKey === "grade"
+            ? activity.grades.includes(filterValue)
+            : activity.domain === filterValue;
+          if (!matches) return;
+          const coveredByGrade = activity.grades.some(g => selectedGrades.has(g));
+          const coveredByDomain = selectedDomains.has(activity.domain);
+          if (!coveredByGrade && !coveredByDomain) selected.delete(index);
+        });
+      }
       renderAll();
     });
 
@@ -1996,9 +2016,13 @@ function chunkActivities(items, size) {
       if (!actionButton) return;
       const action = actionButton.dataset.action;
       selected.clear();
+      selectedGrades.clear();
+      selectedDomains.clear();
 
       if (action === "all") {
         activities.forEach((_, index) => selected.add(index));
+        uniqueValues(a => a.grades).forEach(g => selectedGrades.add(g));
+        uniqueValues(a => [a.domain]).forEach(d => selectedDomains.add(d));
       } else if (action === "workshops") {
         activities.forEach((activity, index) => { if (activity.type === "סדנה") selected.add(index); });
       } else if (action === "escapes") {
