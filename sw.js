@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-21-ui-cleanup-v34";
+const CACHE_NAME = "summer-catalog-v2026-05-21-btn-labels-v35";
 const ASSETS = [
   "./",
   "./index.html",
