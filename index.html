@@ -1407,6 +1407,14 @@
         min-height: 0 !important;
       }
 
+      .escape-cards-row--single .activity-card {
+        flex: 0 0 auto !important;
+      }
+
+      .escape-cards-row--single .escape-room-card .image-box {
+        max-height: 80mm !important;
+      }
+
       .escape-room-card {
         display: grid !important;
         grid-template-columns: 40% minmax(0, 1fr) !important;
@@ -1733,6 +1741,7 @@ function chunkActivities(items, size) {
         </footer>`;
 
       const cardsRow = page.querySelector(".escape-cards-row");
+      if (escapeActivities.length === 1) cardsRow.classList.add("escape-cards-row--single");
       escapeActivities.forEach((activity, i) => {
         const card = renderCard(activity);
         const title = activity.title || "";
