@@ -99,10 +99,6 @@
       box-shadow: 0 14px 36px rgba(20,34,66,.09);
     }
 
-    .selector-body {
-      display: block;
-    }
-
     .selector-panel.collapsed .selector-body {
       display: none;
     }
@@ -111,25 +107,20 @@
       margin-bottom: 0;
     }
 
-    .selector-top {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .selector-title h2 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -.02em;
-    }
-
-    .selector-title p {
-      margin: 4px 0 0;
+    .header-subtitle {
+      margin: 2px 0 0;
       color: var(--muted);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .selector-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
     }
 
     .selected-count {
@@ -146,26 +137,25 @@
       font-weight: 900;
     }
 
-    .selector-tools {
-      display: grid;
-      grid-template-columns: minmax(260px, 1fr) auto;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 10px;
+    .selector-body {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
     }
 
-    .filters-panel {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .filters-sidebar {
+      flex: none;
+      width: 200px;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
-      margin-bottom: 12px;
     }
 
     .filter-group {
       border: 1px solid var(--line);
       border-radius: 14px;
       background: white;
-      padding: 10px;
+      padding: 10px 12px;
     }
 
     .filter-label {
@@ -176,25 +166,28 @@
     }
 
     .filter-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 8px;
     }
 
     .filter-chip {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 6px;
-      border: 1px solid rgba(23,32,51,.12);
-      border-radius: 999px;
-      padding: 4px 9px;
+      padding: 4px 2px;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
-      background: #fff;
     }
 
-    .filter-chip input { accent-color: var(--blue); }
+    .filter-chip input {
+      accent-color: var(--blue);
+      width: 14px;
+      height: 14px;
+      flex: none;
+      cursor: pointer;
+    }
 
     .search-box {
       height: 46px;
@@ -221,7 +214,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      justify-content: flex-end;
+      justify-content: flex-start;
     }
 
     .action-btn {
@@ -1178,7 +1171,8 @@
       .selector-top,
       .selector-tools { grid-template-columns: 1fr; }
       .action-row { justify-content: flex-start; }
-      .filters-panel { grid-template-columns: 1fr; }
+      .selector-body { flex-direction: column; }
+      .filters-sidebar { width: 100%; }
       .activity-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .a4-page { transform: scale(.62); transform-origin: top center; margin-bottom: -112mm; }
     }
@@ -1460,6 +1454,7 @@
       <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
       <div>
         <h1>קטלוג סדנאות וחדרי בריחה</h1>
+        <p class="header-subtitle">בחירת פעילויות לקטלוג</p>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
         <button class="action-btn" id="catalogModeBtn" type="button">יצירת קטלוג</button>
@@ -1469,8 +1464,11 @@
 
     <section class="selector-panel collapsed" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
       <div class="selector-top">
-        <div class="selector-title">
-          <h2>בחירת סדנאות ופעילויות לקטלוג</h2>
+        <div class="action-row">
+          <button class="action-btn" type="button" data-action="all">בחר הכול</button>
+          <button class="action-btn" type="button" data-action="none">נקה הכול</button>
+          <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
+          <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
           <div class="selected-count" id="selectedCount">0 נבחרו</div>
@@ -1479,28 +1477,17 @@
       </div>
 
       <div class="selector-body">
-      <div class="selector-tools">
-        <div class="action-row">
-          <button class="action-btn" type="button" data-action="all">בחר הכול</button>
-          <button class="action-btn" type="button" data-action="none">נקה הכול</button>
-          <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
-          <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
+        <div class="filters-sidebar">
+          <div class="filter-group">
+            <p class="filter-label">סינון לפי כיתות</p>
+            <div id="gradeFilters" class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <p class="filter-label">סינון לפי תחומים</p>
+            <div id="domainFilters" class="filter-options"></div>
+          </div>
         </div>
-      </div>
-
-      
-      <div class="filters-panel">
-        <div class="filter-group">
-          <p class="filter-label">סינון לפי כיתות (בחירה מרובה)</p>
-          <div id="gradeFilters" class="filter-options"></div>
-        </div>
-        <div class="filter-group">
-          <p class="filter-label">סינון לפי תחומים (בחירה מרובה)</p>
-          <div id="domainFilters" class="filter-options"></div>
-        </div>
-      </div>
-
-      <div id="activityPicker" class="activity-picker"></div>
+        <div id="activityPicker" class="activity-picker"></div>
       </div>
     </section>
   </header>
