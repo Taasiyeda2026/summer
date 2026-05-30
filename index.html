@@ -1512,7 +1512,7 @@
 
     const booklet = document.getElementById("booklet");
     const picker = document.getElementById("activityPicker");
-    const searchInput = document.getElementById("pickerSearch");
+
     const selectedCount = document.getElementById("selectedCount");
     const gradeFilters = document.getElementById("gradeFilters");
     const domainFilters = document.getElementById("domainFilters");
@@ -1525,7 +1525,7 @@
       bottom: 4
     };
     const selected = new Set();
-    let pickerQuery = "";
+
     const selectedGrades = new Set();
     const selectedDomains = new Set();
 
@@ -1900,18 +1900,6 @@ function chunkActivities(items, size) {
       renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]), "domain");
     }
 
-    function matchesPickerSearch(activity) {
-      const q = pickerQuery.trim().toLowerCase();
-      if (!q) return true;
-      const haystack = [
-        activity.title,
-        activity.domain,
-        activity.type,
-        activity.product,
-        activity.grades.join(" ")
-      ].join(" ").toLowerCase();
-      return haystack.includes(q);
-    }
 
     function matchesAdvancedFilters(activity) {
       const gradeMatch = !selectedGrades.size || activity.grades.some(grade => selectedGrades.has(grade));
@@ -1928,7 +1916,7 @@ function chunkActivities(items, size) {
       escapeGrid.className = "picker-grid escapes";
 
       activities.forEach((activity, index) => {
-        if (!matchesPickerSearch(activity) || !matchesAdvancedFilters(activity)) return;
+        if (!matchesAdvancedFilters(activity)) return;
         const label = document.createElement("label");
         label.className = "activity-option" + (selected.has(index) ? " selected" : "");
         label.style.setProperty("--option-accent", activity.accent || "#203b7a");
@@ -2002,10 +1990,6 @@ function chunkActivities(items, size) {
       togglePickerBtn.textContent = isCollapsed ? "▾ בחר פעילויות" : "▴ סגור";
     });
 
-    searchInput.addEventListener("input", event => {
-      pickerQuery = event.target.value;
-      renderPicker();
-    });
 
     document.addEventListener("click", event => {
       const actionButton = event.target.closest("[data-action]");
