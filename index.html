@@ -1921,8 +1921,10 @@ function chunkActivities(items, size) {
       });
     }
 
+    const GRADE_ORDER = ["א","ב","ג","ד","ה","ו"];
+
     function renderFilters() {
-      renderFilterChips(gradeFilters, uniqueValues(activity => activity.grades), "grade");
+      renderFilterChips(gradeFilters, GRADE_ORDER, "grade");
       renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]), "domain");
     }
 
