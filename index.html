@@ -1550,6 +1550,7 @@
 
     const selectedGrades = new Set();
     const selectedDomains = new Set();
+    let selectedType = null;
 
     const DOMAIN_COLORS = {
       "חלל":        "#1e3a8a",
@@ -1930,9 +1931,10 @@ function chunkActivities(items, size) {
 
 
     function matchesAdvancedFilters(activity) {
+      const typeMatch = !selectedType || activity.type === selectedType;
       const gradeMatch = !selectedGrades.size || activity.grades.some(grade => selectedGrades.has(grade));
       const domainMatch = !selectedDomains.size || selectedDomains.has(activity.domain);
-      return gradeMatch && domainMatch;
+      return typeMatch && gradeMatch && domainMatch;
     }
 
     function renderPicker() {
@@ -2055,12 +2057,17 @@ function chunkActivities(items, size) {
       selectedDomains.clear();
 
       if (action === "all") {
+        selectedType = null;
         activities.forEach((_, index) => selected.add(index));
         uniqueValues(a => a.grades).forEach(g => selectedGrades.add(g));
         uniqueValues(a => [a.domain]).forEach(d => selectedDomains.add(d));
+      } else if (action === "none") {
+        selectedType = null;
       } else if (action === "workshops") {
+        selectedType = "סדנה";
         activities.forEach((activity, index) => { if (activity.type === "סדנה") selected.add(index); });
       } else if (action === "escapes") {
+        selectedType = "חדר בריחה";
         activities.forEach((activity, index) => { if (activity.type === "חדר בריחה") selected.add(index); });
       }
 
