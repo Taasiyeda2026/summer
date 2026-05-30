@@ -1422,6 +1422,10 @@
         min-height: 0 !important;
       }
 
+      .escape-cards-row--single {
+        flex: 0 0 auto !important;
+      }
+
       .escape-cards-row--single .activity-card {
         flex: 0 0 auto !important;
       }
@@ -1641,15 +1645,17 @@ function chunkActivities(items, size) {
           <div class="product-box">
             <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
           </div>`;
+      const tagHTML = isEscape ? "" : `
+          <div class="card-topline">
+            <span class="tag">${escapeHTML(activity.domain)}</span>
+          </div>`;
       return `
         <div class="media-column">
           <div class="image-box">
             <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
           </div>
           ${productHTML}
-          <div class="card-topline">
-            <span class="tag">${escapeHTML(activity.domain)}</span>
-          </div>
+          ${tagHTML}
         </div>`;
     }
 
@@ -1676,6 +1682,7 @@ function chunkActivities(items, size) {
         ${imageMarkup(activity)}
         <div class="card-content">
           <div class="card-header">
+            <div class="card-topline"><span class="tag">${escapeHTML(activity.domain)}</span></div>
             <h2>${escapeHTML(activity.title)}</h2>
           </div>
           <p class="card-description">${escapeHTML(activity.text)}</p>
