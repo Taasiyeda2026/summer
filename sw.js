@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-30-split-pages-v42";
+const CACHE_NAME = "summer-catalog-v2026-05-30-disabled-btn-v43";
 const ASSETS = [
   "./",
   "./index.html",

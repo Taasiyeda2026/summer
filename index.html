@@ -90,6 +90,13 @@
       white-space: nowrap;
     }
 
+    .print-btn:disabled {
+      background: #c8cdd6;
+      box-shadow: none;
+      cursor: not-allowed;
+      opacity: 1;
+    }
+
     .selector-panel {
       margin-top: 14px;
       padding: 16px;
@@ -1468,7 +1475,7 @@
         <p class="header-subtitle">בחירת פעילויות לקטלוג</p>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-        <button class="print-btn" id="catalogModeBtn" type="button">הפקת קטלוג ←</button>
+        <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
       </div>
     </section>
 
@@ -1953,6 +1960,7 @@ function chunkActivities(items, size) {
     function updateCount() {
       const sel = getSelectedActivities();
       selectedCount.textContent = `${sel.length} נבחרו`;
+      catalogModeBtn.disabled = sel.length === 0;
     }
 
     function renderSelection() {
