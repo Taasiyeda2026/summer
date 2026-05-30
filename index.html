@@ -324,7 +324,7 @@
     }
 
     .booklet {
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
       gap: 22px;
@@ -1123,6 +1123,10 @@
       display: none;
     }
 
+    .catalog-mode .booklet {
+      display: flex;
+    }
+
     .back-bar {
       display: none;
       position: fixed;
@@ -1464,12 +1468,11 @@
         <p class="header-subtitle">בחירת פעילויות לקטלוג</p>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-        <button class="action-btn" id="catalogModeBtn" type="button">יצירת קטלוג</button>
-        <button class="print-btn" type="button" onclick="window.print()">PDF</button>
+        <button class="print-btn" id="catalogModeBtn" type="button">הפקת קטלוג ←</button>
       </div>
     </section>
 
-    <section class="selector-panel collapsed" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
+    <section class="selector-panel" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
       <div class="selector-top">
         <div class="action-row">
           <button class="action-btn" type="button" data-action="all">בחר הכול</button>
@@ -1947,10 +1950,15 @@ function chunkActivities(items, size) {
       }
     }
 
-    function renderAll() {
+    function updateCount() {
+      const sel = getSelectedActivities();
+      selectedCount.textContent = `${sel.length} נבחרו`;
+    }
+
+    function renderSelection() {
       renderFilters();
       renderPicker();
-      renderCatalog(getSelectedActivities());
+      updateCount();
     }
 
     picker.addEventListener("change", event => {
@@ -1958,7 +1966,7 @@ function chunkActivities(items, size) {
       if (!checkbox) return;
       const index = Number(checkbox.dataset.index);
       checkbox.checked ? selected.add(index) : selected.delete(index);
-      renderAll();
+      renderSelection();
     });
 
     document.addEventListener("change", event => {
@@ -1987,11 +1995,12 @@ function chunkActivities(items, size) {
           if (!coveredByGrade && !coveredByDomain) selected.delete(index);
         });
       }
-      renderAll();
+      renderSelection();
     });
 
     catalogModeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("catalog-mode");
+      renderCatalog(getSelectedActivities());
+      document.body.classList.add("catalog-mode");
     });
 
     document.getElementById("backBtn").addEventListener("click", () => {
@@ -2024,13 +2033,13 @@ function chunkActivities(items, size) {
         activities.forEach((activity, index) => { if (activity.type === "חדר בריחה") selected.add(index); });
       }
 
-      renderAll();
+      renderSelection();
     });
 
     async function init() {
       try {
         activities = await loadActivities();
-        renderAll();
+        renderSelection();
       } catch (error) {
         console.error(error);
         selectedCount.textContent = "0 נבחרו";
