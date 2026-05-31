@@ -785,6 +785,17 @@
       line-height: 1.35;
     }
 
+    .ms-activity-panel-summary {
+      margin: 3mm 0 0;
+      font-size: 9.5px;
+      font-weight: 700;
+      font-style: italic;
+      color: #075985;
+      line-height: 1.5;
+      border-top: 1.5px solid rgba(3,105,161,.2);
+      padding-top: 2.5mm;
+    }
+
     .ms-activity-panel-goals li::before {
       content: "◆";
       position: absolute;
@@ -1781,6 +1792,17 @@
         line-height: 1.35 !important;
       }
 
+      .ms-activity-panel-summary {
+        font-size: 9.5px !important;
+        font-weight: 700 !important;
+        font-style: italic !important;
+        color: #075985 !important;
+        line-height: 1.5 !important;
+        border-top: 1.5px solid rgba(3,105,161,.2) !important;
+        padding-top: 2.5mm !important;
+        margin: 3mm 0 0 !important;
+      }
+
       .ms-activity-panel-header {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -2105,6 +2127,7 @@ function chunkActivities(items, size) {
             <p class="ms-activity-panel-desc">${escapeHTML(activity.text)}</p>
             <p class="ms-activity-panel-goals-title">מטרות הסדנה</p>
             <ul class="ms-activity-panel-goals">${goals}</ul>
+            ${activity.summary ? `<p class="ms-activity-panel-summary">${escapeHTML(activity.summary)}</p>` : ""}
           </div>
           ${activity.personalProduct ? `<div class="ms-activity-panel-footer"><p class="ms-activity-panel-product">תוצר: <span>${escapeHTML(activity.personalProduct)}</span></p></div>` : ""}
         `;
