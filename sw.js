@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-31-fonts-v69";
+const CACHE_NAME = "summer-catalog-v2026-05-31-full-v70";
 const ASSETS = [
   "./",
   "./index.html",
@@ -30,6 +30,20 @@ const ASSETS = [
   "./image/023.png",
   "./image/024.png",
   "./image/025.png",
+  "./image/026.png",
+  "./image/027.png",
+  "./image/028.png",
+  "./image/029.png",
+  "./image/030.png",
+  "./image/031.png",
+  "./image/032.png",
+  "./image/033.png",
+  "./image/034.png",
+  "./image/035.png",
+  "./image/036.png",
+  "./image/037.png",
+  "./image/038.png",
+  "./image/039.png",
   "./image/26.png",
   "./image/ai.png"
 ];
