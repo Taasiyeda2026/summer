@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-31-ms-image-v60";
+const CACHE_NAME = "summer-catalog-v2026-05-31-ms-image-v61";
 const ASSETS = [
   "./",
   "./index.html",
@@ -30,7 +30,8 @@ const ASSETS = [
   "./image/023.png",
   "./image/024.png",
   "./image/025.png",
-  "./image/26.png"
+  "./image/26.png",
+  "./image/ai.png"
 ];
 
 self.addEventListener("install", event => {
