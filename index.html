@@ -730,9 +730,22 @@
     .ms-activity-panel-title {
       font-size: 17px;
       font-weight: 800;
-      margin: 0 0 2mm;
-      line-height: 1.15;
+      margin: 0;
+      line-height: 1.2;
       letter-spacing: -.025em;
+    }
+
+    .ms-activity-panel-title-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 2mm;
+      padding: 0.5mm 2.5mm;
+      vertical-align: middle;
+      margin-right: 2mm;
     }
 
     .ms-activity-panel-chips {
@@ -2127,11 +2140,7 @@ function chunkActivities(items, size) {
         panel.className = "ms-activity-panel";
         panel.innerHTML = `
           <div class="ms-activity-panel-header">
-            <p class="ms-activity-panel-title">${escapeHTML(activity.title)}</p>
-            <div class="ms-activity-panel-chips">
-              <span class="ms-activity-panel-chip">${escapeHTML(activity.domain)}</span>
-              <span class="ms-activity-panel-chip">${activity.durationMinutes ?? 45} דקות</span>
-            </div>
+            <p class="ms-activity-panel-title">${escapeHTML(activity.title)} <span class="ms-activity-panel-title-tag">AI</span></p>
           </div>
           <div class="ms-activity-panel-body">
             <p class="ms-activity-panel-desc">${escapeHTML(activity.text)}</p>
