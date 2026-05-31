@@ -713,12 +713,12 @@
       background: linear-gradient(180deg, rgba(248,252,255,.97), rgba(237,246,255,.95));
       border: 1.2px solid rgba(3,105,161,.22);
       border-radius: 3.5mm;
-      overflow: visible;
-      height: auto;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       direction: rtl;
       text-align: right;
+      min-height: 0;
     }
 
     .ms-activity-panel-header {
@@ -756,8 +756,9 @@
       display: flex;
       flex-direction: column;
       gap: 2mm;
-      height: auto;
-      overflow: visible;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .ms-activity-panel-desc {
@@ -1780,15 +1781,16 @@
       .ms-activity-panel {
         display: flex !important;
         flex-direction: column !important;
-        height: auto !important;
-        overflow: visible !important;
+        overflow: hidden !important;
+        min-height: 0 !important;
         break-inside: avoid !important;
         page-break-inside: avoid !important;
       }
 
       .ms-activity-panel-body {
-        height: auto !important;
-        overflow: visible !important;
+        flex: 1 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
       }
 
       .ms-activity-panel-desc {
