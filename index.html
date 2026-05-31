@@ -670,6 +670,127 @@
       padding-top: 2.5mm;
     }
 
+    /* ─── MS unique activity panels ─── */
+    .ms-activities-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5mm;
+      min-height: 0;
+    }
+
+    .ms-activity-panel {
+      background: linear-gradient(180deg, rgba(248,252,255,.97), rgba(237,246,255,.95));
+      border: 1.2px solid rgba(3,105,161,.22);
+      border-radius: 3.5mm;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .ms-activity-panel-header {
+      background: linear-gradient(135deg, #075985 0%, #0369a1 60%, #0284c7 100%);
+      color: #fff;
+      padding: 3mm 4mm 2.5mm;
+    }
+
+    .ms-activity-panel-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      margin: 0 0 1.5mm;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+
+    .ms-activity-panel-chips {
+      display: flex;
+      gap: 2mm;
+      flex-wrap: wrap;
+    }
+
+    .ms-activity-panel-chip {
+      font-size: 8.5px;
+      font-weight: 600;
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 10mm;
+      padding: 0.4mm 2.5mm;
+      white-space: nowrap;
+    }
+
+    .ms-activity-panel-body {
+      flex: 1;
+      padding: 3mm 4mm;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .ms-activity-panel-desc {
+      font-size: 9.5px;
+      color: #374151;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .ms-activity-panel-goals-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #075985;
+      margin: 0;
+      border-bottom: 1px solid rgba(3,105,161,.18);
+      padding-bottom: 1mm;
+    }
+
+    .ms-activity-panel-goals {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1mm;
+    }
+
+    .ms-activity-panel-goals li {
+      font-size: 9px;
+      color: #1e3a8a;
+      padding-right: 3.5mm;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .ms-activity-panel-goals li::before {
+      content: "◆";
+      position: absolute;
+      right: 0;
+      font-size: 6px;
+      color: #0369a1;
+      top: 2px;
+    }
+
+    .ms-activity-panel-footer {
+      border-top: 1px solid rgba(3,105,161,.16);
+      padding: 2mm 4mm;
+      background: rgba(224,242,255,.45);
+      flex-shrink: 0;
+    }
+
+    .ms-activity-panel-product {
+      font-size: 9px;
+      color: #075985;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .ms-activity-panel-product span {
+      color: #374151;
+      font-weight: 400;
+    }
+
     .escape-intro-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1565,6 +1686,32 @@
         border-top: 1px solid rgba(148,163,184,.35) !important;
         padding-top: 2mm !important;
       }
+
+      .ms-activities-grid {
+        flex: 1 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 3mm !important;
+        min-height: 0 !important;
+      }
+
+      .ms-activity-panel {
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .ms-activity-panel-body {
+        flex: 1 !important;
+        overflow: hidden !important;
+      }
+
+      .ms-activity-panel-header {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
     }
   </style>
 </head>
@@ -1859,7 +2006,7 @@ function chunkActivities(items, size) {
               </div>
             </div>
           </div>
-          <div class="escape-cards-row"></div>
+          <div class="ms-activities-grid"></div>
           <p class="ms-summary-line"><strong>מבנה ההפעלה:</strong> הפעילויות ניתנות להפעלה כיחידה קצרה, כיום פעילות או כחלק מרצף רחב יותר של מפגשים. כל יחידה משלבת פתיחה מסקרנת, התנסות מונחית, עבודה קבוצתית, פיתוח רעיון או תוצר וסיכום קצר המחבר בין ההתנסות לבין עולמות הלמידה, הטכנולוגיה והחיים הדיגיטליים של התלמידים.</p>
         </div>
         <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
@@ -1868,11 +2015,27 @@ function chunkActivities(items, size) {
           <span class="page-number">${pageIndex + 1}</span>
         </footer>`;
 
-      const cardsRow = page.querySelector(".escape-cards-row");
-      msActivities.slice(0, 2).forEach((activity, i) => {
-        const card = renderCard(activity, false, true);
-        if (i === 0) card.classList.add("escape-room-card--mirrored");
-        cardsRow.appendChild(card);
+      const activitiesGrid = page.querySelector(".ms-activities-grid");
+      msActivities.slice(0, 2).forEach(activity => {
+        const goals = activity.goals.map(g => `<li>${escapeHTML(g)}</li>`).join("");
+        const panel = document.createElement("div");
+        panel.className = "ms-activity-panel";
+        panel.innerHTML = `
+          <div class="ms-activity-panel-header">
+            <p class="ms-activity-panel-title">${escapeHTML(activity.title)}</p>
+            <div class="ms-activity-panel-chips">
+              <span class="ms-activity-panel-chip">${escapeHTML(activity.domain)}</span>
+              <span class="ms-activity-panel-chip">${activity.durationMinutes ?? 45} דקות</span>
+            </div>
+          </div>
+          <div class="ms-activity-panel-body">
+            <p class="ms-activity-panel-desc">${escapeHTML(activity.text)}</p>
+            <p class="ms-activity-panel-goals-title">מטרות הסדנה</p>
+            <ul class="ms-activity-panel-goals">${goals}</ul>
+          </div>
+          ${activity.personalProduct ? `<div class="ms-activity-panel-footer"><p class="ms-activity-panel-product">תוצר: <span>${escapeHTML(activity.personalProduct)}</span></p></div>` : ""}
+        `;
+        activitiesGrid.appendChild(panel);
       });
       return page;
     }
