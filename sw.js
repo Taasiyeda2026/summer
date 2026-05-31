@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-05-31-ms-image-v61";
+const CACHE_NAME = "summer-catalog-v2026-05-31-ms-fix-v62";
 const ASSETS = [
   "./",
   "./index.html",

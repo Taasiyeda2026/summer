@@ -1651,6 +1651,7 @@
       "ביולוגיה":   "#9d174d",
       "פיזיקה":     "#78350f",
       "הנדסה":      "#4338ca",
+      "AI":         "#0369a1",
     };
 
     function normalizeActivity(rawActivity = {}, gradeGroup = "") {
@@ -1755,15 +1756,16 @@ function chunkActivities(items, size) {
       return placeholder;
     }
 
-    function renderCard(activity, isHorizontal = false) {
+    function renderCard(activity, isHorizontal = false, useEscapeLayout = false) {
       const goals = activity.goals.map(goal => `<li>${escapeHTML(goal)}</li>`).join("");
       const card = document.createElement("article");
       const isEscape = activity.type === "חדר בריחה";
-      card.className = isEscape ? "activity-card escape-room-card" : "activity-card";
-      if (!isEscape && isHorizontal) card.classList.add("horizontal-card");
+      const escapeLayout = isEscape || useEscapeLayout;
+      card.className = escapeLayout ? "activity-card escape-room-card" : "activity-card";
+      if (!escapeLayout && isHorizontal) card.classList.add("horizontal-card");
       card.style.setProperty("--accent", activity.accent || "#203b7a");
 
-      if (isEscape) {
+      if (escapeLayout) {
         const summaryHTML = activity.summaryLine
           ? `<p class="escape-room-summary-line">${escapeHTML(activity.summaryLine)}</p>`
           : "";
@@ -1868,7 +1870,7 @@ function chunkActivities(items, size) {
 
       const cardsRow = page.querySelector(".escape-cards-row");
       msActivities.slice(0, 2).forEach((activity, i) => {
-        const card = renderCard(activity);
+        const card = renderCard(activity, false, true);
         if (i === 0) card.classList.add("escape-room-card--mirrored");
         cardsRow.appendChild(card);
       });
