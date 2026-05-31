@@ -1646,9 +1646,6 @@ function chunkActivities(items, size) {
         .replace(/'/g, "&#039;");
     }
 
-    function formatGrade(grade) {
-      return String(grade ?? "").replace(/[\u05D0-\u05EA]/g, "$&׳");
-    }
 
     function imageMarkup(activity) {
       const isEscape = activity.type === "חדר בריחה";
@@ -1745,6 +1742,51 @@ function chunkActivities(items, size) {
           <ul>${goals}</ul>
         </div>`;
       return card;
+    }
+
+    function renderMiddleSchoolPage(msActivities, pageIndex, totalPages) {
+      const page = document.createElement("section");
+      page.className = "a4-page catalog-page escape-room-page ms-page";
+      page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
+
+      page.innerHTML = `
+        <header class="page-header">
+          <img class="page-header-logo" src="logo.png" alt="לוגו" />
+          <div><h1 class="page-title">סדנאות AI – חט"ב</h1></div>
+        </header>
+        <div class="page-grid">
+          <div class="escape-hero ms-hero">
+            <p class="escape-hero-subtitle">למידה חווייתית, חשיבה ביקורתית וטכנולוגיה עדכנית — בדרך לכיתה של המחר.</p>
+          </div>
+          <div class="escape-intro-cards ms-intro-cards">
+            <div class="escape-info-card">
+              <p class="escape-info-card-title">AI ויצירתיות</p>
+              <p class="escape-info-card-body">הבינה המלאכותית כבר כאן — בסרטונים, במוזיקה, בכתיבה ובעיצוב. בסדנאות החטיבה התלמידים לא רק משתמשים בכלים אלא מבינים כיצד הם עובדים ומפתחים מבט ביקורתי ומודע.</p>
+            </div>
+            <div class="escape-info-card">
+              <p class="escape-info-card-title">חשיבה הנדסית</p>
+              <p class="escape-info-card-body">STEM בחטיבה פירושו אתגרים אמיתיים. התלמידים חווים תהליך הנדסי שלם: הגדרת בעיה, בניית אב טיפוס, בדיקה ושיפור — כמו מהנדסים אמיתיים.</p>
+            </div>
+            <div class="escape-info-card">
+              <p class="escape-info-card-title">עבודת צוות ואחריות</p>
+              <p class="escape-info-card-body">מיומנויות המאה ה-21 עומדות במרכז: שיח, הקשבה, חלוקת תפקידים וקבלת החלטות משותפת. כל סדנה מזמינה את התלמידים לעבוד יחד לקראת יעד משותף.</p>
+            </div>
+          </div>
+          <div class="escape-cards-row"></div>
+        </div>
+        <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
+        <footer class="page-footer">
+          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
+          <span class="page-number">${pageIndex + 1}</span>
+        </footer>`;
+
+      const cardsRow = page.querySelector(".escape-cards-row");
+      msActivities.slice(0, 2).forEach((activity, i) => {
+        const card = renderCard(activity);
+        if (i === 0) card.classList.add("escape-room-card--mirrored");
+        cardsRow.appendChild(card);
+      });
+      return page;
     }
 
     function renderEscapeRoomPage(escapeActivities, pageIndex, totalPages) {
@@ -1888,9 +1930,11 @@ function chunkActivities(items, size) {
       }
 
       const gradeGroupsOrder = ["א-ג", "ד-ו"];
-      const workshopActivities = filteredActivities.filter(activity => activity.type !== "חדר בריחה");
-      const escapeRoomActivities = filteredActivities.filter(activity => activity.type === "חדר בריחה");
+      const workshopActivities = filteredActivities.filter(a => a.type !== "חדר בריחה" && a.gradeGroup !== "ז-ט");
+      const escapeRoomActivities = filteredActivities.filter(a => a.type === "חדר בריחה");
+      const middleSchoolActivities = filteredActivities.filter(a => a.gradeGroup === "ז-ט");
       const hasEscape = escapeRoomActivities.length > 0;
+      const hasMiddleSchool = middleSchoolActivities.length > 0;
 
       const allGroupPages = gradeGroupsOrder
         .map(group => ({
@@ -1901,7 +1945,7 @@ function chunkActivities(items, size) {
         .filter(g => g.pages.length > 0);
 
       const totalWorkshopPages = allGroupPages.reduce((sum, g) => sum + g.pages.length, 0);
-      const totalPages = totalWorkshopPages + (hasEscape ? 1 : 0);
+      const totalPages = totalWorkshopPages + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
 
       let globalPageIndex = 0;
       allGroupPages.forEach(({ label, pages }) => {
@@ -1910,6 +1954,11 @@ function chunkActivities(items, size) {
           globalPageIndex++;
         });
       });
+
+      if (hasMiddleSchool) {
+        booklet.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages));
+        globalPageIndex++;
+      }
 
       if (hasEscape) {
         booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages));
@@ -1934,7 +1983,12 @@ function chunkActivities(items, size) {
       });
     }
 
-    const GRADE_ORDER = ["א","ב","ג","ד","ה","ו"];
+    const GRADE_ORDER = ["א","ב","ג","ד","ה","ו","ז-ט"];
+
+    function formatGrade(grade) {
+      if (grade === "ז-ט") return "ז׳–ט׳";
+      return String(grade ?? "").replace(/[\u05D0-\u05EA]/g, "$&׳");
+    }
 
     function renderFilters() {
       renderFilterChips(gradeFilters, GRADE_ORDER, "grade");
@@ -1944,7 +1998,9 @@ function chunkActivities(items, size) {
 
     function matchesAdvancedFilters(activity) {
       const typeMatch = !selectedType || activity.type === selectedType;
-      const gradeMatch = !selectedGrades.size || activity.grades.some(grade => selectedGrades.has(grade));
+      const gradeMatch = !selectedGrades.size ||
+        (selectedGrades.has("ז-ט") && activity.gradeGroup === "ז-ט") ||
+        activity.grades.some(grade => selectedGrades.has(grade));
       const domainMatch = !selectedDomains.size || selectedDomains.has(activity.domain);
       return typeMatch && gradeMatch && domainMatch;
     }
@@ -2023,8 +2079,8 @@ function chunkActivities(items, size) {
       if (filterInput.checked) {
         bucket.add(filterValue);
         activities.forEach((activity, index) => {
-          const matches = filterKey === "grade"
-            ? activity.grades.includes(filterValue) && activity.type !== "חדר בריחה"
+              const matches = filterKey === "grade"
+            ? (filterValue === "ז-ט" ? activity.gradeGroup === "ז-ט" : activity.grades.includes(filterValue) && activity.type !== "חדר בריחה")
             : activity.domain === filterValue;
           if (matches) selected.add(index);
         });
@@ -2032,7 +2088,7 @@ function chunkActivities(items, size) {
         bucket.delete(filterValue);
         activities.forEach((activity, index) => {
           const matches = filterKey === "grade"
-            ? activity.grades.includes(filterValue) && activity.type !== "חדר בריחה"
+            ? (filterValue === "ז-ט" ? activity.gradeGroup === "ז-ט" : activity.grades.includes(filterValue) && activity.type !== "חדר בריחה")
             : activity.domain === filterValue;
           if (!matches) return;
           const coveredByGrade = activity.grades.some(g => selectedGrades.has(g));
