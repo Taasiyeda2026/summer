@@ -631,37 +631,56 @@
       line-height: 1.5;
     }
 
-    .ms-center-zone {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 3mm;
-      align-items: start;
+    /* ─── MS page layout ─── */
+    .ms-main-zone {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5mm;
       min-height: 0;
     }
 
-    .ms-text-col {
-      display: flex;
-      flex-direction: column;
-      gap: 3mm;
-      height: auto;
-      overflow: visible;
+    .ms-top-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+      flex: 0 0 auto;
     }
 
     .ms-image-col {
       display: flex;
       align-items: center;
       justify-content: center;
+      background: rgba(240,248,255,.55);
+      border: 1px solid rgba(3,105,161,.12);
+      border-radius: 4mm;
+      padding: 3mm;
     }
 
     .ms-center-img {
       width: 100%;
-      max-width: 44mm;
       height: auto;
-      max-height: 52mm;
+      max-height: 82mm;
       object-fit: contain;
-      border-radius: 5mm;
+      border-radius: 3mm;
       display: block;
+    }
+
+    .ms-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3mm;
+    }
+
+    .escape-info-card-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      color: #0369a1;
+      background: rgba(3,105,161,.1);
+      border-radius: 2mm;
+      padding: 0.5mm 2mm;
+      margin-bottom: 1.5mm;
     }
 
     .ms-summary-line {
@@ -674,21 +693,12 @@
     }
 
     /* ─── MS unique activity panels ─── */
-    .ms-activities-col {
-      display: flex;
-      flex-direction: column;
-      gap: 2mm;
-      height: auto;
-      overflow: visible;
-    }
-
-    .ms-activities-grid {
+    .ms-bottom-row {
       flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4mm;
       min-height: 0;
-      overflow: hidden;
     }
 
     .ms-activity-panel {
@@ -1699,25 +1709,40 @@
         padding-top: 2.5mm !important;
       }
 
-      .ms-center-zone {
-        display: grid !important;
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 3mm !important;
-        align-items: start !important;
+      .ms-main-zone {
         flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3.5mm !important;
         min-height: 0 !important;
       }
 
-      .ms-text-col {
-        height: auto !important;
-        overflow: visible !important;
+      .ms-top-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 4mm !important;
+        flex: 0 0 auto !important;
+      }
+
+      .ms-image-col {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .ms-center-img {
         width: 100% !important;
-        max-width: 44mm !important;
         height: auto !important;
-        max-height: 52mm !important;
+        max-height: 82mm !important;
+        object-fit: contain !important;
+      }
+
+      .ms-info-col {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3mm !important;
       }
 
       .escape-info-card-body {
@@ -1725,12 +1750,12 @@
         line-height: 1.5 !important;
       }
 
-      .ms-activities-col {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2mm !important;
-        height: auto !important;
-        overflow: visible !important;
+      .ms-bottom-row {
+        flex: 1 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 4mm !important;
+        min-height: 0 !important;
       }
 
       .ms-activity-panel {
@@ -2033,27 +2058,28 @@ function chunkActivities(items, size) {
           <div class="escape-hero ms-hero">
             <p class="escape-hero-subtitle">עולם הבינה המלאכותית כבר נמצא סביבנו — בלמידה, ביצירה, בחיפוש מידע ובחיי היומיום. הסדנאות של תעשיידע מזמינות את תלמידי חטיבת הביניים לפגוש את עולם ה-AI בצורה חווייתית, נגישה ומעשית, תוך פיתוח חשיבה ביקורתית, יצירתית ואחראית.</p>
           </div>
-          <div class="ms-center-zone">
-            <div class="ms-text-col">
-              <div class="escape-info-card">
-                <p class="escape-info-card-title">למי ומתי?</p>
-                <p class="escape-info-card-body">הפעילויות מותאמות לתלמידי כיתות ז׳–ט׳ ולמסגרות קיץ, ימי שיא, ימי העשרה או רצף קצר של מפגשים. הן מאפשרות לתלמידים לחוות את הבינה המלאכותית לא כנושא רחוק, אלא ככלי עכשווי שמזמין חשיבה, יצירה ואתיקה טכנולוגית.</p>
+          <div class="ms-main-zone">
+            <div class="ms-top-row">
+              <div class="ms-image-col">
+                <img src="image/ai.png" alt="בינה מלאכותית" class="ms-center-img" />
               </div>
-              <div class="escape-info-card">
-                <p class="escape-info-card-title">למידה פעילה עם AI</p>
-                <p class="escape-info-card-body">הסדנאות משלבות למידה פעילה, עבודה בקבוצות, אתגרי חשיבה, יצירת רעיונות ותוצרים קצרים. התלמידים מתנסים בשימוש בכלי AI ככלי עזר לחשיבה, חקר, למידה ויצירה — ובמקביל לומדים לעצור, לשאול, לבדוק ולהפעיל שיקול דעת.</p>
+              <div class="ms-info-col">
+                <div class="escape-info-card">
+                  <p class="escape-info-card-title">למי ומתי?</p>
+                  <p class="escape-info-card-body">הפעילויות מותאמות לתלמידי כיתות ז׳–ט׳ ולמסגרות קיץ, ימי שיא, ימי העשרה או רצף קצר של מפגשים. הן מאפשרות לתלמידים לחוות את הבינה המלאכותית לא כנושא רחוק, אלא ככלי עכשווי שמזמין חשיבה, יצירה ואתיקה טכנולוגית.</p>
+                </div>
+                <div class="escape-info-card">
+                  <p class="escape-info-card-title">למידה פעילה עם AI</p>
+                  <p class="escape-info-card-body">הסדנאות משלבות למידה פעילה, עבודה בקבוצות, אתגרי חשיבה, יצירת רעיונות ותוצרים קצרים. התלמידים מתנסים בשימוש בכלי AI ככלי עזר לחשיבה, חקר, למידה ויצירה — ובמקביל לומדים לעצור, לשאול, לבדוק ולהפעיל שיקול דעת.</p>
+                </div>
+                <div class="escape-info-card">
+                  <span class="escape-info-card-tag">בינה מלאכותית</span>
+                  <p class="escape-info-card-title">יותר מסתם שימוש בכלי</p>
+                  <p class="escape-info-card-body">הדגש אינו רק על "איך משתמשים בכלי", אלא על הבנה רחבה יותר: איך שואלים שאלה טובה, בודקים מידע, מזהים מגבלות ומשתמשים בטכנולוגיה בצורה הוגנת ואחראית — ואיך משלבים בין סקרנות אנושית לכלים דיגיטליים מתקדמים.</p>
+                </div>
               </div>
             </div>
-            <div class="ms-image-col">
-              <img src="image/ai.png" alt="בינה מלאכותית" class="ms-center-img" />
-            </div>
-            <div class="ms-text-col">
-              <div class="escape-info-card">
-                <p class="escape-info-card-title">יותר מסתם שימוש בכלי</p>
-                <p class="escape-info-card-body">הדגש אינו רק על "איך משתמשים בכלי", אלא על הבנה רחבה יותר: איך שואלים שאלה טובה, בודקים מידע, מזהים מגבלות ומשתמשים בטכנולוגיה בצורה הוגנת ואחראית — ואיך משלבים בין סקרנות אנושית לכלים דיגיטליים מתקדמים.</p>
-              </div>
-            </div>
-            <div class="ms-activities-col"></div>
+            <div class="ms-bottom-row"></div>
           </div>
         </div>
         <div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>
@@ -2062,7 +2088,7 @@ function chunkActivities(items, size) {
           <span class="page-number">${pageIndex + 1}</span>
         </footer>`;
 
-      const activitiesGrid = page.querySelector(".ms-activities-col");
+      const activitiesGrid = page.querySelector(".ms-bottom-row");
       msActivities.slice(0, 2).forEach(activity => {
         const goals = activity.goals.map(g => `<li>${escapeHTML(g)}</li>`).join("");
         const panel = document.createElement("div");
