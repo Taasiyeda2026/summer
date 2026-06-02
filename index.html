@@ -813,11 +813,12 @@
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: 40% minmax(0, 1fr);
-      grid-template-rows: auto auto;
+      grid-template-rows: minmax(0, 1fr) auto;
       gap: 3mm;
       align-items: stretch;
       direction: ltr;
       text-align: right;
+      overflow: hidden;
     }
 
     .escape-room-card .media-column {
@@ -1976,8 +1977,8 @@
       .escape-room-card {
         display: grid !important;
         grid-template-columns: 40% minmax(0, 1fr) !important;
-        grid-template-rows: auto auto !important;
-        align-content: start !important;
+        grid-template-rows: minmax(0, 1fr) auto !important;
+        overflow: hidden !important;
         gap: 3mm !important;
         border-radius: 4.2mm !important;
         border: 1px solid rgba(100,116,139,.24) !important;
@@ -2810,13 +2811,13 @@ function chunkActivities(items, size) {
         });
       });
 
-      if (hasMiddleSchool) {
-        booklet.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages));
+      if (hasEscape) {
+        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages));
         globalPageIndex++;
       }
 
-      if (hasEscape) {
-        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages));
+      if (hasMiddleSchool) {
+        booklet.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages));
       }
     }
 
