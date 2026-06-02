@@ -334,6 +334,118 @@
       color: var(--muted);
     }
 
+
+    .catalog-gateway,
+    .program-gateway,
+    .workshop-interface {
+      margin-top: 14px;
+    }
+
+    .catalog-gateway,
+    .program-gateway {
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.92);
+      box-shadow: 0 14px 36px rgba(20,34,66,.09);
+      text-align: center;
+    }
+
+    .gateway-heading {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: -.025em;
+      color: var(--ink);
+    }
+
+    .gateway-subtitle {
+      max-width: 620px;
+      margin: 7px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .catalog-type-grid,
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .program-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      max-width: 760px;
+      margin-inline: auto;
+    }
+
+    .catalog-tile,
+    .program-tile {
+      min-height: 68px;
+      padding: 12px 14px;
+      border: 1px solid rgba(23,32,51,.11);
+      border-radius: 17px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,251,255,.92));
+      color: #172033;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(20,34,66,.07);
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .catalog-tile:hover,
+    .catalog-tile:focus-visible,
+    .program-tile:hover,
+    .program-tile:focus-visible,
+    .program-tile.is-selected {
+      transform: translateY(-2px);
+      border-color: rgba(52,195,213,.58);
+      background:
+        linear-gradient(135deg, rgba(233,250,253,.98), rgba(255,255,255,.96));
+      box-shadow: 0 12px 26px rgba(32,59,122,.12);
+      outline: none;
+    }
+
+    .program-context {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .gateway-back-btn {
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid rgba(23,32,51,.12);
+      border-radius: 999px;
+      background: white;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .program-note {
+      margin: 14px auto 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
     .booklet {
       display: none;
       flex-direction: column;
@@ -1414,6 +1526,8 @@
       .selector-body { flex-direction: column; }
       .filters-sidebar { width: 100%; }
       .activity-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .catalog-type-grid,
+      .program-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .a4-page { transform: scale(.62); transform-origin: top center; margin-bottom: -112mm; }
     }
 
@@ -1851,42 +1965,64 @@
     <section class="control-hero">
       <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
       <div>
-        <h1>קטלוג סדנאות וחדרי בריחה</h1>
-        <p class="header-subtitle">בחירת פעילויות לקטלוג</p>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-        <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
+        <h1>קטלוג תעשיידע לקיץ</h1>
+        <p class="header-subtitle">בחרו את סוג הקטלוג כדי להתקדם לשלב הבא</p>
       </div>
     </section>
 
-    <section class="selector-panel" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
-      <div class="selector-top">
-        <div class="action-row">
-          <button class="action-btn" type="button" data-action="all">בחר הכול</button>
-          <button class="action-btn" type="button" data-action="none">נקה הכול</button>
-          <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
-          <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="selected-count" id="selectedCount">0 נבחרו</div>
-          <button class="action-btn" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
-        </div>
-      </div>
-
-      <div class="selector-body">
-        <div class="filters-sidebar">
-          <div class="filter-group">
-            <p class="filter-label">סינון לפי כיתות</p>
-            <div id="gradeFilters" class="filter-options"></div>
-          </div>
-          <div class="filter-group">
-            <p class="filter-label">סינון לפי תחומים</p>
-            <div id="domainFilters" class="filter-options"></div>
-          </div>
-        </div>
-        <div id="activityPicker" class="activity-picker"></div>
+    <section class="catalog-gateway" id="catalogGateway" aria-label="בחירת סוג קטלוג">
+      <h2 class="gateway-heading">מאיפה מתחילים?</h2>
+      <p class="gateway-subtitle">בחרו שכבת גיל או עברו ישירות לממשק הסדנאות וחדרי הבריחה.</p>
+      <div class="catalog-type-grid" id="catalogTypeGrid">
+        <button class="catalog-tile" type="button" data-catalog-type="elementary">יסודי</button>
+        <button class="catalog-tile" type="button" data-catalog-type="middle">חטיבה</button>
+        <button class="catalog-tile" type="button" data-catalog-type="high">תיכון</button>
+        <button class="catalog-tile" type="button" data-catalog-type="workshops">סדנאות</button>
       </div>
     </section>
+
+    <section class="program-gateway is-hidden" id="programGateway" aria-live="polite" aria-label="בחירת תוכנית">
+      <div class="program-context">
+        <button class="gateway-back-btn" type="button" data-gateway-back>← חזרה לסוגי קטלוג</button>
+        <h2 class="gateway-heading" id="programGatewayTitle">בחירת תוכנית</h2>
+      </div>
+      <p class="gateway-subtitle" id="programGatewaySubtitle">בחרו תוכנית מתוך סוג הקטלוג שנבחר.</p>
+      <div class="program-grid" id="programGrid"></div>
+      <p class="program-note" id="programNote">לאחר בחירת תוכנית ניתן לחזור ולבחור סוג קטלוג אחר.</p>
+    </section>
+
+    <div class="workshop-interface is-hidden" id="workshopInterface">
+      <section class="selector-panel" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
+        <div class="selector-top">
+          <div class="action-row">
+            <button class="gateway-back-btn" type="button" data-gateway-back>← חזרה לסוגי קטלוג</button>
+            <button class="action-btn" type="button" data-action="all">בחר הכול</button>
+            <button class="action-btn" type="button" data-action="none">נקה הכול</button>
+            <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
+            <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;">
+            <div class="selected-count" id="selectedCount">0 נבחרו</div>
+            <button class="action-btn" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
+            <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
+          </div>
+        </div>
+
+        <div class="selector-body">
+          <div class="filters-sidebar">
+            <div class="filter-group">
+              <p class="filter-label">סינון לפי כיתות</p>
+              <div id="gradeFilters" class="filter-options"></div>
+            </div>
+            <div class="filter-group">
+              <p class="filter-label">סינון לפי תחומים</p>
+              <div id="domainFilters" class="filter-options"></div>
+            </div>
+          </div>
+          <div id="activityPicker" class="activity-picker"></div>
+        </div>
+      </section>
+    </div>
   </header>
 
   <main id="booklet" class="booklet" aria-label="חוברת פעילויות A4"></main>
@@ -1896,6 +2032,14 @@
 
     const booklet = document.getElementById("booklet");
     const picker = document.getElementById("activityPicker");
+    const catalogGateway = document.getElementById("catalogGateway");
+    const catalogTypeGrid = document.getElementById("catalogTypeGrid");
+    const programGateway = document.getElementById("programGateway");
+    const programGatewayTitle = document.getElementById("programGatewayTitle");
+    const programGatewaySubtitle = document.getElementById("programGatewaySubtitle");
+    const programGrid = document.getElementById("programGrid");
+    const programNote = document.getElementById("programNote");
+    const workshopInterface = document.getElementById("workshopInterface");
 
     const selectedCount = document.getElementById("selectedCount");
     const gradeFilters = document.getElementById("gradeFilters");
@@ -1913,6 +2057,25 @@
     const selectedGrades = new Set();
     const selectedDomains = new Set();
     let selectedType = null;
+    let selectedProgram = null;
+
+    const CATALOG_TYPES = {
+      elementary: {
+        label: "יסודי",
+        subtitle: "תוכניות קטלוג לתלמידי יסודי",
+        programs: ["ביומימיקרי", "טכנולוגיות החלל", "משחקי קופסה", "מנהיגות ירוקה"]
+      },
+      middle: {
+        label: "חטיבה",
+        subtitle: "תוכניות קטלוג לתלמידי חטיבת ביניים",
+        programs: ["בינה מלאכותית", "יישומי AI בתעשייה", "פורצות דרך", "יזמות פרימיום", "רוקחים עולם"]
+      },
+      high: {
+        label: "תיכון",
+        subtitle: "תוכניות קטלוג לתלמידי תיכון",
+        programs: ["התנסות בתעשייה", "אופק לתעשייה"]
+      }
+    };
 
     const DOMAIN_COLORS = {
       "חלל":        "#1e3a8a",
@@ -1927,6 +2090,44 @@
       "הנדסה":      "#4338ca",
       "AI":         "#0369a1",
     };
+
+    function showMainGateway() {
+      selectedProgram = null;
+      document.body.classList.remove("catalog-mode");
+      catalogGateway.classList.remove("is-hidden");
+      programGateway.classList.add("is-hidden");
+      workshopInterface.classList.add("is-hidden");
+      booklet.innerHTML = "";
+    }
+
+    function showProgramGateway(typeKey) {
+      const catalogType = CATALOG_TYPES[typeKey];
+      if (!catalogType) return;
+      selectedProgram = null;
+      catalogGateway.classList.add("is-hidden");
+      workshopInterface.classList.add("is-hidden");
+      programGateway.classList.remove("is-hidden");
+      programGatewayTitle.textContent = `${catalogType.label} · בחירת תוכנית`;
+      programGatewaySubtitle.textContent = catalogType.subtitle;
+      programNote.textContent = "לאחר בחירת תוכנית ניתן לחזור ולבחור סוג קטלוג אחר.";
+      programGrid.innerHTML = "";
+      catalogType.programs.forEach(programName => {
+        const button = document.createElement("button");
+        button.className = "program-tile";
+        button.type = "button";
+        button.textContent = programName;
+        button.dataset.programName = programName;
+        programGrid.appendChild(button);
+      });
+    }
+
+    function showWorkshopInterface() {
+      selectedProgram = null;
+      catalogGateway.classList.add("is-hidden");
+      programGateway.classList.add("is-hidden");
+      workshopInterface.classList.remove("is-hidden");
+      renderSelection();
+    }
 
     function normalizeActivity(rawActivity = {}, gradeGroup = "") {
       const title = rawActivity.workshopName ?? rawActivity.title ?? "";
@@ -2436,6 +2637,32 @@ function chunkActivities(items, size) {
       renderPicker();
       updateCount();
     }
+
+    catalogTypeGrid.addEventListener("click", event => {
+      const typeButton = event.target.closest("[data-catalog-type]");
+      if (!typeButton) return;
+      const typeKey = typeButton.dataset.catalogType;
+      if (typeKey === "workshops") {
+        showWorkshopInterface();
+        return;
+      }
+      showProgramGateway(typeKey);
+    });
+
+    programGrid.addEventListener("click", event => {
+      const programButton = event.target.closest("[data-program-name]");
+      if (!programButton) return;
+      selectedProgram = programButton.dataset.programName;
+      programGrid.querySelectorAll(".program-tile").forEach(button => {
+        button.classList.toggle("is-selected", button === programButton);
+      });
+      programNote.textContent = `נבחרה תוכנית: ${selectedProgram}. ניתן לחזור לבחירת סוג קטלוג אחר בכל רגע.`;
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest("[data-gateway-back]")) return;
+      showMainGateway();
+    });
 
     picker.addEventListener("change", event => {
       const checkbox = event.target.closest('input[type="checkbox"][data-index]');
