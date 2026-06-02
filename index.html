@@ -1614,23 +1614,26 @@
       bottom: auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 12px;
       color: #6b7280;
       font-size: 8.8px;
       font-weight: 800;
       border-top: 1px solid rgba(23,32,51,.10);
       padding-top: 2mm;
+      margin-top: 3mm;
     }
 
     .page-footer-org {
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
+      text-align: center;
       font-size: 8px;
       font-weight: 700;
       color: #9ca3af;
       white-space: nowrap;
+      pointer-events: none;
     }
 
     .page-number {
@@ -1943,7 +1946,16 @@
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
-        margin-top: 2mm;
+        margin-top: 4mm !important;
+        justify-content: flex-end !important;
+      }
+
+      .page-footer-org {
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        text-align: center !important;
+        transform: none !important;
       }
 
       h1, h2, h3,
