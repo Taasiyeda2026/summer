@@ -738,16 +738,23 @@
     .cover-catalog-grid {
       position: relative;
       z-index: 1;
-      min-height: 0;
+      min-height: 52mm;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: minmax(0, 1fr);
+      grid-template-columns: 1fr;
+      grid-template-rows: 52mm;
       gap: 2.2mm;
-      align-content: stretch;
+      align-content: start;
     }
 
     .cover-catalog-grid .activity-card {
-      height: 100%;
+      width: 100%;
+    }
+
+    .cover-catalog-grid .activity-card.horizontal-card {
+      grid-column: 1 / -1;
+      height: 52mm;
+      min-height: 52mm;
+      max-height: 52mm;
     }
 
     .cover-catalog-grid:empty::before {
@@ -1745,7 +1752,18 @@
       }
 
       .cover-letter-page {
-        grid-template-rows: auto auto auto minmax(0, 1fr) auto auto !important;
+        grid-template-rows: auto auto auto 52mm auto auto !important;
+      }
+
+      .cover-catalog-grid {
+        min-height: 52mm !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 52mm !important;
+        align-content: start !important;
+      }
+
+      .cover-catalog-grid .activity-card.horizontal-card {
+        overflow: hidden !important;
       }
 
       .page-grid {
@@ -2222,7 +2240,7 @@
     const catalogModeBtn = document.getElementById("catalogModeBtn");
     const coverLetterCheckbox = document.getElementById("coverLetterCheckbox");
     const ACTIVITIES_PER_PAGE = 5;
-    const COVER_LETTER_ACTIVITIES = 2;
+    const COVER_LETTER_ACTIVITIES = 1;
     const PAGE_LAYOUT_SEQUENCE = ["bottom", "middle", "top", "middle", "bottom"];
     const LAYOUT_HORIZONTAL_INDEX = {
       top: 0,
@@ -2641,7 +2659,7 @@ function chunkActivities(items, size) {
         </footer>`;
 
       const grid = page.querySelector(".cover-catalog-grid");
-      items.forEach(activity => grid.appendChild(renderCard(activity, false)));
+      items.slice(0, COVER_LETTER_ACTIVITIES).forEach(activity => grid.appendChild(renderCard(activity, true)));
       return page;
     }
 
