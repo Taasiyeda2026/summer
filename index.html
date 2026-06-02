@@ -740,8 +740,8 @@
       z-index: 1;
       min-height: 52mm;
       display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: 52mm;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 52mm minmax(0, 1fr);
       gap: 2.2mm;
       align-content: start;
     }
@@ -755,6 +755,11 @@
       height: 52mm;
       min-height: 52mm;
       max-height: 52mm;
+    }
+
+    .cover-catalog-grid .activity-card:not(.horizontal-card) {
+      min-height: 0;
+      overflow: hidden;
     }
 
     .cover-catalog-grid:empty::before {
@@ -1752,17 +1757,23 @@
       }
 
       .cover-letter-page {
-        grid-template-rows: auto auto auto 52mm auto auto !important;
+        grid-template-rows: auto auto auto minmax(0, 1fr) auto auto !important;
       }
 
       .cover-catalog-grid {
         min-height: 52mm !important;
-        grid-template-columns: 1fr !important;
-        grid-template-rows: 52mm !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: 52mm minmax(0, 1fr) !important;
         align-content: start !important;
       }
 
       .cover-catalog-grid .activity-card.horizontal-card {
+        overflow: hidden !important;
+        grid-column: 1 / -1 !important;
+      }
+
+      .cover-catalog-grid .activity-card:not(.horizontal-card) {
+        min-height: 0 !important;
         overflow: hidden !important;
       }
 
@@ -2240,7 +2251,7 @@
     const catalogModeBtn = document.getElementById("catalogModeBtn");
     const coverLetterCheckbox = document.getElementById("coverLetterCheckbox");
     const ACTIVITIES_PER_PAGE = 5;
-    const COVER_LETTER_ACTIVITIES = 1;
+    const COVER_LETTER_ACTIVITIES = 3;
     const PAGE_LAYOUT_SEQUENCE = ["bottom", "middle", "top", "middle", "bottom"];
     const LAYOUT_HORIZONTAL_INDEX = {
       top: 0,
@@ -2659,7 +2670,7 @@ function chunkActivities(items, size) {
         </footer>`;
 
       const grid = page.querySelector(".cover-catalog-grid");
-      items.slice(0, COVER_LETTER_ACTIVITIES).forEach(activity => grid.appendChild(renderCard(activity, true)));
+      items.slice(0, COVER_LETTER_ACTIVITIES).forEach((activity, index) => grid.appendChild(renderCard(activity, index === 0)));
       return page;
     }
 
