@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-03-v103";
+const CACHE_NAME = "summer-catalog-v2026-06-03-v104";
 const ASSETS = [
   "./",
   "./index.html",
@@ -76,7 +76,7 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  if (url.pathname.endsWith("/activities.json")) {
+  if (url.pathname.endsWith("/activities.json") || url.pathname.endsWith("/catalog-data.json")) {
     event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => caches.match(event.request)));
     return;
   }

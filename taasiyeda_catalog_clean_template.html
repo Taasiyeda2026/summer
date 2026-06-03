@@ -3450,69 +3450,7 @@ textarea,
  <div class="print-btn"><button onclick="window.print()">PDF</button></div>
 </div>
 <script>
-const PROGRAM_TEMPLATE = {
-  "gefen": "",
-  "activityNo": "",
-  "audienceLevel": "",
-  "catalogSection": "",
-  "itemType": "קורס",
-  "title": "שם הקורס",
-  "subtitle": "כותרת משנה קצרה",
-  "grades": "כיתות יעד",
-  "domain": "תחום | תחום | תחום",
-  "sessions": "מספר מפגשים",
-  "duration": "משך מפגש",
-  "opening": "משפט פתיחה קצר שמכניס את הקורא לעולם התוכן של הקורס.",
-  "core": "מטרת־העל של הקורס תיכתב כאן במשפט ברור, קצר ומדויק.",
-  "short": "תקציר הקורס ייכתב כאן. מומלץ לשמור על פסקה אחת ברורה שמתארת מה לומדים, איך לומדים ומה הערך המרכזי של התוכנית.",
-  "goals": "כאן יופיע תיאור הקורס בפסקה או שתיים. אפשר לתאר את תהליך הלמידה, העקרונות הפדגוגיים, אופי הפעילות והחיבור לתוצר הסיום.\n\nאפשר להוסיף פסקה נוספת שמסבירה את שלבי העבודה: חקר, תכנון, פיתוח, משוב, שיפור והצגה מסכמת.",
-  "flow": "תהליך הלמידה בקורס: חקר, תכנון, פיתוח, קבלת משוב, שיפור והצגה.",
-  "develops": "אוריינות מידע, אוריינות מדעית, חשיבה ביקורתית, חשיבה יצירתית, פתרון בעיות, עבודת צוות, קבלת משוב, הצגה בפני קהל",
-  "skills": [
-    "אוריינות מידע",
-    "אוריינות מדעית",
-    "חשיבה ביקורתית",
-    "חשיבה יצירתית",
-    "פתרון בעיות",
-    "עבודת צוות",
-    "קבלת משוב",
-    "הצגה בפני קהל"
-  ],
-  "outcome": "תוצר סיום ראשון\nתוצר סיום שני\nתוצר סיום שלישי",
-  "school": "כאן יופיע הערך של הקורס לבית הספר: חיזוק למידה פעילה, פיתוח מיומנויות, תהליך תוצרי וחיבור לעולמות תוכן רלוונטיים.",
-  "c0": "#2F6F68",
-  "c1": "#3B8C7F",
-  "c2": "#6FAFA5",
-  "c3": "#CFE7E1",
-  "c4": "#EEF8F5",
-  "c5": "#2F6F68",
-  "c6": "#3B8C7F",
-  "courseLayout": true
-};
-
-const programs = [
-  { ...PROGRAM_TEMPLATE }
-];
-
-const syllabus = {
-  "": [
-    {
-      "n": "1",
-      "topic": "נושא המפגש",
-      "desc": "תיאור קצר של המפגש הראשון."
-    },
-    {
-      "n": "2",
-      "topic": "נושא המפגש",
-      "desc": "תיאור קצר של המפגש השני."
-    },
-    {
-      "n": "3",
-      "topic": "נושא המפגש",
-      "desc": "תיאור קצר של המפגש השלישי."
-    }
-  ]
-};
+let programs = [];
 
 const LOGO = "logo.png";
 
@@ -3599,13 +3537,6 @@ function buildSkillsGroups(p) {
  return buildSkillsTags(p);
 }
 
-function highlightSyllabusTerms(text) {
- let safe = escapeHtml(text);
- safe = safe.replace(/BIO-WOW/g, '<span class="term-chip">BIO-WOW</span>');
- safe = safe.replace(/BIO-NOW/g, '<span class="term-chip">BIO-NOW</span>');
- safe = safe.replace(/i-Sight/g, '<span class="term-chip">i-Sight</span>');
- return safe;
-}
 
 function syllabusStageClass(n) {
  const num = Number(n);
@@ -3617,16 +3548,16 @@ function syllabusStageClass(n) {
 
 function buildCourseDescription(p) {
  const paragraphs = String(p.goals || "").split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
- let html = p.gefen === "6089" ? buildLearningFlow() : "";
+ let html = p.showLearningFlow ? buildLearningFlow() : "";
  html += paragraphs.map(par => `<p>${escapeHtml(par)}</p>`).join("");
- if (p.gefen === "6089") {
- html += `<div class="inline-outcomes-wrap"><div class="inline-outcomes-label">תוצרי סיום</div>${buildOutcome(p, "inline")}</div>`;
+ if (p.showInlineOutcomes) {
+   html += `<div class="inline-outcomes-wrap"><div class="inline-outcomes-label">תוצרי סיום</div>${buildOutcome(p, "inline")}</div>`;
  }
  return html || escapeHtml(p.goals || "");
 }
 
 function buildSyllabus(p) {
- const rows = syllabus[p.gefen] || [];
+ const rows = Array.isArray(p.syllabus) ? p.syllabus : [];
  if (!rows.length) return '';
  return `<div class="syllabus-wrap">
  <div class="syllabus-header">סילבוס הקורס</div>
@@ -3754,7 +3685,31 @@ function render(i) {
  </div>`;
 }
 
-buildNav();
+function showLoadError(msg) {
+  document.getElementById("a4-container").innerHTML =
+    `<div style="direction:rtl;font-family:Arial,sans-serif;padding:40px;color:#c0392b;font-size:15px;text-align:center;">
+      <strong>שגיאה בטעינת הנתונים</strong><br><br>${msg}
+    </div>`;
+}
+
+async function init() {
+  try {
+    const res = await fetch("catalog-data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data.programs) || data.programs.length === 0) {
+      showLoadError("קובץ catalog-data.json ריק או חסר שדה programs.");
+      return;
+    }
+    programs = data.programs;
+    buildNav();
+    render(0);
+    scheduleA4Fit();
+    setupCourseDrawer();
+  } catch (err) {
+    showLoadError("לא ניתן לטעון את נתוני הקטלוג. בדקו שקובץ catalog-data.json קיים ותקין.<br><small>" + err.message + "</small>");
+  }
+}
 
 function setupCourseDrawer() {
  const toggle = document.querySelector(".nav-toggle");
@@ -3793,9 +3748,7 @@ function setupCourseDrawer() {
 }
 
 
-render(0);
-scheduleA4Fit();
-setupCourseDrawer();
+init();
 
 function fitA4Page() {
  const a4 = document.querySelector(".a4");
