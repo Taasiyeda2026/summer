@@ -3463,23 +3463,80 @@ function escapeHtml(value) {
  .replace(/'/g, "&#039;");
 }
 
-function buildNav() {
+function stableProgramId(program = {}) {
+ const explicitId = String(program.id ?? "").trim();
+ if (explicitId) return explicitId;
+ const gefen = String(program.gefen ?? "").trim();
+ if (gefen) return `gefen-${gefen.replace(/\s+/g, "-")}`;
+ return String(program.title ?? "program")
+   .trim()
+   .toLowerCase()
+   .replace(/[^\p{L}\p{N}]+/gu, "-")
+   .replace(/^-+|-+$/g, "") || "program";
+}
+
+function normalizeProgram(program = {}) {
+ const textFields = ["gefen", "activityNo", "catalogSection", "itemType", "title", "subtitle", "grades", "domain", "sessions", "duration", "opening", "core", "short", "goals", "flow", "develops", "outcome", "school"];
+ const normalized = { ...program };
+ textFields.forEach(field => { normalized[field] = String(program[field] ?? ""); });
+ normalized.id = stableProgramId(program);
+ normalized.audienceLevel = String(program.audienceLevel ?? "").trim();
+ normalized.skills = Array.isArray(program.skills) ? program.skills.filter(Boolean) : [];
+ normalized.syllabus = Array.isArray(program.syllabus) ? program.syllabus : [];
+ normalized.c0 = program.c0 || "#2F6F68";
+ normalized.c1 = program.c1 || "#3B8C7F";
+ normalized.c2 = program.c2 || "#6FAFA5";
+ normalized.c3 = program.c3 || "#CFE7E1";
+ normalized.c4 = program.c4 || "#EEF8F5";
+ normalized.c5 = program.c5 || normalized.c0;
+ normalized.c6 = program.c6 || normalized.c1;
+ normalized.courseLayout = Boolean(program.courseLayout);
+ normalized.showLearningFlow = Boolean(program.showLearningFlow);
+ normalized.showInlineOutcomes = Boolean(program.showInlineOutcomes);
+ return normalized;
+}
+
+function setActiveNav(index) {
+ document.querySelectorAll(".nav-btn").forEach((button, buttonIndex) => {
+   button.classList.toggle("active", buttonIndex === index);
+ });
+}
+
+function buildNav(activeIndex = 0) {
  const nav = document.getElementById("nav");
  nav.innerHTML = "";
  programs.forEach((p,i) => {
  const btn = document.createElement("button");
- btn.className = "nav-btn"+(i===0?" active":"");
+ btn.className = "nav-btn"+(i===activeIndex?" active":"");
  btn.style.setProperty('--c0',p.c0);
  btn.style.setProperty('--c1',p.c1);
  btn.style.setProperty('--c3',p.c3);
  btn.style.setProperty('--c4',p.c4);
  btn.textContent = p.title;
- btn.onclick = () => {
- render(i);
- document.querySelectorAll(".nav-btn").forEach((b,j)=>b.classList.toggle("active",j===i));
- };
+ btn.dataset.programId = p.id;
+ btn.onclick = () => selectProgram(i, true);
  nav.appendChild(btn);
  });
+}
+
+function findProgramIndexFromUrl() {
+ const params = new URLSearchParams(window.location.search);
+ const requestedId = params.get("id");
+ const requestedGefen = params.get("gefen");
+ if (requestedId) return programs.findIndex(program => program.id === requestedId);
+ if (requestedGefen) return programs.findIndex(program => String(program.gefen) === requestedGefen);
+ return 0;
+}
+
+function selectProgram(index, pushUrl = false) {
+ if (index < 0 || index >= programs.length) return;
+ render(index);
+ setActiveNav(index);
+ scheduleA4Fit();
+ if (pushUrl) {
+   const url = `./course-page.html?id=${encodeURIComponent(programs[index].id)}`;
+   history.pushState({ programId: programs[index].id }, "", url);
+ }
 }
 
 function buildSkills(p) {
@@ -3573,6 +3630,7 @@ function buildSyllabus(p) {
 
 function render(i) {
  const p = programs[i];
+ if (!p) return;
  const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6};--theme-rgb:${hexToRgbString(p.c1)}`;
 
  if (p.courseLayout) {
@@ -3685,11 +3743,16 @@ function render(i) {
  </div>`;
 }
 
-function showLoadError(msg) {
+function showLoadError(msg, showBackLink = false) {
+  const backLink = showBackLink ? `<br><br><a href="./index.html" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת תוכנית</a>` : "";
   document.getElementById("a4-container").innerHTML =
     `<div style="direction:rtl;font-family:Arial,sans-serif;padding:40px;color:#c0392b;font-size:15px;text-align:center;">
-      <strong>שגיאה בטעינת הנתונים</strong><br><br>${msg}
+      <strong>שגיאה בטעינת הנתונים</strong><br><br>${msg}${backLink}
     </div>`;
+}
+
+function showProgramNotFound() {
+  showLoadError("התוכנית המבוקשת לא נמצאה בקובץ הנתונים.", true);
 }
 
 async function init() {
@@ -3701,11 +3764,16 @@ async function init() {
       showLoadError("קובץ catalog-data.json ריק או חסר שדה programs.");
       return;
     }
-    programs = data.programs;
-    buildNav();
-    render(0);
-    scheduleA4Fit();
+    programs = data.programs.map(program => normalizeProgram(program));
+    const requestedIndex = findProgramIndexFromUrl();
     setupCourseDrawer();
+    if (requestedIndex === -1) {
+      buildNav();
+      showProgramNotFound();
+      return;
+    }
+    buildNav(requestedIndex);
+    selectProgram(requestedIndex, false);
   } catch (err) {
     showLoadError("לא ניתן לטעון את נתוני הקטלוג. בדקו שקובץ catalog-data.json קיים ותקין.<br><small>" + err.message + "</small>");
   }
@@ -3801,6 +3869,15 @@ function scheduleA4Fit() {
 
 window.addEventListener("resize", scheduleA4Fit);
 window.addEventListener("beforeprint", fitA4Page);
+window.addEventListener("popstate", () => {
+ const index = findProgramIndexFromUrl();
+ if (index === -1) {
+   showProgramNotFound();
+   setActiveNav(-1);
+   return;
+ }
+ selectProgram(index, false);
+});
 
 
 document.addEventListener("click", function(event) {

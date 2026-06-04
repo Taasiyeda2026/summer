@@ -1,7 +1,9 @@
-const CACHE_NAME = "summer-catalog-v2026-06-03-v104";
+const CACHE_NAME = "summer-catalog-v2026-06-04-v105";
 const ASSETS = [
   "./",
   "./index.html",
+  "./course-page.html",
+  "./catalog-data.json",
   "./activities.json",
   "./logo.png",
   "./image/001.png",
@@ -77,7 +79,13 @@ self.addEventListener("fetch", event => {
   }
 
   if (url.pathname.endsWith("/activities.json") || url.pathname.endsWith("/catalog-data.json")) {
-    event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => caches.match(event.request)));
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" }).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        return response;
+      }).catch(() => caches.match(event.request))
+    );
     return;
   }
 

@@ -2322,22 +2322,21 @@
     const selectedDomains = new Set();
     let selectedType = null;
     let selectedProgram = null;
+    let catalogPrograms = [];
+    let catalogLoadError = null;
 
     const CATALOG_TYPES = {
       elementary: {
         label: "יסודי",
-        subtitle: "תוכניות קטלוג לתלמידי יסודי",
-        programs: ["ביומימיקרי", "טכנולוגיות החלל", "משחקי קופסה", "מנהיגות ירוקה"]
+        subtitle: "תוכניות קטלוג לתלמידי יסודי"
       },
       middle: {
         label: "חטיבה",
-        subtitle: "תוכניות קטלוג לתלמידי חטיבת ביניים",
-        programs: ["בינה מלאכותית", "יישומי AI בתעשייה", "פורצות דרך", "יזמות פרימיום", "רוקחים עולם"]
+        subtitle: "תוכניות קטלוג לתלמידי חטיבת ביניים"
       },
       high: {
         label: "תיכון",
-        subtitle: "תוכניות קטלוג לתלמידי תיכון",
-        programs: ["התנסות בתעשייה", "אופק לתעשייה"]
+        subtitle: "תוכניות קטלוג לתלמידי תיכון"
       }
     };
 
@@ -2364,6 +2363,35 @@
       booklet.innerHTML = "";
     }
 
+    function stableProgramId(program = {}) {
+      const explicitId = String(program.id ?? "").trim();
+      if (explicitId) return explicitId;
+      const gefen = String(program.gefen ?? "").trim();
+      if (gefen) return `gefen-${gefen.replace(/\s+/g, "-")}`;
+      return String(program.title ?? "program")
+        .trim()
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, "-")
+        .replace(/^-+|-+$/g, "") || "program";
+    }
+
+    function normalizeProgram(program = {}) {
+      return {
+        ...program,
+        id: stableProgramId(program),
+        audienceLevel: String(program.audienceLevel ?? "").trim(),
+        title: String(program.title ?? "").trim()
+      };
+    }
+
+    async function loadCatalogPrograms() {
+      const response = await fetch("catalog-data.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Failed to load catalog-data.json (${response.status})`);
+      const data = await response.json();
+      if (!Array.isArray(data?.programs)) throw new Error("catalog-data.json is missing programs array");
+      return data.programs.map(program => normalizeProgram(program)).filter(program => program.title);
+    }
+
     function showProgramGateway(typeKey) {
       const catalogType = CATALOG_TYPES[typeKey];
       if (!catalogType) return;
@@ -2375,12 +2403,24 @@
       programGatewaySubtitle.textContent = catalogType.subtitle;
       programNote.textContent = "לאחר בחירת תוכנית ניתן לחזור ולבחור סוג קטלוג אחר.";
       programGrid.innerHTML = "";
-      catalogType.programs.forEach(programName => {
+
+      if (catalogLoadError) {
+        programNote.textContent = "לא ניתן לטעון את catalog-data.json. בדקו שהקובץ קיים ותקין.";
+        return;
+      }
+
+      const programsForType = catalogPrograms.filter(program => program.audienceLevel === typeKey);
+      if (!programsForType.length) {
+        programNote.textContent = "לא נמצאו תוכניות לקבוצת גיל זו בקובץ הנתונים.";
+        return;
+      }
+
+      programsForType.forEach(program => {
         const button = document.createElement("button");
         button.className = "program-tile";
         button.type = "button";
-        button.textContent = programName;
-        button.dataset.programName = programName;
+        button.textContent = program.title;
+        button.dataset.programId = program.id;
         programGrid.appendChild(button);
       });
     }
@@ -2999,13 +3039,10 @@ function chunkActivities(items, size) {
     });
 
     programGrid.addEventListener("click", event => {
-      const programButton = event.target.closest("[data-program-name]");
+      const programButton = event.target.closest("[data-program-id]");
       if (!programButton) return;
-      selectedProgram = programButton.dataset.programName;
-      programGrid.querySelectorAll(".program-tile").forEach(button => {
-        button.classList.toggle("is-selected", button === programButton);
-      });
-      programNote.textContent = `נבחרה תוכנית: ${selectedProgram}. ניתן לחזור לבחירת סוג קטלוג אחר בכל רגע.`;
+      selectedProgram = programButton.dataset.programId;
+      window.location.href = `./course-page.html?id=${encodeURIComponent(selectedProgram)}`;
     });
 
     document.addEventListener("click", event => {
@@ -3094,6 +3131,15 @@ function chunkActivities(items, size) {
     });
 
     async function init() {
+      try {
+        catalogPrograms = await loadCatalogPrograms();
+        catalogLoadError = null;
+      } catch (error) {
+        console.error(error);
+        catalogPrograms = [];
+        catalogLoadError = error;
+      }
+
       try {
         activities = await loadActivities();
         renderSelection();
