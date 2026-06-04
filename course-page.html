@@ -505,7 +505,13 @@ body {
  text-align: center;
 }
 
-.print-btn { margin-top: 16px; }
+.print-btn {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
 .print-btn button {
  font-size: 14px;
  padding: 10px 28px;
@@ -518,6 +524,21 @@ body {
  font-weight: bold;
 }
 .print-btn button:hover { opacity: 0.85; }
+.back-btn {
+  display: inline-block;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #C7D1DA;
+  background: #fff;
+  color: #3A4E62;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.back-btn:hover { background: #EEF2F5; border-color: #9AAAB8; }
 
 @media print {
  @page { size: A4; margin: 0; }
@@ -1269,17 +1290,17 @@ body {
 
 /* Final requested updates: wider syllabus topic, top logo row, tinted outcome tags */
 .syl-topic {
-  width: 122px !important;
+  width: 138px !important;
 }
 
 .syllabus-table th:nth-child(2),
 .syllabus-table td:nth-child(2) {
-  width: 122px !important;
+  width: 138px !important;
 }
 
 .syllabus-table th:first-child,
 .syllabus-table td:first-child {
-  width: 38px !important;
+  width: 44px !important;
 }
 
 .top-meta-row {
@@ -3447,7 +3468,10 @@ textarea,
 <div class="nav" id="nav"></div>
 <div class="page-wrap">
  <div id="a4-container"></div>
- <div class="print-btn"><button onclick="window.print()">PDF</button></div>
+ <div class="print-btn">
+   <a class="back-btn" href="./index.html">← חזרה</a>
+   <button onclick="window.print()">PDF</button>
+ </div>
 </div>
 <script>
 let programs = [];
