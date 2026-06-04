@@ -3077,8 +3077,12 @@ body.nav-open {
 @media print {
   .nav,
   .nav-toggle,
-  .nav-overlay {
+  .nav-overlay,
+  .nav-pdf-footer {
     display: none !important;
+  }
+  body.nav-open {
+    overflow: visible !important;
   }
 }
 
@@ -3610,7 +3614,17 @@ function buildNav(activeIndex = 0) {
 
  const footer = document.createElement("div");
  footer.className = "nav-pdf-footer";
- footer.innerHTML = `<button class="nav-pdf-btn" type="button" onclick="window.print()">PDF</button>`;
+ const pdfBtn = document.createElement("button");
+ pdfBtn.className = "nav-pdf-btn";
+ pdfBtn.type = "button";
+ pdfBtn.textContent = "PDF";
+ pdfBtn.addEventListener("click", () => {
+   nav.classList.remove("open");
+   document.querySelector(".nav-overlay")?.classList.remove("open");
+   document.body.classList.remove("nav-open");
+   setTimeout(() => window.print(), 120);
+ });
+ footer.appendChild(pdfBtn);
  nav.appendChild(footer);
 }
 
