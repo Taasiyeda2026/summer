@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>קטלוג תוכניות – תעשיידע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
- font-family: Arial, sans-serif;
+ font-family: "Assistant", Arial, sans-serif;
  direction: rtl;
  background: #EEF2F5;
  color: #1E2D3D;
@@ -33,7 +36,7 @@ body {
  background: #fff;
  color: #3A4E62;
  cursor: pointer;
- font-family: Arial, sans-serif;
+ font-family: "Assistant", Arial, sans-serif;
  font-weight: bold;
  transition: all .15s;
  white-space: nowrap;
@@ -61,7 +64,7 @@ body {
  border-radius: 0;
  display: flex;
  flex-direction: column;
- font-family: Arial, sans-serif;
+ font-family: "Assistant", Arial, sans-serif;
  overflow: hidden;
  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
 }
@@ -520,7 +523,7 @@ body {
  background: #3A5068;
  color: #fff;
  cursor: pointer;
- font-family: Arial, sans-serif;
+ font-family: "Assistant", Arial, sans-serif;
  font-weight: bold;
 }
 .print-btn button:hover { opacity: 0.85; }
@@ -533,7 +536,7 @@ body {
   background: #fff;
   color: #3A4E62;
   text-decoration: none;
-  font-family: Arial, sans-serif;
+  font-family: "Assistant", Arial, sans-serif;
   font-weight: bold;
   white-space: nowrap;
   transition: all .15s;
@@ -2994,14 +2997,53 @@ body {
 }
 
 .nav::before {
-  content: "קורסים";
+  content: "תוכניות";
   position: absolute;
-  top: 18px;
+  top: 16px;
   right: 16px;
-  color: #173A4A;
-  font-size: 14px;
+  color: #8FA8B8;
+  font-size: 11px;
   font-weight: 900;
+  letter-spacing: 0.04em;
 }
+
+.nav-section-heading {
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  color: #8FA8B8 !important;
+  letter-spacing: 0.07em !important;
+  padding: 12px 10px 3px !important;
+  margin-top: 2px !important;
+  text-transform: uppercase !important;
+  border-top: 1px solid #EEF2F5 !important;
+}
+
+.nav-section-heading:first-of-type {
+  border-top: none !important;
+  padding-top: 0 !important;
+}
+
+.nav-pdf-footer {
+  margin-top: 10px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #E8EFF4 !important;
+}
+
+.nav-pdf-btn {
+  width: 100% !important;
+  padding: 9px 12px !important;
+  border: none !important;
+  border-radius: 10px !important;
+  background: #3A5068 !important;
+  color: #FFFFFF !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  font-family: "Assistant", Arial, sans-serif !important;
+  cursor: pointer !important;
+  text-align: center !important;
+}
+
+.nav-pdf-btn:hover { opacity: 0.85 !important; }
 
 .nav-btn {
   width: 100% !important;
@@ -3521,26 +3563,50 @@ function normalizeProgram(program = {}) {
 }
 
 function setActiveNav(index) {
- document.querySelectorAll(".nav-btn").forEach((button, buttonIndex) => {
-   button.classList.toggle("active", buttonIndex === index);
+ const activeId = index >= 0 && programs[index] ? programs[index].id : null;
+ document.querySelectorAll(".nav-btn").forEach(btn => {
+   btn.classList.toggle("active", btn.dataset.programId === activeId);
  });
 }
 
 function buildNav(activeIndex = 0) {
  const nav = document.getElementById("nav");
  nav.innerHTML = "";
- programs.forEach((p,i) => {
- const btn = document.createElement("button");
- btn.className = "nav-btn"+(i===activeIndex?" active":"");
- btn.style.setProperty('--c0',p.c0);
- btn.style.setProperty('--c1',p.c1);
- btn.style.setProperty('--c3',p.c3);
- btn.style.setProperty('--c4',p.c4);
- btn.textContent = p.title;
- btn.dataset.programId = p.id;
- btn.onclick = () => selectProgram(i, true);
- nav.appendChild(btn);
+ const activeId = programs[activeIndex] ? programs[activeIndex].id : null;
+
+ const levels = [
+   { label: "יסודי",  keys: ["elementary", "elementary-middle"] },
+   { label: "חטיבה", keys: ["middle", "middle-high"] },
+   { label: "תיכון",  keys: ["high", "high-middle"] },
+ ];
+
+ levels.forEach(({ label, keys }) => {
+   const group = programs.filter(p => keys.includes(p.audienceLevel));
+   if (!group.length) return;
+
+   const heading = document.createElement("div");
+   heading.className = "nav-section-heading";
+   heading.textContent = label;
+   nav.appendChild(heading);
+
+   group.forEach(p => {
+     const btn = document.createElement("button");
+     btn.className = "nav-btn" + (p.id === activeId ? " active" : "");
+     btn.style.setProperty('--c0', p.c0);
+     btn.style.setProperty('--c1', p.c1);
+     btn.style.setProperty('--c3', p.c3);
+     btn.style.setProperty('--c4', p.c4);
+     btn.textContent = p.title;
+     btn.dataset.programId = p.id;
+     btn.onclick = () => selectProgram(programs.indexOf(p), true);
+     nav.appendChild(btn);
+   });
  });
+
+ const footer = document.createElement("div");
+ footer.className = "nav-pdf-footer";
+ footer.innerHTML = `<button class="nav-pdf-btn" type="button" onclick="window.print()">🖨 הדפסה / PDF</button>`;
+ nav.appendChild(footer);
 }
 
 function findProgramIndexFromUrl() {
@@ -3770,7 +3836,7 @@ function render(i) {
 function showLoadError(msg, showBackLink = false) {
   const backLink = showBackLink ? `<br><br><a href="./index.html" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת תוכנית</a>` : "";
   document.getElementById("a4-container").innerHTML =
-    `<div style="direction:rtl;font-family:Arial,sans-serif;padding:40px;color:#c0392b;font-size:15px;text-align:center;">
+    `<div style="direction:rtl;font-family:"Assistant",Arial,sans-serif;padding:40px;color:#c0392b;font-size:15px;text-align:center;">
       <strong>שגיאה בטעינת הנתונים</strong><br><br>${msg}${backLink}
     </div>`;
 }
