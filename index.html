@@ -2409,7 +2409,14 @@
         return;
       }
 
-      const programsForType = catalogPrograms.filter(program => program.audienceLevel === typeKey);
+      const programsForType = catalogPrograms.filter(program => {
+        const level = program.audienceLevel;
+        if (level === typeKey) return true;
+        if (typeKey === "middle" && (level === "middle-high" || level === "elementary-middle")) return true;
+        if (typeKey === "high"   && (level === "middle-high" || level === "high-middle")) return true;
+        if (typeKey === "elementary" && level === "elementary-middle") return true;
+        return false;
+      });
       if (!programsForType.length) {
         programNote.textContent = "לא נמצאו תוכניות לקבוצת גיל זו בקובץ הנתונים.";
         return;
