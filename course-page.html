@@ -3595,9 +3595,42 @@ textarea,
 }
 
 
-/* Fix: limit decorative background to banner area only */
+/* Fix: limit decorative background strictly to banner area */
 .a4::before {
-  height: 48mm !important;
+  height: 36mm !important;
+}
+
+/* Fix: clear visual separator — banner ends, body begins */
+.a4-banner {
+  border-bottom: 1.5px solid rgba(var(--theme-rgb), 0.28) !important;
+  padding-bottom: 4mm !important;
+  margin-bottom: 3.5mm !important;
+}
+.a4-body {
+  padding-top: 1.5mm !important;
+}
+
+/* Fit-class overrides to absorb the added spacing */
+.a4.fit-compact .a4-banner {
+  margin-bottom: 2mm !important;
+  padding-bottom: 2mm !important;
+}
+.a4.fit-compact .a4-body {
+  padding-top: 1mm !important;
+}
+.a4.fit-tight .a4-banner {
+  margin-bottom: 1.5mm !important;
+  padding-bottom: 1.2mm !important;
+}
+.a4.fit-tight .a4-body {
+  padding-top: 0.8mm !important;
+}
+.a4.fit-ultra .a4-banner {
+  margin-bottom: 1mm !important;
+  padding-bottom: 0.6mm !important;
+}
+.a4.fit-ultra .a4-body {
+  padding-top: 0.5mm !important;
 }
 
 </style>
