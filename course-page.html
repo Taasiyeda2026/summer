@@ -3646,6 +3646,19 @@ textarea,
   }
 }
 
+/* Domain strip letter-spacing fix (was crowded at weight 900 with zero spacing) */
+.domain-before-syllabus {
+  letter-spacing: 0.04em !important;
+}
+.program-domain-strip {
+  letter-spacing: 0.04em !important;
+}
+@media print {
+  .domain-before-syllabus {
+    letter-spacing: 0.04em !important;
+  }
+}
+
 /* Visual separator line above school-value (screen + print) */
 .school-value-after-syllabus {
   border-top: 2px solid rgba(var(--theme-rgb), 0.35) !important;
