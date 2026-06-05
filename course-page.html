@@ -1524,16 +1524,18 @@ body {
 /* ── Skill Groups Grid ── */
 .skills-group-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 72px);
   gap: 6px;
-  width: 100%;
+  width: fit-content;
   margin-top: 3px;
 }
 .skill-group-card {
   background: #FFFFFF;
   border: 1px solid rgba(var(--theme-rgb), 0.22);
   border-radius: 7px;
-  padding: 8px 10px 9px;
+  padding: 7px 9px 8px;
+  width: 72px;
+  box-sizing: border-box;
 }
 .skill-group-title {
   font-size: 9px;
@@ -1557,7 +1559,7 @@ body {
 }
 @media print {
   .skills-group-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(4, 72px) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
