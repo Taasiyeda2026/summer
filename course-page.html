@@ -2924,7 +2924,7 @@ body {
   }
 
   .school-value-after-syllabus {
-    margin-top: 6px !important;
+    margin-top: 8mm !important;
     padding-top: 7px !important;
     padding-bottom: 7px !important;
   }
@@ -3631,6 +3631,24 @@ textarea,
 }
 .a4.fit-ultra .a4-body {
   padding-top: 0.5mm !important;
+}
+
+/* Visible gap between syllabus and school-value in print (fit-class overrides) */
+@media print {
+  .a4.fit-compact .school-value-after-syllabus {
+    margin-top: 6mm !important;
+  }
+  .a4.fit-tight .school-value-after-syllabus {
+    margin-top: 5mm !important;
+  }
+  .a4.fit-ultra .school-value-after-syllabus {
+    margin-top: 4mm !important;
+  }
+}
+
+/* Visual separator line above school-value (screen + print) */
+.school-value-after-syllabus {
+  border-top: 2px solid rgba(var(--theme-rgb), 0.35) !important;
 }
 
 /* Center + widen the skills-group-grid cards */
