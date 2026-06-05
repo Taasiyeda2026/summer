@@ -295,6 +295,27 @@
       font-size: 13px;
     }
 
+    .switch-interface-btn {
+      min-height: 40px;
+      padding: 6px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      border: 1.5px solid rgba(31,47,61,0.22);
+      border-radius: 999px;
+      background: #fff;
+      color: #374151;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.13s, border-color 0.13s, color 0.13s;
+      flex-shrink: 0;
+    }
+    .switch-interface-btn:hover {
+      background: #f0f4f8;
+      border-color: rgba(31,47,61,0.38);
+      color: #111827;
+    }
+
     .activity-picker {
       display: flex;
       flex-direction: column;
@@ -2334,6 +2355,7 @@
             <button class="action-btn" type="button" data-course-action="middle">חטיבה</button>
             <button class="action-btn" type="button" data-course-action="high">תיכון</button>
             <button class="action-btn" type="button" data-course-action="manual">בחירה ידנית</button>
+            <button class="switch-interface-btn" type="button" onclick="showWorkshopInterface()">🎨 עבור לסדנאות</button>
           </div>
           <div class="catalog-actions">
             <div class="selected-count" id="selectedCourseCount">0 קורסים נבחרו</div>
@@ -2382,6 +2404,7 @@
         <div class="selector-top">
           <div class="action-row">
             <button class="gateway-back-btn" type="button" data-gateway-back style="display:none">← חזרה לסוגי קטלוג</button>
+            <button class="switch-interface-btn" type="button" onclick="applyCoursePreset('manual')">📚 עבור לקורסים</button>
             <button class="action-btn" type="button" data-action="all">בחר הכול</button>
             <button class="action-btn" type="button" data-action="none">נקה הכול</button>
             <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
