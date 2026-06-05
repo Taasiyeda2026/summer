@@ -3725,12 +3725,23 @@ textarea,
 /* Visual separator line above school-value (screen + print) */
 .school-value-after-syllabus {
   border-top: 2px solid rgba(var(--theme-rgb), 0.35) !important;
+  margin-top: 52px !important;
 }
 @media print {
   .school-value-after-syllabus {
     border-top: 2px solid rgba(var(--theme-rgb), 0.35) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    margin-top: 10mm !important;
+  }
+  .a4.fit-compact .school-value-after-syllabus {
+    margin-top: 8mm !important;
+  }
+  .a4.fit-tight .school-value-after-syllabus {
+    margin-top: 7mm !important;
+  }
+  .a4.fit-ultra .school-value-after-syllabus {
+    margin-top: 6mm !important;
   }
 }
 
