@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הפקת קטלוג קורסים – תעשיידע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   SCREEN — Selection UI
+═══════════════════════════════════════════════ */
+@media screen {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Assistant", Arial, sans-serif;
+    background: #EEF3F8;
+    direction: rtl;
+    color: #1E2D3D;
+  }
+
+  #print-area { display: none; }
+
+  .ui-shell {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  .ui-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .ui-header-logo { height: 36px; width: auto; }
+  .ui-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    color: #1A3050;
+  }
+  .ui-header-back {
+    margin-right: auto;
+    font-size: 13px;
+    color: #5A7A9A;
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid #C8D8E8;
+    border-radius: 999px;
+    padding: 5px 14px;
+    background: #fff;
+    transition: background 0.15s;
+  }
+  .ui-header-back:hover { background: #EEF3F8; }
+
+  /* Quick-select bar */
+  .quick-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .quick-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-family: "Assistant", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    background: #D8E5F0;
+    color: #1A3050;
+  }
+  .quick-btn:hover { background: #C0D5E8; }
+  .quick-btn.active  { background: #2B5580; color: #fff; }
+  .quick-btn.clear   { background: #F0E8E8; color: #903030; }
+  .quick-btn.clear:hover { background: #E0D0D0; }
+
+  /* Search + filter row */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-row input[type=text] {
+    flex: 1;
+    min-width: 180px;
+    padding: 8px 14px;
+    border: 1px solid #C8D8E8;
+    border-radius: 8px;
+    font-family: "Assistant", Arial, sans-serif;
+    font-size: 13px;
+    direction: rtl;
+    outline: none;
+  }
+  .filter-row input[type=text]:focus { border-color: #2B5580; }
+  .level-filter-btn {
+    border: 1px solid #C8D8E8;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-family: "Assistant", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    background: #fff;
+    color: #1A3050;
+    transition: background 0.15s;
+  }
+  .level-filter-btn.active { background: #2B5580; color: #fff; border-color: #2B5580; }
+  .level-filter-btn:hover:not(.active) { background: #EEF3F8; }
+
+  /* Course list */
+  .list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #5A7A9A;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .select-all-link {
+    cursor: pointer;
+    color: #2B5580;
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  #courseList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 52vh;
+    overflow-y: auto;
+    border: 1px solid #D0DEE8;
+    border-radius: 10px;
+    background: #fff;
+    padding: 6px;
+  }
+
+  .course-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .course-row:hover { background: #F0F6FC; }
+  .course-row.selected { background: #E8F0F8; }
+
+  .course-row input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    accent-color: #2B5580;
+    cursor: pointer;
+  }
+  .course-row-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1A3050;
+    flex: 1;
+  }
+  .course-row-meta {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .meta-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #3A5A7A;
+    background: #E8F0F8;
+    border-radius: 999px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .meta-badge.domain { background: #F0EBF8; color: #5A3A7A; }
+
+  .empty-list {
+    padding: 24px;
+    text-align: center;
+    color: #8A9AB0;
+    font-size: 14px;
+  }
+
+  /* Footer bar */
+  .action-bar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #fff;
+    border-top: 1px solid #D0DEE8;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+  }
+  .selected-count {
+    font-size: 14px;
+    font-weight: 700;
+    color: #5A7A9A;
+  }
+  .selected-count strong { color: #2B5580; }
+  #generateBtn {
+    margin-right: auto;
+    border: none;
+    border-radius: 999px;
+    padding: 11px 28px;
+    font-family: "Assistant", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    background: #2B5580;
+    color: #fff;
+    transition: background 0.15s, opacity 0.15s;
+  }
+  #generateBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+  #generateBtn:not(:disabled):hover { background: #1A3F62; }
+}
+
+/* ═══════════════════════════════════════════════
+   A4 PAGE STYLES  (screen + print)
+═══════════════════════════════════════════════ */
+.a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  font-family: "Assistant", Arial, sans-serif;
+  direction: rtl;
+  position: relative;
+  box-sizing: border-box;
+  padding: 10mm 13mm 8mm;
+  display: flex;
+  flex-direction: column;
+  font-size: 10.5px;
+}
+
+/* — Top Meta Row (courseLayout) — */
+.top-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+.top-meta-logo { width: 56px; height: auto; }
+.top-meta-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  background: var(--c4);
+  border: 1px solid var(--c3);
+  border-radius: 999px;
+  padding: 4px 14px;
+}
+.meta-main  { font-size: 9px; font-weight: 800; color: var(--c0); }
+.meta-value { font-size: 9px; color: var(--c0); font-weight: 600; }
+.meta-separator {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--c2);
+  display: inline-block;
+}
+
+/* — Opening sentence — */
+.a4-opening {
+  font-size: 9.5px;
+  font-style: italic;
+  color: var(--c0);
+  text-align: center;
+  border: 1px solid var(--c3);
+  background: var(--c4);
+  border-radius: 8px;
+  padding: 5px 12px;
+  margin: 0 0 7px;
+  line-height: 1.5;
+}
+
+/* — Banner — */
+.a4-banner {
+  background: var(--c0);
+  color: #fff;
+  border-radius: 12px;
+  padding: 11px 15px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.a4-banner-text { flex: 1; }
+.a4-title    { font-size: 19px; font-weight: 900; margin: 0 0 2px; line-height: 1.2; }
+.a4-subtitle { font-size: 10.5px; font-weight: 600; margin: 0 0 6px; opacity: 0.88; }
+.a4-badges   { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+.badge {
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.badge-domain { background: rgba(255,255,255,0.12); }
+.a4-gefen { font-size: 8.5px; font-weight: 700; margin-bottom: 4px; opacity: 0.82; }
+.gefen-label { opacity: 0.75; margin-left: 3px; }
+.a4-logo { width: 46px; height: auto; flex-shrink: 0; }
+
+/* — Body — */
+.a4-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* — Info sections — */
+.info-section {
+  border-radius: 9px;
+  border: 1px solid #DDE5EC;
+  background: #fff;
+  padding: 7px 11px;
+}
+.section-title {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--c0);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.section-body {
+  font-size: 10px;
+  line-height: 1.52;
+  color: #2A3A4A;
+}
+
+/* — Split grid — */
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.mini-card, .skills-card, .outcome-card, .school-card {
+  border-radius: 9px;
+  border: 1px solid #DDE5EC;
+  background: #fff;
+  padding: 7px 11px;
+}
+
+/* — Pills — */
+.pill-row { display: flex; flex-wrap: wrap; gap: 4px; }
+.pill {
+  background: rgba(var(--theme-rgb),0.09);
+  border: 1px solid rgba(var(--theme-rgb),0.22);
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--c0);
+}
+
+/* — Skills tags — */
+.skills-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.skill-tag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--theme-rgb),0.24);
+  background: rgba(var(--theme-rgb),0.075);
+  color: var(--c0);
+  font-size: 9px;
+  font-weight: 800;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* — Skill groups — */
+.skills-group-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 72px);
+  gap: 6px;
+  width: fit-content;
+  margin-top: 3px;
+}
+.skill-group-card {
+  background: #fff;
+  border: 1px solid rgba(var(--theme-rgb),0.22);
+  border-radius: 7px;
+  padding: 7px 9px 8px;
+  width: 72px;
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.skill-group-title {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--c0);
+  margin-bottom: 5px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(var(--theme-rgb),0.15);
+  line-height: 1.3;
+}
+.skill-group-items { display: flex; flex-direction: column; gap: 2px; }
+.skill-group-item { font-size: 8px; line-height: 1.5; color: #3A4A58; font-weight: 600; }
+
+/* — Outcomes — */
+.outcome-box-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 6px;
+  margin-top: 2px;
+}
+.inline-outcomes-wrap {
+  background: var(--c4);
+  border: 1px solid var(--c3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-top: 5px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.inline-outcomes-label {
+  font-size: 8px;
+  font-weight: 800;
+  color: var(--c0);
+  margin-bottom: 4px;
+}
+.inline-outcomes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.outcome-item {
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--c3);
+  background: #F8FAFC;
+  color: #1E2D3D;
+  font-size: 9px;
+  font-weight: 800;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* — Domain strip — */
+.program-domain-strip {
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--c0);
+  background: var(--c4);
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin: 2px 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* — Syllabus — */
+.syllabus-wrap { margin: 4px 0; }
+.syllabus-header {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--c0);
+  background: #fff;
+  border-radius: 6px 6px 0 0;
+  padding: 4px 8px;
+  border: 1px solid #DDE5EC;
+  border-bottom: none;
+}
+.syllabus-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5px;
+  table-layout: fixed;
+}
+.syllabus-table th {
+  background: var(--c0);
+  color: #fff;
+  font-size: 9px;
+  padding: 4px 7px;
+  font-weight: 700;
+  text-align: center;
+  border-left: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid #DDE5EC;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.syllabus-table th:last-child { border-left: none; text-align: right; }
+.syllabus-table td {
+  padding: 4px 7px;
+  border-bottom: 1px solid #EEF2F7;
+  border-left: 1px solid #EEF2F7;
+  vertical-align: top;
+}
+.syllabus-table td:last-child { border-left: none; }
+.syllabus-table tr:nth-child(even) td { background: #FAFBFC; }
+.syllabus-table th:first-child,
+.syllabus-table td:first-child { width: 48px; text-align: center; }
+.syllabus-table th:nth-child(2),
+.syllabus-table td:nth-child(2) { width: 152px; }
+.syl-num { color: var(--c0); font-weight: 700; font-size: 9px; text-align: center; }
+.syl-topic { font-weight: 700; color: #1E2D3D; }
+.syl-desc { color: #3A4A58; }
+
+/* — Learning flow — */
+.learning-flow-strip {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.learning-flow-step {
+  flex: 1;
+  text-align: center;
+  background: var(--c4);
+  border: 1px solid var(--c3);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--c0);
+}
+
+/* — School value — */
+.school-value-after-syllabus { margin-top: 28px; }
+
+/* — Footer — */
+.a4-footer {
+  border-top: 1px solid var(--c3);
+  margin-top: auto;
+  padding-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.a4-footer-brand { font-size: 7.5px; color: #8A9AB0; font-weight: 600; }
+
+/* — Page wrap for print breaks — */
+.a4-page-wrap { break-before: page; page-break-before: always; }
+.a4-page-wrap:first-child { break-before: auto; page-break-before: auto; }
+
+/* ═══════════════════════════════════════════════
+   PRINT
+═══════════════════════════════════════════════ */
+@media print {
+  body { margin: 0; padding: 0; background: #fff; }
+  .ui-shell, .action-bar { display: none !important; }
+  #print-area { display: block !important; }
+
+  @page { size: A4; margin: 0; }
+
+  .a4 {
+    width: 210mm;
+    min-height: 297mm;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+  .a4-page-wrap:last-child .a4 { page-break-after: auto; break-after: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Selection UI ── -->
+<div class="ui-shell" id="uiShell">
+  <div class="ui-header">
+    <img class="ui-header-logo" src="logo.png" alt="תעשיידע">
+    <h1>הפקת קטלוג קורסים</h1>
+    <a class="ui-header-back" href="index.html">← חזרה לאתר</a>
+  </div>
+
+  <!-- Quick select -->
+  <div class="quick-bar">
+    <button class="quick-btn" id="btnAll"     onclick="quickSelect('all')">בחר את כל הקורסים</button>
+    <button class="quick-btn" id="btnElem"    onclick="quickSelect('יסודי')">יסודי</button>
+    <button class="quick-btn" id="btnMiddle"  onclick="quickSelect('חטיבה')">חטיבת ביניים</button>
+    <button class="quick-btn" id="btnHigh"    onclick="quickSelect('תיכון')">תיכון</button>
+    <button class="quick-btn clear"           onclick="clearSelection()">נקה בחירה</button>
+  </div>
+
+  <!-- Search + level filter -->
+  <div class="filter-row">
+    <input type="text" id="searchInput" placeholder="חיפוש לפי שם קורס או גפ״ן..." oninput="onSearch(this.value)">
+    <button class="level-filter-btn active" id="fAll"    onclick="setLevelFilter('all',    this)">הכל</button>
+    <button class="level-filter-btn"        id="fElem"   onclick="setLevelFilter('יסודי',  this)">יסודי</button>
+    <button class="level-filter-btn"        id="fMiddle" onclick="setLevelFilter('חטיבה',  this)">חטיבה</button>
+    <button class="level-filter-btn"        id="fHigh"   onclick="setLevelFilter('תיכון',  this)">תיכון</button>
+  </div>
+
+  <!-- List header -->
+  <div class="list-header">
+    <span id="listCount"></span>
+    <span class="select-all-link" onclick="selectAllFiltered()">בחר הכל בתוצאות</span>
+  </div>
+
+  <!-- Course rows -->
+  <div id="courseList"></div>
+</div>
+
+<!-- ── Print area ── -->
+<div id="print-area"></div>
+
+<!-- ── Fixed action bar ── -->
+<div class="action-bar">
+  <span class="selected-count">נבחרו <strong id="selectedCount">0</strong> קורסים</span>
+  <button id="generateBtn" disabled onclick="generatePDF()">הפק PDF לקטלוג</button>
+</div>
+
+<script>
+let programs      = [];
+let selectedIds   = new Set();
+let searchQuery   = "";
+let levelFilter   = "all";
+
+const LOGO = "logo.png";
+
+const LEVEL_KEYS = {
+  "יסודי":  ["elementary", "elementary-middle"],
+  "חטיבה": ["middle", "middle-high"],
+  "תיכון":  ["high", "high-middle"],
+};
+
+/* ── Utilities ── */
+function escapeHtml(v) {
+  return String(v ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function hexToRgbString(hex) {
+  const c = String(hex||"").replace("#","").trim();
+  if (!/^[0-9a-fA-F]{6}$/.test(c)) return "78,104,128";
+  return [0,2,4].map(i=>parseInt(c.slice(i,i+2),16)).join(",");
+}
+function cleanGradeLabel(v) { return String(v||"").replace(/^כיתות\s+/,"").trim(); }
+
+function stableProgramId(p={}) {
+  const id = String(p.id??"").trim();
+  if (id) return id;
+  const g = String(p.gefen??"").trim();
+  if (g) return `gefen-${g.replace(/\s+/g,"-")}`;
+  return String(p.title??"program").trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-+|-+$/g,"")||"program";
+}
+
+function normalizeProgram(p={}) {
+  const text = ["gefen","activityNo","catalogSection","itemType","title","subtitle","grades","domain","sessions","duration","opening","core","short","goals","flow","develops","outcome","school"];
+  const n = {...p};
+  text.forEach(f=>{n[f]=String(p[f]??"");});
+  n.id            = stableProgramId(p);
+  n.audienceLevel = String(p.audienceLevel??"").trim();
+  n.skills        = Array.isArray(p.skills)      ? p.skills.filter(Boolean)                                    : [];
+  n.skillGroups   = Array.isArray(p.skillGroups) ? p.skillGroups.filter(g=>g&&typeof g==="object"&&g.title)    : [];
+  n.syllabus      = Array.isArray(p.syllabus)    ? p.syllabus                                                  : [];
+  n.c0 = p.c0||"#2F6F68"; n.c1=p.c1||"#3B8C7F"; n.c2=p.c2||"#6FAFA5";
+  n.c3 = p.c3||"#CFE7E1"; n.c4=p.c4||"#EEF8F5"; n.c5=p.c5||n.c0; n.c6=p.c6||n.c1;
+  n.courseLayout      = Boolean(p.courseLayout);
+  n.showLearningFlow  = Boolean(p.showLearningFlow);
+  n.showInlineOutcomes= Boolean(p.showInlineOutcomes);
+  return n;
+}
+
+function getDisplayLevel(p) {
+  for (const [label, keys] of Object.entries(LEVEL_KEYS))
+    if (keys.includes(p.audienceLevel)) return label;
+  return p.audienceLevel||"—";
+}
+
+/* ── Build functions (same as course-page.html) ── */
+function buildTopMetaLabel(p) {
+  const items = [
+    `<span class="meta-main">מספר גפ״ן ${escapeHtml(p.gefen)}</span>`,
+    `<span class="meta-value">${escapeHtml(cleanGradeLabel(p.grades))}</span>`,
+    `<span class="meta-value">${escapeHtml(p.sessions)}</span>`,
+    `<span class="meta-value">${escapeHtml(p.duration)}</span>`,
+  ];
+  return `<div class="top-meta-row">
+    <img class="top-meta-logo" src="${LOGO}" alt="לוגו תעשיידע">
+    <div class="top-meta-label">${items.map((it,i)=>i>0?`<span class="meta-separator"></span>${it}`:it).join("")}</div>
+  </div>`;
+}
+
+function buildLearningFlow() {
+  const steps = ["חוקרים","מתכננים","מפתחים","משפרים","מציגים"];
+  return `<div class="learning-flow-strip">${steps.map(s=>`<div class="learning-flow-step">${escapeHtml(s)}</div>`).join("")}</div>`;
+}
+
+function getOutcomeItems(p) {
+  return String(p.outcome||"").split(/\n|•/).map(s=>s.trim()).filter(Boolean);
+}
+
+function buildOutcome(p, mode="default") {
+  const items = getOutcomeItems(p);
+  if (items.length > 1) {
+    const cls = mode==="inline" ? "inline-outcomes-grid" : "outcome-box-grid";
+    return `<div class="${cls}">${items.map(it=>`<div class="outcome-item">${escapeHtml(it)}</div>`).join("")}</div>`;
+  }
+  return `<div class="section-body">${escapeHtml(p.outcome||"")}</div>`;
+}
+
+function buildSkills(p) {
+  const items = Array.isArray(p.skills)&&p.skills.length ? p.skills : String(p.develops||"").split(",").map(s=>s.trim()).filter(Boolean);
+  return items.map(s=>`<span class="pill">${escapeHtml(s)}</span>`).join("");
+}
+
+function buildSkillsTags(p) {
+  const items = Array.isArray(p.skills)&&p.skills.length ? p.skills : String(p.develops||"").split(",").map(s=>s.trim()).filter(Boolean);
+  return `<div class="skills-tags">${items.map(it=>`<span class="skill-tag">${escapeHtml(it)}</span>`).join("")}</div>`;
+}
+
+function buildSkillsGroups(p) {
+  if (Array.isArray(p.skillGroups)&&p.skillGroups.length) {
+    const cards = p.skillGroups.map(g=>{
+      const title = escapeHtml(g.title||"");
+      const items = Array.isArray(g.items) ? g.items.map(it=>`<div class="skill-group-item">${escapeHtml(it)}</div>`).join("") : "";
+      return `<div class="skill-group-card"><div class="skill-group-title">${title}</div><div class="skill-group-items">${items}</div></div>`;
+    }).join("");
+    return `<div class="skills-group-grid">${cards}</div>`;
+  }
+  return buildSkillsTags(p);
+}
+
+function buildCourseDescription(p) {
+  const paras = String(p.goals||"").split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean);
+  let html = p.showLearningFlow ? buildLearningFlow() : "";
+  html += paras.map(par=>`<p style="margin:0 0 4px">${escapeHtml(par)}</p>`).join("");
+  if (p.showInlineOutcomes) {
+    html += `<div class="inline-outcomes-wrap"><div class="inline-outcomes-label">תוצרי סיום</div>${buildOutcome(p,"inline")}</div>`;
+  }
+  return html || escapeHtml(p.goals||"");
+}
+
+function syllabusStageClass(n) {
+  const num=Number(n);
+  if(num>=1&&num<=4) return "stage-nature";
+  if(num>=5&&num<=6) return "stage-tech";
+  if(num>=7&&num<=10) return "stage-product";
+  return "";
+}
+
+function buildSyllabus(p) {
+  const rows = Array.isArray(p.syllabus)?p.syllabus:[];
+  if(!rows.length) return "";
+  return `<div class="syllabus-wrap">
+<div class="syllabus-header">סילבוס הקורס</div>
+<table class="syllabus-table">
+<thead><tr><th>מפגש</th><th style="text-align:right">נושא</th><th style="text-align:right">תיאור</th></tr></thead>
+<tbody>${rows.map(r=>`<tr class="${syllabusStageClass(r.n)}">
+<td class="syl-num">${escapeHtml(r.n)}</td>
+<td class="syl-topic">${escapeHtml(r.topic)}</td>
+<td class="syl-desc">${escapeHtml(r.desc)}</td>
+</tr>`).join("")}</tbody>
+</table></div>`;
+}
+
+/* ── Render single program as A4 HTML ── */
+function renderProgram(p) {
+  const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6};--theme-rgb:${hexToRgbString(p.c1)}`;
+
+  if (p.courseLayout) {
+    return `<div class="a4" style="${style}">
+${buildTopMetaLabel(p)}
+<p class="a4-opening">${escapeHtml(p.opening)}</p>
+<div class="a4-banner">
+  <div class="a4-banner-text">
+    <h1 class="a4-title">${escapeHtml(p.title)}</h1>
+    <p class="a4-subtitle">${escapeHtml(p.subtitle)}</p>
+    <div class="a4-badges"><span class="badge badge-domain">${escapeHtml(p.domain)}</span></div>
+  </div>
+</div>
+<div class="a4-body">
+  <section class="info-section">
+    <div class="section-title">תקציר</div>
+    <div class="section-body">${escapeHtml(p.short)}</div>
+  </section>
+  <section class="info-section">
+    <div class="section-body">${escapeHtml(p.core)}</div>
+  </section>
+  <section class="info-section">
+    <div class="section-title">תיאור הקורס</div>
+    <div class="section-body">${buildCourseDescription(p)}</div>
+  </section>
+  <section class="info-section">
+    <div class="section-title">כלים ומיומנויות</div>
+    <div class="section-body">${buildSkillsGroups(p)}</div>
+  </section>
+  <div class="program-domain-strip">${escapeHtml(p.domain)}</div>
+  ${buildSyllabus(p)}
+  <section class="info-section school-value-after-syllabus">
+    <div class="section-body">${escapeHtml(p.school)}</div>
+  </section>
+</div>
+<div class="a4-footer"><span class="a4-footer-brand">© תעשיידע - תעשייה למען חינוך מתקדם</span></div>
+</div>`;
+  }
+
+  return `<div class="a4" style="${style}">
+<p class="a4-opening">${escapeHtml(p.opening)}</p>
+<div class="a4-banner">
+  <div class="a4-banner-text">
+    <div class="a4-gefen"><span class="gefen-label">מס׳ גפ״ן</span><span class="gefen-number">${escapeHtml(p.gefen)}</span></div>
+    <h1 class="a4-title">${escapeHtml(p.title)}</h1>
+    <p class="a4-subtitle">${escapeHtml(p.subtitle)}</p>
+    <div class="a4-badges">
+      <span class="badge">${escapeHtml(p.grades)}</span>
+      <span class="badge">${escapeHtml(p.sessions)}</span>
+      <span class="badge">${escapeHtml(p.duration)}</span>
+      <span class="badge badge-domain">${escapeHtml(p.domain)}</span>
+    </div>
+  </div>
+  <img class="a4-logo" src="${LOGO}" alt="לוגו תעשיידע">
+</div>
+<div class="a4-body">
+  <section class="info-section">
+    <div class="section-title">על התוכנית</div>
+    <div class="section-body">${escapeHtml(p.short)}</div>
+  </section>
+  <section class="info-section">
+    <div class="section-title">הרעיון המרכזי</div>
+    <div class="section-body">${escapeHtml(p.core)}</div>
+  </section>
+  <div class="split-grid">
+    <section class="mini-card">
+      <div class="section-title">איך לומדים</div>
+      <div class="section-body">${escapeHtml(p.goals)}</div>
+    </section>
+    <section class="mini-card">
+      <div class="section-title">מה עושים</div>
+      <div class="section-body">${escapeHtml(p.flow)}</div>
+    </section>
+  </div>
+  <div class="split-grid">
+    <section class="skills-card">
+      <div class="section-title">כלים ומיומנויות</div>
+      <div class="pill-row">${buildSkills(p)}</div>
+    </section>
+    <section class="outcome-card">
+      <div class="section-title">תוצר סיום</div>
+      ${buildOutcome(p)}
+    </section>
+  </div>
+  <section class="info-section school-card">
+    <div class="section-title">ערך לבית הספר</div>
+    <div class="section-body">${escapeHtml(p.school)}</div>
+  </section>
+  ${buildSyllabus(p)}
+</div>
+<div class="a4-footer"><span class="a4-footer-brand">© תעשיידע - תעשייה למען חינוך מתקדם</span></div>
+</div>`;
+}
+
+/* ── Selection UI logic ── */
+function getFilteredPrograms() {
+  return programs.filter(p => {
+    const matchLevel = levelFilter==="all" || (LEVEL_KEYS[levelFilter]||[]).includes(p.audienceLevel);
+    const q = searchQuery.toLowerCase();
+    const matchSearch = !q || p.title.toLowerCase().includes(q) || p.gefen.includes(q);
+    return matchLevel && matchSearch;
+  });
+}
+
+function renderList() {
+  const filtered = getFilteredPrograms();
+  const list = document.getElementById("courseList");
+  document.getElementById("listCount").textContent = `${filtered.length} קורסים`;
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty-list">לא נמצאו קורסים תואמים</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(p => {
+    const checked = selectedIds.has(p.id) ? "checked" : "";
+    const sel = selectedIds.has(p.id) ? " selected" : "";
+    const domain = p.domain ? p.domain.split("|")[0].trim() : "";
+    return `<label class="course-row${sel}" data-id="${p.id}">
+  <input type="checkbox" data-id="${p.id}" ${checked}>
+  <span class="course-row-title">${escapeHtml(p.title)}</span>
+  <span class="course-row-meta">
+    ${p.gefen ? `<span class="meta-badge">גפ״ן ${escapeHtml(p.gefen)}</span>` : ""}
+    <span class="meta-badge">${escapeHtml(getDisplayLevel(p))}</span>
+    ${domain ? `<span class="meta-badge domain">${escapeHtml(domain)}</span>` : ""}
+  </span>
+</label>`;
+  }).join("");
+
+  list.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const id = cb.closest("[data-id]").dataset.id;
+      if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+      updateActionBar();
+      cb.closest(".course-row").classList.toggle("selected", cb.checked);
+    });
+  });
+}
+
+function updateActionBar() {
+  const n = selectedIds.size;
+  document.getElementById("selectedCount").textContent = n;
+  const btn = document.getElementById("generateBtn");
+  btn.disabled = n === 0;
+  btn.textContent = n === 0 ? "הפק PDF לקטלוג" : `הפק PDF – ${n} קורסים`;
+}
+
+function quickSelect(group) {
+  if (group === "all") {
+    programs.forEach(p => selectedIds.add(p.id));
+  } else {
+    const keys = LEVEL_KEYS[group] || [];
+    programs.filter(p => keys.includes(p.audienceLevel)).forEach(p => selectedIds.add(p.id));
+  }
+  renderList();
+  updateActionBar();
+}
+
+function clearSelection() {
+  selectedIds.clear();
+  renderList();
+  updateActionBar();
+}
+
+function selectAllFiltered() {
+  getFilteredPrograms().forEach(p => selectedIds.add(p.id));
+  renderList();
+  updateActionBar();
+}
+
+function onSearch(v) {
+  searchQuery = v.trim();
+  renderList();
+}
+
+function setLevelFilter(level, btn) {
+  levelFilter = level;
+  document.querySelectorAll(".level-filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderList();
+}
+
+/* ── PDF Generation ── */
+function generatePDF() {
+  const selected = programs.filter(p => selectedIds.has(p.id));
+  if (!selected.length) return;
+
+  const printArea = document.getElementById("print-area");
+  printArea.innerHTML = selected.map((p, i) =>
+    `<div class="a4-page-wrap">${renderProgram(p)}</div>`
+  ).join("");
+
+  setTimeout(() => window.print(), 150);
+}
+
+/* ── Init ── */
+async function init() {
+  try {
+    const res = await fetch("catalog-data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data.programs) || !data.programs.length) throw new Error("programs ריק");
+    programs = data.programs.map(p => normalizeProgram(p));
+    renderList();
+    updateActionBar();
+  } catch(err) {
+    document.getElementById("courseList").innerHTML =
+      `<div class="empty-list">שגיאה בטעינת הנתונים: ${escapeHtml(err.message)}</div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
