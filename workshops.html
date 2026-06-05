@@ -3330,7 +3330,7 @@ function chunkActivities(items, size) {
       if (!typeButton) return;
       const typeKey = typeButton.dataset.catalogType;
       if (typeKey === "workshops") {
-        window.location.href = "./workshops.html";
+        showWorkshopInterface();
         return;
       }
       if (typeKey.startsWith("courses-")) {
