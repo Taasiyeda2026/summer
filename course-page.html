@@ -4411,5 +4411,12 @@ document.addEventListener("click", function(event) {
 
 </script>
 <div class="fit-warning" id="fit-warning">התוכן עדיין ארוך מעט לעמוד A4 אחד. מומלץ לקצר מעט טקסט או סילבוס.</div>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").then(registration => registration.update());
+    });
+  }
+</script>
 </body>
 </html>
