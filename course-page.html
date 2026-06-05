@@ -545,9 +545,45 @@ body {
 }
 .back-btn:hover { background: #EEF2F5; border-color: #9AAAB8; }
 
+.catalog-toolbar {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 10002;
+  display: none;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #D8E1E8;
+  border-radius: 999px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+}
+body.catalog-view .catalog-toolbar { display: flex; }
+.catalog-toolbar .back-btn { font-size: 12px; }
+.catalog-print-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: #3A5068;
+  color: #fff;
+  font: 800 12px "Assistant", Arial, sans-serif;
+  cursor: pointer;
+}
+.catalog-opening-frame {
+  width: 210mm;
+  height: 297mm;
+  border: 0;
+  display: block;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+body.catalog-view .page-wrap { gap: 22px; }
+body.catalog-view .a4 { margin-bottom: 22px; }
+
 @media print {
  @page { size: A4; margin: 0; }
- .nav, .print-btn, .nav-toggle, .catalog-gen-link { display: none !important; }
+ .nav, .print-btn, .nav-toggle, .catalog-gen-link, .catalog-toolbar { display: none !important; }
  html, body { width: 210mm; margin: 0; padding: 0; background: #fff; }
  .page-wrap { padding: 0; }
  .a4 {
@@ -3844,7 +3880,10 @@ textarea,
 </head>
 <body>
 <button class="nav-toggle" type="button" aria-label="פתיחת רשימת קורסים" aria-expanded="false">☰</button>
-<a class="catalog-gen-link" href="catalog-generator.html" title="הפקת קטלוג קורסים ל־PDF">📄 קטלוג PDF</a>
+<div class="catalog-toolbar" id="catalogToolbar" aria-label="פעולות קטלוג קורסים">
+  <a class="back-btn" href="./index.html">← חזרה לבחירה</a>
+  <button class="catalog-print-btn" type="button" onclick="window.print()">🖨 הדפסה / PDF</button>
+</div>
 <div class="nav-overlay" aria-hidden="true"></div>
 <div class="nav" id="nav"></div>
 <div class="page-wrap">
@@ -4073,13 +4112,11 @@ function buildSyllabus(p) {
  </table></div>`;
 }
 
-function render(i) {
- const p = programs[i];
- if (!p) return;
+function buildProgramPageHtml(p) {
  const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6};--theme-rgb:${hexToRgbString(p.c1)}`;
 
  if (p.courseLayout) {
- document.getElementById("a4-container").innerHTML = `
+ return `
  <div class="a4" style="${style}">
  ${buildTopMetaLabel(p)}
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
@@ -4122,10 +4159,9 @@ function render(i) {
  <span class="a4-footer-brand">© תעשיידע - תעשייה למען חינוך מתקדם</span>
  </div>
  </div>`;
- return;
  }
 
- document.getElementById("a4-container").innerHTML = `
+ return `
  <div class="a4" style="${style}">
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
  <div class="a4-banner">
@@ -4188,6 +4224,35 @@ function render(i) {
  </div>`;
 }
 
+function render(i) {
+ const p = programs[i];
+ if (!p) return;
+ document.getElementById("a4-container").innerHTML = buildProgramPageHtml(p);
+}
+
+function findProgramIndexesFromUrl() {
+ const params = new URLSearchParams(window.location.search);
+ const ids = String(params.get("ids") || "").split(",").map(id => id.trim()).filter(Boolean);
+ if (!ids.length) return [];
+ const requested = new Set(ids);
+ return programs.map((program, index) => requested.has(program.id) ? index : -1).filter(index => index >= 0);
+}
+
+function isCatalogModeFromUrl() {
+ const params = new URLSearchParams(window.location.search);
+ return params.get("catalog") === "1" || params.has("ids");
+}
+
+function renderCourseCatalog(indexes, includeCover = false) {
+ const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
+ document.body.classList.add("catalog-view");
+ document.querySelector(".nav-toggle")?.setAttribute("hidden", "hidden");
+ document.getElementById("nav")?.setAttribute("hidden", "hidden");
+ const openingHtml = includeCover ? `<iframe class="catalog-opening-frame" src="./opening.html" title="מכתב מקדים לקטלוג הקורסים"></iframe>` : "";
+ document.getElementById("a4-container").innerHTML = openingHtml + selectedPrograms.map(buildProgramPageHtml).join("");
+ scheduleA4Fit();
+}
+
 function showLoadError(msg, showBackLink = false) {
   const backLink = showBackLink ? `<br><br><a href="./index.html" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת תוכנית</a>` : "";
   document.getElementById("a4-container").innerHTML =
@@ -4210,6 +4275,16 @@ async function init() {
       return;
     }
     programs = data.programs.map(program => normalizeProgram(program));
+    if (isCatalogModeFromUrl()) {
+      const params = new URLSearchParams(window.location.search);
+      const requestedIndexes = findProgramIndexesFromUrl();
+      if (!requestedIndexes.length) {
+        showLoadError("לא נבחרו קורסים תקינים להפקת קטלוג.", true);
+        return;
+      }
+      renderCourseCatalog(requestedIndexes, params.get("cover") === "1");
+      return;
+    }
     const requestedIndex = findProgramIndexFromUrl();
     setupCourseDrawer();
     if (requestedIndex === -1) {
@@ -4264,42 +4339,44 @@ function setupCourseDrawer() {
 init();
 
 function fitA4Page() {
- const a4 = document.querySelector(".a4");
+ const pages = document.querySelectorAll(".a4");
  const warning = document.getElementById("fit-warning");
- if (!a4) return;
-
- const modes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
- a4.classList.remove(...modes);
+ if (!pages.length) return;
  if (warning) warning.classList.remove("show");
 
- // Start spacious when there is enough room.
- a4.classList.add("fit-spacious");
+ const modes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
+ let hasOverflow = false;
+ pages.forEach(a4 => {
+   a4.classList.remove(...modes);
+   a4.classList.add("fit-spacious");
 
- const tolerance = 2;
- const fits = () => a4.scrollHeight <= a4.clientHeight + tolerance;
+   const tolerance = 2;
+   const fits = () => a4.scrollHeight <= a4.clientHeight + tolerance;
 
- // If spacious overflows, step down.
- if (!fits()) {
-   a4.classList.remove("fit-spacious");
-   a4.classList.add("fit-normal");
- }
+   if (!fits()) {
+     a4.classList.remove("fit-spacious");
+     a4.classList.add("fit-normal");
+   }
 
- if (!fits()) {
-   a4.classList.remove("fit-normal");
-   a4.classList.add("fit-compact");
- }
+   if (!fits()) {
+     a4.classList.remove("fit-normal");
+     a4.classList.add("fit-compact");
+   }
 
- if (!fits()) {
-   a4.classList.remove("fit-compact");
-   a4.classList.add("fit-tight");
- }
+   if (!fits()) {
+     a4.classList.remove("fit-compact");
+     a4.classList.add("fit-tight");
+   }
 
- if (!fits()) {
-   a4.classList.remove("fit-tight");
-   a4.classList.add("fit-ultra");
- }
+   if (!fits()) {
+     a4.classList.remove("fit-tight");
+     a4.classList.add("fit-ultra");
+   }
 
- if (!fits() && warning) {
+   if (!fits()) hasOverflow = true;
+ });
+
+ if (hasOverflow && warning) {
    warning.classList.add("show");
  }
 }

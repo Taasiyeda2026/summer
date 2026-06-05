@@ -433,7 +433,7 @@
     .catalog-type-grid,
     .program-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 12px;
       margin-top: 18px;
     }
@@ -501,6 +501,87 @@
       font-size: 13px;
       font-weight: 700;
       line-height: 1.55;
+    }
+
+    .course-interface {
+      margin-top: 14px;
+    }
+
+    .course-summary-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,251,255,.92));
+    }
+
+    .course-summary-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .course-summary-text {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .course-controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .course-search-box {
+      flex: 1 1 240px;
+      min-width: 220px;
+    }
+
+    .course-filter-select {
+      min-height: 46px;
+      min-width: 150px;
+      padding: 0 14px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .course-picker {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 8px;
+      max-height: 380px;
+      overflow: auto;
+      padding: 2px 2px 4px;
+    }
+
+    .course-option .option-card {
+      grid-template-columns: 18px 1fr;
+      align-items: start;
+      min-height: 76px;
+    }
+
+    .course-option .option-title {
+      font-size: 13px;
+    }
+
+    .course-option .option-meta {
+      font-size: 11px;
+      line-height: 1.35;
     }
 
     .is-hidden {
@@ -2222,11 +2303,13 @@
 
     <section class="catalog-gateway" id="catalogGateway" aria-label="בחירת סוג קטלוג">
       <h2 class="gateway-heading">מאיפה מתחילים?</h2>
-      <p class="gateway-subtitle">בחרו שכבת גיל או עברו ישירות לממשק הסדנאות וחדרי הבריחה.</p>
+      <p class="gateway-subtitle">בחרו קבוצת קורסים מהירה, עברו לבחירה ידנית, או פתחו את ממשק הסדנאות וחדרי הבריחה.</p>
       <div class="catalog-type-grid" id="catalogTypeGrid">
-        <button class="catalog-tile" type="button" data-catalog-type="elementary">יסודי</button>
-        <button class="catalog-tile" type="button" data-catalog-type="middle">חטיבה</button>
-        <button class="catalog-tile" type="button" data-catalog-type="high">תיכון</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-all">כל הקורסים</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-elementary">כל יסודי</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-middle">כל חטיבה</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-high">כל תיכון</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-manual">בחירה ידנית</button>
         <button class="catalog-tile" type="button" data-catalog-type="workshops">סדנאות</button>
       </div>
     </section>
@@ -2240,6 +2323,59 @@
       <div class="program-grid" id="programGrid"></div>
       <p class="program-note" id="programNote">לאחר בחירת תוכנית ניתן לחזור ולבחור סוג קטלוג אחר.</p>
     </section>
+
+    <div class="course-interface is-hidden" id="courseInterface">
+      <section class="selector-panel" id="courseSelectorPanel" aria-label="בחירת קורסים לקטלוג">
+        <div class="selector-top">
+          <div class="action-row">
+            <button class="gateway-back-btn" type="button" data-gateway-back>← חזרה לסוגי קטלוג</button>
+            <button class="action-btn" type="button" data-course-action="all">כל הקורסים</button>
+            <button class="action-btn" type="button" data-course-action="elementary">כל יסודי</button>
+            <button class="action-btn" type="button" data-course-action="middle">כל חטיבה</button>
+            <button class="action-btn" type="button" data-course-action="high">כל תיכון</button>
+            <button class="action-btn" type="button" data-course-action="manual">בחירה ידנית</button>
+          </div>
+          <div class="catalog-actions">
+            <div class="selected-count" id="selectedCourseCount">0 קורסים</div>
+            <button class="action-btn" id="toggleCoursePickerBtn" type="button">▾ בחר קורסים</button>
+            <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
+              <input id="courseCoverLetterCheckbox" type="checkbox" />
+              <span>להוסיף מכתב מקדים</span>
+            </label>
+            <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
+          </div>
+        </div>
+        <div class="course-summary-card">
+          <div>
+            <p class="course-summary-title" id="courseSelectionTitle">בחרו קבוצת קורסים</p>
+            <p class="course-summary-text" id="courseSelectionText">אפשר להתחיל מבחירה מהירה או לפתוח בחירה ידנית.</p>
+          </div>
+          <button class="gateway-back-btn" type="button" id="courseClearBtn">ניקוי הכול</button>
+        </div>
+        <div class="selector-body" id="courseManualBody">
+          <div style="width:100%;">
+            <div class="course-controls-row">
+              <button class="action-btn" type="button" data-course-manual="select-visible">בחר הכול</button>
+              <button class="action-btn" type="button" data-course-manual="clear-visible">נקה הכול</button>
+              <label class="search-box course-search-box" aria-label="חיפוש קורס">
+                🔎
+                <input id="courseSearchInput" type="search" placeholder="חיפוש לפי שם קורס" autocomplete="off" />
+              </label>
+              <select class="course-filter-select" id="courseLevelFilter" aria-label="סינון לפי שכבת גיל">
+                <option value="all">כל שכבות הגיל</option>
+                <option value="elementary">יסודי</option>
+                <option value="middle">חטיבה</option>
+                <option value="high">תיכון</option>
+              </select>
+              <select class="course-filter-select" id="courseDomainFilter" aria-label="סינון לפי תחום">
+                <option value="all">כל התחומים</option>
+              </select>
+            </div>
+            <div class="course-picker" id="coursePicker"></div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <div class="workshop-interface is-hidden" id="workshopInterface">
       <section class="selector-panel" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
@@ -2267,7 +2403,6 @@
               </select>
             </div>
             <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
-            <a class="print-btn" href="catalog-generator.html" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;">📄 קטלוג PDF</a>
           </div>
         </div>
 
@@ -2303,6 +2438,20 @@
     const programGrid = document.getElementById("programGrid");
     const programNote = document.getElementById("programNote");
     const workshopInterface = document.getElementById("workshopInterface");
+    const courseInterface = document.getElementById("courseInterface");
+    const courseSelectorPanel = document.getElementById("courseSelectorPanel");
+    const courseManualBody = document.getElementById("courseManualBody");
+    const coursePicker = document.getElementById("coursePicker");
+    const selectedCourseCount = document.getElementById("selectedCourseCount");
+    const courseSelectionTitle = document.getElementById("courseSelectionTitle");
+    const courseSelectionText = document.getElementById("courseSelectionText");
+    const courseCatalogModeBtn = document.getElementById("courseCatalogModeBtn");
+    const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
+    const courseSearchInput = document.getElementById("courseSearchInput");
+    const courseLevelFilter = document.getElementById("courseLevelFilter");
+    const courseDomainFilter = document.getElementById("courseDomainFilter");
+    const toggleCoursePickerBtn = document.getElementById("toggleCoursePickerBtn");
+    const courseClearBtn = document.getElementById("courseClearBtn");
 
     const selectedCount = document.getElementById("selectedCount");
     const gradeFilters = document.getElementById("gradeFilters");
@@ -2318,6 +2467,9 @@
       bottom: 4
     };
     const selected = new Set();
+    const selectedCourses = new Set();
+    let selectedCoursePreset = null;
+    let courseManualOpen = false;
 
     const selectedGrades = new Set();
     const selectedDomains = new Set();
@@ -2361,6 +2513,7 @@
       catalogGateway.classList.remove("is-hidden");
       programGateway.classList.add("is-hidden");
       workshopInterface.classList.add("is-hidden");
+      courseInterface.classList.add("is-hidden");
       booklet.innerHTML = "";
     }
 
@@ -2399,6 +2552,7 @@
       selectedProgram = null;
       catalogGateway.classList.add("is-hidden");
       workshopInterface.classList.add("is-hidden");
+      courseInterface.classList.add("is-hidden");
       programGateway.classList.remove("is-hidden");
       programGatewayTitle.textContent = `${catalogType.label} · בחירת תוכנית`;
       programGatewaySubtitle.textContent = catalogType.subtitle;
@@ -2437,8 +2591,144 @@
       selectedProgram = null;
       catalogGateway.classList.add("is-hidden");
       programGateway.classList.add("is-hidden");
+      courseInterface.classList.add("is-hidden");
       workshopInterface.classList.remove("is-hidden");
       renderSelection();
+    }
+
+    function courseMatchesLevel(program, levelKey) {
+      const level = program.audienceLevel;
+      if (levelKey === "all") return true;
+      if (level === levelKey) return true;
+      if (levelKey === "middle" && (level === "middle-high" || level === "elementary-middle")) return true;
+      if (levelKey === "high" && (level === "middle-high" || level === "high-middle")) return true;
+      if (levelKey === "elementary" && level === "elementary-middle") return true;
+      return false;
+    }
+
+    function courseLevelLabel(program) {
+      const labels = [];
+      if (courseMatchesLevel(program, "elementary")) labels.push("יסודי");
+      if (courseMatchesLevel(program, "middle")) labels.push("חטיבה");
+      if (courseMatchesLevel(program, "high")) labels.push("תיכון");
+      return labels.join(" · ") || "כללי";
+    }
+
+    function courseDomains(program) {
+      return String(program.domain || "")
+        .split(/\||,|،/)
+        .map(item => item.trim())
+        .filter(Boolean);
+    }
+
+    function getSelectedCoursePrograms() {
+      return catalogPrograms.filter(program => selectedCourses.has(program.id));
+    }
+
+    function visibleCoursePrograms() {
+      const term = courseSearchInput.value.trim().toLowerCase();
+      const level = courseLevelFilter.value;
+      const domain = courseDomainFilter.value;
+      return catalogPrograms.filter(program => {
+        const matchesTerm = !term || program.title.toLowerCase().includes(term);
+        const matchesLevel = level === "all" || courseMatchesLevel(program, level);
+        const domains = courseDomains(program);
+        const matchesDomain = domain === "all" || domains.includes(domain) || String(program.domain || "") === domain;
+        return matchesTerm && matchesLevel && matchesDomain;
+      });
+    }
+
+    function renderCourseDomainFilter() {
+      const current = courseDomainFilter.value;
+      const domains = [...new Set(catalogPrograms.flatMap(courseDomains))].sort((a, b) => a.localeCompare(b, "he"));
+      courseDomainFilter.innerHTML = `<option value="all">כל התחומים</option>` + domains.map(domain => `<option value="${escapeHTML(domain)}">${escapeHTML(domain)}</option>`).join("");
+      courseDomainFilter.value = domains.includes(current) ? current : "all";
+    }
+
+    function updateCourseSummary() {
+      const selectedPrograms = getSelectedCoursePrograms();
+      selectedCourseCount.textContent = `${selectedPrograms.length} קורסים`;
+      courseCatalogModeBtn.disabled = selectedPrograms.length === 0;
+      const presetLabels = {
+        all: "כל הקורסים",
+        elementary: "כל יסודי",
+        middle: "כל חטיבה",
+        high: "כל תיכון",
+        manual: "בחירה ידנית"
+      };
+      courseSelectionTitle.textContent = selectedCoursePreset ? presetLabels[selectedCoursePreset] : "בחירת קורסים";
+      if (!selectedPrograms.length) {
+        courseSelectionText.textContent = "לא נבחרו קורסים. בחרו קבוצה מהירה או פתחו בחירה ידנית.";
+        return;
+      }
+      const preview = selectedPrograms.slice(0, 4).map(program => program.title).join(" · ");
+      const suffix = selectedPrograms.length > 4 ? ` ועוד ${selectedPrograms.length - 4}` : "";
+      courseSelectionText.textContent = `${preview}${suffix}`;
+    }
+
+    function renderCoursePicker() {
+      coursePicker.innerHTML = "";
+      const programs = visibleCoursePrograms();
+      if (!programs.length) {
+        coursePicker.innerHTML = `<p class="program-note">לא נמצאו קורסים בהתאם לחיפוש ולסינון.</p>`;
+        return;
+      }
+      programs.forEach((program, index) => {
+        const label = document.createElement("label");
+        label.className = `activity-option course-option ${selectedCourses.has(program.id) ? "selected" : ""}`;
+        label.style.setProperty("--option-accent", program.c1 || "#203b7a");
+        label.innerHTML = `
+          <input type="checkbox" data-course-id="${escapeHTML(program.id)}" ${selectedCourses.has(program.id) ? "checked" : ""} />
+          <span class="option-card">
+            <span class="checkmark" aria-hidden="true"></span>
+            <span>
+              <span class="option-title">${escapeHTML(program.title)}</span>
+              <span class="option-meta">${escapeHTML(courseLevelLabel(program))}${program.domain ? ` · ${escapeHTML(program.domain)}` : ""}</span>
+            </span>
+          </span>`;
+        coursePicker.appendChild(label);
+      });
+    }
+
+    function renderCourseSelection() {
+      renderCourseDomainFilter();
+      renderCoursePicker();
+      updateCourseSummary();
+      courseSelectorPanel.classList.toggle("collapsed", !courseManualOpen);
+      courseManualBody.classList.toggle("is-hidden", !courseManualOpen);
+      toggleCoursePickerBtn.textContent = courseManualOpen ? "▴ סגור" : "▾ בחר קורסים";
+    }
+
+    function applyCoursePreset(preset) {
+      selectedCourses.clear();
+      selectedCoursePreset = preset;
+      const level = preset === "all" || preset === "manual" ? "all" : preset;
+      if (preset !== "manual") {
+        catalogPrograms.forEach(program => {
+          if (courseMatchesLevel(program, level)) selectedCourses.add(program.id);
+        });
+        courseManualOpen = false;
+      } else {
+        courseManualOpen = true;
+      }
+      showCourseInterface();
+    }
+
+    function showCourseInterface() {
+      catalogGateway.classList.add("is-hidden");
+      programGateway.classList.add("is-hidden");
+      workshopInterface.classList.add("is-hidden");
+      courseInterface.classList.remove("is-hidden");
+      renderCourseSelection();
+    }
+
+    function buildCourseCatalogUrl() {
+      const ids = [...selectedCourses];
+      const params = new URLSearchParams();
+      params.set("ids", ids.join(","));
+      params.set("catalog", "1");
+      if (courseCoverLetterCheckbox.checked) params.set("cover", "1");
+      return `./course-page.html?${params.toString()}`;
     }
 
     function normalizeActivity(rawActivity = {}, gradeGroup = "") {
@@ -3043,6 +3333,11 @@ function chunkActivities(items, size) {
         showWorkshopInterface();
         return;
       }
+      if (typeKey.startsWith("courses-")) {
+        const preset = typeKey.replace("courses-", "");
+        applyCoursePreset(preset);
+        return;
+      }
       showProgramGateway(typeKey);
     });
 
@@ -3104,6 +3399,56 @@ function chunkActivities(items, size) {
       document.body.classList.remove("catalog-mode");
     });
 
+    coursePicker.addEventListener("change", event => {
+      const checkbox = event.target.closest('input[type="checkbox"][data-course-id]');
+      if (!checkbox) return;
+      checkbox.checked ? selectedCourses.add(checkbox.dataset.courseId) : selectedCourses.delete(checkbox.dataset.courseId);
+      selectedCoursePreset = "manual";
+      renderCourseSelection();
+    });
+
+    [courseSearchInput, courseLevelFilter, courseDomainFilter].forEach(control => {
+      control.addEventListener("input", renderCourseSelection);
+      control.addEventListener("change", renderCourseSelection);
+    });
+
+    toggleCoursePickerBtn.addEventListener("click", () => {
+      courseManualOpen = !courseManualOpen;
+      selectedCoursePreset = courseManualOpen && !selectedCoursePreset ? "manual" : selectedCoursePreset;
+      renderCourseSelection();
+    });
+
+    courseClearBtn.addEventListener("click", () => {
+      selectedCourses.clear();
+      selectedCoursePreset = null;
+      renderCourseSelection();
+    });
+
+    courseCatalogModeBtn.addEventListener("click", () => {
+      if (!selectedCourses.size) return;
+      window.location.href = buildCourseCatalogUrl();
+    });
+
+    document.addEventListener("click", event => {
+      const actionButton = event.target.closest("[data-course-action]");
+      if (!actionButton) return;
+      applyCoursePreset(actionButton.dataset.courseAction);
+    });
+
+    document.addEventListener("click", event => {
+      const actionButton = event.target.closest("[data-course-manual]");
+      if (!actionButton) return;
+      const visible = visibleCoursePrograms();
+      if (actionButton.dataset.courseManual === "select-visible") {
+        visible.forEach(program => selectedCourses.add(program.id));
+      } else if (actionButton.dataset.courseManual === "clear-visible") {
+        visible.forEach(program => selectedCourses.delete(program.id));
+      }
+      selectedCoursePreset = "manual";
+      courseManualOpen = true;
+      renderCourseSelection();
+    });
+
     const selectorPanel = document.getElementById("selectorPanel");
     const togglePickerBtn = document.getElementById("togglePickerBtn");
     togglePickerBtn.addEventListener("click", () => {
@@ -3142,6 +3487,7 @@ function chunkActivities(items, size) {
       try {
         catalogPrograms = await loadCatalogPrograms();
         catalogLoadError = null;
+        renderCourseDomainFilter();
       } catch (error) {
         console.error(error);
         catalogPrograms = [];
