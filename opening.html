@@ -254,6 +254,71 @@
       opacity: 0.95;
     }
 
+    /* — Marketer contact line (bottom of page) — */
+    .page-contact {
+      display: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e3a5f;
+      direction: rtl;
+      letter-spacing: 0.01em;
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    .page-contact.visible { display: block; }
+
+    /* — Marketer selector bar (screen only) — */
+    .marketer-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: #fff;
+      border-top: 1px solid rgba(31,47,61,0.12);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 200;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+      font-family: Arial, sans-serif;
+      direction: rtl;
+    }
+    .marketer-bar-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1f2f3d;
+      white-space: nowrap;
+    }
+    .marketer-bar select {
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid rgba(31,47,61,0.18);
+      border-radius: 999px;
+      padding: 6px 14px;
+      background: #f7fbff;
+      color: #1f2f3d;
+      cursor: pointer;
+      outline: none;
+      font-family: Arial, sans-serif;
+    }
+    .marketer-bar-print {
+      margin-right: auto;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 22px;
+      background: #1c6fa8;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      transition: background 0.15s;
+    }
+    .marketer-bar-print:hover { background: #155a8a; }
+
     @media print {
       body {
         background: #ffffff;
@@ -268,6 +333,9 @@
         box-shadow: none;
         padding: 26mm 24mm 22mm;
       }
+
+      .marketer-bar { display: none !important; }
+      .page-contact { font-size: 11.5px; margin-top: 20mm; padding-top: 10px; }
     }
 
     @media (max-width: 760px) {
@@ -387,8 +455,39 @@
           </div>
         </div>
       </div>
+
+      <div class="page-contact" id="pageContact"></div>
     </section>
 
   </main>
+
+  <!-- Marketer selector bar (screen only) -->
+  <div class="marketer-bar">
+    <span class="marketer-bar-label">שיווק:</span>
+    <select id="marketerSelect" onchange="onMarketerChange(this.value)">
+      <option value="none">ללא שיווק</option>
+      <option value="yael">יעל אביב</option>
+      <option value="israa">איסראא אבו-ראס</option>
+    </select>
+    <button class="marketer-bar-print" onclick="window.print()">🖨 הדפס מכתב מקדים</button>
+  </div>
+
+  <script>
+    const CONTACTS = {
+      yael:  "לפרטים נוספים: יעל אביב \u2013 054-7790073 | yael_aviv@think.org.il",
+      israa: "לפרטים נוספים: איסראא אבו-ראס \u2013 054-5419396 | esraas@think.org.il",
+    };
+
+    function onMarketerChange(val) {
+      const el = document.getElementById("pageContact");
+      if (val === "none") {
+        el.textContent = "";
+        el.classList.remove("visible");
+      } else {
+        el.textContent = CONTACTS[val] || "";
+        el.classList.add("visible");
+      }
+    }
+  </script>
 </body>
 </html>
