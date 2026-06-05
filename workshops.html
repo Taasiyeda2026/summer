@@ -2303,12 +2303,12 @@
 
     <section class="catalog-gateway" id="catalogGateway" aria-label="בחירת סוג קטלוג">
       <h2 class="gateway-heading">מאיפה מתחילים?</h2>
-      <p class="gateway-subtitle">בחרו קבוצת קורסים מהירה, עברו לבחירה ידנית, או פתחו את ממשק הסדנאות וחדרי הבריחה.</p>
+      <p class="gateway-subtitle">בחרו קבוצת קורסים מהירה או עברו לבחירה ידנית. ממשק הסדנאות נשאר זמין מכפתור הסדנאות הראשי.</p>
       <div class="catalog-type-grid" id="catalogTypeGrid">
         <button class="catalog-tile" type="button" data-catalog-type="courses-all">כל הקורסים</button>
-        <button class="catalog-tile" type="button" data-catalog-type="courses-elementary">כל יסודי</button>
-        <button class="catalog-tile" type="button" data-catalog-type="courses-middle">כל חטיבה</button>
-        <button class="catalog-tile" type="button" data-catalog-type="courses-high">כל תיכון</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-elementary">יסודי</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-middle">חטיבה</button>
+        <button class="catalog-tile" type="button" data-catalog-type="courses-high">תיכון</button>
         <button class="catalog-tile" type="button" data-catalog-type="courses-manual">בחירה ידנית</button>
         <button class="catalog-tile" type="button" data-catalog-type="workshops">סדנאות</button>
       </div>
@@ -2330,13 +2330,13 @@
           <div class="action-row">
             <button class="gateway-back-btn" type="button" data-gateway-back>← חזרה לסוגי קטלוג</button>
             <button class="action-btn" type="button" data-course-action="all">כל הקורסים</button>
-            <button class="action-btn" type="button" data-course-action="elementary">כל יסודי</button>
-            <button class="action-btn" type="button" data-course-action="middle">כל חטיבה</button>
-            <button class="action-btn" type="button" data-course-action="high">כל תיכון</button>
+            <button class="action-btn" type="button" data-course-action="elementary">יסודי</button>
+            <button class="action-btn" type="button" data-course-action="middle">חטיבה</button>
+            <button class="action-btn" type="button" data-course-action="high">תיכון</button>
             <button class="action-btn" type="button" data-course-action="manual">בחירה ידנית</button>
           </div>
           <div class="catalog-actions">
-            <div class="selected-count" id="selectedCourseCount">0 קורסים</div>
+            <div class="selected-count" id="selectedCourseCount">0 קורסים נבחרו</div>
             <button class="action-btn" id="toggleCoursePickerBtn" type="button">▾ בחר קורסים</button>
             <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
               <input id="courseCoverLetterCheckbox" type="checkbox" />
@@ -2647,13 +2647,13 @@
 
     function updateCourseSummary() {
       const selectedPrograms = getSelectedCoursePrograms();
-      selectedCourseCount.textContent = `${selectedPrograms.length} קורסים`;
+      selectedCourseCount.textContent = `${selectedPrograms.length} קורסים נבחרו`;
       courseCatalogModeBtn.disabled = selectedPrograms.length === 0;
       const presetLabels = {
         all: "כל הקורסים",
-        elementary: "כל יסודי",
-        middle: "כל חטיבה",
-        high: "כל תיכון",
+        elementary: "יסודי",
+        middle: "חטיבה",
+        high: "תיכון",
         manual: "בחירה ידנית"
       };
       courseSelectionTitle.textContent = selectedCoursePreset ? presetLabels[selectedCoursePreset] : "בחירת קורסים";
@@ -3330,7 +3330,7 @@ function chunkActivities(items, size) {
       if (!typeButton) return;
       const typeKey = typeButton.dataset.catalogType;
       if (typeKey === "workshops") {
-        showWorkshopInterface();
+        window.location.href = "./workshops.html";
         return;
       }
       if (typeKey.startsWith("courses-")) {
@@ -3442,7 +3442,7 @@ function chunkActivities(items, size) {
       if (actionButton.dataset.courseManual === "select-visible") {
         visible.forEach(program => selectedCourses.add(program.id));
       } else if (actionButton.dataset.courseManual === "clear-visible") {
-        visible.forEach(program => selectedCourses.delete(program.id));
+        selectedCourses.clear();
       }
       selectedCoursePreset = "manual";
       courseManualOpen = true;
@@ -3497,6 +3497,12 @@ function chunkActivities(items, size) {
       try {
         activities = await loadActivities();
         renderSelection();
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("catalog") === "courses") {
+          applyCoursePreset("manual");
+        } else if (params.get("catalog") === "workshops") {
+          showWorkshopInterface();
+        }
       } catch (error) {
         console.error(error);
         selectedCount.textContent = "0 נבחרו";

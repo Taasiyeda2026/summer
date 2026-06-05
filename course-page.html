@@ -577,6 +577,8 @@ body.catalog-view .catalog-toolbar { display: flex; }
   display: block;
   background: #fff;
   box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  page-break-after: always;
+  break-after: page;
 }
 body.catalog-view .page-wrap { gap: 22px; }
 body.catalog-view .a4 { margin-bottom: 22px; }
@@ -3881,7 +3883,7 @@ textarea,
 <body>
 <button class="nav-toggle" type="button" aria-label="פתיחת רשימת קורסים" aria-expanded="false">☰</button>
 <div class="catalog-toolbar" id="catalogToolbar" aria-label="פעולות קטלוג קורסים">
-  <a class="back-btn" href="./index.html">← חזרה לבחירה</a>
+  <a class="back-btn" href="./workshops.html?catalog=courses">← חזרה לבחירה</a>
   <button class="catalog-print-btn" type="button" onclick="window.print()">🖨 הדפסה / PDF</button>
 </div>
 <div class="nav-overlay" aria-hidden="true"></div>
@@ -3889,7 +3891,7 @@ textarea,
 <div class="page-wrap">
  <div id="a4-container"></div>
  <div class="print-btn">
-   <a class="back-btn" href="./index.html">← חזרה</a>
+   <a class="back-btn" href="./workshops.html?catalog=courses">← חזרה</a>
  </div>
 </div>
 <script>
@@ -4254,7 +4256,7 @@ function renderCourseCatalog(indexes, includeCover = false) {
 }
 
 function showLoadError(msg, showBackLink = false) {
-  const backLink = showBackLink ? `<br><br><a href="./index.html" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת תוכנית</a>` : "";
+  const backLink = showBackLink ? `<br><br><a href="./workshops.html?catalog=courses" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת קורסים</a>` : "";
   document.getElementById("a4-container").innerHTML =
     `<div style="direction:rtl;font-family:"Assistant",Arial,sans-serif;padding:40px;color:#c0392b;font-size:15px;text-align:center;">
       <strong>שגיאה בטעינת הנתונים</strong><br><br>${msg}${backLink}
