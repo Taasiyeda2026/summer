@@ -3646,6 +3646,22 @@ textarea,
   }
 }
 
+/* Syllabus header row — white background instead of dark */
+.syllabus-table th {
+  background: #FFFFFF !important;
+  color: var(--c0) !important;
+  border-bottom: 2px solid var(--c0) !important;
+}
+@media print {
+  .syllabus-table th {
+    background: #FFFFFF !important;
+    color: var(--c0) !important;
+    border-bottom: 2px solid var(--c0) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
 /* core-plain-card (מטרת העל) — font size reduced by 0.5px */
 .core-plain-card .section-body {
   font-size: 12.15px !important;
