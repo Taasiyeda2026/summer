@@ -21,31 +21,41 @@
       box-sizing: border-box;
     }
 
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    html,
     body {
       margin: 0;
-      min-height: 100vh;
+      min-height: 100%;
       font-family: Arial, sans-serif;
       color: var(--ink);
       background:
         radial-gradient(circle at 14% 16%, rgba(254, 227, 70, 0.22), transparent 28%),
         radial-gradient(circle at 86% 18%, rgba(47, 156, 149, 0.15), transparent 30%),
         linear-gradient(135deg, #eef7fb 0%, #ffffff 42%, #f7fbfc 100%);
+    }
+
+    body {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 36px;
+      padding: 24px;
     }
 
     .page {
-      width: min(960px, 100%);
-      min-height: 1180px;
+      width: 210mm;
+      height: 297mm;
       background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 30px;
-      box-shadow: 0 24px 70px rgba(31, 47, 61, 0.13);
+      border-radius: 24px;
+      box-shadow: 0 22px 60px rgba(31, 47, 61, 0.13);
       position: relative;
       overflow: hidden;
-      padding: 72px 78px 64px;
+      padding: 22mm 18mm 16mm;
     }
 
     .page::before {
@@ -53,9 +63,9 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, transparent 0 72%, rgba(28, 111, 168, 0.055) 72% 100%),
-        radial-gradient(circle at 9% 88%, rgba(254, 227, 70, 0.32), transparent 22%),
-        radial-gradient(circle at 95% 9%, rgba(47, 156, 149, 0.17), transparent 24%);
+        linear-gradient(90deg, transparent 0 72%, rgba(28, 111, 168, 0.05) 72% 100%),
+        radial-gradient(circle at 9% 88%, rgba(254, 227, 70, 0.28), transparent 22%),
+        radial-gradient(circle at 95% 9%, rgba(47, 156, 149, 0.15), transparent 24%);
       pointer-events: none;
     }
 
@@ -63,60 +73,60 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 260px;
-      height: 260px;
+      width: 215px;
+      height: 215px;
       background: linear-gradient(135deg, rgba(28, 111, 168, 0.14), rgba(47, 156, 149, 0.12));
       border-bottom-left-radius: 100%;
     }
 
     .page-logo {
       position: absolute;
-      top: 38px;
-      left: 46px;
+      top: 18mm;
+      left: 16mm;
       z-index: 3;
-      width: 150px;
-      max-height: 82px;
+      width: 118px;
+      max-height: 68px;
       object-fit: contain;
     }
 
     .content {
       position: relative;
       z-index: 1;
-      max-width: 760px;
+      max-width: 100%;
     }
 
     .eyebrow {
       display: inline-block;
-      padding: 9px 18px;
+      padding: 7px 15px;
       border-radius: 999px;
       background: rgba(47, 156, 149, 0.11);
       border: 1px solid rgba(47, 156, 149, 0.24);
       color: #247c76;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 700;
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
 
     h1 {
       margin: 0;
-      font-size: 50px;
-      line-height: 1.12;
-      letter-spacing: -0.7px;
+      font-size: 35px;
+      line-height: 1.14;
+      letter-spacing: -0.35px;
       color: var(--ink);
-      max-width: 800px;
+      max-width: 620px;
     }
 
     .subtitle {
-      margin: 20px 0 0;
-      font-size: 29px;
+      margin: 13px 0 0;
+      font-size: 22px;
       line-height: 1.35;
       font-weight: 700;
       color: var(--blue);
     }
 
     .meta {
-      margin: 14px 0 46px;
-      font-size: 25px;
+      margin: 8px 0 28px;
+      font-size: 19px;
       line-height: 1.35;
       font-weight: 700;
       color: var(--muted);
@@ -124,9 +134,9 @@
 
     .text-block {
       display: grid;
-      gap: 22px;
-      font-size: 22px;
-      line-height: 1.72;
+      gap: 13px;
+      font-size: 16.7px;
+      line-height: 1.58;
       color: #263846;
     }
 
@@ -135,20 +145,24 @@
     }
 
     .highlight {
-      margin-top: 6px;
-      padding: 22px 26px;
+      margin-top: 2px;
+      padding: 14px 18px;
       border: 2px solid #3da66b;
-      border-right: 8px solid #2f8f5b;
+      border-right: 7px solid #2f8f5b;
       background: linear-gradient(90deg, rgba(61, 166, 107, 0.14), rgba(61, 166, 107, 0.045));
-      border-radius: 20px;
+      border-radius: 16px;
       font-weight: 700;
       color: #243646;
       text-align: center;
     }
 
+    .invite-text {
+      font-size: 16.2px;
+    }
+
     .closing {
-      margin-top: 50px;
-      padding-top: 24px;
+      margin-top: 26px;
+      padding-top: 18px;
       border-top: 1px solid var(--line);
       display: flex;
       justify-content: center;
@@ -158,77 +172,34 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 18px;
+      gap: 15px;
       direction: rtl;
       text-align: center;
     }
 
     .brand-logo {
-      width: 64px;
-      height: 58px;
+      width: 58px;
+      height: 52px;
       object-fit: contain;
       flex: 0 0 auto;
       margin-top: -2px;
     }
 
-    .brand-symbol {
-      width: 58px;
-      height: 52px;
-      position: relative;
-      flex: 0 0 auto;
-      margin-top: -2px;
-    }
-
-    .brand-symbol span {
-      position: absolute;
-      display: block;
-      border-radius: 999px 999px 999px 10px;
-      transform-origin: center;
-      box-shadow: 0 3px 8px rgba(31, 47, 61, 0.10);
-    }
-
-    .brand-symbol .shape-a {
-      width: 52px;
-      height: 18px;
-      top: 3px;
-      right: 0;
-      background: #f4b344;
-      transform: rotate(12deg);
-    }
-
-    .brand-symbol .shape-b {
-      width: 44px;
-      height: 18px;
-      top: 17px;
-      right: 8px;
-      background: #56d5cf;
-      transform: rotate(-28deg);
-    }
-
-    .brand-symbol .shape-c {
-      width: 50px;
-      height: 18px;
-      top: 28px;
-      right: 2px;
-      background: #ec4d8d;
-      transform: rotate(-62deg);
-    }
-
     .tagline-main {
       margin: 0;
-      font-size: 28px;
-      line-height: 1.22;
+      font-size: 24px;
+      line-height: 1.2;
       font-weight: 800;
       color: #4e5f65;
-      letter-spacing: -0.2px;
+      letter-spacing: -0.15px;
     }
 
     .tagline-sub {
-      margin: 3px 0 0;
-      font-size: 27px;
-      line-height: 1.22;
+      margin: 2px 0 0;
+      font-size: 23px;
+      line-height: 1.2;
       font-weight: 800;
-      letter-spacing: -0.15px;
+      letter-spacing: -0.12px;
     }
 
     .tagline-sub .innovation {
@@ -243,99 +214,27 @@
       color: #e84f89;
     }
 
-    .bottom-mark {
-      position: absolute;
-      left: 54px;
-      bottom: 44px;
-      width: 128px;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--yellow), var(--teal), var(--blue));
-      opacity: 0.95;
-    }
-
-    /* — Marketer contact line (bottom of page) — */
-    .page-contact {
-      display: none;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 700;
-      color: #1e3a5f;
-      direction: rtl;
-      letter-spacing: 0.01em;
-      margin-top: 32px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }
-    .page-contact.visible { display: block; }
-
-    /* — Marketer selector bar (screen only) — */
-    .marketer-bar {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      background: #fff;
-      border-top: 1px solid rgba(31,47,61,0.12);
-      padding: 10px 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 200;
-      box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
-      font-family: Arial, sans-serif;
-      direction: rtl;
-    }
-    .marketer-bar-label {
-      font-size: 14px;
-      font-weight: 800;
-      color: #1f2f3d;
-      white-space: nowrap;
-    }
-    .marketer-bar select {
-      font-size: 14px;
-      font-weight: 700;
-      border: 1px solid rgba(31,47,61,0.18);
-      border-radius: 999px;
-      padding: 6px 14px;
-      background: #f7fbff;
-      color: #1f2f3d;
-      cursor: pointer;
-      outline: none;
-      font-family: Arial, sans-serif;
-    }
-    .marketer-bar-print {
-      margin-right: auto;
-      border: none;
-      border-radius: 999px;
-      padding: 8px 22px;
-      background: #1c6fa8;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      transition: background 0.15s;
-    }
-    .marketer-bar-print:hover { background: #155a8a; }
-
     @media print {
+      html,
       body {
+        width: 210mm;
+        height: 297mm;
         background: #ffffff;
+      }
+
+      body {
         padding: 0;
+        display: block;
       }
 
       .page {
         width: 210mm;
-        min-height: 297mm;
+        height: 297mm;
         border: none;
         border-radius: 0;
         box-shadow: none;
-        padding: 26mm 24mm 22mm;
+        page-break-after: always;
       }
-
-      .marketer-bar { display: none !important; }
-      .page-contact { font-size: 11.5px; margin-top: 20mm; padding-top: 10px; }
     }
 
     @media (max-width: 760px) {
@@ -344,72 +243,43 @@
       }
 
       .page {
-        min-height: auto;
-        padding: 46px 28px 56px;
+        width: min(100%, 210mm);
+        height: auto;
+        min-height: 297mm;
+        padding: 46px 28px 52px;
         border-radius: 22px;
       }
 
       .page-logo {
-        width: 112px;
-        top: 26px;
-        left: 26px;
+        width: 105px;
+        top: 24px;
+        left: 24px;
       }
 
       h1 {
-        font-size: 36px;
+        font-size: 32px;
       }
 
       .subtitle {
-        font-size: 24px;
-      }
-
-      .meta {
-        font-size: 21px;
-        margin-bottom: 34px;
-      }
-
-      .text-block {
-        font-size: 19px;
-        line-height: 1.65;
-      }
-
-      .tagline-row {
-        gap: 12px;
-      }
-
-      .brand-logo {
-        width: 50px;
-        height: 46px;
-      }
-
-      .brand-symbol {
-        width: 46px;
-        height: 42px;
-      }
-
-      .brand-symbol .shape-a {
-        width: 42px;
-        height: 15px;
-      }
-
-      .brand-symbol .shape-b {
-        width: 36px;
-        height: 15px;
-        top: 14px;
-      }
-
-      .brand-symbol .shape-c {
-        width: 40px;
-        height: 15px;
-        top: 23px;
-      }
-
-      .tagline-main {
         font-size: 22px;
       }
 
-      .tagline-sub {
+      .meta {
+        font-size: 19px;
+        margin-bottom: 30px;
+      }
+
+      .text-block {
+        font-size: 17.5px;
+        line-height: 1.62;
+      }
+
+      .tagline-main {
         font-size: 21px;
+      }
+
+      .tagline-sub {
+        font-size: 20px;
       }
     }
   </style>
@@ -423,7 +293,7 @@
     <section class="content">
       <div class="eyebrow">קטלוג תשפ״ז</div>
 
-      <h1>קטלוג התוכניות החינוכיות של תעשיידע | תשפ״ז</h1>
+      <h1>קטלוג התוכניות החינוכיות<br />של תעשיידע | תשפ״ז</h1>
       <p class="subtitle">בתחומי המדע והטכנולוגיה</p>
       <p class="meta">כיתות א׳–י״ב | בפריסה ארצית</p>
 
@@ -434,11 +304,13 @@
 
         <p>בקטלוג תשפ״ז ריכזנו מגוון תוכניות חינוכיות המשלבות תוכן פדגוגי איכותי, התנסות חווייתית ותהליכי למידה מעשיים. התוכניות מזמינות את התלמידות והתלמידים לשאול שאלות, לחקור, לבנות, ליצור, לעבוד יחד ולהציג תוצרים ורעיונות באופן ברור ובטוח.</p>
 
-        <p>כל תוכנית נבנית מתוך מחשבה על התאמה לגיל, למטרות הלמידה ולמסגרת הבית־ספרית. ההפעלה מתבצעת על ידי מדריכים מקצועיים, בליווי צוותי התוכן והפדגוגיה של תעשיידע, ובאופן המאפשר לבית הספר לשלב את הפעילות כחלק ממענה חינוכי רחב, רלוונטי ומעשי.</p>
+        <p>דרך ההתנסות בתוכניות נחשפים המשתתפים לכלים ולמיומנויות הנדרשים במאה ה-21: חשיבה ביקורתית ויצירתית, פתרון בעיות, עבודת צוות, תקשורת בין-אישית, אוריינות מדעית וטכנולוגית, שימוש מושכל בכלים דיגיטליים, קבלת משוב, שיפור רעיונות והצגה בפני קהל. מיומנויות אלו משתלבות בתוך הפעילות באופן טבעי, מתוך עשייה, חקר והתנסות ולא כלמידה מנותקת מהעולם האמיתי.</p>
+
+        <p>כל תוכנית נבנית מתוך מחשבה על התאמה לגיל, למטרות הלמידה ולמסגרת הבית-ספרית. ההפעלה מתבצעת על ידי מדריכים מקצועיים, בליווי צוותי התוכן והפדגוגיה של תעשיידע, ובאופן המאפשר לבית הספר לשלב את הפעילות כחלק ממענה חינוכי רחב, רלוונטי ומעשי.</p>
 
         <p class="highlight">תוכניות תעשיידע מאושרות על ידי משרד החינוך ומופיעות במאגר גפ״ן במסלול הירוק.</p>
 
-        <p>אנו מזמינים אתכם לעיין בקטלוג ולבחור את התוכניות המתאימות לבית הספר שלכם — תוכניות שמחברות בין ידע לעשייה, בין סקרנות להתנסות, ובין למידה לחוויות הצלחה.</p>
+        <p class="invite-text">אנו מזמינים אתכם לעיין בקטלוג ולבחור את התוכניות המתאימות לבית הספר שלכם — תוכניות שמחברות בין ידע לעשייה, בין סקרנות להתנסות ובין למידה לחוויות הצלחה.</p>
       </div>
 
       <div class="closing">
@@ -455,39 +327,7 @@
           </div>
         </div>
       </div>
-
-      <div class="page-contact" id="pageContact"></div>
     </section>
-
   </main>
-
-  <!-- Marketer selector bar (screen only) -->
-  <div class="marketer-bar">
-    <span class="marketer-bar-label">שיווק:</span>
-    <select id="marketerSelect" onchange="onMarketerChange(this.value)">
-      <option value="none">ללא שיווק</option>
-      <option value="yael">יעל אביב</option>
-      <option value="israa">איסראא אבו-ראס</option>
-    </select>
-    <button class="marketer-bar-print" onclick="window.print()">🖨 הדפס מכתב מקדים</button>
-  </div>
-
-  <script>
-    const CONTACTS = {
-      yael:  "לפרטים נוספים: יעל אביב \u2013 054-7790073 | yael_aviv@think.org.il",
-      israa: "לפרטים נוספים: איסראא אבו-ראס \u2013 054-5419396 | esraas@think.org.il",
-    };
-
-    function onMarketerChange(val) {
-      const el = document.getElementById("pageContact");
-      if (val === "none") {
-        el.textContent = "";
-        el.classList.remove("visible");
-      } else {
-        el.textContent = CONTACTS[val] || "";
-        el.classList.add("visible");
-      }
-    }
-  </script>
 </body>
 </html>
