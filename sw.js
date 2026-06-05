@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-05-v130";
+const CACHE_NAME = "summer-catalog-v2026-06-05-v131";
 const ASSETS = [
   "./",
   "./index.html",
@@ -68,7 +68,9 @@ self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (event.request.mode === "navigate" || url.pathname.endsWith("/index.html") || url.pathname === "/") {
+  if (event.request.mode === "navigate" ||
+      url.pathname.endsWith(".html") ||
+      url.pathname === "/") {
     event.respondWith(
       fetch(event.request, { cache: "no-store" }).then(response => {
         const copy = response.clone();
