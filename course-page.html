@@ -3594,6 +3594,36 @@ textarea,
   }
 }
 
+
+/* Fix: clear visual boundary between banner and body */
+.a4::before {
+  height: 58mm !important;
+}
+
+.a4-banner {
+  margin-bottom: 5mm !important;
+}
+
+.a4-body {
+  padding-top: 2mm !important;
+  border-top: 1.5px solid rgba(var(--theme-rgb), 0.18) !important;
+  margin: 0 10mm !important;
+  width: calc(100% - 20mm) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+@media print {
+  .a4-body {
+    border-top: 1.5px solid rgba(var(--theme-rgb), 0.18) !important;
+    margin: 0 10mm !important;
+    width: calc(100% - 20mm) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
 </style>
 </head>
 <body>
