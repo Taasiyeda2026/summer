@@ -422,8 +422,8 @@ body {
  font-size: 11.7px;
 }
 .syllabus-table th {
- background: #F4F7FA;
- color: #1E2D3D;
+ background: var(--c0);
+ color: #FFFFFF;
  font-size: 10.6px;
  padding: 5px 8px;
  font-weight: bold;
@@ -431,6 +431,8 @@ body {
  line-height: 1.3;
  border-left: 1px solid #DDE5EC;
  border-bottom: 1px solid #DDE5EC;
+ -webkit-print-color-adjust: exact;
+ print-color-adjust: exact;
 }
 .syllabus-table th:last-child { text-align: right; border-left: none; }
 .syllabus-table th:first-child { text-align: center; width: 36px; }
@@ -1434,7 +1436,8 @@ body {
 }
 
 .syllabus-table th {
-  background: rgba(var(--theme-rgb), 0.055) !important;
+  background: var(--c0) !important;
+  color: #FFFFFF !important;
 }
 
 .a4-footer {
@@ -1691,8 +1694,10 @@ body {
 }
 
 .syllabus-table th {
-  background: #F6F8FA !important;
-  color: #1E2D3D !important;
+  background: var(--c0) !important;
+  color: #FFFFFF !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
 }
 
 .syllabus-table tr:nth-child(even) td {
