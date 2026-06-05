@@ -229,6 +229,31 @@
   }
   #generateBtn:disabled { opacity: 0.45; cursor: not-allowed; }
   #generateBtn:not(:disabled):hover { background: #1A3F62; }
+  .marketer-field {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid #D0DEE8;
+    border-radius: 999px;
+    background: rgba(255,255,255,.92);
+  }
+  .marketer-label {
+    font-size: 13px;
+    font-weight: 900;
+    color: #172033;
+    white-space: nowrap;
+  }
+  .marketer-select {
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #172033;
+    outline: none;
+    font-family: "Assistant", Arial, sans-serif;
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -278,6 +303,18 @@
   border-radius: 50%;
   background: var(--c2);
   display: inline-block;
+}
+
+/* — Contact line (marketer) at bottom of opening letter — */
+.page-contact {
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1e3a5f;
+  direction: rtl;
+  letter-spacing: 0.01em;
+  margin-top: auto;
+  padding-top: 8mm;
 }
 
 /* — Opening sentence — */
@@ -651,6 +688,14 @@
 <!-- ── Fixed action bar ── -->
 <div class="action-bar">
   <span class="selected-count">נבחרו <strong id="selectedCount">0</strong> קורסים</span>
+  <div class="marketer-field">
+    <span class="marketer-label">שיווק:</span>
+    <select id="marketerSelect" class="marketer-select">
+      <option value="none">ללא שיווק</option>
+      <option value="yael">יעל אביב</option>
+      <option value="israa">איסראא אבו-ראס</option>
+    </select>
+  </div>
   <button id="generateBtn" disabled onclick="generatePDF()">הפק PDF לקטלוג</button>
 </div>
 
@@ -984,12 +1029,41 @@ function setLevelFilter(level, btn) {
 }
 
 /* ── PDF Generation ── */
-function generatePDF() {
+function contactLineHTML(marketer) {
+  if (marketer === "yael") {
+    return `<div class="page-contact">לפרטים נוספים: יעל אביב &nbsp;–&nbsp; 054-7790073 &nbsp;|&nbsp; <a href="mailto:yael_aviv@think.org.il" style="color:inherit;text-decoration:none;">yael_aviv@think.org.il</a></div>`;
+  }
+  if (marketer === "israa") {
+    return `<div class="page-contact">לפרטים נוספים: איסראא אבו-ראס &nbsp;–&nbsp; 054-5419396 &nbsp;|&nbsp; <a href="mailto:esraas@think.org.il" style="color:inherit;text-decoration:none;">esraas@think.org.il</a></div>`;
+  }
+  return "";
+}
+
+async function buildOpeningLetterPage(marketer) {
+  try {
+    const res = await fetch("opening.html", { cache: "no-store" });
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const styles = Array.from(doc.querySelectorAll("style")).map(s => s.outerHTML).join("");
+    const pageEl = doc.querySelector(".page");
+    const pageContent = pageEl ? pageEl.innerHTML : "";
+    const contact = contactLineHTML(marketer);
+    return `<div class="a4-page-wrap"><div style="width:210mm;min-height:297mm;background:#fff;box-sizing:border-box;display:flex;flex-direction:column;font-family:Arial,sans-serif;direction:rtl;padding:14mm 16mm 12mm;position:relative;">${styles}<div>${pageContent}</div>${contact}</div></div>`;
+  } catch(e) {
+    return "";
+  }
+}
+
+async function generatePDF() {
   const selected = programs.filter(p => selectedIds.has(p.id));
   if (!selected.length) return;
 
+  const marketer = document.getElementById("marketerSelect").value;
+  const openingPage = await buildOpeningLetterPage(marketer);
+
   const printArea = document.getElementById("print-area");
-  printArea.innerHTML = selected.map((p, i) =>
+  printArea.innerHTML = openingPage + selected.map(p =>
     `<div class="a4-page-wrap">${renderProgram(p)}</div>`
   ).join("");
 
