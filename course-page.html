@@ -3662,6 +3662,23 @@ textarea,
   grid-column: unset !important;
   width: 100% !important;
 }
+@media print {
+  .full-width-card {
+    display: block !important;
+  }
+  .full-width-card .section-title {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto 6px !important;
+    grid-column: unset !important;
+  }
+  .full-width-card .section-body {
+    grid-column: unset !important;
+    width: 100% !important;
+  }
+}
 
 /* Syllabus header row — white background instead of dark */
 .syllabus-table th {
@@ -3683,6 +3700,11 @@ textarea,
 .core-plain-card .section-body {
   font-size: 12.15px !important;
 }
+@media print {
+  .core-plain-card .section-body {
+    font-size: 12.15px !important;
+  }
+}
 
 /* Domain strip letter-spacing fix (was crowded at weight 900 with zero spacing) */
 .domain-before-syllabus {
@@ -3695,11 +3717,21 @@ textarea,
   .domain-before-syllabus {
     letter-spacing: 0.04em !important;
   }
+  .program-domain-strip {
+    letter-spacing: 0.04em !important;
+  }
 }
 
 /* Visual separator line above school-value (screen + print) */
 .school-value-after-syllabus {
   border-top: 2px solid rgba(var(--theme-rgb), 0.35) !important;
+}
+@media print {
+  .school-value-after-syllabus {
+    border-top: 2px solid rgba(var(--theme-rgb), 0.35) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
 
 /* Center + widen the skills-group-grid cards */
