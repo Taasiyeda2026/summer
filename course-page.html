@@ -547,7 +547,7 @@ body {
 
 @media print {
  @page { size: A4; margin: 0; }
- .nav, .print-btn { display: none !important; }
+ .nav, .print-btn, .nav-toggle, .catalog-gen-link { display: none !important; }
  html, body { width: 210mm; margin: 0; padding: 0; background: #fff; }
  .page-wrap { padding: 0; }
  .a4 {
@@ -3014,6 +3014,30 @@ body {
   background: #F7FAF9;
 }
 
+.catalog-gen-link {
+  position: fixed;
+  top: 14px;
+  right: 60px;
+  z-index: 10002;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid #D8E1E8;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #173A4A;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: "Assistant", Arial, sans-serif;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.catalog-gen-link:hover { background: #F0F5FA; }
+
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -3574,6 +3598,7 @@ textarea,
 </head>
 <body>
 <button class="nav-toggle" type="button" aria-label="פתיחת רשימת קורסים" aria-expanded="false">☰</button>
+<a class="catalog-gen-link" href="catalog-generator.html" title="הפקת קטלוג קורסים ל־PDF">📄 קטלוג PDF</a>
 <div class="nav-overlay" aria-hidden="true"></div>
 <div class="nav" id="nav"></div>
 <div class="page-wrap">

@@ -248,6 +248,11 @@
   font-size: 10.5px;
 }
 
+/* — Reset browser markers / circles — */
+.a4 h1::before, .a4 h2::before, .a4 h3::before,
+.a4 p::before,  .a4 .section-title::before { content: none !important; display: none !important; }
+.a4 ul, .a4 ol { list-style: none; margin: 0; padding: 0; }
+
 /* — Top Meta Row (courseLayout) — */
 .top-meta-row {
   display: flex;
@@ -304,8 +309,8 @@
   print-color-adjust: exact;
 }
 .a4-banner-text { flex: 1; }
-.a4-title    { font-size: 19px; font-weight: 900; margin: 0 0 2px; line-height: 1.2; }
-.a4-subtitle { font-size: 10.5px; font-weight: 600; margin: 0 0 6px; opacity: 0.88; }
+.a4-title    { font-size: 19px; font-weight: 900; margin: 0 0 4px; line-height: 1.2; }
+.a4-subtitle { font-size: 11px; font-weight: 800; margin: 0 0 7px; color: rgba(255,255,255,0.96); }
 .a4-badges   { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
 .badge {
   background: rgba(255,255,255,0.18);
@@ -395,17 +400,16 @@
 /* — Skill groups — */
 .skills-group-grid {
   display: grid;
-  grid-template-columns: repeat(4, 72px);
-  gap: 6px;
-  width: fit-content;
-  margin-top: 3px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  width: 100%;
+  margin-top: 4px;
 }
 .skill-group-card {
   background: #fff;
   border: 1px solid rgba(var(--theme-rgb),0.22);
   border-radius: 7px;
-  padding: 7px 9px 8px;
-  width: 72px;
+  padding: 8px 10px 9px;
   box-sizing: border-box;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -522,7 +526,7 @@
 .syllabus-table th:nth-child(2),
 .syllabus-table td:nth-child(2) { width: 152px; }
 .syl-num { color: var(--c0); font-weight: 700; font-size: 9px; text-align: center; }
-.syl-topic { font-weight: 700; color: #1E2D3D; }
+.syl-topic { font-weight: 600; color: #3E5268; }
 .syl-desc { color: #3A4A58; }
 
 /* — Learning flow — */
@@ -547,6 +551,21 @@
 
 /* — School value — */
 .school-value-after-syllabus { margin-top: 28px; }
+.school-card .section-body,
+.school-value-after-syllabus .section-body {
+  font-size: 11.5px;
+  line-height: 1.62;
+  color: #1E2D3D;
+  font-weight: 600;
+}
+.school-card,
+.school-value-after-syllabus {
+  padding: 10px 14px;
+  border-color: var(--c3);
+  background: var(--c4);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 
 /* — Footer — */
 .a4-footer {
@@ -692,7 +711,7 @@ function getDisplayLevel(p) {
 /* ── Build functions (same as course-page.html) ── */
 function buildTopMetaLabel(p) {
   const items = [
-    `<span class="meta-main">מספר גפ״ן ${escapeHtml(p.gefen)}</span>`,
+    `<span class="meta-main">מספר גפ״ן: ${escapeHtml(p.gefen)}</span>`,
     `<span class="meta-value">${escapeHtml(cleanGradeLabel(p.grades))}</span>`,
     `<span class="meta-value">${escapeHtml(p.sessions)}</span>`,
     `<span class="meta-value">${escapeHtml(p.duration)}</span>`,
@@ -821,7 +840,7 @@ ${buildTopMetaLabel(p)}
 <p class="a4-opening">${escapeHtml(p.opening)}</p>
 <div class="a4-banner">
   <div class="a4-banner-text">
-    <div class="a4-gefen"><span class="gefen-label">מס׳ גפ״ן</span><span class="gefen-number">${escapeHtml(p.gefen)}</span></div>
+    <div class="a4-gefen"><span class="gefen-label">מס׳ גפ״ן:</span> <span class="gefen-number">${escapeHtml(p.gefen)}</span></div>
     <h1 class="a4-title">${escapeHtml(p.title)}</h1>
     <p class="a4-subtitle">${escapeHtml(p.subtitle)}</p>
     <div class="a4-badges">
