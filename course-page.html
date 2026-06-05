@@ -3640,7 +3640,9 @@ function setActiveNav(index) {
 function buildNav(activeIndex = 0) {
  const nav = document.getElementById("nav");
  nav.innerHTML = "";
- const activeId = programs[activeIndex] ? programs[activeIndex].id : null;
+ const activeProgram = programs[activeIndex];
+ const activeId = activeProgram ? activeProgram.id : null;
+ const activeLevel = activeProgram ? activeProgram.audienceLevel : "";
 
  const levels = [
    { label: "יסודי",  keys: ["elementary", "elementary-middle"] },
@@ -3648,27 +3650,21 @@ function buildNav(activeIndex = 0) {
    { label: "תיכון",  keys: ["high", "high-middle"] },
  ];
 
- levels.forEach(({ label, keys }) => {
-   const group = programs.filter(p => keys.includes(p.audienceLevel));
-   if (!group.length) return;
+ const activeGroup = levels.find(({ keys }) => keys.includes(activeLevel));
+ const keysToShow = activeGroup ? activeGroup.keys : levels.flatMap(l => l.keys);
 
-   const heading = document.createElement("div");
-   heading.className = "nav-section-heading";
-   heading.textContent = label;
-   nav.appendChild(heading);
-
-   group.forEach(p => {
-     const btn = document.createElement("button");
-     btn.className = "nav-btn" + (p.id === activeId ? " active" : "");
-     btn.style.setProperty('--c0', p.c0);
-     btn.style.setProperty('--c1', p.c1);
-     btn.style.setProperty('--c3', p.c3);
-     btn.style.setProperty('--c4', p.c4);
-     btn.textContent = p.title;
-     btn.dataset.programId = p.id;
-     btn.onclick = () => selectProgram(programs.indexOf(p), true);
-     nav.appendChild(btn);
-   });
+ const group = programs.filter(p => keysToShow.includes(p.audienceLevel));
+ group.forEach(p => {
+   const btn = document.createElement("button");
+   btn.className = "nav-btn" + (p.id === activeId ? " active" : "");
+   btn.style.setProperty('--c0', p.c0);
+   btn.style.setProperty('--c1', p.c1);
+   btn.style.setProperty('--c3', p.c3);
+   btn.style.setProperty('--c4', p.c4);
+   btn.textContent = p.title;
+   btn.dataset.programId = p.id;
+   btn.onclick = () => selectProgram(programs.indexOf(p), true);
+   nav.appendChild(btn);
  });
 
  const footer = document.createElement("div");
