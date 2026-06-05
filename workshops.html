@@ -2301,7 +2301,7 @@
       </div>
     </section>
 
-    <section class="catalog-gateway" id="catalogGateway" aria-label="בחירת סוג קטלוג">
+    <section class="catalog-gateway is-hidden" id="catalogGateway" aria-label="בחירת סוג קטלוג">
       <h2 class="gateway-heading">מאיפה מתחילים?</h2>
       <p class="gateway-subtitle">בחרו קבוצת קורסים מהירה או עברו לבחירה ידנית. ממשק הסדנאות נשאר זמין מכפתור הסדנאות הראשי.</p>
       <div class="catalog-type-grid" id="catalogTypeGrid">
@@ -2328,7 +2328,7 @@
       <section class="selector-panel" id="courseSelectorPanel" aria-label="בחירת קורסים לקטלוג">
         <div class="selector-top">
           <div class="action-row">
-            <button class="gateway-back-btn" type="button" data-gateway-back>← חזרה לסוגי קטלוג</button>
+            <button class="gateway-back-btn" type="button" data-gateway-back style="display:none">← חזרה לסוגי קטלוג</button>
             <button class="action-btn" type="button" data-course-action="all">כל הקורסים</button>
             <button class="action-btn" type="button" data-course-action="elementary">יסודי</button>
             <button class="action-btn" type="button" data-course-action="middle">חטיבה</button>
@@ -2381,7 +2381,7 @@
       <section class="selector-panel" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
         <div class="selector-top">
           <div class="action-row">
-            <button class="gateway-back-btn" type="button" data-gateway-back>← חזרה לסוגי קטלוג</button>
+            <button class="gateway-back-btn" type="button" data-gateway-back style="display:none">← חזרה לסוגי קטלוג</button>
             <button class="action-btn" type="button" data-action="all">בחר הכול</button>
             <button class="action-btn" type="button" data-action="none">נקה הכול</button>
             <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
@@ -2510,11 +2510,11 @@
     function showMainGateway() {
       selectedProgram = null;
       document.body.classList.remove("catalog-mode");
-      catalogGateway.classList.remove("is-hidden");
+      catalogGateway.classList.add("is-hidden");
       programGateway.classList.add("is-hidden");
       workshopInterface.classList.add("is-hidden");
-      courseInterface.classList.add("is-hidden");
-      booklet.innerHTML = "";
+      courseInterface.classList.remove("is-hidden");
+      renderCourseSelection();
     }
 
     function stableProgramId(program = {}) {
@@ -3498,10 +3498,10 @@ function chunkActivities(items, size) {
         activities = await loadActivities();
         renderSelection();
         const params = new URLSearchParams(window.location.search);
-        if (params.get("catalog") === "courses") {
-          applyCoursePreset("manual");
-        } else if (params.get("catalog") === "workshops") {
+        if (params.get("catalog") === "workshops") {
           showWorkshopInterface();
+        } else {
+          applyCoursePreset("manual");
         }
       } catch (error) {
         console.error(error);
