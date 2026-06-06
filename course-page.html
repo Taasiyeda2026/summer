@@ -5057,6 +5057,264 @@ body.catalog-courses-print .a4:not(.index-page):last-child {
   }
 }
 
+
+/* === A4 COURSE FIX V13: bounded grid skeleton, no syllabus overlap ===
+   The body owns a real grid track for each content area. Only the syllabus
+   track is flexible, and it clips its own area after row-count-specific
+   spacing has been reduced so rows remain inside the allocated track. */
+.a4.a4-course-skeleton {
+  height: 297mm !important;
+  min-height: 297mm !important;
+  max-height: 297mm !important;
+  padding-top: 6mm !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transform: none !important;
+}
+
+.a4.a4-course-skeleton > .top-meta-row,
+.a4.a4-course-skeleton > .top-meta-label,
+.a4.a4-course-skeleton > .a4-opening,
+.a4.a4-course-skeleton > .a4-banner,
+.a4.a4-course-skeleton > .a4-contact,
+.a4.a4-course-skeleton > .a4-footer {
+  flex: 0 0 auto !important;
+  position: relative !important;
+  transform: none !important;
+  z-index: auto !important;
+}
+
+.a4.a4-course-skeleton > .a4-banner {
+  margin-top: 1.2mm !important;
+  margin-bottom: 2.2mm !important;
+  padding-bottom: 2.2mm !important;
+}
+
+.a4.a4-course-skeleton > .a4-contact {
+  padding-top: 2px !important;
+  padding-bottom: 4px !important;
+  overflow: hidden !important;
+}
+
+.a4.a4-course-skeleton > .a4-footer {
+  margin-top: 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  overflow: hidden !important;
+}
+
+.a4.a4-course-skeleton .a4-body,
+body.catalog-courses-print .a4.a4-course-skeleton .a4-body,
+body.catalog-view .a4.a4-course-skeleton .a4-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows:
+    auto
+    auto
+    auto
+    auto
+    auto
+    minmax(0, 1fr)
+    auto !important;
+  gap: 4px !important;
+  justify-content: stretch !important;
+  align-content: stretch !important;
+  padding: 0 10mm 4px !important;
+  overflow: hidden !important;
+}
+
+.a4.a4-course-skeleton .course-summary,
+.a4.a4-course-skeleton .core-plain-card,
+.a4.a4-course-skeleton .course-description,
+.a4.a4-course-skeleton .learning-process-section,
+.a4.a4-course-skeleton .full-width-card,
+.a4.a4-course-skeleton .domain-before-syllabus,
+.a4.a4-course-skeleton .school-value-after-syllabus {
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  align-self: start !important;
+  overflow: hidden !important;
+  position: static !important;
+  transform: none !important;
+  z-index: auto !important;
+}
+
+.a4.a4-course-skeleton .course-summary { grid-row: 1 !important; }
+.a4.a4-course-skeleton .core-plain-card { grid-row: 2 !important; }
+.a4.a4-course-skeleton .course-description,
+.a4.a4-course-skeleton .learning-process-section { grid-row: 3 !important; }
+.a4.a4-course-skeleton .full-width-card { grid-row: 4 !important; }
+.a4.a4-course-skeleton .domain-before-syllabus { grid-row: 5 !important; }
+
+.a4.a4-course-skeleton .course-summary .section-body,
+.a4.a4-course-skeleton .core-plain-card .section-body,
+.a4.a4-course-skeleton .full-width-card .section-body {
+  line-height: 1.48 !important;
+}
+
+.a4.a4-course-skeleton .course-description,
+.a4.a4-course-skeleton .learning-process-section {
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+}
+
+.a4.a4-course-skeleton .course-description .section-body {
+  line-height: 1.40 !important;
+}
+
+.a4.a4-course-skeleton .course-description .section-body p {
+  margin-bottom: 6px !important;
+}
+
+.a4.a4-course-skeleton .inline-outcomes-wrap {
+  margin-top: 5px !important;
+  padding: 5px 7px !important;
+}
+
+.a4.a4-course-skeleton .full-width-card {
+  margin-bottom: 0 !important;
+}
+
+.a4.a4-course-skeleton .skills-group-grid,
+.a4.a4-course-skeleton .skills-groups {
+  gap: 4px !important;
+}
+
+.a4.a4-course-skeleton .skill-group-card,
+.a4.a4-course-skeleton .skill-group {
+  min-height: 0 !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+.a4.a4-course-skeleton .domain-before-syllabus {
+  margin: 0 !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.a4.a4-course-skeleton .syllabus-wrap {
+  grid-row: 6 !important;
+  align-self: stretch !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  position: static !important;
+  transform: none !important;
+  z-index: auto !important;
+}
+
+.a4.a4-course-skeleton .syllabus-header {
+  flex: 0 0 auto !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.a4.a4-course-skeleton .syllabus-table {
+  width: 100% !important;
+  table-layout: fixed !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  font-size: 10.95px !important;
+}
+
+.a4.a4-course-skeleton .syllabus-table tbody {
+  height: auto !important;
+}
+
+.a4.a4-course-skeleton .syllabus-table th {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  line-height: 1.16 !important;
+}
+
+.a4.a4-course-skeleton .syl-rows-8 .syllabus-table td {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  line-height: 1.35 !important;
+}
+
+.a4.a4-course-skeleton .syl-rows-10 .syllabus-table td {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  line-height: 1.32 !important;
+}
+
+.a4.a4-course-skeleton .syl-rows-12 .syllabus-table td {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  line-height: 1.27 !important;
+}
+
+.a4.a4-course-skeleton .syl-rows-14 .syllabus-table td {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  line-height: 1.18 !important;
+}
+
+.a4.a4-course-skeleton .school-value-after-syllabus {
+  grid-row: 7 !important;
+  min-height: 34px !important;
+  max-height: 46px !important;
+  padding: 6px 10px !important;
+  margin-top: 0 !important;
+  overflow: hidden !important;
+}
+
+.a4.a4-course-skeleton .school-value-after-syllabus .section-body {
+  font-size: 11.05px !important;
+  line-height: 1.30 !important;
+}
+
+.a4.a4-course-skeleton.syl-topic-wide .syl-topic,
+.a4.a4-course-skeleton.syl-topic-wide .syllabus-table th:nth-child(2),
+.a4.a4-course-skeleton.syl-topic-wide .syllabus-table td:nth-child(2) {
+  width: 165px !important;
+  max-width: 165px !important;
+}
+
+@media print {
+  .a4.a4-course-skeleton {
+    padding-top: 6mm !important;
+    overflow: hidden !important;
+  }
+
+  .a4.a4-course-skeleton .a4-body,
+  body.catalog-courses-print .a4.a4-course-skeleton .a4-body,
+  body.catalog-view .a4.a4-course-skeleton .a4-body {
+    grid-template-rows: auto auto auto auto auto minmax(0, 1fr) auto !important;
+    gap: 4px !important;
+    padding: 0 10mm 4px !important;
+    overflow: hidden !important;
+  }
+
+  .a4.a4-course-skeleton .syllabus-wrap,
+  .a4.a4-course-skeleton .school-value-after-syllabus,
+  .a4.a4-course-skeleton > .a4-contact,
+  .a4.a4-course-skeleton > .a4-footer {
+    overflow: hidden !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .a4.a4-course-skeleton.syl-topic-wide .syl-topic,
+  .a4.a4-course-skeleton.syl-topic-wide .syllabus-table th:nth-child(2),
+  .a4.a4-course-skeleton.syl-topic-wide .syllabus-table td:nth-child(2) {
+    width: 165px !important;
+    max-width: 165px !important;
+  }
+}
+
 </style>
 </head>
 <body>
