@@ -5315,6 +5315,34 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
   }
 }
 
+/* Targeted course-page skills row: keep the existing skill cards, but place
+   the title inline beside them to free vertical space above the syllabus. */
+.a4.a4-course-skeleton .full-width-card.text-only-section {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, max-content) !important;
+  align-items: center !important;
+  justify-content: start !important;
+  column-gap: 10px !important;
+  margin: 0 !important;
+}
+
+.a4.a4-course-skeleton .full-width-card.text-only-section .section-title {
+  align-self: center !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+.a4.a4-course-skeleton .full-width-card.text-only-section .section-body {
+  min-width: 0 !important;
+  padding-top: 0 !important;
+}
+
+.a4.a4-course-skeleton .full-width-card.text-only-section .skills-group-grid,
+.a4.a4-course-skeleton .full-width-card.text-only-section .skills-tags {
+  margin: 0 !important;
+}
+
 </style>
 </head>
 <body>
