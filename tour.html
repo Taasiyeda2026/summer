@@ -310,31 +310,55 @@ h1{
   line-height:1.5;
   font-weight:500;
 }
-.print-btn{
+.page-actions{
   position:fixed;
   left:16px;
   bottom:16px;
   z-index:9999;
+  display:flex;
+  gap:8px;
+  align-items:center;
 }
-.print-btn button{
+.page-actions .action-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:84px;
   height:36px;
-  min-width:54px;
-  padding:0 14px;
-  border:1px solid #D8E1E8;
+  padding:0 10px;
   border-radius:999px;
-  background:#263443;
-  color:white;
-  font-size:13px;
+  font-size:12px;
   font-weight:800;
+  line-height:1;
+  text-decoration:none;
   cursor:pointer;
+  box-sizing:border-box;
+  white-space:nowrap;
   box-shadow:0 4px 12px rgba(0,0,0,.16);
+}
+.page-actions .back-btn{
+  border:1px solid #C7D1DA;
+  background:#fff;
+  color:#3A4E62;
+}
+.page-actions .back-btn:hover{
+  background:#EEF2F5;
+  border-color:#9AAAB8;
+}
+.page-actions .print-btn{
+  border:1px solid #D8E1E8;
+  background:#263443;
+  color:#fff;
+}
+.page-actions .print-btn:hover{
+  opacity:.92;
 }
 @page{size:A4;margin:0}
 @media print{
   html,body{width:210mm;min-width:210mm;background:white;overflow:visible}
   .page-wrap{padding:0;display:block;background:white}
   .a4{width:210mm;min-width:210mm;max-width:210mm;height:297mm;min-height:297mm;max-height:297mm;border:none;box-shadow:none;margin:0;padding:6mm 9mm 0;page-break-after:always;break-after:page}
-  .print-btn{display:none}
+  .page-actions{display:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media screen and (max-width:820px){.a4{max-width:calc(100vw - 20px);height:auto;max-height:none}.page-wrap{padding:10px}.intro-box .text{column-count:1}.goal-strip,.options-grid,.steps,.skills-wrap{grid-template-columns:1fr}.step{border-left:none;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:none}.skills{grid-template-columns:1fr 1fr}}
@@ -441,7 +465,10 @@ h1{
   </main>
 </div>
 
-<div class="print-btn"><button type="button" onclick="window.print()">PDF</button></div>
+<div class="page-actions" aria-label="פעולות עמוד">
+  <a class="action-btn back-btn" href="./index.html">← חזרה</a>
+  <button class="action-btn print-btn" type="button" onclick="window.print()">PDF</button>
+</div>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {

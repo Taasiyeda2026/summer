@@ -193,7 +193,17 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      align-items: center;
+      align-items: stretch;
+    }
+
+    .final-options .cover-letter-toggle,
+    .final-options .marketer-field {
+      flex: 0 0 152px;
+      width: 152px;
+      min-height: 40px;
+      height: 40px;
+      justify-content: center;
+      box-sizing: border-box;
     }
 
     .selected-count {
@@ -647,11 +657,6 @@
       gap: 8px;
       align-items: center;
       margin-bottom: 12px;
-    }
-
-    .course-search-box {
-      flex: 1 1 240px;
-      min-width: 220px;
     }
 
     .course-filter-select {
@@ -2498,18 +2503,11 @@
               <div class="course-controls-row">
                 <button class="action-btn secondary-action" type="button" data-course-manual="select-visible">בחר הכל</button>
                 <button class="action-btn secondary-action" type="button" data-course-manual="clear-visible">נקה הכל</button>
-                <label class="search-box course-search-box" aria-label="חיפוש תוכנית">
-                  🔎
-                  <input id="courseSearchInput" type="search" placeholder="חיפוש לפי שם תוכנית" autocomplete="off" />
-                </label>
                 <select class="course-filter-select" id="courseLevelFilter" aria-label="סינון לפי שכבת גיל">
                   <option value="all">כל שכבות הגיל</option>
                   <option value="elementary">יסודי</option>
                   <option value="middle">חטיבה</option>
                   <option value="high">תיכון</option>
-                </select>
-                <select class="course-filter-select" id="courseDomainFilter" aria-label="סינון לפי תחום">
-                  <option value="all">כל התחומים</option>
                 </select>
               </div>
               <div class="course-picker" id="coursePicker"></div>
@@ -2637,9 +2635,7 @@
     const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
     const courseMarketerSelect = document.getElementById("courseMarketerSelect");
     const courseIndexCheckbox = document.getElementById("courseIndexCheckbox");
-    const courseSearchInput = document.getElementById("courseSearchInput");
     const courseLevelFilter = document.getElementById("courseLevelFilter");
-    const courseDomainFilter = document.getElementById("courseDomainFilter");
     const toggleCoursePickerBtn = document.getElementById("toggleCoursePickerBtn");
     const courseClearBtn = document.getElementById("courseClearBtn");
 
@@ -2808,36 +2804,17 @@
       return labels.join(" · ") || "כללי";
     }
 
-    function courseDomains(program) {
-      return String(program.domain || "")
-        .split(/\||,|،/)
-        .map(item => item.trim())
-        .filter(Boolean);
-    }
-
     function getSelectedCoursePrograms() {
       return catalogPrograms.filter(program => selectedCourses.has(program.id));
     }
 
     function visibleCoursePrograms() {
-      const term = courseSearchInput.value.trim().toLowerCase();
       const level = courseLevelFilter.value;
-      const domain = courseDomainFilter.value;
       const levelOrder = { elementary: 1, "elementary-middle": 2, middle: 3, "middle-high": 4, high: 5 };
       return catalogPrograms.filter(program => {
-        const matchesTerm = !term || program.title.toLowerCase().includes(term);
         const matchesLevel = level === "all" || courseMatchesLevel(program, level);
-        const domains = courseDomains(program);
-        const matchesDomain = domain === "all" || domains.includes(domain) || String(program.domain || "") === domain;
-        return matchesTerm && matchesLevel && matchesDomain;
+        return matchesLevel;
       }).sort((a, b) => (levelOrder[a.audienceLevel] ?? 99) - (levelOrder[b.audienceLevel] ?? 99));
-    }
-
-    function renderCourseDomainFilter() {
-      const current = courseDomainFilter.value;
-      const domains = [...new Set(catalogPrograms.flatMap(courseDomains))].sort((a, b) => a.localeCompare(b, "he"));
-      courseDomainFilter.innerHTML = `<option value="all">כל התחומים</option>` + domains.map(domain => `<option value="${escapeHTML(domain)}">${escapeHTML(domain)}</option>`).join("");
-      courseDomainFilter.value = domains.includes(current) ? current : "all";
     }
 
     function updateCourseSummary() {
@@ -2868,7 +2845,7 @@
       coursePicker.innerHTML = "";
       const programs = visibleCoursePrograms();
       if (!programs.length) {
-        coursePicker.innerHTML = `<p class="program-note">לא נמצאו קורסים בהתאם לחיפוש ולסינון.</p>`;
+        coursePicker.innerHTML = `<p class="program-note">לא נמצאו קורסים בהתאם לסינון.</p>`;
         return;
       }
       programs.forEach((program, index) => {
@@ -2889,7 +2866,6 @@
     }
 
     function renderCourseSelection() {
-      renderCourseDomainFilter();
       renderCoursePicker();
       updateCourseSummary();
       courseSelectorPanel.classList.toggle("collapsed", !courseManualOpen);
@@ -3618,10 +3594,7 @@ function chunkActivities(items, size) {
       renderCourseSelection();
     });
 
-    [courseSearchInput, courseLevelFilter, courseDomainFilter].forEach(control => {
-      control.addEventListener("input", renderCourseSelection);
-      control.addEventListener("change", renderCourseSelection);
-    });
+    courseLevelFilter.addEventListener("change", renderCourseSelection);
 
     toggleCoursePickerBtn.addEventListener("click", () => {
       courseManualOpen = !courseManualOpen;
@@ -3702,7 +3675,6 @@ function chunkActivities(items, size) {
       try {
         catalogPrograms = await loadCatalogPrograms();
         catalogLoadError = null;
-        renderCourseDomainFilter();
       } catch (error) {
         console.error(error);
         catalogPrograms = [];
