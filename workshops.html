@@ -3492,7 +3492,7 @@ function chunkActivities(items, size) {
       if (action === "all") {
         selectedType = null;
         activities.forEach((_, index) => selected.add(index));
-        uniqueValues(a => a.grades).forEach(g => selectedGrades.add(g));
+        GRADE_ORDER.forEach(g => selectedGrades.add(g));
         uniqueValues(a => [a.domain]).forEach(d => selectedDomains.add(d));
       } else if (action === "none") {
         selectedType = null;
