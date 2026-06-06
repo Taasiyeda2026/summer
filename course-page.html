@@ -3932,8 +3932,8 @@ textarea,
   table-layout: fixed;
 }
 .idx-table thead tr {
-  background: #1A2F50;
-  color: #fff;
+  background: #EEF2F6;
+  color: #1A2F50;
 }
 .idx-table th {
   padding: 7px 8px;
@@ -3941,18 +3941,22 @@ textarea,
   font-size: 11.5px;
   text-align: center;
   white-space: nowrap;
+  border-left: 1px solid #C8D5E0;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
+.idx-table th:last-child { border-left: none; }
 .idx-table td {
   padding: 7px 8px;
   color: #1E2D3D;
   text-align: center;
   border-bottom: 1px solid #E4EAEF;
+  border-left: 1px solid #E4EAEF;
   vertical-align: middle;
   line-height: 1.35;
   overflow: hidden;
 }
+.idx-table td:last-child { border-left: none; }
 .idx-table tbody tr:nth-child(even) td {
   background: #F5F8FA;
   -webkit-print-color-adjust: exact;
@@ -3961,11 +3965,11 @@ textarea,
 .idx-table th.idx-gefen,
 .idx-table td.idx-gefen  { width: 25mm; text-align: center; }
 .idx-table th.idx-level,
-.idx-table td.idx-level  { width: 20mm; text-align: center; }
+.idx-table td.idx-level  { width: 20mm; text-align: right; }
 .idx-table th.idx-grades,
 .idx-table td.idx-grades { width: 20mm; text-align: center; }
 .idx-table th.idx-sessions,
-.idx-table td.idx-sessions { width: 25mm; text-align: center; }
+.idx-table td.idx-sessions { width: 25mm; text-align: right; }
 .idx-table th.idx-title,
 .idx-table td.idx-title  { width: 70mm; text-align: right; font-weight: 800; }
 @media print {
