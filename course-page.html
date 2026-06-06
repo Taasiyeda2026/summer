@@ -582,13 +582,25 @@ body.catalog-view .catalog-toolbar { display: flex; }
 }
 .catalog-opening-frame {
   width: 210mm;
+  min-width: 210mm;
+  max-width: 210mm;
   height: 297mm;
+  min-height: 297mm;
+  max-height: 297mm;
   border: 0;
   display: block;
+  margin: 0 auto;
   background: #fff;
   box-shadow: 0 4px 18px rgba(0,0,0,0.08);
   page-break-after: always;
   break-after: page;
+  overflow: hidden;
+}
+body.catalog-view #a4-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 body.catalog-view .page-wrap { gap: 22px; }
 body.catalog-view .a4 { margin-bottom: 22px; }
@@ -4431,6 +4443,7 @@ textarea,
     border: none !important;
     box-shadow: none !important;
     transform: none !important;
+    overflow: hidden !important;
     page-break-after: always !important;
     break-after: page !important;
   }
