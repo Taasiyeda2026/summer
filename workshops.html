@@ -2367,6 +2367,10 @@
               <input id="courseCoverLetterCheckbox" type="checkbox" />
               <span>מכתב מקדים</span>
             </label>
+            <label class="cover-letter-toggle" for="courseIndexCheckbox">
+              <input id="courseIndexCheckbox" type="checkbox" />
+              <span>מקרא</span>
+            </label>
             <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
           </div>
         </div>
@@ -2473,6 +2477,7 @@
     const courseSelectionText = document.getElementById("courseSelectionText");
     const courseCatalogModeBtn = document.getElementById("courseCatalogModeBtn");
     const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
+    const courseIndexCheckbox = document.getElementById("courseIndexCheckbox");
     const courseSearchInput = document.getElementById("courseSearchInput");
     const courseLevelFilter = document.getElementById("courseLevelFilter");
     const courseDomainFilter = document.getElementById("courseDomainFilter");
@@ -2755,6 +2760,7 @@
       params.set("ids", ids.join(","));
       params.set("catalog", "1");
       if (courseCoverLetterCheckbox.checked) params.set("cover", "1");
+      if (courseIndexCheckbox.checked) params.set("index", "1");
       return `./course-page.html?${params.toString()}`;
     }
 

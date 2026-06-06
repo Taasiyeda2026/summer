@@ -4428,13 +4428,13 @@ function buildIndexPageHtml(selectedPrograms) {
   </div>`;
 }
 
-function renderCourseCatalog(indexes, includeCover = false) {
+function renderCourseCatalog(indexes, includeCover = false, includeIndex = false) {
  const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
  document.body.classList.add("catalog-view");
  document.querySelector(".nav-toggle")?.setAttribute("hidden", "hidden");
  document.getElementById("nav")?.setAttribute("hidden", "hidden");
  const openingHtml = includeCover ? `<iframe class="catalog-opening-frame" src="./opening.html" title="מכתב מקדים לקטלוג הקורסים"></iframe>` : "";
- const indexHtml = buildIndexPageHtml(selectedPrograms);
+ const indexHtml = includeIndex ? buildIndexPageHtml(selectedPrograms) : "";
  document.getElementById("a4-container").innerHTML = openingHtml + indexHtml + selectedPrograms.map(buildProgramPageHtml).join("");
  scheduleA4Fit();
 }
@@ -4470,7 +4470,7 @@ async function init() {
         showLoadError("לא נבחרו קורסים תקינים להפקת קטלוג.", true);
         return;
       }
-      renderCourseCatalog(requestedIndexes, params.get("cover") === "1");
+      renderCourseCatalog(requestedIndexes, params.get("cover") === "1", params.get("index") === "1");
       return;
     }
     const requestedIndex = findProgramIndexFromUrl();
