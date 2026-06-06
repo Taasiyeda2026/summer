@@ -4540,6 +4540,35 @@ textarea,
   }
 }
 
+/* Summary + course description — enforce readable sizes in screen and print */
+.course-summary .section-body {
+  font-size: 12.8px !important;
+}
+
+.course-description .section-body {
+  font-size: 12.9px !important;
+}
+
+@media print {
+  .course-summary .section-body,
+  .a4.fit-spacious .course-summary .section-body,
+  .a4.fit-normal .course-summary .section-body,
+  .a4.fit-compact .course-summary .section-body,
+  .a4.fit-tight .course-summary .section-body,
+  .a4.fit-ultra .course-summary .section-body {
+    font-size: 12.8px !important;
+  }
+
+  .course-description .section-body,
+  .a4.fit-spacious .course-description .section-body,
+  .a4.fit-normal .course-description .section-body,
+  .a4.fit-compact .course-description .section-body,
+  .a4.fit-tight .course-description .section-body,
+  .a4.fit-ultra .course-description .section-body {
+    font-size: 12.9px !important;
+  }
+}
+
 </style>
 </head>
 <body>
