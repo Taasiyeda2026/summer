@@ -3911,7 +3911,7 @@ textarea,
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 0 10mm 8mm;
+  padding: 3mm 10mm 8mm;
   border-bottom: 3px solid #1A2F50;
 }
 .idx-logo {
@@ -3920,21 +3920,34 @@ textarea,
   object-fit: contain;
   flex-shrink: 0;
 }
+.idx-title-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  padding-top: 3mm;
+}
 .idx-main-title {
   font-size: 26px;
   font-weight: 900;
   color: #1A2F50;
   line-height: 1.15;
+  text-align: right;
+  width: 100%;
 }
 .idx-sub-title {
   font-size: 13px;
   font-weight: 600;
   color: #607080;
   margin-top: 3px;
+  text-align: right;
+  width: 100%;
 }
 .idx-body {
   flex: 1;
-  padding: 8mm 10mm 0;
+  padding: 11mm 10mm 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -3990,6 +4003,9 @@ textarea,
 .idx-table td.idx-gefen  { width: 20mm; text-align: center; }
 @media print {
   .index-page { padding-top: 14mm; }
+  .idx-header { padding-top: 3mm !important; }
+  .idx-title-block { padding-top: 3mm !important; }
+  .idx-body { padding-top: 11mm !important; }
   .idx-table { width: 150mm !important; }
   .idx-table th { font-size: 11px !important; }
   .idx-table td { font-size: 12px !important; }
@@ -4930,7 +4946,7 @@ function buildIndexPageHtml(selectedPrograms) {
   <div class="a4 index-page" style="page-break-after:always;break-after:page;">
     <div class="idx-header">
       <img class="idx-logo" src="logo.png" alt="תעשיידע">
-      <div>
+      <div class="idx-title-block">
         <div class="idx-main-title">מקרא: תוכניות תעשיידע</div>
         <div class="idx-sub-title">רשימת התוכניות הנכללות בקטלוג זה</div>
       </div>
