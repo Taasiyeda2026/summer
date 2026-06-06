@@ -4605,6 +4605,69 @@ textarea,
   }
 }
 
+/* Tighter gap: title banner → course summary */
+.a4-banner:has(+ .a4-body > .course-summary) {
+  padding-bottom: 0 !important;
+  margin-bottom: 0.3mm !important;
+}
+
+.a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
+  padding-top: 0 !important;
+}
+
+.a4-body > .course-summary:first-child {
+  margin-top: 0 !important;
+}
+
+.a4-banner:has(+ .a4-body > .course-summary) .a4-banner-text::after {
+  margin-top: 2px !important;
+}
+
+.a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary),
+.a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary),
+.a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) {
+  margin-bottom: 0.2mm !important;
+  padding-bottom: 0 !important;
+}
+
+.a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
+.a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
+.a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
+  padding-top: 0 !important;
+}
+
+@media print {
+  .a4-banner:has(+ .a4-body > .course-summary) {
+    padding-bottom: 0 !important;
+    margin-bottom: 0.3mm !important;
+  }
+
+  .a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
+    padding-top: 0 !important;
+  }
+
+  .a4-body > .course-summary:first-child {
+    margin-top: 0 !important;
+  }
+
+  .a4-banner:has(+ .a4-body > .course-summary) .a4-banner-text::after {
+    margin-top: 2px !important;
+  }
+
+  .a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary),
+  .a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary),
+  .a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) {
+    margin-bottom: 0.2mm !important;
+    padding-bottom: 0 !important;
+  }
+
+  .a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
+  .a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
+  .a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
+    padding-top: 0 !important;
+  }
+}
+
 </style>
 </head>
 <body>
