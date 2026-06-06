@@ -4771,12 +4771,14 @@ body.catalog-courses-print .a4 .a4-footer {
 
 
 
-/* === A4 COURSE FIX V7: structural layout only — no global compression ===
+/* === A4 COURSE FIX V8: structural layout only — no global compression ===
    - fixed A4 page box, flex layout, no hidden syllabus rows
    - course description stays one full-width paragraph
    - spacing/font compression only via fit-* classes (JS auto-fit)
+   - gentle fill via --a4-fill-gap only when JS sets a4-fill-active (no overflow)
 */
 .a4 {
+  width: 210mm !important;
   height: 297mm !important;
   min-height: 297mm !important;
   max-height: 297mm !important;
@@ -4820,10 +4822,28 @@ body.catalog-courses-print .a4 .a4-body {
   gap: 0 !important;
 }
 
+/* Gentle fill: controlled vertical spacing only when page has slack (no overflow) */
+.a4.a4-fill-active .a4-body,
+body.catalog-courses-print .a4.a4-fill-active .a4-body,
+body.catalog-view .a4.a4-fill-active .a4-body {
+  gap: var(--a4-fill-gap, 0px) !important;
+  padding-bottom: calc(13px + var(--a4-fill-pad, 0px)) !important;
+}
+
 @media print {
   body.catalog-courses-print .a4 .a4-body {
     justify-content: flex-start !important;
     gap: 0 !important;
+  }
+
+  body.catalog-courses-print .a4.a4-fill-active .a4-body {
+    gap: var(--a4-fill-gap, 0px) !important;
+    padding-bottom: calc(13px + var(--a4-fill-pad, 0px)) !important;
+  }
+
+  .a4.a4-fill-active .a4-body {
+    gap: var(--a4-fill-gap, 0px) !important;
+    padding-bottom: calc(13px + var(--a4-fill-pad, 0px)) !important;
   }
 
   .syllabus-wrap {
@@ -5395,21 +5415,32 @@ function setupCourseDrawer() {
 
 init();
 
-function getCatalogStretchAnchor(a4) {
- return a4.querySelector(".a4-contact") || a4.querySelector(".a4-footer");
+function getA4BodySlack(a4, tolerance = 2) {
+ const body = a4.querySelector(".a4-body");
+ if (!body || !body.lastElementChild) return 0;
+ const bodyRect = body.getBoundingClientRect();
+ const lastRect = body.lastElementChild.getBoundingClientRect();
+ return Math.max(0, bodyRect.bottom - lastRect.bottom - tolerance);
 }
 
-function getCatalogContentBottom(a4) {
- const body = a4.querySelector(".a4-body");
- if (body && body.lastElementChild) {
-   return body.lastElementChild.getBoundingClientRect().bottom;
+function relaxCompressionIfPossible(a4, tolerance, isCatalogPrint) {
+ if (a4.classList.contains("a4-fit-scaled")) return;
+
+ const tiers = ["fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
+ for (const tier of tiers) {
+   if (!a4.classList.contains(tier)) continue;
+   a4.classList.remove(tier);
+   if (pageFitsA4(a4, tolerance, isCatalogPrint) && !hasClippedContent(a4, tolerance)) {
+     continue;
+   }
+   a4.classList.add(tier);
  }
- let maxBottom = 0;
- for (const child of a4.children) {
-   if (child.classList.contains("a4-contact") || child.classList.contains("a4-footer")) continue;
-   maxBottom = Math.max(maxBottom, child.getBoundingClientRect().bottom);
- }
- return maxBottom;
+}
+
+function clearA4Fill(a4) {
+ a4.classList.remove("a4-fill-active");
+ a4.style.removeProperty("--a4-fill-gap");
+ a4.style.removeProperty("--a4-fill-pad");
 }
 
 function hasHiddenOverflow(a4) {
@@ -5475,7 +5506,7 @@ function fitA4Page() {
  pages.forEach(a4 => {
    a4.classList.remove(...compressModes);
    clearA4FitScale(a4);
-   a4.style.removeProperty("--catalog-gap");
+   clearA4Fill(a4);
 
    const fits = () => pageFitsA4(a4, tolerance, isCatalogPrint);
 
@@ -5513,7 +5544,13 @@ function fitA4Page() {
      }
    }
 
-   // No stretch in catalog mode: stretching/dynamic gaps can hide syllabus rows.
+   relaxCompressionIfPossible(a4, tolerance, isCatalogPrint);
+
+   if (pageFitsA4(a4, tolerance, isCatalogPrint)) {
+     gentleFillA4Page(a4, tolerance);
+   } else {
+     clearA4Fill(a4);
+   }
  });
 
  if (hasOverflow && warning) {
@@ -5521,28 +5558,53 @@ function fitA4Page() {
  }
 }
 
-function stretchCatalogCoursePage(a4, tolerance) {
- const anchor = getCatalogStretchAnchor(a4);
- if (!anchor) return;
+function gentleFillA4Page(a4, tolerance = 2) {
+ clearA4Fill(a4);
 
- const anchorTop = () => anchor.getBoundingClientRect().top;
- const contentBottom = () => getCatalogContentBottom(a4);
- const fits = () => contentBottom() <= anchorTop() - tolerance;
+ const body = a4.querySelector(".a4-body");
+ if (!body) return;
 
+ const childCount = body.children.length;
+ if (childCount < 2) return;
+
+ const slack = getA4BodySlack(a4, tolerance);
+ if (slack < 10) return;
+
+ const maxGapPerSlot = Math.min(14, slack / (childCount - 1));
+ if (maxGapPerSlot < 2) return;
+
+ a4.classList.add("a4-fill-active");
  let lo = 0;
- let hi = 28;
+ let hi = maxGapPerSlot;
  let best = 0;
- for (let i = 0; i < 12; i += 1) {
+
+ for (let i = 0; i < 10; i += 1) {
    const mid = (lo + hi) / 2;
-   a4.style.setProperty("--catalog-gap", `${mid}px`);
-   if (fits()) {
+   a4.style.setProperty("--a4-fill-gap", `${mid}px`);
+   a4.style.removeProperty("--a4-fill-pad");
+   if (pageFitsA4(a4, tolerance) && !hasClippedContent(a4, tolerance)) {
      best = mid;
      lo = mid;
    } else {
      hi = mid;
    }
  }
- a4.style.setProperty("--catalog-gap", `${best}px`);
+
+ if (best < 1) {
+   clearA4Fill(a4);
+   return;
+ }
+
+ a4.style.setProperty("--a4-fill-gap", `${best}px`);
+
+ const remaining = getA4BodySlack(a4, tolerance);
+ if (remaining >= 4) {
+   const pad = Math.min(12, remaining);
+   a4.style.setProperty("--a4-fill-pad", `${pad}px`);
+   if (!pageFitsA4(a4, tolerance) || hasClippedContent(a4, tolerance)) {
+     a4.style.removeProperty("--a4-fill-pad");
+   }
+ }
 }
 
 function scheduleA4Fit() {
