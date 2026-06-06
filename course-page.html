@@ -2189,93 +2189,6 @@ body {
 }
 
 
-/* Balanced top spacing reduction */
-.a4 {
-  padding-top: 5mm !important;
-}
-
-.top-meta-row {
-  min-height: 26px !important;
-  margin: 0 10mm 0.5mm !important;
-}
-
-.top-meta-label {
-  padding: 2px 10px 3px !important;
-  gap: 3px 7px !important;
-  line-height: 1.1 !important;
-}
-
-.top-meta-label .meta-main {
-  font-size: 10.3px !important;
-}
-
-.top-meta-label .meta-value {
-  font-size: 9.9px !important;
-}
-
-.top-meta-logo {
-  width: 60px !important;
-  height: 28px !important;
-}
-
-.a4-opening {
-  min-height: 24px !important;
-  padding: 4px 12px !important;
-  margin-top: 0 !important;
-  margin-bottom: 1.8mm !important;
-  font-size: 12.15px !important;
-  line-height: 1.34 !important;
-}
-
-.a4-banner {
-  padding: 0 0 2mm !important;
-  margin: 0 10mm 2.8mm !important;
-  min-height: 0 !important;
-}
-
-.a4-title {
-  font-size: 27px !important;
-  line-height: 1 !important;
-  margin-bottom: 1px !important;
-}
-
-.a4-subtitle {
-  font-size: 12.7px !important;
-  line-height: 1.16 !important;
-}
-
-.a4-banner-text::after {
-  margin-top: 6px !important;
-}
-
-.a4-body {
-  padding-top: 0 !important;
-}
-
-@media print {
-  .a4 {
-    padding-top: 5mm !important;
-  }
-
-  .top-meta-row {
-    min-height: 26px !important;
-    margin: 0 10mm 0.5mm !important;
-  }
-
-  .a4-opening {
-    min-height: 24px !important;
-    padding: 4px 12px !important;
-    margin-bottom: 1.8mm !important;
-  }
-
-  .a4-banner {
-    padding: 0 0 2mm !important;
-    margin: 0 10mm 2.8mm !important;
-    min-height: 0 !important;
-  }
-}
-
-
 /* Final micro layout adjustments */
 .a4-banner {
   margin-bottom: 2.1mm !important;
@@ -2550,9 +2463,9 @@ body {
 }
 
 .course-description .section-body {
-  column-count: 2 !important;
-  column-gap: 20px !important;
-  column-rule: 1px solid #E8F0EE !important;
+  column-count: 1 !important;
+  column-gap: 0 !important;
+  column-rule: none !important;
   font-size: 12.9px !important;
   line-height: 1.48 !important;
 }
@@ -2698,7 +2611,7 @@ body {
 .syllabus-wrap {
   border-color: #DDE8E6 !important;
   border-radius: 10px !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .syllabus-header {
@@ -2883,7 +2796,6 @@ body {
 
 
 /* Vertical compression — only when auto-fit detects A4 overflow */
-.a4.fit-normal,
 .a4.fit-compact,
 .a4.fit-tight,
 .a4.fit-ultra {
@@ -4142,8 +4054,7 @@ textarea,
 
 
 /* ── Targeted A4 auto-fit hierarchy correction ──
-   Applied only when auto-fit detects overflow (fit-normal and beyond). */
-.a4.fit-normal,
+   Applied only when auto-fit detects overflow (fit-normal = gaps only; fit-compact+ = tighter). */
 .a4.fit-compact,
 .a4.fit-tight,
 .a4.fit-ultra {
@@ -4533,10 +4444,6 @@ textarea,
   line-height: 1.48 !important;
 }
 
-.a4.fit-normal .syllabus-table {
-  font-size: 11.25px !important;
-}
-
 .a4.fit-compact .syllabus-table {
   font-size: 11.05px !important;
 }
@@ -4571,23 +4478,38 @@ textarea,
 }
 
 @media print {
-  .a4 {
+  .a4.fit-normal,
+  .a4.fit-compact,
+  .a4.fit-tight,
+  .a4.fit-ultra {
     padding-top: 3.8mm !important;
   }
-  .top-meta-row {
+  .a4.fit-normal .top-meta-row,
+  .a4.fit-compact .top-meta-row,
+  .a4.fit-tight .top-meta-row,
+  .a4.fit-ultra .top-meta-row {
     min-height: 20px !important;
     margin-bottom: 0.35mm !important;
   }
-  .top-meta-logo {
+  .a4.fit-normal .top-meta-logo,
+  .a4.fit-compact .top-meta-logo,
+  .a4.fit-tight .top-meta-logo,
+  .a4.fit-ultra .top-meta-logo {
     width: 58px !important;
     height: 24px !important;
   }
-  .a4-opening {
+  .a4.fit-normal .a4-opening,
+  .a4.fit-compact .a4-opening,
+  .a4.fit-tight .a4-opening,
+  .a4.fit-ultra .a4-opening {
     min-height: 20px !important;
     padding: 2px 10px !important;
     margin-bottom: 3.5mm !important;
   }
-  .a4-banner {
+  .a4.fit-normal .a4-banner,
+  .a4.fit-compact .a4-banner,
+  .a4.fit-tight .a4-banner,
+  .a4.fit-ultra .a4-banner {
     padding-bottom: 1mm !important;
     margin-bottom: 1.4mm !important;
   }
@@ -4598,7 +4520,10 @@ textarea,
     display: flex !important;
     flex-wrap: wrap !important;
   }
-  .domain-before-syllabus {
+  .a4.fit-normal .domain-before-syllabus,
+  .a4.fit-compact .domain-before-syllabus,
+  .a4.fit-tight .domain-before-syllabus,
+  .a4.fit-ultra .domain-before-syllabus {
     margin: 3mm 0 !important;
   }
   .a4.fit-compact .domain-before-syllabus {
@@ -4610,7 +4535,10 @@ textarea,
   .a4.fit-ultra .domain-before-syllabus {
     margin: 1.5mm 0 !important;
   }
-  .school-value-after-syllabus {
+  .a4.fit-normal .school-value-after-syllabus,
+  .a4.fit-compact .school-value-after-syllabus,
+  .a4.fit-tight .school-value-after-syllabus,
+  .a4.fit-ultra .school-value-after-syllabus {
     margin-top: 8mm !important;
   }
   .a4.fit-compact .school-value-after-syllabus {
@@ -4666,7 +4594,7 @@ textarea,
     display: block !important;
   }
 
-  body.catalog-courses-print .a4,
+  body.catalog-courses-print .a4:not(.a4-fit-scaled),
   body.catalog-courses-print .index-page {
     width: 210mm !important;
     min-width: 210mm !important;
@@ -4843,12 +4771,10 @@ body.catalog-courses-print .a4 .a4-footer {
 
 
 
-/* === A4 COURSE FIX V5: layout/print only, no redesign ===
-   - keep each course on one A4 page when possible
-   - do not shrink by default
-   - prevent hidden syllabus rows
-   - course description is one full-width paragraph
-   - reduce vertical gaps slightly across the page
+/* === A4 COURSE FIX V7: structural layout only — no global compression ===
+   - fixed A4 page box, flex layout, no hidden syllabus rows
+   - course description stays one full-width paragraph
+   - spacing/font compression only via fit-* classes (JS auto-fit)
 */
 .a4 {
   height: 297mm !important;
@@ -4864,8 +4790,6 @@ body.catalog-courses-print .a4 .a4-footer {
   flex-direction: column !important;
   justify-content: flex-start !important;
   gap: 0 !important;
-  padding-top: 0.6mm !important;
-  padding-bottom: 4px !important;
 }
 
 .a4-body > *,
@@ -4878,226 +4802,16 @@ body.catalog-courses-print .a4 .a4-footer {
   flex-shrink: 0 !important;
 }
 
-.course-summary,
-.core-plain-card,
-.full-width-card,
-.learning-process-section,
-.course-description,
-.domain-before-syllabus,
-.syllabus-wrap {
-  margin-bottom: 4px !important;
-}
-
-.top-meta-row {
-  min-height: 22px !important;
-  margin-bottom: 0.3mm !important;
-}
-
-.top-meta-label {
-  padding-top: 1px !important;
-  padding-bottom: 2px !important;
-}
-
-.a4-opening {
-  margin-bottom: 1.2mm !important;
-  padding-top: 3px !important;
-  padding-bottom: 3px !important;
-}
-
-.a4-banner {
-  margin-bottom: 1.4mm !important;
-  padding-bottom: 1mm !important;
-}
-
-.a4-banner-text::after {
-  margin-top: 4px !important;
-}
-
-.section-title,
-.text-only-section .section-title,
-.learning-process-section .section-title,
-.full-width-card .section-title {
-  margin-bottom: 3px !important;
-}
-
-.core-plain-card .section-body {
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
-  line-height: 1.48 !important;
-}
-
-.learning-process-section,
-.course-description {
-  padding: 6px 9px !important;
-}
-
-.learning-flow-strip {
-  margin-top: 0 !important;
-  margin-bottom: 4px !important;
-  padding: 4px 5px !important;
-}
-
-/* Approved by user: description as one full-width paragraph, not two columns */
-.course-description .section-body,
-.a4.fit-spacious .course-description .section-body,
-.a4.fit-normal .course-description .section-body,
-.a4.fit-compact .course-description .section-body,
-.a4.fit-tight .course-description .section-body,
-.a4.fit-ultra .course-description .section-body {
+/* Approved: description as one full-width paragraph, not two columns */
+.course-description .section-body {
   column-count: 1 !important;
   column-gap: 0 !important;
   column-rule: none !important;
-  font-size: 12.7px !important;
-  line-height: 1.42 !important;
-}
-
-.course-description .section-body p {
-  margin-bottom: 4px !important;
-}
-
-.inline-outcomes-wrap {
-  margin-top: 5px !important;
-  padding: 5px 7px !important;
-}
-
-.inline-outcomes-label {
-  margin-bottom: 3px !important;
-}
-
-.inline-outcomes-grid,
-.a4.fit-spacious .inline-outcomes-grid,
-.a4.fit-normal .inline-outcomes-grid,
-.a4.fit-compact .inline-outcomes-grid,
-.a4.fit-tight .inline-outcomes-grid,
-.a4.fit-ultra .inline-outcomes-grid {
-  gap: 3px !important;
-}
-
-.inline-outcomes-grid .outcome-item,
-.a4.fit-spacious .inline-outcomes-grid .outcome-item,
-.a4.fit-normal .inline-outcomes-grid .outcome-item,
-.a4.fit-compact .inline-outcomes-grid .outcome-item,
-.a4.fit-tight .inline-outcomes-grid .outcome-item,
-.a4.fit-ultra .inline-outcomes-grid .outcome-item {
-  min-height: 22px !important;
-  padding: 3px 5px !important;
-  font-size: 9.75px !important;
-  line-height: 1.12 !important;
-}
-
-.skills-group-grid,
-.a4.fit-spacious .skills-group-grid,
-.a4.fit-normal .skills-group-grid,
-.a4.fit-compact .skills-group-grid,
-.a4.fit-tight .skills-group-grid,
-.a4.fit-ultra .skills-group-grid {
-  gap: 4px !important;
-  margin-top: 1px !important;
-}
-
-.skill-group-card,
-.a4.fit-spacious .skill-group-card,
-.a4.fit-normal .skill-group-card,
-.a4.fit-compact .skill-group-card,
-.a4.fit-tight .skill-group-card,
-.a4.fit-ultra .skill-group-card {
-  min-height: 44px !important;
-  padding: 4px 6px !important;
-}
-
-.skill-group-title,
-.a4.fit-spacious .skill-group-title,
-.a4.fit-normal .skill-group-title,
-.a4.fit-compact .skill-group-title,
-.a4.fit-tight .skill-group-title,
-.a4.fit-ultra .skill-group-title {
-  margin-bottom: 2px !important;
-  padding-bottom: 2px !important;
-}
-
-.domain-before-syllabus,
-.a4.fit-spacious .domain-before-syllabus,
-.a4.fit-normal .domain-before-syllabus,
-.a4.fit-compact .domain-before-syllabus,
-.a4.fit-tight .domain-before-syllabus,
-.a4.fit-ultra .domain-before-syllabus {
-  margin: 2px 0 4px !important;
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
 }
 
 /* Critical: do not hide syllabus rows inside the wrapper */
 .syllabus-wrap {
   overflow: visible !important;
-  margin-top: 0 !important;
-  margin-bottom: 3px !important;
-}
-
-.syllabus-header,
-.a4.fit-spacious .syllabus-header,
-.a4.fit-normal .syllabus-header,
-.a4.fit-compact .syllabus-header,
-.a4.fit-tight .syllabus-header,
-.a4.fit-ultra .syllabus-header {
-  padding-top: 3px !important;
-  padding-bottom: 3px !important;
-}
-
-.syllabus-table,
-.a4.fit-spacious .syllabus-table,
-.a4.fit-normal .syllabus-table,
-.a4.fit-compact .syllabus-table,
-.a4.fit-tight .syllabus-table,
-.a4.fit-ultra .syllabus-table {
-  font-size: 10.95px !important;
-}
-
-.syllabus-table th,
-.syllabus-table td,
-.a4.fit-spacious .syllabus-table th,
-.a4.fit-spacious .syllabus-table td,
-.a4.fit-normal .syllabus-table th,
-.a4.fit-normal .syllabus-table td,
-.a4.fit-compact .syllabus-table th,
-.a4.fit-compact .syllabus-table td,
-.a4.fit-tight .syllabus-table th,
-.a4.fit-tight .syllabus-table td,
-.a4.fit-ultra .syllabus-table th,
-.a4.fit-ultra .syllabus-table td {
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  line-height: 1.22 !important;
-}
-
-.school-value-after-syllabus,
-.a4.fit-spacious .school-value-after-syllabus,
-.a4.fit-normal .school-value-after-syllabus,
-.a4.fit-compact .school-value-after-syllabus,
-.a4.fit-tight .school-value-after-syllabus,
-.a4.fit-ultra .school-value-after-syllabus {
-  margin-top: 4px !important;
-  padding-top: 6px !important;
-  padding-bottom: 6px !important;
-}
-
-.school-value-after-syllabus .section-body,
-.a4.fit-spacious .school-value-after-syllabus .section-body,
-.a4.fit-normal .school-value-after-syllabus .section-body,
-.a4.fit-compact .school-value-after-syllabus .section-body,
-.a4.fit-tight .school-value-after-syllabus .section-body,
-.a4.fit-ultra .school-value-after-syllabus .section-body {
-  font-size: 11px !important;
-  line-height: 1.32 !important;
-}
-
-.a4-contact {
-  padding-bottom: 3px !important;
-  font-size: 11.8px !important;
-}
-
-.a4-footer {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
 }
 
 /* Catalog print: no internal stretching. Stretching caused hidden table rows. */
@@ -5114,6 +4828,19 @@ body.catalog-courses-print .a4 .a4-body {
 
   .syllabus-wrap {
     overflow: visible !important;
+  }
+}
+
+/* Last-resort scale: only when fit-ultra is active on a specific overflowing page */
+.a4.fit-ultra.a4-fit-scaled {
+  transform: scale(var(--a4-fit-scale, 1)) !important;
+  transform-origin: top center !important;
+}
+
+@media print {
+  .a4.fit-ultra.a4-fit-scaled {
+    transform: scale(var(--a4-fit-scale, 1)) !important;
+    transform-origin: top center !important;
   }
 }
 
@@ -5707,23 +5434,31 @@ function hasClippedContent(a4, tolerance = 2) {
    if (isClipped(row)) return true;
  }
 
- for (const selector of [".school-value-after-syllabus", ".a4-contact", ".a4-footer"]) {
-   const el = a4.querySelector(selector);
-   if (el && isClipped(el)) return true;
- }
+ const schoolValue = a4.querySelector(".school-value-after-syllabus");
+ if (schoolValue && isClipped(schoolValue)) return true;
 
  return false;
 }
 
 function pageFitsA4(a4, tolerance, isCatalogPrint) {
  if (hasHiddenOverflow(a4) || hasClippedContent(a4, tolerance)) return false;
- if (isCatalogPrint) {
-   const anchor = getCatalogStretchAnchor(a4);
-   if (anchor) {
-     return getCatalogContentBottom(a4) <= anchor.getBoundingClientRect().top - tolerance;
-   }
- }
- return a4.scrollHeight <= a4.clientHeight + tolerance;
+ if (a4.classList.contains("a4-fit-scaled")) return true;
+
+ const a4Rect = a4.getBoundingClientRect();
+ const footer = a4.querySelector(".a4-footer") || a4.querySelector(".a4-contact");
+ if (footer && footer.getBoundingClientRect().bottom > a4Rect.bottom + tolerance) return false;
+
+ return true;
+}
+
+function clearA4FitScale(a4) {
+ a4.classList.remove("a4-fit-scaled");
+ a4.style.removeProperty("--a4-fit-scale");
+}
+
+function applyA4FitScale(a4, scale) {
+ a4.style.setProperty("--a4-fit-scale", String(scale));
+ a4.classList.add("a4-fit-scaled");
 }
 
 function fitA4Page() {
@@ -5739,6 +5474,7 @@ function fitA4Page() {
 
  pages.forEach(a4 => {
    a4.classList.remove(...compressModes);
+   clearA4FitScale(a4);
    a4.style.removeProperty("--catalog-gap");
 
    const fits = () => pageFitsA4(a4, tolerance, isCatalogPrint);
@@ -5762,7 +5498,20 @@ function fitA4Page() {
      a4.classList.add("fit-ultra");
    }
 
-   if (!fits()) hasOverflow = true;
+   if (!fits()) {
+     let scaled = false;
+     for (let scale = 0.99; scale >= 0.94; scale = Math.round((scale - 0.01) * 100) / 100) {
+       applyA4FitScale(a4, scale);
+       if (!hasClippedContent(a4, tolerance)) {
+         scaled = true;
+         break;
+       }
+     }
+     if (!scaled) {
+       clearA4FitScale(a4);
+       hasOverflow = true;
+     }
+   }
 
    // No stretch in catalog mode: stretching/dynamic gaps can hide syllabus rows.
  });
