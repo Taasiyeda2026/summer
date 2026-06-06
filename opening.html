@@ -357,7 +357,7 @@
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").then(r => r.update());
+        navigator.serviceWorker.register("./sw.js").then(registration => registration.update());
       });
     }
   </script>
