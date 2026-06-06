@@ -4771,10 +4771,11 @@ body.catalog-courses-print .a4 .a4-footer {
 
 
 
-/* === A4 COURSE FIX V9: uniform fixed skeleton — syllabus rows only vary ===
+/* === A4 COURSE FIX V10: uniform fixed skeleton — syllabus rows only vary ===
    - one identical A4 layout for every course page
    - no global scale/zoom/fit, no per-course spacing, no space-between on body
    - no overflow:hidden clipping; only syllabus table row spacing changes by row count
+   - top breathing: less page padding-top; extra space before course title banner
 */
 .a4.a4-course-skeleton {
   width: 210mm !important;
@@ -4784,8 +4785,12 @@ body.catalog-courses-print .a4 .a4-footer {
   overflow: visible !important;
   display: flex !important;
   flex-direction: column !important;
-  padding-top: 9mm !important;
+  padding-top: 5mm !important;
   transform: none !important;
+}
+
+.a4.a4-course-skeleton > .a4-banner {
+  margin-top: 3.5mm !important;
 }
 
 .a4.a4-course-skeleton .a4-body {
@@ -4922,7 +4927,7 @@ body.catalog-courses-print .a4 .a4-footer {
 .a4.a4-course-skeleton.fit-ultra,
 .a4.a4-course-skeleton.a4-fit-scaled,
 .a4.a4-course-skeleton.a4-fill-active {
-  padding-top: 9mm !important;
+  padding-top: 5mm !important;
   transform: none !important;
   gap: 0 !important;
 }
@@ -4946,6 +4951,11 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
     max-height: 297mm !important;
     overflow: visible !important;
     transform: none !important;
+    padding-top: 5mm !important;
+  }
+
+  .a4.a4-course-skeleton > .a4-banner {
+    margin-top: 3.5mm !important;
   }
 
   .a4.a4-course-skeleton .syllabus-wrap {
