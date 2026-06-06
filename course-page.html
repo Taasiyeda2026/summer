@@ -4174,6 +4174,23 @@ textarea,
   line-height: 1.30 !important;
 }
 
+/* Subtle zebra rows: white alternating with soft gray + per-course theme tint */
+.syllabus-table tbody tr:nth-child(odd) td,
+.syllabus-table tbody tr.stage-nature:nth-child(odd) td,
+.syllabus-table tbody tr.stage-tech:nth-child(odd) td,
+.syllabus-table tbody tr.stage-product:nth-child(odd) td {
+  background: #FFFFFF !important;
+}
+
+.syllabus-table tbody tr:nth-child(even) td,
+.syllabus-table tbody tr.stage-nature:nth-child(even) td,
+.syllabus-table tbody tr.stage-tech:nth-child(even) td,
+.syllabus-table tbody tr.stage-product:nth-child(even) td {
+  background:
+    linear-gradient(rgba(var(--theme-rgb), 0.065), rgba(var(--theme-rgb), 0.065)),
+    #F1F4F7 !important;
+}
+
 /* Fixed, short modules: never let fit-* shrink their font. */
 .school-value-after-syllabus {
   margin-top: 28px !important;
@@ -4430,6 +4447,24 @@ textarea,
   }
   .a4.fit-ultra .school-value-after-syllabus {
     margin-top: 4mm !important;
+  }
+  .syllabus-table tbody tr:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-nature:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-tech:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-product:nth-child(odd) td {
+    background: #FFFFFF !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .syllabus-table tbody tr:nth-child(even) td,
+  .syllabus-table tbody tr.stage-nature:nth-child(even) td,
+  .syllabus-table tbody tr.stage-tech:nth-child(even) td,
+  .syllabus-table tbody tr.stage-product:nth-child(even) td {
+    background:
+      linear-gradient(rgba(var(--theme-rgb), 0.065), rgba(var(--theme-rgb), 0.065)),
+      #F1F4F7 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 
