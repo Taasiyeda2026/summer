@@ -404,7 +404,7 @@ body {
  background: #FFFFFF;
  border: 1px solid #DDE5EC;
  border-radius: 10px;
- overflow: hidden;
+ overflow: visible;
 }
 .syllabus-header {
  font-size: 11px;
@@ -471,9 +471,9 @@ body {
  break-inside: avoid;
 }
 .course-description .section-body {
- column-count: 2;
- column-gap: 18px;
- column-rule: 1px solid #E4EAEF;
+ column-count: 1;
+ column-gap: 0;
+ column-rule: none;
  font-size: 12.9px;
  line-height: 1.45;
 }
@@ -1255,9 +1255,9 @@ body {
 }
 
 .course-description .section-body {
-  column-count: 2 !important;
-  column-gap: 20px !important;
-  column-rule: 1px solid #EEF2F5 !important;
+  column-count: 1 !important;
+  column-gap: 0 !important;
+  column-rule: none !important;
   font-size: 12.9px !important;
   line-height: 1.48 !important;
 }
@@ -4813,9 +4813,8 @@ textarea,
   }
 }
 
-/* Course catalog print — distribute content between page top and marketing contact */
+/* Course catalog print — keep content top-aligned; never stretch gaps (hides syllabus rows) */
 body.catalog-courses-print .a4 {
-  --catalog-gap: 0px;
   display: flex !important;
   flex-direction: column !important;
 }
@@ -4834,18 +4833,12 @@ body.catalog-courses-print .a4 .a4-body {
   min-height: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: space-between !important;
-  gap: var(--catalog-gap) !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
 }
 
 body.catalog-courses-print .a4 .a4-footer {
   margin-top: 0 !important;
-}
-
-@media print {
-  body.catalog-courses-print .a4 .a4-body {
-    justify-content: space-between !important;
-  }
 }
 
 
@@ -5121,6 +5114,39 @@ body.catalog-courses-print .a4 .a4-body {
 
   .syllabus-wrap {
     overflow: visible !important;
+  }
+}
+
+/* V6: one A4 per course — screen + print guardrails */
+.a4:not(.index-page) {
+  flex: 0 0 auto !important;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+body.catalog-view .a4:not(.index-page),
+body.catalog-courses-print .a4:not(.index-page) {
+  page-break-after: always !important;
+  break-after: page !important;
+}
+
+body.catalog-view .a4:not(.index-page):last-child,
+body.catalog-courses-print .a4:not(.index-page):last-child {
+  page-break-after: auto !important;
+  break-after: auto !important;
+}
+
+@media print {
+  .a4:not(.index-page) {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .a4:not(.index-page):last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
   }
 }
 
@@ -5670,8 +5696,27 @@ function hasHiddenOverflow(a4) {
  });
 }
 
+function hasClippedContent(a4, tolerance = 2) {
+ const a4Rect = a4.getBoundingClientRect();
+ const isClipped = (el) => {
+   const rect = el.getBoundingClientRect();
+   return rect.bottom > a4Rect.bottom + tolerance || rect.top < a4Rect.top - tolerance;
+ };
+
+ for (const row of a4.querySelectorAll(".syllabus-table tbody tr")) {
+   if (isClipped(row)) return true;
+ }
+
+ for (const selector of [".school-value-after-syllabus", ".a4-contact", ".a4-footer"]) {
+   const el = a4.querySelector(selector);
+   if (el && isClipped(el)) return true;
+ }
+
+ return false;
+}
+
 function pageFitsA4(a4, tolerance, isCatalogPrint) {
- if (hasHiddenOverflow(a4)) return false;
+ if (hasHiddenOverflow(a4) || hasClippedContent(a4, tolerance)) return false;
  if (isCatalogPrint) {
    const anchor = getCatalogStretchAnchor(a4);
    if (anchor) {
@@ -5682,7 +5727,7 @@ function pageFitsA4(a4, tolerance, isCatalogPrint) {
 }
 
 function fitA4Page() {
- const pages = document.querySelectorAll(".a4");
+ const pages = document.querySelectorAll(".a4:not(.index-page)");
  const warning = document.getElementById("fit-warning");
  if (!pages.length) return;
  if (warning) warning.classList.remove("show");
