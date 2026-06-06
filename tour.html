@@ -68,16 +68,14 @@ body,button,input,textarea,select{font-family:"Assistant",Arial,sans-serif}
   position:relative;
   margin-bottom:2.2mm;
 }
-.logo-text{
+.logo-img{
   position:absolute;
   left:0;
   top:50%;
   transform:translateY(-50%);
-  color:var(--blue-dark);
-  font-size:19px;
-  line-height:1.5;
-  font-weight:900;
-  letter-spacing:.01em;
+  height:44px;
+  width:auto;
+  object-fit:contain;
 }
 .meta{
   display:flex;
@@ -346,7 +344,7 @@ h1{
 <div class="page-wrap">
   <main class="a4">
     <div class="top-row">
-      <div class="logo-text">תעשיידע</div>
+      <img class="logo-img" src="logo.png" alt="לוגו תעשיידע" />
       <div class="meta">
         <span>סיור</span><span class="dot"></span><span>התנסות בתעשייה</span><span class="dot"></span><span>מספר גפ"ן 13990</span>
       </div>
