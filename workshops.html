@@ -2706,7 +2706,7 @@
             <span class="checkmark" aria-hidden="true"></span>
             <span>
               <span class="option-title">${escapeHTML(program.title)}</span>
-              <span class="option-meta">${escapeHTML(courseLevelLabel(program))}${program.domain ? ` · ${escapeHTML(program.domain)}` : ""}</span>
+              <span class="option-meta">${escapeHTML(courseLevelLabel(program))}${program.domain ? ` · ${escapeHTML(program.domain)}` : ""}${program.gefen ? ` · גפן ${escapeHTML(String(program.gefen))}` : ""}</span>
             </span>
           </span>`;
         coursePicker.appendChild(label);
