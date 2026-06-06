@@ -77,21 +77,36 @@
 
     .print-btn,
     .action-btn {
+      min-height: 34px;
       border: 1px solid rgba(23,32,51,.12);
-      border-radius: 15px;
-      padding: 11px 16px;
+      border-radius: 999px;
+      padding: 7px 12px;
       cursor: pointer;
+      font-size: 13px;
       font-weight: 900;
       color: #172033;
       background: white;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+
+    .action-btn:hover,
+    .action-btn.is-active {
+      border-color: rgba(32,59,122,.36);
+      background: rgba(32,59,122,.08);
+      color: var(--blue);
     }
 
     .print-btn {
+      min-height: 44px;
+      padding: 11px 22px;
+      border-radius: 16px;
       color: white;
       border-color: transparent;
       background: linear-gradient(135deg, var(--pink), var(--purple));
       box-shadow: 0 12px 24px rgba(108,77,230,.22);
       white-space: nowrap;
+      font-size: 15px;
     }
 
     .print-btn:disabled {
@@ -134,17 +149,64 @@
       margin-bottom: 14px;
     }
 
+    .workflow-section {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(23,32,51,.10);
+      border-radius: 20px;
+      background: rgba(255,255,255,.76);
+    }
+
+    .workflow-section:first-child { margin-top: 0; }
+
+    .workflow-section.final-step {
+      border-color: rgba(108,77,230,.18);
+      background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(247,244,255,.84));
+    }
+
+    .workflow-heading {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 950;
+      color: var(--ink);
+    }
+
+    .workflow-subheading {
+      margin: 0 0 9px;
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .workflow-topline,
+    .final-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .final-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
     .selected-count {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 112px;
-      min-height: 40px;
-      padding: 8px 13px;
+      min-height: 30px;
+      padding: 5px 10px;
       border-radius: 999px;
-      color: white;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      font-size: 13px;
+      color: var(--blue);
+      background: rgba(52,195,213,.12);
+      border: 1px solid rgba(52,195,213,.25);
+      font-size: 12px;
       font-weight: 900;
     }
 
@@ -152,6 +214,13 @@
       display: flex;
       gap: 14px;
       align-items: flex-start;
+    }
+
+    .filter-panel {
+      border: 1px solid rgba(32,59,122,.10);
+      border-radius: 16px;
+      background: rgba(247,251,255,.78);
+      padding: 10px;
     }
 
     .filters-sidebar {
@@ -237,11 +306,11 @@
     }
 
     .cover-letter-toggle {
-      min-height: 40px;
+      min-height: 34px;
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 8px 12px;
+      padding: 6px 10px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(255,255,255,.92);
@@ -264,11 +333,11 @@
       position: relative;
       display: inline-flex;
       align-items: center;
-      padding: 8px 12px;
+      padding: 6px 10px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(255,255,255,.92);
-      min-height: 40px;
+      min-height: 34px;
       cursor: pointer;
     }
 
@@ -292,15 +361,17 @@
       background: transparent;
     }
 
-    .action-btn {
-      min-height: 40px;
-      padding: 8px 12px;
-      font-size: 13px;
+    .secondary-action {
+      min-height: 30px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: #475467;
+      background: #fff;
     }
 
     .switch-interface-btn {
-      min-height: 40px;
-      padding: 6px 13px;
+      min-height: 34px;
+      padding: 6px 12px;
       font-size: 12px;
       font-weight: 700;
       font-family: inherit;
@@ -367,7 +438,7 @@
       grid-template-columns: 16px 1fr;
       gap: 7px;
       align-items: center;
-      padding: 7px 10px;
+      padding: 6px 9px;
       border-radius: 10px;
       background: white;
       border: 1px solid rgba(23,32,51,.11);
@@ -417,6 +488,18 @@
       line-height: 1.3;
       font-weight: 700;
       color: var(--muted);
+    }
+
+    .type-pill,
+    .gefen-meta {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(32,59,122,.07);
+      color: #475467;
+      font-size: .92em;
+      font-weight: 900;
     }
 
 
@@ -586,8 +669,8 @@
 
     .course-picker {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 7px;
       max-height: 380px;
       overflow: auto;
       padding: 2px 2px 4px;
@@ -596,7 +679,7 @@
     .course-option .option-card {
       grid-template-columns: 18px 1fr;
       align-items: start;
-      min-height: 76px;
+      min-height: 58px;
     }
 
     .course-option .option-title {
@@ -2350,105 +2433,152 @@
 
     <div class="course-interface is-hidden" id="courseInterface">
       <section class="selector-panel" id="courseSelectorPanel" aria-label="בחירת קורסים לקטלוג">
-        <div class="selector-top">
-          <div class="action-row">
-            <button class="gateway-back-btn" type="button" data-gateway-back style="display:none">← חזרה לסוגי קטלוג</button>
-            <button class="action-btn" type="button" data-course-action="all">כל הקורסים</button>
+        <section class="workflow-section" aria-label="בחירת סוג התוכן להפקה">
+          <div class="workflow-topline">
+            <div>
+              <h2 class="workflow-heading">בחרו אילו תוכניות לכלול בקטלוג</h2>
+              <p class="header-subtitle">בחרו קבוצה מהירה או עברו לבחירה ידנית.</p>
+            </div>
+            <button class="switch-interface-btn" type="button" onclick="window.location.href='./index.html'">חזרה לראשי</button>
+          </div>
+          <div class="action-row" style="margin-top:10px;">
+            <button class="action-btn" type="button" data-course-action="all">כל התוכניות</button>
             <button class="action-btn" type="button" data-course-action="elementary">יסודי</button>
             <button class="action-btn" type="button" data-course-action="middle">חטיבה</button>
             <button class="action-btn" type="button" data-course-action="high">תיכון</button>
             <button class="action-btn" type="button" data-course-action="manual">בחירה ידנית</button>
-            <button class="switch-interface-btn" type="button" onclick="showWorkshopInterface()">🎨 עבור לסדנאות</button>
           </div>
-          <div class="catalog-actions">
-            <div class="selected-count" id="selectedCourseCount">0 קורסים נבחרו</div>
-            <button class="action-btn" id="toggleCoursePickerBtn" type="button">▾ בחר קורסים</button>
-            <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
-              <input id="courseCoverLetterCheckbox" type="checkbox" />
-              <span>מכתב מקדים</span>
-            </label>
-            <label class="cover-letter-toggle" for="courseIndexCheckbox">
-              <input id="courseIndexCheckbox" type="checkbox" />
-              <span>מקרא</span>
-            </label>
-            <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
-          </div>
-        </div>
-        <div class="course-summary-card">
-          <div>
-            <p class="course-summary-title" id="courseSelectionTitle">בחרו קבוצת קורסים</p>
-            <p class="course-summary-text" id="courseSelectionText">אפשר להתחיל מבחירה מהירה או לפתוח בחירה ידנית.</p>
-          </div>
-          <button class="gateway-back-btn" type="button" id="courseClearBtn">ניקוי הכול</button>
-        </div>
-        <div class="selector-body" id="courseManualBody">
-          <div style="width:100%;">
-            <div class="course-controls-row">
-              <button class="action-btn" type="button" data-course-manual="select-visible">בחר הכול</button>
-              <button class="action-btn" type="button" data-course-manual="clear-visible">נקה הכול</button>
-              <label class="search-box course-search-box" aria-label="חיפוש קורס">
-                🔎
-                <input id="courseSearchInput" type="search" placeholder="חיפוש לפי שם קורס" autocomplete="off" />
-              </label>
-              <select class="course-filter-select" id="courseLevelFilter" aria-label="סינון לפי שכבת גיל">
-                <option value="all">כל שכבות הגיל</option>
-                <option value="elementary">יסודי</option>
-                <option value="middle">חטיבה</option>
-                <option value="high">תיכון</option>
-              </select>
-              <select class="course-filter-select" id="courseDomainFilter" aria-label="סינון לפי תחום">
-                <option value="all">כל התחומים</option>
-              </select>
+        </section>
+
+        <section class="workflow-section" aria-label="סינון ובחירת תוכניות">
+          <div class="selector-top">
+            <div>
+              <h3 class="workflow-subheading">סינון ובחירה</h3>
+              <div class="selected-count" id="selectedCourseCount">0 קורסים נבחרו</div>
             </div>
-            <div class="course-picker" id="coursePicker"></div>
+            <button class="action-btn secondary-action" id="toggleCoursePickerBtn" type="button">▾ בחר תוכניות</button>
           </div>
-        </div>
+          <div class="course-summary-card">
+            <div>
+              <p class="course-summary-title" id="courseSelectionTitle">בחרו קבוצת תוכניות</p>
+              <p class="course-summary-text" id="courseSelectionText">אפשר להתחיל מבחירה מהירה או לפתוח בחירה ידנית.</p>
+            </div>
+            <button class="action-btn secondary-action" type="button" id="courseClearBtn">נקה הכל</button>
+          </div>
+          <div class="selector-body filter-panel" id="courseManualBody">
+            <div style="width:100%;">
+              <div class="course-controls-row">
+                <button class="action-btn secondary-action" type="button" data-course-manual="select-visible">בחר הכל</button>
+                <button class="action-btn secondary-action" type="button" data-course-manual="clear-visible">נקה הכל</button>
+                <label class="search-box course-search-box" aria-label="חיפוש תוכנית">
+                  🔎
+                  <input id="courseSearchInput" type="search" placeholder="חיפוש לפי שם תוכנית" autocomplete="off" />
+                </label>
+                <select class="course-filter-select" id="courseLevelFilter" aria-label="סינון לפי שכבת גיל">
+                  <option value="all">כל שכבות הגיל</option>
+                  <option value="elementary">יסודי</option>
+                  <option value="middle">חטיבה</option>
+                  <option value="high">תיכון</option>
+                </select>
+                <select class="course-filter-select" id="courseDomainFilter" aria-label="סינון לפי תחום">
+                  <option value="all">כל התחומים</option>
+                </select>
+              </div>
+              <div class="course-picker" id="coursePicker"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="workflow-section final-step" aria-label="חלקים נוספים והפקת PDF">
+          <h3 class="workflow-subheading">מה להוסיף לקטלוג?</h3>
+          <div class="final-actions-row">
+            <div class="final-options">
+              <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
+                <input id="courseCoverLetterCheckbox" type="checkbox" />
+                <span>מכתב מקדים</span>
+              </label>
+              <div class="marketer-field">
+                <span class="marketer-face">שיווק ▾</span>
+                <select id="courseMarketerSelect" class="marketer-select" aria-label="בחירת שיווק לקטלוג קורסים">
+                  <option value="none">ללא שיווק</option>
+                  <option value="yael">יעל אביב</option>
+                  <option value="israa">איסראא אבו-ראס</option>
+                </select>
+              </div>
+              <label class="cover-letter-toggle" for="courseIndexCheckbox">
+                <input id="courseIndexCheckbox" type="checkbox" />
+                <span>מקרא</span>
+              </label>
+            </div>
+            <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
+          </div>
+        </section>
       </section>
     </div>
 
     <div class="workshop-interface is-hidden" id="workshopInterface">
       <section class="selector-panel" id="selectorPanel" aria-label="בחירת פעילויות לקטלוג">
-        <div class="selector-top">
-          <div class="action-row">
-            <button class="gateway-back-btn" type="button" data-gateway-back style="display:none">← חזרה לסוגי קטלוג</button>
-            <button class="switch-interface-btn" type="button" onclick="applyCoursePreset('manual')">📚 עבור לקורסים</button>
-            <button class="action-btn" type="button" data-action="all">בחר הכול</button>
-            <button class="action-btn" type="button" data-action="none">נקה הכול</button>
+        <section class="workflow-section" aria-label="בחירת סוג הפעילות להפקה">
+          <div class="workflow-topline">
+            <div>
+              <h2 class="workflow-heading">בחרו אילו פעילויות לכלול בקטלוג</h2>
+              <p class="header-subtitle">בחרו את היקף הקטלוג, ואז סננו או בחרו ידנית.</p>
+            </div>
+            <button class="switch-interface-btn" type="button" onclick="window.location.href='./index.html'">חזרה לראשי</button>
+          </div>
+          <div class="action-row" style="margin-top:10px;">
+            <button class="action-btn" type="button" data-action="all">כל הפעילויות</button>
             <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
             <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
+            <button class="action-btn" type="button" data-action="manual">בחירה ידנית</button>
+            <span class="selected-count" id="selectedCount">0 נבחרו</span>
           </div>
-          <div class="catalog-actions">
-            <div class="selected-count" id="selectedCount">0 נבחרו</div>
-            <button class="action-btn" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
-            <label class="cover-letter-toggle" for="coverLetterCheckbox">
-              <input id="coverLetterCheckbox" type="checkbox" />
-              <span>מכתב מקדים</span>
-            </label>
-            <div class="marketer-field">
-              <span class="marketer-face">שיווק ▾</span>
-              <select id="marketerSelect" class="marketer-select">
-                <option value="none">ללא שיווק</option>
-                <option value="yael">יעל אביב</option>
-                <option value="israa">איסראא אבו-ראס</option>
-              </select>
-            </div>
-            <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
-          </div>
-        </div>
+        </section>
 
-        <div class="selector-body">
-          <div class="filters-sidebar">
-            <div class="filter-group">
-              <p class="filter-label">סינון לפי כיתות</p>
-              <div id="gradeFilters" class="filter-options"></div>
-            </div>
-            <div class="filter-group">
-              <p class="filter-label">סינון לפי תחומים</p>
-              <div id="domainFilters" class="filter-options"></div>
-            </div>
+        <section class="workflow-section" aria-label="סינון ובחירת פעילויות">
+          <div class="selector-top">
+            <h3 class="workflow-subheading">סינון ובחירה</h3>
+            <button class="action-btn secondary-action" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
           </div>
-          <div id="activityPicker" class="activity-picker"></div>
-        </div>
+          <div class="action-row" style="margin-bottom:10px;">
+            <button class="action-btn secondary-action" type="button" data-action="all">בחר הכל</button>
+            <button class="action-btn secondary-action" type="button" data-action="none">נקה הכל</button>
+          </div>
+          <div class="selector-body filter-panel">
+            <div class="filters-sidebar">
+              <div class="filter-group">
+                <p class="filter-label">סינון לפי כיתות</p>
+                <div id="gradeFilters" class="filter-options"></div>
+              </div>
+              <div class="filter-group">
+                <p class="filter-label">סינון לפי תחומי תוכן</p>
+                <div id="domainFilters" class="filter-options"></div>
+              </div>
+            </div>
+            <div id="activityPicker" class="activity-picker"></div>
+          </div>
+        </section>
+
+        <section class="workflow-section final-step" aria-label="חלקים נוספים והפקת PDF">
+          <h3 class="workflow-subheading">מה להוסיף לקטלוג?</h3>
+          <div class="final-actions-row">
+            <div class="final-options">
+              <label class="cover-letter-toggle" for="coverLetterCheckbox">
+                <input id="coverLetterCheckbox" type="checkbox" />
+                <span>מכתב מקדים</span>
+              </label>
+              <div class="marketer-field">
+                <span class="marketer-face">שיווק ▾</span>
+                <select id="marketerSelect" class="marketer-select" aria-label="בחירת שיווק לקטלוג סדנאות">
+                  <option value="none">ללא שיווק</option>
+                  <option value="yael">יעל אביב</option>
+                  <option value="israa">איסראא אבו-ראס</option>
+                </select>
+              </div>
+            </div>
+            <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
+          </div>
+        </section>
       </section>
     </div>
   </header>
@@ -2477,6 +2607,7 @@
     const courseSelectionText = document.getElementById("courseSelectionText");
     const courseCatalogModeBtn = document.getElementById("courseCatalogModeBtn");
     const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
+    const courseMarketerSelect = document.getElementById("courseMarketerSelect");
     const courseIndexCheckbox = document.getElementById("courseIndexCheckbox");
     const courseSearchInput = document.getElementById("courseSearchInput");
     const courseLevelFilter = document.getElementById("courseLevelFilter");
@@ -2680,16 +2811,19 @@
 
     function updateCourseSummary() {
       const selectedPrograms = getSelectedCoursePrograms();
-      selectedCourseCount.textContent = `${selectedPrograms.length} קורסים נבחרו`;
+      selectedCourseCount.textContent = `נבחרו ${selectedPrograms.length} תוכניות`;
       courseCatalogModeBtn.disabled = selectedPrograms.length === 0;
+      document.querySelectorAll("[data-course-action]").forEach(button => {
+        button.classList.toggle("is-active", button.dataset.courseAction === selectedCoursePreset);
+      });
       const presetLabels = {
-        all: "כל הקורסים",
+        all: "כל התוכניות",
         elementary: "יסודי",
         middle: "חטיבה",
         high: "תיכון",
         manual: "בחירה ידנית"
       };
-      courseSelectionTitle.textContent = selectedCoursePreset ? presetLabels[selectedCoursePreset] : "בחירת קורסים";
+      courseSelectionTitle.textContent = selectedCoursePreset ? presetLabels[selectedCoursePreset] : "בחירת תוכניות";
       if (!selectedPrograms.length) {
         courseSelectionText.textContent = "לא נבחרו קורסים. בחרו קבוצה מהירה או פתחו בחירה ידנית.";
         return;
@@ -2716,7 +2850,7 @@
             <span class="checkmark" aria-hidden="true"></span>
             <span>
               <span class="option-title">${escapeHTML(program.title)}</span>
-              <span class="option-meta">${escapeHTML(courseLevelLabel(program))}${program.domain ? ` · ${escapeHTML(program.domain)}` : ""}${program.gefen ? ` · גפן ${escapeHTML(String(program.gefen))}` : ""}</span>
+              <span class="option-meta">${escapeHTML(courseLevelLabel(program))}${program.domain ? ` · ${escapeHTML(program.domain)}` : ""}${program.gefen ? ` · <span class="gefen-meta">גפ״ן ${escapeHTML(String(program.gefen))}</span>` : ""}</span>
             </span>
           </span>`;
         coursePicker.appendChild(label);
@@ -2729,7 +2863,7 @@
       updateCourseSummary();
       courseSelectorPanel.classList.toggle("collapsed", !courseManualOpen);
       courseManualBody.classList.toggle("is-hidden", !courseManualOpen);
-      toggleCoursePickerBtn.textContent = courseManualOpen ? "▴ סגור" : "▾ בחר קורסים";
+      toggleCoursePickerBtn.textContent = courseManualOpen ? "▴ סגור" : "▾ בחר תוכניות";
     }
 
     function applyCoursePreset(preset) {
@@ -2762,6 +2896,7 @@
       params.set("ids", ids.join(","));
       params.set("catalog", "1");
       if (courseCoverLetterCheckbox.checked) params.set("cover", "1");
+      if (courseMarketerSelect.value !== "none") params.set("marketer", courseMarketerSelect.value);
       if (courseIndexCheckbox.checked) params.set("index", "1");
       return `./course-page.html?${params.toString()}`;
     }
@@ -3322,7 +3457,7 @@ function chunkActivities(items, size) {
             <span class="checkmark" aria-hidden="true"></span>
             <span>
               <span class="option-title">${escapeHTML(activity.title)}</span>
-              <span class="option-meta">${escapeHTML(activity.type)} · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
+              <span class="option-meta"><span class="type-pill">${escapeHTML(activity.type)}</span> · ${escapeHTML(activity.domain)} · ${escapeHTML(activity.grades.map(formatGrade).join(", "))}</span>
             </span>
           </span>`;
         if (activity.type === "חדר בריחה") {
@@ -3350,8 +3485,15 @@ function chunkActivities(items, size) {
 
     function updateCount() {
       const sel = getSelectedActivities();
-      selectedCount.textContent = `${sel.length} נבחרו`;
+      selectedCount.textContent = `נבחרו ${sel.length} פעילויות`;
       catalogModeBtn.disabled = sel.length === 0;
+      document.querySelectorAll("[data-action]").forEach(button => {
+        const action = button.dataset.action;
+        const active = (selectedType === null && action === "all" && sel.length === activities.length && activities.length > 0) ||
+          (selectedType === "סדנה" && action === "workshops") ||
+          (selectedType === "חדר בריחה" && action === "escapes");
+        button.classList.toggle("is-active", active && !button.classList.contains("secondary-action"));
+      });
     }
 
     function renderSelection() {
@@ -3505,7 +3647,7 @@ function chunkActivities(items, size) {
         activities.forEach((_, index) => selected.add(index));
         GRADE_ORDER.forEach(g => selectedGrades.add(g));
         uniqueValues(a => [a.domain]).forEach(d => selectedDomains.add(d));
-      } else if (action === "none") {
+      } else if (action === "none" || action === "manual") {
         selectedType = null;
       } else if (action === "workshops") {
         selectedType = "סדנה";
@@ -3516,6 +3658,10 @@ function chunkActivities(items, size) {
       }
 
       renderSelection();
+      if (action === "manual") {
+        selectorPanel.classList.remove("collapsed");
+        togglePickerBtn.textContent = "▴ סגור";
+      }
     });
 
     async function init() {
