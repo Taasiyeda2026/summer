@@ -3956,16 +3956,16 @@ textarea,
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
-.idx-table th.idx-gefen,
-.idx-table td.idx-gefen  { width: 25mm; text-align: center; }
-.idx-table th.idx-level,
-.idx-table td.idx-level  { width: 20mm; text-align: right; }
-.idx-table th.idx-grades,
-.idx-table td.idx-grades { width: 20mm; text-align: center; }
-.idx-table th.idx-sessions,
-.idx-table td.idx-sessions { width: 25mm; text-align: right; }
 .idx-table th.idx-title,
-.idx-table td.idx-title  { width: 70mm; text-align: right; font-weight: 800; }
+.idx-table td.idx-title  { width: 90mm; text-align: right; font-weight: 800; }
+.idx-table th.idx-level,
+.idx-table td.idx-level  { width: 22mm; text-align: right; }
+.idx-table th.idx-grades,
+.idx-table td.idx-grades { width: 18mm; text-align: center; }
+.idx-table th.idx-sessions,
+.idx-table td.idx-sessions { width: 22mm; text-align: right; }
+.idx-table th.idx-gefen,
+.idx-table td.idx-gefen  { width: 20mm; text-align: center; }
 @media print {
   .index-page { padding-top: 14mm; }
   .idx-table { width: 160mm !important; }
@@ -4391,11 +4391,11 @@ function buildIndexPageHtml(selectedPrograms) {
   const levelLabel = { elementary: "יסודי", "elementary-middle": "יסודי–חטיבה", middle: "חטיבה", "middle-high": "חטיבה–תיכון", high: "תיכון" };
   const rows = selectedPrograms.map(p => `
     <tr>
-      <td class="idx-gefen">${escapeHtml(String(p.gefen || p.activityNo || "—"))}</td>
+      <td class="idx-title">${escapeHtml(p.title || "—")}</td>
       <td class="idx-level">${escapeHtml(levelLabel[p.audienceLevel] || p.catalogSection || "—")}</td>
       <td class="idx-grades">${escapeHtml(p.grades || "—")}</td>
       <td class="idx-sessions">${escapeHtml(p.sessions || "—")}</td>
-      <td class="idx-title">${escapeHtml(p.title || "—")}</td>
+      <td class="idx-gefen">${escapeHtml(String(p.gefen || p.activityNo || "—"))}</td>
     </tr>`).join("");
   return `
   <div class="a4 index-page" style="page-break-after:always;break-after:page;">
@@ -4410,11 +4410,11 @@ function buildIndexPageHtml(selectedPrograms) {
       <table class="idx-table">
         <thead>
           <tr>
-            <th class="idx-gefen">גפן</th>
+            <th class="idx-title">שם התוכנית</th>
             <th class="idx-level">שכבת גיל</th>
             <th class="idx-grades">כיתות</th>
             <th class="idx-sessions">מפגשים</th>
-            <th class="idx-title">שם התוכנית</th>
+            <th class="idx-gefen">גפ״ן</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
