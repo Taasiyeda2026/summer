@@ -4329,7 +4329,9 @@ async function init() {
       showLoadError("קובץ catalog-data.json ריק או חסר שדה programs.");
       return;
     }
-    programs = data.programs.map(program => normalizeProgram(program));
+    const levelOrder = { elementary: 1, "elementary-middle": 2, middle: 3, "middle-high": 4, high: 5 };
+    programs = data.programs.map(program => normalizeProgram(program))
+      .sort((a, b) => (levelOrder[a.audienceLevel] ?? 99) - (levelOrder[b.audienceLevel] ?? 99));
     if (isCatalogModeFromUrl()) {
       const params = new URLSearchParams(window.location.search);
       const requestedIndexes = findProgramIndexesFromUrl();

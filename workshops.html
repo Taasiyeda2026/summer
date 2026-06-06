@@ -2652,13 +2652,14 @@
       const term = courseSearchInput.value.trim().toLowerCase();
       const level = courseLevelFilter.value;
       const domain = courseDomainFilter.value;
+      const levelOrder = { elementary: 1, "elementary-middle": 2, middle: 3, "middle-high": 4, high: 5 };
       return catalogPrograms.filter(program => {
         const matchesTerm = !term || program.title.toLowerCase().includes(term);
         const matchesLevel = level === "all" || courseMatchesLevel(program, level);
         const domains = courseDomains(program);
         const matchesDomain = domain === "all" || domains.includes(domain) || String(program.domain || "") === domain;
         return matchesTerm && matchesLevel && matchesDomain;
-      });
+      }).sort((a, b) => (levelOrder[a.audienceLevel] ?? 99) - (levelOrder[b.audienceLevel] ?? 99));
     }
 
     function renderCourseDomainFilter() {
