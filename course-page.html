@@ -2282,7 +2282,7 @@ body {
 }
 
 .course-summary {
-  margin-top: 1.5mm !important;
+  margin-top: 0 !important;
 }
 
 /* Align “כלים ומיומנויות” with the skills boxes */
@@ -2882,103 +2882,169 @@ body {
 }
 
 
-/* Tiny vertical compression to prevent one-line overflow to next page */
-.a4 {
+/* Vertical compression — only when auto-fit detects A4 overflow */
+.a4.fit-normal,
+.a4.fit-compact,
+.a4.fit-tight,
+.a4.fit-ultra {
   padding-top: 4.5mm !important;
 }
 
-.a4-opening {
+.a4.fit-normal .a4-opening,
+.a4.fit-compact .a4-opening,
+.a4.fit-tight .a4-opening,
+.a4.fit-ultra .a4-opening {
   padding-top: 3px !important;
   padding-bottom: 3px !important;
   margin-bottom: 1.3mm !important;
 }
 
-.a4-banner {
+.a4.fit-normal .a4-banner,
+.a4.fit-compact .a4-banner,
+.a4.fit-tight .a4-banner,
+.a4.fit-ultra .a4-banner {
   padding-bottom: 1.4mm !important;
   margin-bottom: 1.9mm !important;
 }
 
-.course-summary,
-.core-plain-card,
-.full-width-card,
-.learning-process-section,
-.course-description {
+.a4.fit-normal .course-summary,
+.a4.fit-normal .core-plain-card,
+.a4.fit-normal .full-width-card,
+.a4.fit-normal .learning-process-section,
+.a4.fit-normal .course-description,
+.a4.fit-compact .course-summary,
+.a4.fit-compact .core-plain-card,
+.a4.fit-compact .full-width-card,
+.a4.fit-compact .learning-process-section,
+.a4.fit-compact .course-description,
+.a4.fit-tight .course-summary,
+.a4.fit-tight .core-plain-card,
+.a4.fit-tight .full-width-card,
+.a4.fit-tight .learning-process-section,
+.a4.fit-tight .course-description,
+.a4.fit-ultra .course-summary,
+.a4.fit-ultra .core-plain-card,
+.a4.fit-ultra .full-width-card,
+.a4.fit-ultra .learning-process-section,
+.a4.fit-ultra .course-description {
   margin-bottom: 6px !important;
 }
 
-.core-plain-card .section-body {
+.a4.fit-normal .core-plain-card .section-body,
+.a4.fit-compact .core-plain-card .section-body,
+.a4.fit-tight .core-plain-card .section-body,
+.a4.fit-ultra .core-plain-card .section-body {
   padding-top: 7px !important;
   padding-bottom: 7px !important;
 }
 
-.learning-flow-strip {
+.a4.fit-normal .learning-flow-strip,
+.a4.fit-compact .learning-flow-strip,
+.a4.fit-tight .learning-flow-strip,
+.a4.fit-ultra .learning-flow-strip {
   margin-bottom: 6px !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
 }
 
-.inline-outcomes-wrap {
+.a4.fit-normal .inline-outcomes-wrap,
+.a4.fit-compact .inline-outcomes-wrap,
+.a4.fit-tight .inline-outcomes-wrap,
+.a4.fit-ultra .inline-outcomes-wrap {
   margin-top: 6px !important;
   padding-top: 6px !important;
   padding-bottom: 6px !important;
 }
 
-.skills-groups {
+.a4.fit-normal .skills-groups,
+.a4.fit-compact .skills-groups,
+.a4.fit-tight .skills-groups,
+.a4.fit-ultra .skills-groups {
   gap: 5px !important;
 }
 
-.skill-group {
+.a4.fit-normal .skill-group,
+.a4.fit-compact .skill-group,
+.a4.fit-tight .skill-group,
+.a4.fit-ultra .skill-group {
   min-height: 58px !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
 }
 
-.domain-before-syllabus {
+.a4.fit-normal .domain-before-syllabus,
+.a4.fit-compact .domain-before-syllabus,
+.a4.fit-tight .domain-before-syllabus,
+.a4.fit-ultra .domain-before-syllabus {
   margin-top: 2px !important;
   margin-bottom: 4px !important;
   padding-top: 3px !important;
   padding-bottom: 3px !important;
 }
 
-.syllabus-header {
+.a4.fit-normal .syllabus-header,
+.a4.fit-compact .syllabus-header,
+.a4.fit-tight .syllabus-header,
+.a4.fit-ultra .syllabus-header {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }
 
-.syllabus-table th {
+.a4.fit-normal .syllabus-table th,
+.a4.fit-compact .syllabus-table th,
+.a4.fit-tight .syllabus-table th,
+.a4.fit-ultra .syllabus-table th {
   padding-top: 3px !important;
   padding-bottom: 3px !important;
 }
 
-.syllabus-table td {
+.a4.fit-normal .syllabus-table td,
+.a4.fit-compact .syllabus-table td,
+.a4.fit-tight .syllabus-table td,
+.a4.fit-ultra .syllabus-table td {
   padding-top: 3px !important;
   padding-bottom: 3px !important;
   line-height: 1.34 !important;
 }
 
-.school-value-after-syllabus {
+.a4.fit-normal .school-value-after-syllabus,
+.a4.fit-compact .school-value-after-syllabus,
+.a4.fit-tight .school-value-after-syllabus,
+.a4.fit-ultra .school-value-after-syllabus {
   margin-top: 36px !important;
   padding-top: 7px !important;
   padding-bottom: 7px !important;
 }
 
-.a4-footer {
+.a4.fit-normal .a4-footer,
+.a4.fit-compact .a4-footer,
+.a4.fit-tight .a4-footer,
+.a4.fit-ultra .a4-footer {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
 }
 
 @media print {
-  .a4 {
+  .a4.fit-normal,
+  .a4.fit-compact,
+  .a4.fit-tight,
+  .a4.fit-ultra {
     padding-top: 4.5mm !important;
   }
 
-  .syllabus-table td {
+  .a4.fit-normal .syllabus-table td,
+  .a4.fit-compact .syllabus-table td,
+  .a4.fit-tight .syllabus-table td,
+  .a4.fit-ultra .syllabus-table td {
     padding-top: 3px !important;
     padding-bottom: 3px !important;
     line-height: 1.34 !important;
   }
 
-  .school-value-after-syllabus {
+  .a4.fit-normal .school-value-after-syllabus,
+  .a4.fit-compact .school-value-after-syllabus,
+  .a4.fit-tight .school-value-after-syllabus,
+  .a4.fit-ultra .school-value-after-syllabus {
     margin-top: 8mm !important;
     padding-top: 7px !important;
     padding-bottom: 7px !important;
@@ -4076,38 +4142,57 @@ textarea,
 
 
 /* ── Targeted A4 auto-fit hierarchy correction ──
-   Keep short, fixed modules visually consistent between courses. Auto-fit now
-   spends compression first on top spacing, section gaps, box padding and only
-   then on long content areas (course description + syllabus). */
-.a4 {
+   Applied only when auto-fit detects overflow (fit-normal and beyond). */
+.a4.fit-normal,
+.a4.fit-compact,
+.a4.fit-tight,
+.a4.fit-ultra {
   padding-top: 3.8mm !important;
 }
 
-.top-meta-row {
+.a4.fit-normal .top-meta-row,
+.a4.fit-compact .top-meta-row,
+.a4.fit-tight .top-meta-row,
+.a4.fit-ultra .top-meta-row {
   min-height: 20px !important;
   margin: 0 10mm 0.35mm !important;
 }
 
-.top-meta-label {
+.a4.fit-normal .top-meta-label,
+.a4.fit-compact .top-meta-label,
+.a4.fit-tight .top-meta-label,
+.a4.fit-ultra .top-meta-label {
   padding: 1px 9px 2px !important;
   gap: 2px 6px !important;
   line-height: 1.05 !important;
 }
 
-.top-meta-label .meta-main {
+.a4.fit-normal .top-meta-label .meta-main,
+.a4.fit-compact .top-meta-label .meta-main,
+.a4.fit-tight .top-meta-label .meta-main,
+.a4.fit-ultra .top-meta-label .meta-main {
   font-size: 10.1px !important;
 }
 
-.top-meta-label .meta-value {
+.a4.fit-normal .top-meta-label .meta-value,
+.a4.fit-compact .top-meta-label .meta-value,
+.a4.fit-tight .top-meta-label .meta-value,
+.a4.fit-ultra .top-meta-label .meta-value {
   font-size: 9.75px !important;
 }
 
-.top-meta-logo {
+.a4.fit-normal .top-meta-logo,
+.a4.fit-compact .top-meta-logo,
+.a4.fit-tight .top-meta-logo,
+.a4.fit-ultra .top-meta-logo {
   width: 58px !important;
   height: 24px !important;
 }
 
-.a4-opening {
+.a4.fit-normal .a4-opening,
+.a4.fit-compact .a4-opening,
+.a4.fit-tight .a4-opening,
+.a4.fit-ultra .a4-opening {
   min-height: 20px !important;
   padding: 2px 10px !important;
   margin-bottom: 3.5mm !important;
@@ -4115,65 +4200,122 @@ textarea,
   line-height: 1.27 !important;
 }
 
-.a4-banner {
+.a4.fit-normal .a4-banner,
+.a4.fit-compact .a4-banner,
+.a4.fit-tight .a4-banner,
+.a4.fit-ultra .a4-banner {
   padding: 0 0 1mm !important;
   margin: 0 10mm 1.4mm !important;
 }
 
-.a4-title {
+.a4.fit-normal .a4-title,
+.a4.fit-compact .a4-title,
+.a4.fit-tight .a4-title,
+.a4.fit-ultra .a4-title {
   font-size: 27px !important;
   line-height: 1 !important;
   margin-bottom: 1px !important;
 }
 
-.a4-subtitle {
+.a4.fit-normal .a4-subtitle,
+.a4.fit-compact .a4-subtitle,
+.a4.fit-tight .a4-subtitle,
+.a4.fit-ultra .a4-subtitle {
   font-size: 12.7px !important;
   line-height: 1.14 !important;
 }
 
-.a4-banner-text::after {
+.a4.fit-normal .a4-banner-text::after,
+.a4.fit-compact .a4-banner-text::after,
+.a4.fit-tight .a4-banner-text::after,
+.a4.fit-ultra .a4-banner-text::after {
   margin-top: 5px !important;
 }
 
-.a4-body {
+.a4.fit-normal .a4-body,
+.a4.fit-compact .a4-body,
+.a4.fit-tight .a4-body,
+.a4.fit-ultra .a4-body {
   padding-top: 0 !important;
   padding-bottom: 6px !important;
 }
 
-.course-summary,
-.core-plain-card,
-.full-width-card,
-.learning-process-section,
-.course-description {
+.a4.fit-normal .course-summary,
+.a4.fit-normal .core-plain-card,
+.a4.fit-normal .full-width-card,
+.a4.fit-normal .learning-process-section,
+.a4.fit-normal .course-description,
+.a4.fit-compact .course-summary,
+.a4.fit-compact .core-plain-card,
+.a4.fit-compact .full-width-card,
+.a4.fit-compact .learning-process-section,
+.a4.fit-compact .course-description,
+.a4.fit-tight .course-summary,
+.a4.fit-tight .core-plain-card,
+.a4.fit-tight .full-width-card,
+.a4.fit-tight .learning-process-section,
+.a4.fit-tight .course-description,
+.a4.fit-ultra .course-summary,
+.a4.fit-ultra .core-plain-card,
+.a4.fit-ultra .full-width-card,
+.a4.fit-ultra .learning-process-section,
+.a4.fit-ultra .course-description {
   margin-bottom: 5px !important;
 }
 
-.section-title,
-.text-only-section .section-title,
-.learning-process-section .section-title {
+.a4.fit-normal .section-title,
+.a4.fit-normal .text-only-section .section-title,
+.a4.fit-normal .learning-process-section .section-title,
+.a4.fit-compact .section-title,
+.a4.fit-compact .text-only-section .section-title,
+.a4.fit-compact .learning-process-section .section-title,
+.a4.fit-tight .section-title,
+.a4.fit-tight .text-only-section .section-title,
+.a4.fit-tight .learning-process-section .section-title,
+.a4.fit-ultra .section-title,
+.a4.fit-ultra .text-only-section .section-title,
+.a4.fit-ultra .learning-process-section .section-title {
   margin-bottom: 3px !important;
 }
 
-.core-plain-card .section-body {
+.a4.fit-normal .core-plain-card .section-body,
+.a4.fit-compact .core-plain-card .section-body,
+.a4.fit-tight .core-plain-card .section-body,
+.a4.fit-ultra .core-plain-card .section-body {
   padding: 6px 9px !important;
 }
 
-.learning-process-section,
-.course-description {
+.a4.fit-normal .learning-process-section,
+.a4.fit-normal .course-description,
+.a4.fit-compact .learning-process-section,
+.a4.fit-compact .course-description,
+.a4.fit-tight .learning-process-section,
+.a4.fit-tight .course-description,
+.a4.fit-ultra .learning-process-section,
+.a4.fit-ultra .course-description {
   padding: 7px 10px !important;
 }
 
-.learning-flow-strip {
+.a4.fit-normal .learning-flow-strip,
+.a4.fit-compact .learning-flow-strip,
+.a4.fit-tight .learning-flow-strip,
+.a4.fit-ultra .learning-flow-strip {
   margin-bottom: 5px !important;
   padding: 4px 5px !important;
 }
 
-.inline-outcomes-wrap {
+.a4.fit-normal .inline-outcomes-wrap,
+.a4.fit-compact .inline-outcomes-wrap,
+.a4.fit-tight .inline-outcomes-wrap,
+.a4.fit-ultra .inline-outcomes-wrap {
   margin-top: 5px !important;
   padding: 5px 7px !important;
 }
 
-.domain-before-syllabus {
+.a4.fit-normal .domain-before-syllabus,
+.a4.fit-compact .domain-before-syllabus,
+.a4.fit-tight .domain-before-syllabus,
+.a4.fit-ultra .domain-before-syllabus {
   margin: 10px 0 !important;
   padding: 2px 10px !important;
 }
@@ -4190,17 +4332,26 @@ textarea,
   margin: 5px 0 !important;
 }
 
-.syllabus-header {
+.a4.fit-normal .syllabus-header,
+.a4.fit-compact .syllabus-header,
+.a4.fit-tight .syllabus-header,
+.a4.fit-ultra .syllabus-header {
   padding-top: 3px !important;
   padding-bottom: 3px !important;
 }
 
-.syllabus-table th {
+.a4.fit-normal .syllabus-table th,
+.a4.fit-compact .syllabus-table th,
+.a4.fit-tight .syllabus-table th,
+.a4.fit-ultra .syllabus-table th {
   padding-top: 2px !important;
   padding-bottom: 2px !important;
 }
 
-.syllabus-table td {
+.a4.fit-normal .syllabus-table td,
+.a4.fit-compact .syllabus-table td,
+.a4.fit-tight .syllabus-table td,
+.a4.fit-ultra .syllabus-table td {
   padding-top: 2px !important;
   padding-bottom: 2px !important;
   line-height: 1.30 !important;
@@ -4224,7 +4375,10 @@ textarea,
 }
 
 /* Fixed, short modules: never let fit-* shrink their font. */
-.school-value-after-syllabus {
+.a4.fit-normal .school-value-after-syllabus,
+.a4.fit-compact .school-value-after-syllabus,
+.a4.fit-tight .school-value-after-syllabus,
+.a4.fit-ultra .school-value-after-syllabus {
   margin-top: 28px !important;
   padding: 6px 10px !important;
 }
@@ -4620,35 +4774,22 @@ textarea,
   }
 }
 
-/* Safe gap: title banner → course summary */
-.a4-banner:has(+ .a4-body > .course-summary) {
-  padding-bottom: 0 !important;
-  margin-bottom: 2mm !important;
+/* Banner must not shrink below its content (prevents subtitle / תקציר overlap) */
+.a4-banner {
+  flex-shrink: 0 !important;
+  min-height: auto !important;
 }
 
-.a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
-  padding-top: 0 !important;
+.a4-opening {
+  flex-shrink: 0 !important;
 }
 
-.a4-body > .course-summary:first-child {
-  margin-top: 1.5mm !important;
-}
-
-.a4-banner:has(+ .a4-body > .course-summary) .a4-banner-text::after {
-  margin-top: 4px !important;
-}
-
+/* Banner → summary gap floor: only when auto-fit compresses (page overflows A4) */
 .a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary),
 .a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary),
 .a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) {
   margin-bottom: 1.5mm !important;
   padding-bottom: 0 !important;
-}
-
-.a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
-.a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
-.a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
-  padding-top: 0 !important;
 }
 
 .a4.fit-compact .a4-body > .course-summary:first-child,
@@ -4658,34 +4799,11 @@ textarea,
 }
 
 @media print {
-  .a4-banner:has(+ .a4-body > .course-summary) {
-    padding-bottom: 0 !important;
-    margin-bottom: 2mm !important;
-  }
-
-  .a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
-    padding-top: 0 !important;
-  }
-
-  .a4-body > .course-summary:first-child {
-    margin-top: 1.5mm !important;
-  }
-
-  .a4-banner:has(+ .a4-body > .course-summary) .a4-banner-text::after {
-    margin-top: 4px !important;
-  }
-
   .a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary),
   .a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary),
   .a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) {
     margin-bottom: 1.5mm !important;
     padding-bottom: 0 !important;
-  }
-
-  .a4.fit-compact .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
-  .a4.fit-tight .a4-banner:has(+ .a4-body > .course-summary) + .a4-body,
-  .a4.fit-ultra .a4-banner:has(+ .a4-body > .course-summary) + .a4-body {
-    padding-top: 0 !important;
   }
 
   .a4.fit-compact .a4-body > .course-summary:first-child,
