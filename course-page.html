@@ -4020,6 +4020,352 @@ textarea,
   border-right-width: 4px !important;
 }
 
+
+/* ── Targeted A4 auto-fit hierarchy correction ──
+   Keep short, fixed modules visually consistent between courses. Auto-fit now
+   spends compression first on top spacing, section gaps, box padding and only
+   then on long content areas (course description + syllabus). */
+.a4 {
+  padding-top: 3.8mm !important;
+}
+
+.top-meta-row {
+  min-height: 20px !important;
+  margin: 0 10mm 0.35mm !important;
+}
+
+.top-meta-label {
+  padding: 1px 9px 2px !important;
+  gap: 2px 6px !important;
+  line-height: 1.05 !important;
+}
+
+.top-meta-label .meta-main {
+  font-size: 10.1px !important;
+}
+
+.top-meta-label .meta-value {
+  font-size: 9.75px !important;
+}
+
+.top-meta-logo {
+  width: 58px !important;
+  height: 24px !important;
+}
+
+.a4-opening {
+  min-height: 20px !important;
+  padding: 2px 10px !important;
+  margin-bottom: 0.9mm !important;
+  font-size: 12.15px !important;
+  line-height: 1.27 !important;
+}
+
+.a4-banner {
+  padding: 0 0 1mm !important;
+  margin: 0 10mm 1.4mm !important;
+}
+
+.a4-title {
+  font-size: 27px !important;
+  line-height: 1 !important;
+  margin-bottom: 1px !important;
+}
+
+.a4-subtitle {
+  font-size: 12.7px !important;
+  line-height: 1.14 !important;
+}
+
+.a4-banner-text::after {
+  margin-top: 5px !important;
+}
+
+.a4-body {
+  padding-top: 0 !important;
+  padding-bottom: 6px !important;
+}
+
+.course-summary,
+.core-plain-card,
+.full-width-card,
+.learning-process-section,
+.course-description {
+  margin-bottom: 5px !important;
+}
+
+.section-title,
+.text-only-section .section-title,
+.learning-process-section .section-title {
+  margin-bottom: 3px !important;
+}
+
+.core-plain-card .section-body {
+  padding: 6px 9px !important;
+}
+
+.learning-process-section,
+.course-description {
+  padding: 7px 10px !important;
+}
+
+.learning-flow-strip {
+  margin-bottom: 5px !important;
+  padding: 4px 5px !important;
+}
+
+.inline-outcomes-wrap {
+  margin-top: 5px !important;
+  padding: 5px 7px !important;
+}
+
+.domain-before-syllabus {
+  margin: 1px 0 3px !important;
+  padding: 2px 10px !important;
+}
+
+.syllabus-header {
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.syllabus-table th {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.syllabus-table td {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  line-height: 1.30 !important;
+}
+
+/* Fixed, short modules: never let fit-* shrink their font. */
+.school-value-after-syllabus {
+  margin-top: 3px !important;
+  padding: 6px 10px !important;
+}
+
+.school-value-after-syllabus .section-body,
+.a4.fit-spacious .school-value-after-syllabus .section-body,
+.a4.fit-normal .school-value-after-syllabus .section-body,
+.a4.fit-compact .school-value-after-syllabus .section-body,
+.a4.fit-tight .school-value-after-syllabus .section-body,
+.a4.fit-ultra .school-value-after-syllabus .section-body {
+  font-size: 10.15px !important;
+  line-height: 1.45 !important;
+  font-weight: 400 !important;
+  color: #5A7080 !important;
+}
+
+.skills-group-grid,
+.a4.fit-spacious .skills-group-grid,
+.a4.fit-normal .skills-group-grid,
+.a4.fit-compact .skills-group-grid,
+.a4.fit-tight .skills-group-grid,
+.a4.fit-ultra .skills-group-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 108px) !important;
+  gap: 5px !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin: 2px auto 0 !important;
+  align-items: stretch !important;
+}
+
+.skill-group-card,
+.a4.fit-spacious .skill-group-card,
+.a4.fit-normal .skill-group-card,
+.a4.fit-compact .skill-group-card,
+.a4.fit-tight .skill-group-card,
+.a4.fit-ultra .skill-group-card {
+  width: 108px !important;
+  min-height: 50px !important;
+  height: auto !important;
+  padding: 4px 6px !important;
+}
+
+.skill-group-title,
+.a4.fit-spacious .skill-group-title,
+.a4.fit-normal .skill-group-title,
+.a4.fit-compact .skill-group-title,
+.a4.fit-tight .skill-group-title,
+.a4.fit-ultra .skill-group-title {
+  font-size: 10.25px !important;
+  line-height: 1.12 !important;
+  margin-bottom: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.skill-group-items,
+.a4.fit-spacious .skill-group-items,
+.a4.fit-normal .skill-group-items,
+.a4.fit-compact .skill-group-items,
+.a4.fit-tight .skill-group-items,
+.a4.fit-ultra .skill-group-items {
+  font-size: 9.75px !important;
+  line-height: 1.18 !important;
+}
+
+.skill-group-item,
+.a4.fit-spacious .skill-group-item,
+.a4.fit-normal .skill-group-item,
+.a4.fit-compact .skill-group-item,
+.a4.fit-tight .skill-group-item,
+.a4.fit-ultra .skill-group-item {
+  font-size: 9.75px !important;
+  line-height: 1.18 !important;
+}
+
+.inline-outcomes-grid,
+.a4.fit-spacious .inline-outcomes-grid,
+.a4.fit-normal .inline-outcomes-grid,
+.a4.fit-compact .inline-outcomes-grid,
+.a4.fit-tight .inline-outcomes-grid,
+.a4.fit-ultra .inline-outcomes-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.inline-outcomes-grid .outcome-item,
+.a4.fit-spacious .inline-outcomes-grid .outcome-item,
+.a4.fit-normal .inline-outcomes-grid .outcome-item,
+.a4.fit-compact .inline-outcomes-grid .outcome-item,
+.a4.fit-tight .inline-outcomes-grid .outcome-item,
+.a4.fit-ultra .inline-outcomes-grid .outcome-item {
+  flex: 0 0 102px !important;
+  width: 102px !important;
+  min-width: 102px !important;
+  max-width: 102px !important;
+  min-height: 24px !important;
+  padding: 3px 5px !important;
+  font-size: 10px !important;
+  line-height: 1.14 !important;
+  font-weight: 900 !important;
+}
+
+/* Neutralize global .section-body fit changes for stable short sections. */
+.a4.fit-spacious .course-summary .section-body,
+.a4.fit-normal .course-summary .section-body,
+.a4.fit-compact .course-summary .section-body,
+.a4.fit-tight .course-summary .section-body,
+.a4.fit-ultra .course-summary .section-body,
+.a4.fit-spacious .core-plain-card .section-body,
+.a4.fit-normal .core-plain-card .section-body,
+.a4.fit-compact .core-plain-card .section-body,
+.a4.fit-tight .core-plain-card .section-body,
+.a4.fit-ultra .core-plain-card .section-body,
+.a4.fit-spacious .full-width-card .section-body,
+.a4.fit-normal .full-width-card .section-body,
+.a4.fit-compact .full-width-card .section-body,
+.a4.fit-tight .full-width-card .section-body,
+.a4.fit-ultra .full-width-card .section-body {
+  font-size: 12.15px !important;
+  line-height: 1.55 !important;
+}
+
+/* Font compression is reserved for long content only. */
+.a4.fit-spacious .course-description .section-body {
+  font-size: 11.35px !important;
+  line-height: 1.48 !important;
+}
+
+.a4.fit-normal .course-description .section-body {
+  font-size: 11.25px !important;
+  line-height: 1.43 !important;
+}
+
+.a4.fit-compact .course-description .section-body {
+  font-size: 11.05px !important;
+  line-height: 1.36 !important;
+}
+
+.a4.fit-tight .course-description .section-body {
+  font-size: 10.85px !important;
+  line-height: 1.30 !important;
+}
+
+.a4.fit-ultra .course-description .section-body {
+  font-size: 10.65px !important;
+  line-height: 1.25 !important;
+}
+
+.a4.fit-normal .syllabus-table {
+  font-size: 11.25px !important;
+}
+
+.a4.fit-compact .syllabus-table {
+  font-size: 11.05px !important;
+}
+
+.a4.fit-tight .syllabus-table {
+  font-size: 10.85px !important;
+}
+
+.a4.fit-ultra .syllabus-table {
+  font-size: 10.65px !important;
+}
+
+.a4.fit-normal .syllabus-table th,
+.a4.fit-normal .syllabus-table td {
+  line-height: 1.27 !important;
+}
+
+.a4.fit-compact .syllabus-table th,
+.a4.fit-compact .syllabus-table td {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  line-height: 1.22 !important;
+}
+
+.a4.fit-tight .syllabus-table th,
+.a4.fit-tight .syllabus-table td,
+.a4.fit-ultra .syllabus-table th,
+.a4.fit-ultra .syllabus-table td {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  line-height: 1.18 !important;
+}
+
+@media print {
+  .a4 {
+    padding-top: 3.8mm !important;
+  }
+  .top-meta-row {
+    min-height: 20px !important;
+    margin-bottom: 0.35mm !important;
+  }
+  .top-meta-logo {
+    width: 58px !important;
+    height: 24px !important;
+  }
+  .a4-opening {
+    min-height: 20px !important;
+    padding: 2px 10px !important;
+    margin-bottom: 0.9mm !important;
+  }
+  .a4-banner {
+    padding-bottom: 1mm !important;
+    margin-bottom: 1.4mm !important;
+  }
+  .skills-group-grid {
+    grid-template-columns: repeat(4, 108px) !important;
+  }
+  .inline-outcomes-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+  .school-value-after-syllabus {
+    margin-top: 3px !important;
+  }
+}
+
 </style>
 </head>
 <body>
