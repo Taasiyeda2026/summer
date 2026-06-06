@@ -78,13 +78,15 @@
     }
 
     .page-logo {
-      position: absolute;
-      top: var(--intro-margin-top);
-      left: var(--intro-margin-inline);
+      position: relative;
       z-index: 3;
+      display: block;
       width: 118px;
       max-height: 68px;
       object-fit: contain;
+      flex-shrink: 0;
+      align-self: flex-end;
+      margin: 0 0 10px;
     }
 
     .content {
@@ -99,15 +101,16 @@
     }
 
     .eyebrow {
-      display: inline-block;
-      padding: 7px 15px;
-      border-radius: 999px;
-      background: rgba(47, 156, 149, 0.11);
-      border: 1px solid rgba(47, 156, 149, 0.24);
+      display: block;
+      margin: 6px 0 24px;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: none;
       color: #247c76;
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 16px;
+      line-height: 1.35;
     }
 
     h1 {
@@ -125,6 +128,16 @@
       line-height: 1.35;
       font-weight: 700;
       color: var(--blue);
+    }
+
+    .title-continued {
+      margin-top: 8px;
+      font-size: 28px;
+      color: var(--ink);
+    }
+
+    .domain-line {
+      margin-top: 10px;
     }
 
     .meta {
@@ -278,8 +291,8 @@
 
       .page-logo {
         width: 105px;
-        top: 24px;
-        left: 24px;
+        align-self: flex-end;
+        margin-bottom: 10px;
       }
 
       h1 {
@@ -316,10 +329,11 @@
     <img class="page-logo" src="logo.png" alt="לוגו תעשיידע" />
 
     <section class="content">
-      <div class="eyebrow">קטלוג תשפ״ז</div>
+      <p class="eyebrow">קטלוג תשפ״ז</p>
 
-      <h1>קטלוג התוכניות החינוכיות<br />של תעשיידע | תשפ״ז</h1>
-      <p class="subtitle">בתחומי המדע והטכנולוגיה</p>
+      <h1>קטלוג התוכניות החינוכיות</h1>
+      <p class="subtitle title-continued">של תעשיידע | תשפ״ז</p>
+      <p class="subtitle domain-line">בתחומי המדע והטכנולוגיה</p>
       <p class="meta">כיתות א׳–י״ב | בפריסה ארצית</p>
 
       <div class="text-block">
