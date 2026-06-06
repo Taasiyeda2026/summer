@@ -3884,6 +3884,91 @@ textarea,
   }
 }
 
+/* ── Index / מקרא page ── */
+.index-page {
+  display: flex;
+  flex-direction: column;
+  padding-top: 14mm;
+  direction: rtl;
+}
+.idx-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 10mm 8mm;
+  border-bottom: 3px solid #1A2F50;
+}
+.idx-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.idx-main-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #1A2F50;
+  line-height: 1.15;
+}
+.idx-sub-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #607080;
+  margin-top: 3px;
+}
+.idx-body {
+  flex: 1;
+  padding: 8mm 10mm 0;
+}
+.idx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Assistant", Arial, sans-serif;
+  font-size: 12.5px;
+  direction: rtl;
+}
+.idx-table thead tr {
+  background: #1A2F50;
+  color: #fff;
+}
+.idx-table th {
+  padding: 7px 10px;
+  font-weight: 800;
+  font-size: 11.5px;
+  text-align: right;
+  white-space: nowrap;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.idx-table td {
+  padding: 7px 10px;
+  color: #1E2D3D;
+  text-align: right;
+  border-bottom: 1px solid #E4EAEF;
+  vertical-align: middle;
+  line-height: 1.35;
+}
+.idx-table tbody tr:nth-child(even) td {
+  background: #F5F8FA;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.idx-table th.idx-gefen,
+.idx-table td.idx-gefen { width: 52px; text-align: center; }
+.idx-table th.idx-level,
+.idx-table td.idx-level { width: 90px; }
+.idx-table th.idx-grades,
+.idx-table td.idx-grades { width: 60px; text-align: center; }
+.idx-table th.idx-sessions,
+.idx-table td.idx-sessions { width: 80px; }
+.idx-table th.idx-title,
+.idx-table td.idx-title { font-weight: 800; }
+@media print {
+  .index-page { padding-top: 14mm; }
+  .idx-table th { font-size: 11px !important; }
+  .idx-table td { font-size: 12px !important; }
+}
+
 /* ── White + light-gray + unique-color accent system ── */
 
 /* 1. Syllabus header + table headers: dark bg → clean light gray */
@@ -4298,13 +4383,53 @@ function isCatalogModeFromUrl() {
  return params.get("catalog") === "1" || params.has("ids");
 }
 
+function buildIndexPageHtml(selectedPrograms) {
+  const levelLabel = { elementary: "יסודי", "elementary-middle": "יסודי–חטיבה", middle: "חטיבה", "middle-high": "חטיבה–תיכון", high: "תיכון" };
+  const rows = selectedPrograms.map(p => `
+    <tr>
+      <td class="idx-gefen">${escapeHtml(String(p.gefen || p.activityNo || "—"))}</td>
+      <td class="idx-level">${escapeHtml(levelLabel[p.audienceLevel] || p.catalogSection || "—")}</td>
+      <td class="idx-grades">${escapeHtml(p.grades || "—")}</td>
+      <td class="idx-sessions">${escapeHtml(p.sessions || "—")}</td>
+      <td class="idx-title">${escapeHtml(p.title || "—")}</td>
+    </tr>`).join("");
+  return `
+  <div class="a4 index-page" style="page-break-after:always;break-after:page;">
+    <div class="idx-header">
+      <img class="idx-logo" src="logo.png" alt="תעשיידע">
+      <div>
+        <div class="idx-main-title">מקרא: תוכניות תעשיידע</div>
+        <div class="idx-sub-title">רשימת התוכניות הנכללות בקטלוג זה</div>
+      </div>
+    </div>
+    <div class="idx-body">
+      <table class="idx-table">
+        <thead>
+          <tr>
+            <th class="idx-gefen">גפן</th>
+            <th class="idx-level">שכבת גיל</th>
+            <th class="idx-grades">כיתות</th>
+            <th class="idx-sessions">מפגשים</th>
+            <th class="idx-title">שם התוכנית</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div class="a4-footer">
+      <span class="a4-footer-brand">תעשיידע · תעשייה למען חינוך מתקדם</span>
+    </div>
+  </div>`;
+}
+
 function renderCourseCatalog(indexes, includeCover = false) {
  const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
  document.body.classList.add("catalog-view");
  document.querySelector(".nav-toggle")?.setAttribute("hidden", "hidden");
  document.getElementById("nav")?.setAttribute("hidden", "hidden");
  const openingHtml = includeCover ? `<iframe class="catalog-opening-frame" src="./opening.html" title="מכתב מקדים לקטלוג הקורסים"></iframe>` : "";
- document.getElementById("a4-container").innerHTML = openingHtml + selectedPrograms.map(buildProgramPageHtml).join("");
+ const indexHtml = buildIndexPageHtml(selectedPrograms);
+ document.getElementById("a4-container").innerHTML = openingHtml + indexHtml + selectedPrograms.map(buildProgramPageHtml).join("");
  scheduleA4Fit();
 }
 
