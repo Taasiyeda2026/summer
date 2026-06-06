@@ -2320,7 +2320,7 @@
     <section class="control-hero">
       <img src="logo.png" alt="לוגו תעשיידע" style="height:54px;width:auto;object-fit:contain;flex:none;" />
       <div>
-        <h1>קטלוג סדנאות וחדרי בריחה</h1>
+        <h1 id="mainCatalogTitle">קטלוג סדנאות וחדרי בריחה</h1>
         <p class="header-subtitle">בחרו את סוג הקטלוג כדי להתקדם לשלב הבא</p>
       </div>
     </section>
@@ -2624,6 +2624,7 @@
       programGateway.classList.add("is-hidden");
       courseInterface.classList.add("is-hidden");
       workshopInterface.classList.remove("is-hidden");
+      document.getElementById("mainCatalogTitle").textContent = "קטלוג סדנאות וחדרי בריחה";
       renderSelection();
     }
 
@@ -2751,6 +2752,7 @@
       programGateway.classList.add("is-hidden");
       workshopInterface.classList.add("is-hidden");
       courseInterface.classList.remove("is-hidden");
+      document.getElementById("mainCatalogTitle").textContent = "קטלוג התוכניות החינוכיות";
       renderCourseSelection();
     }
 
