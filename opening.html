@@ -55,7 +55,7 @@
       box-shadow: 0 22px 60px rgba(31, 47, 61, 0.13);
       position: relative;
       overflow: hidden;
-      padding: 22mm 18mm 16mm;
+      padding: 16mm 18mm 16mm;
     }
 
     .page::before {
@@ -81,7 +81,7 @@
 
     .page-logo {
       position: absolute;
-      top: 18mm;
+      top: 13mm;
       left: 16mm;
       z-index: 3;
       width: 118px;
@@ -144,17 +144,19 @@
       margin: 0;
     }
 
-    .highlight {
-      margin-top: 2px;
-      padding: 14px 18px;
-      border: 2px solid #3da66b;
-      border-right: 7px solid #2f8f5b;
-      background: linear-gradient(90deg, rgba(61, 166, 107, 0.14), rgba(61, 166, 107, 0.045));
-      border-radius: 16px;
-      font-weight: 700;
-      color: #243646;
-      text-align: center;
-    }
+ .highlight {
+  margin-top: 2px;
+  margin-inline: -10mm;
+  padding: 14px 12px;
+  border: 2px solid #3da66b;
+  border-right: 7px solid #2f8f5b;
+  background: linear-gradient(90deg, rgba(61, 166, 107, 0.14), rgba(61, 166, 107, 0.045));
+  border-radius: 16px;
+  font-weight: 700;
+  color: #243646;
+  text-align: center;
+  white-space: nowrap;
+}
 
     .invite-text {
       font-size: 16.2px;
@@ -237,19 +239,23 @@
       }
     }
 
-    @media (max-width: 760px) {
-      body {
-        padding: 18px;
-      }
+  @media (max-width: 760px) {
+  body {
+    padding: 18px;
+  }
 
-      .page {
-        width: min(100%, 210mm);
-        height: auto;
-        min-height: 297mm;
-        padding: 46px 28px 52px;
-        border-radius: 22px;
-      }
+  .page {
+    width: min(100%, 210mm);
+    height: auto;
+    min-height: 297mm;
+    padding: 46px 28px 52px;
+    border-radius: 22px;
+  }
 
+  .highlight {
+    margin-inline: 0;
+    white-space: normal;
+  }
       .page-logo {
         width: 105px;
         top: 24px;
