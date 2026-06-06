@@ -4919,6 +4919,14 @@ body.catalog-courses-print .a4 .a4-footer {
   line-height: 1.32 !important;
 }
 
+/* "השמיים אינם הגבול" only — wider syllabus "נושא" column; desc shrinks accordingly */
+.a4.a4-course-skeleton.syl-topic-wide .syl-topic,
+.a4.a4-course-skeleton.syl-topic-wide .syllabus-table th:nth-child(2),
+.a4.a4-course-skeleton.syl-topic-wide .syllabus-table td:nth-child(2) {
+  width: 170px !important;
+  max-width: 170px !important;
+}
+
 /* Neutralize legacy auto-fit classes on skeleton pages */
 .a4.a4-course-skeleton.fit-spacious,
 .a4.a4-course-skeleton.fit-normal,
@@ -4956,6 +4964,13 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
 
   .a4.a4-course-skeleton > .a4-banner {
     margin-top: 3.5mm !important;
+  }
+
+  .a4.a4-course-skeleton.syl-topic-wide .syl-topic,
+  .a4.a4-course-skeleton.syl-topic-wide .syllabus-table th:nth-child(2),
+  .a4.a4-course-skeleton.syl-topic-wide .syllabus-table td:nth-child(2) {
+    width: 170px !important;
+    max-width: 170px !important;
   }
 
   .a4.a4-course-skeleton .syllabus-wrap {
@@ -5255,13 +5270,18 @@ function contactLineHTML(marketer) {
  return "";
 }
 
+function courseNeedsWideSyllabusTopic(p) {
+ return String(p.title || "").includes("השמיים אינם הגבול");
+}
+
 function buildProgramPageHtml(p, marketer = "none") {
  const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6};--theme-rgb:${hexToRgbString(p.c1)}`;
  const contactLine = contactLineHTML(marketer);
 
  if (p.courseLayout) {
+ const skeletonExtraClass = courseNeedsWideSyllabusTopic(p) ? " syl-topic-wide" : "";
  return `
- <div class="a4 a4-course-skeleton" style="${style}">
+ <div class="a4 a4-course-skeleton${skeletonExtraClass}" style="${style}">
  ${buildTopMetaLabel(p)}
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
  <div class="a4-banner">
