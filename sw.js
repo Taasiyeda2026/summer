@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-06-v185";
+const CACHE_NAME = "summer-catalog-v2026-06-06-v186";
 const ASSETS = [
   "./",
   "./sw.js",
@@ -12,6 +12,7 @@ const ASSETS = [
   "./activities.json",
   "./tashpaz/catalogtashpaz.html",
   "./tashpaz/catalog_programs_tashpaz.json",
+  "./tashpaz/taasiyeda-logo.png",
   "./logo.png",
   "./signature-logo.png",
   "./image/001.png",
