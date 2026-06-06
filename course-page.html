@@ -4848,6 +4848,97 @@ body.catalog-courses-print .a4 .a4-footer {
   }
 }
 
+
+
+/* Final course A4 guardrails: one full A4 per course, no automatic shrink unless overflow exists */
+.a4 {
+  flex: 0 0 auto !important;
+  width: 210mm !important;
+  height: 297mm !important;
+  min-height: 297mm !important;
+  max-height: 297mm !important;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  page-break-after: always !important;
+  break-after: page !important;
+}
+
+.a4:last-child {
+  page-break-after: auto !important;
+  break-after: auto !important;
+}
+
+body.catalog-view #a4-container,
+body.catalog-courses-print #a4-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+body.catalog-view .a4,
+body.catalog-courses-print .a4 {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media screen {
+  body.catalog-view .a4,
+  body.catalog-courses-print .a4 {
+    margin-bottom: 22px !important;
+  }
+}
+
+@media print {
+  body.catalog-courses-print #a4-container {
+    display: block !important;
+  }
+
+  .a4:not(.fit-normal):not(.fit-compact):not(.fit-tight):not(.fit-ultra) {
+    padding-top: 5mm !important;
+  }
+
+  .a4:not(.fit-normal):not(.fit-compact):not(.fit-tight):not(.fit-ultra) .top-meta-row {
+    min-height: 26px !important;
+    margin: 0 10mm 0.6mm !important;
+  }
+
+  .a4:not(.fit-normal):not(.fit-compact):not(.fit-tight):not(.fit-ultra) .a4-opening {
+    min-height: 24px !important;
+    padding: 4px 12px !important;
+    margin-top: 0 !important;
+    margin-bottom: 1.8mm !important;
+    line-height: 1.34 !important;
+  }
+
+  .a4:not(.fit-normal):not(.fit-compact):not(.fit-tight):not(.fit-ultra) .a4-banner {
+    padding: 0 0 2mm !important;
+    margin: 0 10mm 2.1mm !important;
+    min-height: 0 !important;
+  }
+
+  .a4:not(.fit-normal):not(.fit-compact):not(.fit-tight):not(.fit-ultra) .school-value-after-syllabus {
+    margin-top: 10mm !important;
+  }
+
+  .a4 {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .a4:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -5399,36 +5490,27 @@ function fitA4Page() {
  if (!pages.length) return;
  if (warning) warning.classList.remove("show");
 
- const compressModes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
+ // Keep the natural A4 layout first. Compression classes are applied only
+ // after a real overflow is detected, so short/normal courses are not
+ // reduced unnecessarily in either screen preview or print/PDF export.
+ const allFitModes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
+ const compressionModes = ["fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
  const isCatalogPrint = document.body.classList.contains("catalog-courses-print");
  const tolerance = 2;
  let hasOverflow = false;
 
  pages.forEach(a4 => {
-   a4.classList.remove(...compressModes);
+   a4.classList.remove(...allFitModes);
    a4.style.removeProperty("--catalog-gap");
 
-   a4.classList.add("fit-spacious");
    const fits = () => pageFitsA4(a4, tolerance, isCatalogPrint);
 
    if (!fits()) {
-     a4.classList.remove("fit-spacious");
-     a4.classList.add("fit-normal");
-   }
-
-   if (!fits()) {
-     a4.classList.remove("fit-normal");
-     a4.classList.add("fit-compact");
-   }
-
-   if (!fits()) {
-     a4.classList.remove("fit-compact");
-     a4.classList.add("fit-tight");
-   }
-
-   if (!fits()) {
-     a4.classList.remove("fit-tight");
-     a4.classList.add("fit-ultra");
+     for (const mode of compressionModes) {
+       a4.classList.remove(...compressionModes);
+       a4.classList.add(mode);
+       if (fits()) break;
+     }
    }
 
    if (!fits()) hasOverflow = true;
