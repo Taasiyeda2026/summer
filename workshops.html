@@ -261,32 +261,35 @@
     }
 
     .marketer-field {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       padding: 8px 12px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(255,255,255,.92);
       min-height: 40px;
+      cursor: pointer;
     }
 
-    .marketer-label {
+    .marketer-face {
       font-size: 13px;
       font-weight: 900;
       color: #172033;
       white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
     }
 
     .marketer-select {
-      font-size: 13px;
-      font-weight: 700;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
       border: none;
       background: transparent;
-      cursor: pointer;
-      color: #172033;
-      outline: none;
-      max-width: 140px;
     }
 
     .action-btn {
@@ -2362,7 +2365,7 @@
             <button class="action-btn" id="toggleCoursePickerBtn" type="button">▾ בחר קורסים</button>
             <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
               <input id="courseCoverLetterCheckbox" type="checkbox" />
-              <span>להוסיף מכתב מקדים</span>
+              <span>מכתב מקדים</span>
             </label>
             <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג ←</button>
           </div>
@@ -2415,10 +2418,10 @@
             <button class="action-btn" id="togglePickerBtn" type="button">▾ בחר פעילויות</button>
             <label class="cover-letter-toggle" for="coverLetterCheckbox">
               <input id="coverLetterCheckbox" type="checkbox" />
-              <span>להוסיף מכתב מקדים</span>
+              <span>מכתב מקדים</span>
             </label>
             <div class="marketer-field">
-              <span class="marketer-label">שיווק:</span>
+              <span class="marketer-face">שיווק ▾</span>
               <select id="marketerSelect" class="marketer-select">
                 <option value="none">ללא שיווק</option>
                 <option value="yael">יעל אביב</option>
