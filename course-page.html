@@ -4849,175 +4849,278 @@ body.catalog-courses-print .a4 .a4-footer {
 }
 
 
-/* V3 targeted fix: course description as one full-width paragraph, no half/half columns.
-   All other course design rules remain unchanged. */
+
+/* === A4 COURSE FIX V5: layout/print only, no redesign ===
+   - keep each course on one A4 page when possible
+   - do not shrink by default
+   - prevent hidden syllabus rows
+   - course description is one full-width paragraph
+   - reduce vertical gaps slightly across the page
+*/
+.a4 {
+  height: 297mm !important;
+  min-height: 297mm !important;
+  max-height: 297mm !important;
+  overflow: hidden !important;
+}
+
+.a4-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  padding-top: 0.6mm !important;
+  padding-bottom: 4px !important;
+}
+
+.a4-body > *,
+.a4 .top-meta-row,
+.a4 .top-meta-label,
+.a4 .a4-opening,
+.a4 .a4-banner,
+.a4 .a4-contact,
+.a4 .a4-footer {
+  flex-shrink: 0 !important;
+}
+
+.course-summary,
+.core-plain-card,
+.full-width-card,
+.learning-process-section,
+.course-description,
+.domain-before-syllabus,
+.syllabus-wrap {
+  margin-bottom: 4px !important;
+}
+
+.top-meta-row {
+  min-height: 22px !important;
+  margin-bottom: 0.3mm !important;
+}
+
+.top-meta-label {
+  padding-top: 1px !important;
+  padding-bottom: 2px !important;
+}
+
+.a4-opening {
+  margin-bottom: 1.2mm !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.a4-banner {
+  margin-bottom: 1.4mm !important;
+  padding-bottom: 1mm !important;
+}
+
+.a4-banner-text::after {
+  margin-top: 4px !important;
+}
+
+.section-title,
+.text-only-section .section-title,
+.learning-process-section .section-title,
+.full-width-card .section-title {
+  margin-bottom: 3px !important;
+}
+
+.core-plain-card .section-body {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  line-height: 1.48 !important;
+}
+
+.learning-process-section,
+.course-description {
+  padding: 6px 9px !important;
+}
+
+.learning-flow-strip {
+  margin-top: 0 !important;
+  margin-bottom: 4px !important;
+  padding: 4px 5px !important;
+}
+
+/* Approved by user: description as one full-width paragraph, not two columns */
 .course-description .section-body,
 .a4.fit-spacious .course-description .section-body,
 .a4.fit-normal .course-description .section-body,
 .a4.fit-compact .course-description .section-body,
 .a4.fit-tight .course-description .section-body,
-.a4.fit-ultra .course-description .section-body,
-.a4.fit-min .course-description .section-body {
+.a4.fit-ultra .course-description .section-body {
   column-count: 1 !important;
   column-gap: 0 !important;
   column-rule: none !important;
-  white-space: normal !important;
+  font-size: 12.7px !important;
+  line-height: 1.42 !important;
 }
 
 .course-description .section-body p {
-  margin: 0 !important;
-}
-
-.course-description .learning-flow-strip + p {
-  margin-top: 6px !important;
-}
-
-.course-description .inline-outcomes-wrap {
-  margin-top: 7px !important;
-}
-
-/* V3 targeted fix: do not apply any fit class unless a page actually overflows.
-   fit-min is an emergency compact mode, used only if the regular modes still overflow. */
-.a4.fit-min {
-  padding-top: 3.2mm !important;
-}
-.a4.fit-min .top-meta-row {
-  min-height: 18px !important;
-  margin-bottom: 0.2mm !important;
-}
-.a4.fit-min .top-meta-logo {
-  width: 54px !important;
-  height: 22px !important;
-}
-.a4.fit-min .top-meta-label {
-  padding: 2px 10px !important;
-}
-.a4.fit-min .top-meta-label .meta-main,
-.a4.fit-min .top-meta-label .meta-value {
-  font-size: 9.4px !important;
-}
-.a4.fit-min .a4-opening {
-  min-height: 18px !important;
-  padding: 2px 9px !important;
-  margin-bottom: 1mm !important;
-  font-size: 11.1px !important;
-  line-height: 1.22 !important;
-}
-.a4.fit-min .a4-banner {
-  padding-bottom: 0.6mm !important;
-  margin-bottom: 1mm !important;
-}
-.a4.fit-min .a4-title {
-  font-size: 24.5px !important;
-}
-.a4.fit-min .a4-subtitle {
-  font-size: 12.1px !important;
-}
-.a4.fit-min .course-summary,
-.a4.fit-min .core-plain-card,
-.a4.fit-min .full-width-card,
-.a4.fit-min .learning-process-section,
-.a4.fit-min .course-description {
   margin-bottom: 4px !important;
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
 }
-.a4.fit-min .section-title {
-  font-size: 12px !important;
-  margin-bottom: 2px !important;
+
+.inline-outcomes-wrap {
+  margin-top: 5px !important;
+  padding: 5px 7px !important;
 }
-.a4.fit-min .course-summary .section-body,
-.a4.fit-min .core-plain-card .section-body,
-.a4.fit-min .full-width-card .section-body {
-  font-size: 11.25px !important;
-  line-height: 1.32 !important;
-}
-.a4.fit-min .course-description .section-body {
-  font-size: 10.95px !important;
-  line-height: 1.27 !important;
-}
-.a4.fit-min .learning-flow-strip {
-  margin: 0 0 4px !important;
-  padding: 4px !important;
-}
-.a4.fit-min .learning-flow-step {
-  font-size: 8.6px !important;
-  padding: 3px !important;
-}
-.a4.fit-min .inline-outcomes-wrap {
-  margin-top: 4px !important;
-  padding: 4px 6px !important;
-}
-.a4.fit-min .inline-outcomes-label {
-  font-size: 9.6px !important;
+
+.inline-outcomes-label {
   margin-bottom: 3px !important;
 }
-.a4.fit-min .inline-outcomes-grid .outcome-item {
-  min-height: 20px !important;
-  padding: 2px 4px !important;
-  font-size: 8.9px !important;
-  line-height: 1.08 !important;
+
+.inline-outcomes-grid,
+.a4.fit-spacious .inline-outcomes-grid,
+.a4.fit-normal .inline-outcomes-grid,
+.a4.fit-compact .inline-outcomes-grid,
+.a4.fit-tight .inline-outcomes-grid,
+.a4.fit-ultra .inline-outcomes-grid {
+  gap: 3px !important;
 }
-.a4.fit-min .skills-group-grid {
-  gap: 4px !important;
-}
-.a4.fit-min .skill-group-card {
-  min-height: 43px !important;
+
+.inline-outcomes-grid .outcome-item,
+.a4.fit-spacious .inline-outcomes-grid .outcome-item,
+.a4.fit-normal .inline-outcomes-grid .outcome-item,
+.a4.fit-compact .inline-outcomes-grid .outcome-item,
+.a4.fit-tight .inline-outcomes-grid .outcome-item,
+.a4.fit-ultra .inline-outcomes-grid .outcome-item {
+  min-height: 22px !important;
   padding: 3px 5px !important;
+  font-size: 9.75px !important;
+  line-height: 1.12 !important;
 }
-.a4.fit-min .skill-group-title,
-.a4.fit-min .skill-group-items,
-.a4.fit-min .skill-group-item {
-  font-size: 8.85px !important;
-  line-height: 1.08 !important;
+
+.skills-group-grid,
+.a4.fit-spacious .skills-group-grid,
+.a4.fit-normal .skills-group-grid,
+.a4.fit-compact .skills-group-grid,
+.a4.fit-tight .skills-group-grid,
+.a4.fit-ultra .skills-group-grid {
+  gap: 4px !important;
+  margin-top: 1px !important;
 }
-.a4.fit-min .domain-before-syllabus {
-  margin: 2px 0 3px !important;
-  padding: 2px 10px !important;
-  font-size: 10.8px !important;
+
+.skill-group-card,
+.a4.fit-spacious .skill-group-card,
+.a4.fit-normal .skill-group-card,
+.a4.fit-compact .skill-group-card,
+.a4.fit-tight .skill-group-card,
+.a4.fit-ultra .skill-group-card {
+  min-height: 44px !important;
+  padding: 4px 6px !important;
 }
-.a4.fit-min .syllabus-header {
-  padding: 2px 10px !important;
-  font-size: 10.8px !important;
+
+.skill-group-title,
+.a4.fit-spacious .skill-group-title,
+.a4.fit-normal .skill-group-title,
+.a4.fit-compact .skill-group-title,
+.a4.fit-tight .skill-group-title,
+.a4.fit-ultra .skill-group-title {
+  margin-bottom: 2px !important;
+  padding-bottom: 2px !important;
 }
-.a4.fit-min .syllabus-table {
-  font-size: 9.65px !important;
+
+.domain-before-syllabus,
+.a4.fit-spacious .domain-before-syllabus,
+.a4.fit-normal .domain-before-syllabus,
+.a4.fit-compact .domain-before-syllabus,
+.a4.fit-tight .domain-before-syllabus,
+.a4.fit-ultra .domain-before-syllabus {
+  margin: 2px 0 4px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
 }
-.a4.fit-min .syllabus-table th,
-.a4.fit-min .syllabus-table td {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  line-height: 1.08 !important;
+
+/* Critical: do not hide syllabus rows inside the wrapper */
+.syllabus-wrap {
+  overflow: visible !important;
+  margin-top: 0 !important;
+  margin-bottom: 3px !important;
 }
-.a4.fit-min .syllabus-table th {
-  font-size: 9.2px !important;
-}
-.a4.fit-min .school-value-after-syllabus {
-  margin-top: 6px !important;
-  padding: 5px 8px !important;
-}
-.a4.fit-min .school-value-after-syllabus .section-body {
-  font-size: 10px !important;
-  line-height: 1.22 !important;
-}
-.a4.fit-min .a4-contact {
-  font-size: 10.8px !important;
+
+.syllabus-header,
+.a4.fit-spacious .syllabus-header,
+.a4.fit-normal .syllabus-header,
+.a4.fit-compact .syllabus-header,
+.a4.fit-tight .syllabus-header,
+.a4.fit-ultra .syllabus-header {
+  padding-top: 3px !important;
   padding-bottom: 3px !important;
 }
-.a4.fit-min .a4-footer {
+
+.syllabus-table,
+.a4.fit-spacious .syllabus-table,
+.a4.fit-normal .syllabus-table,
+.a4.fit-compact .syllabus-table,
+.a4.fit-tight .syllabus-table,
+.a4.fit-ultra .syllabus-table {
+  font-size: 10.95px !important;
+}
+
+.syllabus-table th,
+.syllabus-table td,
+.a4.fit-spacious .syllabus-table th,
+.a4.fit-spacious .syllabus-table td,
+.a4.fit-normal .syllabus-table th,
+.a4.fit-normal .syllabus-table td,
+.a4.fit-compact .syllabus-table th,
+.a4.fit-compact .syllabus-table td,
+.a4.fit-tight .syllabus-table th,
+.a4.fit-tight .syllabus-table td,
+.a4.fit-ultra .syllabus-table th,
+.a4.fit-ultra .syllabus-table td {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  line-height: 1.22 !important;
+}
+
+.school-value-after-syllabus,
+.a4.fit-spacious .school-value-after-syllabus,
+.a4.fit-normal .school-value-after-syllabus,
+.a4.fit-compact .school-value-after-syllabus,
+.a4.fit-tight .school-value-after-syllabus,
+.a4.fit-ultra .school-value-after-syllabus {
+  margin-top: 4px !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+.school-value-after-syllabus .section-body,
+.a4.fit-spacious .school-value-after-syllabus .section-body,
+.a4.fit-normal .school-value-after-syllabus .section-body,
+.a4.fit-compact .school-value-after-syllabus .section-body,
+.a4.fit-tight .school-value-after-syllabus .section-body,
+.a4.fit-ultra .school-value-after-syllabus .section-body {
+  font-size: 11px !important;
+  line-height: 1.32 !important;
+}
+
+.a4-contact {
+  padding-bottom: 3px !important;
+  font-size: 11.8px !important;
+}
+
+.a4-footer {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }
 
+/* Catalog print: no internal stretching. Stretching caused hidden table rows. */
+body.catalog-courses-print .a4 .a4-body {
+  justify-content: flex-start !important;
+  gap: 0 !important;
+}
+
 @media print {
-  .a4.fit-min {
-    padding-top: 3.2mm !important;
+  body.catalog-courses-print .a4 .a4-body {
+    justify-content: flex-start !important;
+    gap: 0 !important;
   }
-  .a4.fit-min .syllabus-table th,
-  .a4.fit-min .syllabus-table td {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    line-height: 1.08 !important;
+
+  .syllabus-wrap {
+    overflow: visible !important;
   }
 }
 
@@ -5233,9 +5336,9 @@ function syllabusStageClass(n) {
 }
 
 function buildCourseDescription(p) {
- const descriptionText = String(p.goals || "").replace(/\s+/g, " ").trim();
+ const paragraphs = String(p.goals || "").split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
  let html = p.showLearningFlow ? buildLearningFlow() : "";
- if (descriptionText) html += `<p>${escapeHtml(descriptionText)}</p>`;
+ html += paragraphs.map(par => `<p>${escapeHtml(par)}</p>`).join("");
  if (p.showInlineOutcomes) {
    html += `<div class="inline-outcomes-wrap"><div class="inline-outcomes-label">תוצרי סיום</div>${buildOutcome(p, "inline")}</div>`;
  }
@@ -5556,7 +5659,19 @@ function getCatalogContentBottom(a4) {
  return maxBottom;
 }
 
+function hasHiddenOverflow(a4) {
+ const selectors = [".a4-body", ".syllabus-wrap", ".syllabus-table", ".course-description", ".learning-process-section"];
+ return selectors.some(selector => {
+   const el = a4.querySelector(selector);
+   if (!el) return false;
+   const style = window.getComputedStyle(el);
+   if (style.overflowY === "visible" && style.overflowX === "visible") return false;
+   return el.scrollHeight > el.clientHeight + 2 || el.scrollWidth > el.clientWidth + 2;
+ });
+}
+
 function pageFitsA4(a4, tolerance, isCatalogPrint) {
+ if (hasHiddenOverflow(a4)) return false;
  if (isCatalogPrint) {
    const anchor = getCatalogStretchAnchor(a4);
    if (anchor) {
@@ -5572,8 +5687,7 @@ function fitA4Page() {
  if (!pages.length) return;
  if (warning) warning.classList.remove("show");
 
- const compressModes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra", "fit-min"];
- const tryModes = ["fit-normal", "fit-compact", "fit-tight", "fit-ultra", "fit-min"];
+ const compressModes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra"];
  const isCatalogPrint = document.body.classList.contains("catalog-courses-print");
  const tolerance = 2;
  let hasOverflow = false;
@@ -5584,20 +5698,28 @@ function fitA4Page() {
 
    const fits = () => pageFitsA4(a4, tolerance, isCatalogPrint);
 
-   // Natural layout first: no fit class and no compression unless the page really overflows.
    if (!fits()) {
-     for (const mode of tryModes) {
-       a4.classList.remove(...compressModes);
-       a4.classList.add(mode);
-       if (fits()) break;
-     }
+     a4.classList.add("fit-normal");
+   }
+
+   if (!fits()) {
+     a4.classList.remove("fit-normal");
+     a4.classList.add("fit-compact");
+   }
+
+   if (!fits()) {
+     a4.classList.remove("fit-compact");
+     a4.classList.add("fit-tight");
+   }
+
+   if (!fits()) {
+     a4.classList.remove("fit-tight");
+     a4.classList.add("fit-ultra");
    }
 
    if (!fits()) hasOverflow = true;
 
-   if (isCatalogPrint && fits()) {
-     stretchCatalogCoursePage(a4, tolerance);
-   }
+   // No stretch in catalog mode: stretching/dynamic gaps can hide syllabus rows.
  });
 
  if (hasOverflow && warning) {
