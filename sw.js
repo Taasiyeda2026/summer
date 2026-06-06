@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-06-v163";
+const CACHE_NAME = "summer-catalog-v2026-06-06-v164";
 const ASSETS = [
   "./",
   "./sw.js",
@@ -10,6 +10,8 @@ const ASSETS = [
   "./catalog-generator.html",
   "./catalog-data.json",
   "./activities.json",
+  "./tashpaz/catalogtashpaz.html",
+  "./tashpaz/catalog_programs_tashpaz.json",
   "./logo.png",
   "./signature-logo.png",
   "./image/001.png",
@@ -86,7 +88,9 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  if (url.pathname.endsWith("/activities.json") || url.pathname.endsWith("/catalog-data.json")) {
+  if (url.pathname.endsWith("/activities.json") ||
+      url.pathname.endsWith("/catalog-data.json") ||
+      url.pathname.endsWith("/catalog_programs_tashpaz.json")) {
     event.respondWith(
       fetch(event.request, { cache: "no-store" }).then(response => {
         const copy = response.clone();
