@@ -3884,6 +3884,53 @@ textarea,
   }
 }
 
+/* ── White + light-gray + unique-color accent system ── */
+
+/* 1. Syllabus header + table headers: dark bg → clean light gray */
+.syllabus-header {
+  background: #EEF2F6 !important;
+  color: var(--c0) !important;
+  border-bottom: 2px solid var(--c2) !important;
+}
+.syllabus-table th {
+  background: #EEF2F6 !important;
+  color: var(--c0) !important;
+  border-bottom: 2px solid var(--c2) !important;
+}
+
+/* 2. Skill groups: light gray tint + thin color top-border */
+.skill-group,
+.skill-group-card {
+  background: #F5F8FA !important;
+  border-top: 2px solid var(--c2) !important;
+}
+
+/* 3. Section titles: thin right accent bar (RTL start edge) */
+.section-title,
+.text-only-section .section-title,
+.learning-process-section .section-title {
+  border-right: 3px solid var(--c1) !important;
+  padding-right: 7px !important;
+}
+
+/* 4. Outcome items: right-edge accent border */
+.outcome-item {
+  border-right: 3px solid var(--c3) !important;
+}
+
+/* 5. Cards: subtle top color strip */
+.overview-card,
+.outcome-card,
+.learning-process-section {
+  border-top: 2px solid var(--c3) !important;
+}
+
+/* 6. Opening quote: keep neutral gray, strengthen left accent */
+.a4-opening {
+  background: #F4F7FA !important;
+  border-right-width: 4px !important;
+}
+
 </style>
 </head>
 <body>
