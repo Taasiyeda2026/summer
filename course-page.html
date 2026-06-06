@@ -4756,7 +4756,7 @@ body.catalog-courses-print .a4 .a4-footer {
   flex-shrink: 0;
 }
 
-body.catalog-courses-print .a4 .a4-body {
+body.catalog-courses-print .a4:not(.a4-course-skeleton) .a4-body {
   flex: 1 1 auto !important;
   min-height: 0 !important;
   display: flex !important;
@@ -4771,11 +4771,12 @@ body.catalog-courses-print .a4 .a4-footer {
 
 
 
-/* === A4 COURSE FIX V10: uniform fixed skeleton — syllabus rows only vary ===
+/* === A4 COURSE FIX V11: uniform fixed skeleton — syllabus rows only vary ===
    - one identical A4 layout for every course page
    - no global scale/zoom/fit, no per-course spacing, no space-between on body
    - no overflow:hidden clipping; only syllabus table row spacing changes by row count
    - top breathing: less page padding-top; extra space before course title banner
+   - school-value is a fixed grid row; syllabus is the only flexible row (minmax)
 */
 .a4.a4-course-skeleton {
   width: 210mm !important;
@@ -4797,7 +4798,7 @@ body.catalog-courses-print .a4 .a4-footer {
   flex: 1 1 auto !important;
   min-height: 0 !important;
   display: grid !important;
-  grid-template-rows: 81px 58px 273px 93px 22px 1fr 52px !important;
+  grid-template-rows: 81px 58px 273px 93px 22px minmax(0, 1fr) 52px !important;
   grid-template-columns: 1fr !important;
   justify-content: flex-start !important;
   align-content: start !important;
@@ -4821,6 +4822,7 @@ body.catalog-courses-print .a4 .a4-footer {
 
 /* Fixed section heights — identical on every course */
 .a4.a4-course-skeleton .course-summary {
+  grid-row: 1;
   margin: 0 0 8px !important;
   min-height: 81px !important;
   max-height: 81px !important;
@@ -4828,6 +4830,7 @@ body.catalog-courses-print .a4 .a4-footer {
 }
 
 .a4.a4-course-skeleton .core-plain-card {
+  grid-row: 2;
   margin: 0 0 8px !important;
   min-height: 58px !important;
   max-height: 58px !important;
@@ -4836,6 +4839,7 @@ body.catalog-courses-print .a4 .a4-footer {
 
 .a4.a4-course-skeleton .course-description,
 .a4.a4-course-skeleton .learning-process-section {
+  grid-row: 3;
   margin: 0 0 8px !important;
   min-height: 273px !important;
   max-height: 273px !important;
@@ -4843,6 +4847,7 @@ body.catalog-courses-print .a4 .a4-footer {
 }
 
 .a4.a4-course-skeleton .full-width-card {
+  grid-row: 4;
   margin: 0 0 8px !important;
   min-height: 93px !important;
   max-height: 93px !important;
@@ -4850,6 +4855,7 @@ body.catalog-courses-print .a4 .a4-footer {
 }
 
 .a4.a4-course-skeleton .domain-before-syllabus {
+  grid-row: 5;
   margin: 0 0 6px !important;
   min-height: 22px !important;
   max-height: 22px !important;
@@ -4857,7 +4863,11 @@ body.catalog-courses-print .a4 .a4-footer {
 }
 
 .a4.a4-course-skeleton .school-value-after-syllabus {
-  margin: 8px 0 0 !important;
+  grid-row: 7;
+  margin: 0 !important;
+  position: static !important;
+  transform: none !important;
+  z-index: auto !important;
   min-height: 52px !important;
   max-height: 52px !important;
   overflow: visible !important;
@@ -4872,10 +4882,12 @@ body.catalog-courses-print .a4 .a4-footer {
 
 /* Syllabus: fixed grid slot; only row padding/line-height varies */
 .a4.a4-course-skeleton .syllabus-wrap {
+  grid-row: 6;
+  align-self: stretch !important;
   min-height: 0 !important;
-  height: auto !important;
-  max-height: none !important;
-  margin: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  margin: 0 0 8px !important;
   overflow: visible !important;
   display: flex !important;
   flex-direction: column !important;
@@ -4908,15 +4920,20 @@ body.catalog-courses-print .a4 .a4-footer {
 }
 
 .a4.a4-course-skeleton .syl-rows-12 .syllabus-table td {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-  line-height: 1.38 !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  line-height: 1.36 !important;
 }
 
 .a4.a4-course-skeleton .syl-rows-14 .syllabus-table td {
-  padding-top: 3px !important;
-  padding-bottom: 3px !important;
-  line-height: 1.32 !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  line-height: 1.28 !important;
+}
+
+.a4.a4-course-skeleton .syl-rows-14 .syllabus-header {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
 }
 
 /* "השמיים אינם הגבול" only — wider syllabus "נושא" column; desc shrinks accordingly */
@@ -4947,8 +4964,15 @@ body.catalog-courses-print .a4 .a4-footer {
 
 body.catalog-courses-print .a4.a4-course-skeleton .a4-body,
 body.catalog-view .a4.a4-course-skeleton .a4-body {
+  display: grid !important;
+  grid-template-rows: 81px 58px 273px 93px 22px minmax(0, 1fr) 52px !important;
+  grid-template-columns: 1fr !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
   justify-content: flex-start !important;
+  align-content: start !important;
   gap: 0 !important;
+  padding: 0 10mm 0 !important;
 }
 
 @media print {
@@ -4977,9 +5001,15 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
     overflow: visible !important;
   }
 
-  body.catalog-courses-print .a4.a4-course-skeleton .a4-body {
+  body.catalog-courses-print .a4.a4-course-skeleton .a4-body,
+  body.catalog-view .a4.a4-course-skeleton .a4-body {
+    display: grid !important;
+    grid-template-rows: 81px 58px 273px 93px 22px minmax(0, 1fr) 52px !important;
+    grid-template-columns: 1fr !important;
     justify-content: flex-start !important;
+    align-content: start !important;
     gap: 0 !important;
+    padding: 0 10mm 0 !important;
   }
 }
 
