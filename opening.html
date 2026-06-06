@@ -420,6 +420,12 @@
       if (val === "none") { el.textContent = ""; el.classList.remove("visible"); }
       else { el.textContent = CONTACTS[val] || ""; el.classList.add("visible"); }
     }
+    const initialMarketer = new URLSearchParams(window.location.search).get("marketer") || "none";
+    const marketerSelect = document.getElementById("marketerSelect");
+    if (marketerSelect && CONTACTS[initialMarketer]) {
+      marketerSelect.value = initialMarketer;
+      onMarketerChange(initialMarketer);
+    }
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./sw.js").then(r => r.update());
