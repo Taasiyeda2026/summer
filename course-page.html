@@ -3256,7 +3256,7 @@ body.nav-open {
   min-height: 23px !important;
   padding-top: 3px !important;
   padding-bottom: 3px !important;
-  margin-bottom: 1.2mm !important;
+  margin-bottom: 2.5mm !important;
 }
 
 .a4.fit-compact .a4-banner {
@@ -3327,7 +3327,7 @@ body.nav-open {
   min-height: 21px !important;
   padding-top: 2px !important;
   padding-bottom: 2px !important;
-  margin-bottom: 0.9mm !important;
+  margin-bottom: 2mm !important;
   line-height: 1.26 !important;
 }
 
@@ -3426,7 +3426,7 @@ body.nav-open {
   min-height: 19px !important;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
-  margin-bottom: 0.6mm !important;
+  margin-bottom: 1.5mm !important;
   line-height: 1.20 !important;
 }
 
@@ -3911,7 +3911,7 @@ textarea,
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 0 10mm 8mm;
+  padding: 3mm 10mm 8mm;
   border-bottom: 3px solid #1A2F50;
 }
 .idx-logo {
@@ -3920,21 +3920,34 @@ textarea,
   object-fit: contain;
   flex-shrink: 0;
 }
+.idx-title-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  padding-top: 3mm;
+}
 .idx-main-title {
   font-size: 26px;
   font-weight: 900;
   color: #1A2F50;
   line-height: 1.15;
+  text-align: right;
+  width: 100%;
 }
 .idx-sub-title {
   font-size: 13px;
   font-weight: 600;
   color: #607080;
   margin-top: 3px;
+  text-align: right;
+  width: 100%;
 }
 .idx-body {
   flex: 1;
-  padding: 8mm 10mm 0;
+  padding: 11mm 10mm 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -3990,6 +4003,9 @@ textarea,
 .idx-table td.idx-gefen  { width: 20mm; text-align: center; }
 @media print {
   .index-page { padding-top: 14mm; }
+  .idx-header { padding-top: 3mm !important; }
+  .idx-title-block { padding-top: 3mm !important; }
+  .idx-body { padding-top: 11mm !important; }
   .idx-table { width: 150mm !important; }
   .idx-table th { font-size: 11px !important; }
   .idx-table td { font-size: 12px !important; }
@@ -4078,7 +4094,7 @@ textarea,
 .a4-opening {
   min-height: 20px !important;
   padding: 2px 10px !important;
-  margin-bottom: 0.9mm !important;
+  margin-bottom: 3.5mm !important;
   font-size: 12.15px !important;
   line-height: 1.27 !important;
 }
@@ -4142,8 +4158,20 @@ textarea,
 }
 
 .domain-before-syllabus {
-  margin: 1px 0 3px !important;
+  margin: 10px 0 !important;
   padding: 2px 10px !important;
+}
+
+.a4.fit-compact .domain-before-syllabus {
+  margin: 8px 0 !important;
+}
+
+.a4.fit-tight .domain-before-syllabus {
+  margin: 6px 0 !important;
+}
+
+.a4.fit-ultra .domain-before-syllabus {
+  margin: 5px 0 !important;
 }
 
 .syllabus-header {
@@ -4162,10 +4190,39 @@ textarea,
   line-height: 1.30 !important;
 }
 
+/* Subtle zebra rows: white alternating with soft gray + per-course theme tint */
+.syllabus-table tbody tr:nth-child(odd) td,
+.syllabus-table tbody tr.stage-nature:nth-child(odd) td,
+.syllabus-table tbody tr.stage-tech:nth-child(odd) td,
+.syllabus-table tbody tr.stage-product:nth-child(odd) td {
+  background: #FFFFFF !important;
+}
+
+.syllabus-table tbody tr:nth-child(even) td,
+.syllabus-table tbody tr.stage-nature:nth-child(even) td,
+.syllabus-table tbody tr.stage-tech:nth-child(even) td,
+.syllabus-table tbody tr.stage-product:nth-child(even) td {
+  background:
+    linear-gradient(rgba(var(--theme-rgb), 0.065), rgba(var(--theme-rgb), 0.065)),
+    #F1F4F7 !important;
+}
+
 /* Fixed, short modules: never let fit-* shrink their font. */
 .school-value-after-syllabus {
-  margin-top: 3px !important;
+  margin-top: 28px !important;
   padding: 6px 10px !important;
+}
+
+.a4.fit-compact .school-value-after-syllabus {
+  margin-top: 22px !important;
+}
+
+.a4.fit-tight .school-value-after-syllabus {
+  margin-top: 18px !important;
+}
+
+.a4.fit-ultra .school-value-after-syllabus {
+  margin-top: 14px !important;
 }
 
 .school-value-after-syllabus .section-body,
@@ -4370,7 +4427,7 @@ textarea,
   .a4-opening {
     min-height: 20px !important;
     padding: 2px 10px !important;
-    margin-bottom: 0.9mm !important;
+    margin-bottom: 3.5mm !important;
   }
   .a4-banner {
     padding-bottom: 1mm !important;
@@ -4383,8 +4440,47 @@ textarea,
     display: flex !important;
     flex-wrap: wrap !important;
   }
+  .domain-before-syllabus {
+    margin: 3mm 0 !important;
+  }
+  .a4.fit-compact .domain-before-syllabus {
+    margin: 2.5mm 0 !important;
+  }
+  .a4.fit-tight .domain-before-syllabus {
+    margin: 2mm 0 !important;
+  }
+  .a4.fit-ultra .domain-before-syllabus {
+    margin: 1.5mm 0 !important;
+  }
   .school-value-after-syllabus {
-    margin-top: 3px !important;
+    margin-top: 8mm !important;
+  }
+  .a4.fit-compact .school-value-after-syllabus {
+    margin-top: 6mm !important;
+  }
+  .a4.fit-tight .school-value-after-syllabus {
+    margin-top: 5mm !important;
+  }
+  .a4.fit-ultra .school-value-after-syllabus {
+    margin-top: 4mm !important;
+  }
+  .syllabus-table tbody tr:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-nature:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-tech:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-product:nth-child(odd) td {
+    background: #FFFFFF !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .syllabus-table tbody tr:nth-child(even) td,
+  .syllabus-table tbody tr.stage-nature:nth-child(even) td,
+  .syllabus-table tbody tr.stage-tech:nth-child(even) td,
+  .syllabus-table tbody tr.stage-product:nth-child(even) td {
+    background:
+      linear-gradient(rgba(var(--theme-rgb), 0.065), rgba(var(--theme-rgb), 0.065)),
+      #F1F4F7 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 
@@ -4850,7 +4946,7 @@ function buildIndexPageHtml(selectedPrograms) {
   <div class="a4 index-page" style="page-break-after:always;break-after:page;">
     <div class="idx-header">
       <img class="idx-logo" src="logo.png" alt="תעשיידע">
-      <div>
+      <div class="idx-title-block">
         <div class="idx-main-title">מקרא: תוכניות תעשיידע</div>
         <div class="idx-sub-title">רשימת התוכניות הנכללות בקטלוג זה</div>
       </div>

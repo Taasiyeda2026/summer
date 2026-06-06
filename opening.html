@@ -78,13 +78,15 @@
     }
 
     .page-logo {
-      position: absolute;
-      top: var(--intro-margin-top);
-      left: var(--intro-margin-inline);
+      position: relative;
       z-index: 3;
+      display: block;
       width: 118px;
       max-height: 68px;
       object-fit: contain;
+      flex-shrink: 0;
+      align-self: flex-end;
+      margin: 0 0 10px;
     }
 
     .content {
@@ -99,15 +101,16 @@
     }
 
     .eyebrow {
-      display: inline-block;
-      padding: 7px 15px;
-      border-radius: 999px;
-      background: rgba(47, 156, 149, 0.11);
-      border: 1px solid rgba(47, 156, 149, 0.24);
+      display: block;
+      margin: 6px 0 24px;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: none;
       color: #247c76;
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 16px;
+      line-height: 1.35;
     }
 
     h1 {
@@ -127,8 +130,18 @@
       color: var(--blue);
     }
 
+    .title-continued {
+      margin-top: 8px;
+      font-size: 28px;
+      color: var(--ink);
+    }
+
+    .domain-line {
+      margin-top: 10px;
+    }
+
     .meta {
-      margin: 8px 0 22px;
+      margin: 8px 0 34px;
       font-size: 19px;
       line-height: 1.35;
       font-weight: 700;
@@ -150,8 +163,7 @@
     .course-intro-gefen-box {
       width: fit-content;
       max-width: calc(100% - 12mm);
-      margin-inline: auto;
-      margin-top: 2px;
+      margin: 11px auto;
       padding: 8px 18px;
       border: 2px solid #3da66b;
       border-right: 7px solid #2f8f5b;
@@ -195,7 +207,7 @@
 
     .tagline-main {
       margin: 0;
-      font-size: 24px;
+      font-size: 23px;
       line-height: 1.2;
       font-weight: 800;
       color: #4e5f65;
@@ -204,7 +216,7 @@
 
     .tagline-sub {
       margin: 2px 0 0;
-      font-size: 23px;
+      font-size: 22px;
       line-height: 1.2;
       font-weight: 800;
       letter-spacing: -0.12px;
@@ -278,8 +290,8 @@
 
       .page-logo {
         width: 105px;
-        top: 24px;
-        left: 24px;
+        align-self: flex-end;
+        margin-bottom: 10px;
       }
 
       h1 {
@@ -292,7 +304,7 @@
 
       .meta {
         font-size: 19px;
-        margin-bottom: 24px;
+        margin-bottom: 36px;
       }
 
       .text-block {
@@ -301,11 +313,11 @@
       }
 
       .tagline-main {
-        font-size: 21px;
+        font-size: 20px;
       }
 
       .tagline-sub {
-        font-size: 20px;
+        font-size: 19px;
       }
     }
   </style>
@@ -316,22 +328,23 @@
     <img class="page-logo" src="logo.png" alt="לוגו תעשיידע" />
 
     <section class="content">
-      <div class="eyebrow">קטלוג תשפ״ז</div>
+      <p class="eyebrow">קטלוג תשפ״ז</p>
 
-      <h1>קטלוג התוכניות החינוכיות<br />של תעשיידע | תשפ״ז</h1>
-      <p class="subtitle">בתחומי המדע והטכנולוגיה</p>
+      <h1>קטלוג התוכניות החינוכיות</h1>
+      <p class="subtitle title-continued">של תעשיידע | תשפ״ז</p>
+      <p class="subtitle domain-line">בתחומי המדע והטכנולוגיה</p>
       <p class="meta">כיתות א׳–י״ב | בפריסה ארצית</p>
 
       <div class="text-block">
-        <p>תעשיידע היא עמותה חינוכית מיסודה של התאחדות התעשיינים בישראל, הפועלת מאז שנת 1992 לחיבור בין מערכת החינוך לבין התעשייה בתחומי המדע והטכנולוגיה.</p>
+        <p>תעשיידע היא עמותה חינוכית מיסודה של התאחדות התעשיינים בישראל,<br />הפועלת מאז שנת 1992 לחיבור בין מערכת החינוך לבין התעשייה בתחומי המדע והטכנולוגיה.</p>
 
         <p>לאורך השנים פיתחה והפעילה העמותה תוכניות חינוכיות בבתי ספר ברחבי הארץ, מתוך היכרות עמוקה עם צורכי השטח, עם עבודת הצוותים החינוכיים ועם האתגרים של למידה משמעותית בבית הספר.</p>
 
         <p>בקטלוג תשפ״ז ריכזנו מגוון תוכניות חינוכיות המשלבות תוכן פדגוגי איכותי, התנסות חווייתית ותהליכי למידה מעשיים. התוכניות מזמינות את התלמידות והתלמידים לשאול שאלות, לחקור, לבנות, ליצור, לעבוד יחד ולהציג תוצרים ורעיונות באופן ברור ובטוח.</p>
 
-        <p>דרך ההתנסות בתוכניות נחשפים המשתתפים לכלים ולמיומנויות הנדרשים במאה ה-21: חשיבה ביקורתית ויצירתית, פתרון בעיות, עבודת צוות, תקשורת בין-אישית, אוריינות מדעית וטכנולוגית, שימוש מושכל בכלים דיגיטליים, קבלת משוב, שיפור רעיונות והצגה בפני קהל. מיומנויות אלו משתלבות בתוך הפעילות באופן טבעי, מתוך עשייה, חקר והתנסות ולא כלמידה מנותקת מהעולם האמיתי.</p>
+        <p>דרך ההתנסות בתוכניות נחשפים המשתתפים לכלים ולמיומנויות הנדרשים במאה ה-21: חשיבה ביקורתית ויצירתית, פתרון בעיות, עבודת צוות, תקשורת בין-אישית, אוריינות מדעית וטכנולוגית, שימוש מושכל בכלים דיגיטליים, קבלת משוב, שיפור רעיונות והצגה בפני קהל.<br />מיומנויות אלו משתלבות בתוך הפעילות באופן טבעי, מתוך עשייה, חקר והתנסות ולא כלמידה מנותקת מהעולם האמיתי.</p>
 
-        <p>כל תוכנית נבנית מתוך מחשבה על התאמה לגיל, למטרות הלמידה ולמסגרת הבית-ספרית. ההפעלה מתבצעת על ידי מדריכים מקצועיים, בליווי צוותי התוכן והפדגוגיה של תעשיידע ובאופן המאפשר לבית הספר לשלב את הפעילות כחלק ממענה חינוכי רחב, רלוונטי ומעשי.</p>
+        <p>כל תוכנית נבנית מתוך מחשבה על התאמה לגיל, למטרות הלמידה ולמסגרת הבית-ספרית.<br />ההפעלה מתבצעת על ידי מדריכים מקצועיים, בליווי צוותי התוכן והפדגוגיה של תעשיידע ובאופן המאפשר לבית הספר לשלב את הפעילות כחלק ממענה חינוכי רחב, רלוונטי ומעשי.</p>
 
         <p class="course-intro-gefen-box">תוכניות תעשיידע נמצאות במאגר התוכניות והמענים שאושרו במסלול המכרזי בגפ״ן.</p>
 
