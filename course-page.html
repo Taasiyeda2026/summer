@@ -5428,6 +5428,141 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
   }
 }
 
+/* === Catalog design refinements V13 === */
+
+/* לפרטים נוספים — font −1px */
+.a4-contact {
+  font-size: 11.5px !important;
+}
+
+/* סילבוס הקורס — centered in title area */
+.syllabus-header {
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-right: none !important;
+  border-left: none !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+/* ערך לבית הספר — font ×1.15, safe wrapping */
+.school-value-after-syllabus .section-body,
+.a4.fit-spacious .school-value-after-syllabus .section-body,
+.a4.fit-normal .school-value-after-syllabus .section-body,
+.a4.fit-compact .school-value-after-syllabus .section-body,
+.a4.fit-tight .school-value-after-syllabus .section-body,
+.a4.fit-ultra .school-value-after-syllabus .section-body {
+  font-size: 12.94px !important;
+  line-height: 1.42 !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+
+.a4.a4-course-skeleton .school-value-after-syllabus .section-body {
+  font-size: 12.71px !important;
+  line-height: 1.32 !important;
+}
+
+/* Softer syllabus row tints and highlights */
+.syllabus-table tbody tr:nth-child(odd) td,
+.syllabus-table tbody tr.stage-nature:nth-child(odd) td,
+.syllabus-table tbody tr.stage-tech:nth-child(odd) td,
+.syllabus-table tbody tr.stage-product:nth-child(odd) td {
+  background: #FFFFFF !important;
+}
+
+.syllabus-table tbody tr:nth-child(even) td,
+.syllabus-table tbody tr.stage-nature:nth-child(even) td,
+.syllabus-table tbody tr.stage-tech:nth-child(even) td,
+.syllabus-table tbody tr.stage-product:nth-child(even) td {
+  background:
+    linear-gradient(rgba(var(--theme-rgb), 0.032), rgba(var(--theme-rgb), 0.032)),
+    #F3F5F8 !important;
+}
+
+.session-pill {
+  background: rgba(var(--theme-rgb), 0.07) !important;
+}
+
+.term-chip {
+  background: rgba(var(--theme-rgb), 0.055) !important;
+  border-color: rgba(var(--theme-rgb), 0.09) !important;
+}
+
+/* Darker title tones — רוקחים עולם + סודות ויסודות הבינה */
+.a4[style*="--c0:#181fd2"] .a4-title,
+.a4[style*="--c0:#181FD2"] .a4-title {
+  color: #10148F !important;
+}
+
+.a4[style*="--c0:#4915b2"] .a4-title,
+.a4[style*="--c0:#4915B2"] .a4-title {
+  color: #2D0D6E !important;
+}
+
+@media print {
+  .a4-contact {
+    font-size: 11.5px !important;
+  }
+
+  .syllabus-header {
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-right: none !important;
+    border-left: none !important;
+  }
+
+  .school-value-after-syllabus .section-body,
+  .a4.fit-spacious .school-value-after-syllabus .section-body,
+  .a4.fit-normal .school-value-after-syllabus .section-body,
+  .a4.fit-compact .school-value-after-syllabus .section-body,
+  .a4.fit-tight .school-value-after-syllabus .section-body,
+  .a4.fit-ultra .school-value-after-syllabus .section-body {
+    font-size: 12.94px !important;
+    line-height: 1.42 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .a4.a4-course-skeleton .school-value-after-syllabus .section-body {
+    font-size: 12.71px !important;
+    line-height: 1.32 !important;
+  }
+
+  .syllabus-table tbody tr:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-nature:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-tech:nth-child(odd) td,
+  .syllabus-table tbody tr.stage-product:nth-child(odd) td {
+    background: #FFFFFF !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .syllabus-table tbody tr:nth-child(even) td,
+  .syllabus-table tbody tr.stage-nature:nth-child(even) td,
+  .syllabus-table tbody tr.stage-tech:nth-child(even) td,
+  .syllabus-table tbody tr.stage-product:nth-child(even) td {
+    background:
+      linear-gradient(rgba(var(--theme-rgb), 0.032), rgba(var(--theme-rgb), 0.032)),
+      #F3F5F8 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .a4[style*="--c0:#181fd2"] .a4-title,
+  .a4[style*="--c0:#181FD2"] .a4-title {
+    color: #10148F !important;
+  }
+
+  .a4[style*="--c0:#4915b2"] .a4-title,
+  .a4[style*="--c0:#4915B2"] .a4-title {
+    color: #2D0D6E !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6002,7 +6137,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=199").then(registration => registration.update());
     });
   }
 </script>
