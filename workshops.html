@@ -1180,6 +1180,11 @@
       padding: 3mm;
     }
 
+    .ms-image-col picture {
+      display: block;
+      width: 100%;
+    }
+
     .ms-center-img {
       width: 100%;
       height: auto;
@@ -1475,11 +1480,15 @@
       margin-top: 5mm;
     }
 
+    .image-box picture,
     .image-box img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       display: block;
+    }
+
+    .image-box img {
+      object-fit: cover;
     }
 
     .image-placeholder {
@@ -2283,6 +2292,11 @@
         justify-content: center !important;
       }
 
+      .ms-image-col picture {
+        display: block !important;
+        width: 62mm !important;
+      }
+
       .ms-center-img {
         width: 62mm !important;
         height: 62mm !important;
@@ -2321,6 +2335,10 @@
         justify-content: center !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+      }
+
+      .ms-image-col picture {
+        width: 100% !important;
       }
 
       .ms-center-img {
@@ -2961,6 +2979,7 @@
       const manualImage = rawActivity.image ?? rawActivity.imageUrl ?? rawActivity.imagePath ?? "";
       const paddedId = String(rawActivity.id ?? "").padStart(3, "0");
       const image = manualImage || (rawActivity.id ? `image/${paddedId}.png` : "");
+      const imageWebp = toWebpPath(image);
 
       return {
         ...rawActivity,
@@ -2974,6 +2993,7 @@
         goals,
         grades,
         image,
+        imageWebp,
         accent: DOMAIN_COLORS[rawActivity.domain ?? ""] || rawActivity.accent || "#203b7a"
       };
     }
@@ -3016,12 +3036,32 @@ function chunkActivities(items, size) {
     }
 
 
-    function optimizedImageMarkup({ src, alt = "", className = "", imgAttrs = "" }) {
+    function toWebpPath(path) {
+      return String(path || "").replace(/\.png(\?.*)?$/i, ".webp$1");
+    }
+
+    function handleCatalogImageError(img) {
+      const fallbackSrc = img.dataset.fallbackSrc;
+      const fallbackUrl = fallbackSrc ? new URL(fallbackSrc, window.location.href).href : "";
+      if (fallbackSrc && img.src !== fallbackUrl) {
+        img.closest("picture")?.querySelectorAll("source").forEach(source => source.remove());
+        img.src = fallbackSrc;
+        return;
+      }
+      img.closest("picture")?.replaceWith(createImagePlaceholder()) || img.replaceWith(createImagePlaceholder());
+    }
+
+    function responsiveImageMarkup({ src, webpSrc = toWebpPath(src), alt = "", className = "", imgAttrs = "" }) {
       if (!src) return "";
       const safeSrc = escapeHTML(src);
+      const safeWebpSrc = escapeHTML(webpSrc || src);
       const safeAlt = escapeHTML(alt);
       const safeClass = className ? ` class="${escapeHTML(className)}"` : "";
-      return `<img src="${safeSrc}" alt="${safeAlt}"${safeClass} loading="eager" decoding="async" ${imgAttrs} onerror="this.replaceWith(createImagePlaceholder())" />`;
+      return `
+        <picture>
+          <source srcset="${safeWebpSrc}" type="image/webp">
+          <img src="${safeSrc}" data-fallback-src="${safeSrc}" alt="${safeAlt}"${safeClass} loading="eager" decoding="async" ${imgAttrs} onerror="handleCatalogImageError(this)" />
+        </picture>`;
     }
 
     function imageMarkup(activity) {
@@ -3040,7 +3080,7 @@ function chunkActivities(items, size) {
         <div class="media-column">
           ${escapeBadge}
           <div class="image-box">
-            ${optimizedImageMarkup({ src: activity.image, alt: activity.title })}
+            ${responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title })}
           </div>
           ${productHTML}
           ${tagHTML}
@@ -3090,7 +3130,7 @@ function chunkActivities(items, size) {
         <div class="horizontal-body">
           <div class="horizontal-media">
             <div class="image-box">
-              ${optimizedImageMarkup({ src: activity.image, alt: activity.title })}
+              ${responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title })}
             </div>
             <div class="product-box">
               <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
@@ -3139,7 +3179,7 @@ function chunkActivities(items, size) {
           <div class="ms-main-zone">
             <div class="ms-top-row">
               <div class="ms-image-col">
-                ${optimizedImageMarkup({ src: "image/ai.png", alt: "בינה מלאכותית", className: "ms-center-img" })}
+                ${responsiveImageMarkup({ src: "image/ai.png", webpSrc: "image/ai.webp", alt: "בינה מלאכותית", className: "ms-center-img" })}
               </div>
               <div class="ms-info-col">
                 <div class="escape-info-card">
