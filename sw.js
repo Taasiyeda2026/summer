@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-07-v199";
+const CACHE_NAME = "summer-catalog-v2026-06-07-v200";
 const ASSETS = [
   "./",
   "./sw.js",
@@ -56,7 +56,8 @@ const ASSETS = [
   "./image/038.png",
   "./image/039.png",
   "./image/26.png",
-  "./image/ai.png"
+  "./image/ai.png",
+  "./image/course-page-tech-bg.webp"
 ];
 
 self.addEventListener("install", event => {

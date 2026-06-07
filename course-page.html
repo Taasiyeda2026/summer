@@ -5563,6 +5563,31 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
   }
 }
 
+/* Course catalog — tech background on exported course pages only */
+body.catalog-view .a4:not(.index-page),
+body.catalog-courses-print .a4:not(.index-page) {
+  background-color: #FFFFFF !important;
+  background-image: url("./image/course-page-tech-bg.webp") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+@media print {
+  body.catalog-view .a4:not(.index-page),
+  body.catalog-courses-print .a4:not(.index-page) {
+    background-color: #FFFFFF !important;
+    background-image: url("./image/course-page-tech-bg.webp") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6137,7 +6162,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=199").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=200").then(registration => registration.update());
     });
   }
 </script>
