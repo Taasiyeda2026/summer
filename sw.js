@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-07-v207";
+const CACHE_NAME = "summer-catalog-v2026-06-07-v208";
 const CORE_ASSETS = [
   "./",
   "./index.html",
