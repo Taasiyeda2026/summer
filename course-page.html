@@ -5343,6 +5343,91 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
   margin: 0 !important;
 }
 
+
+/* === A4 COURSE FIX V14: balanced vertical distribution ===
+   Keep the A4 shell as a fixed-height flex page, but let the course body
+   distribute any remaining vertical space between all content blocks instead
+   of reserving one large flexible track under the syllabus. */
+.a4.a4-course-skeleton .a4-body,
+body.catalog-courses-print .a4.a4-course-skeleton .a4-body,
+body.catalog-view .a4.a4-course-skeleton .a4-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  padding: 0 10mm 4px !important;
+  overflow: hidden !important;
+}
+
+.a4.a4-course-skeleton .course-summary,
+.a4.a4-course-skeleton .core-plain-card,
+.a4.a4-course-skeleton .course-description,
+.a4.a4-course-skeleton .learning-process-section,
+.a4.a4-course-skeleton .full-width-card,
+.a4.a4-course-skeleton .domain-before-syllabus,
+.a4.a4-course-skeleton .syllabus-wrap,
+.a4.a4-course-skeleton .school-value-after-syllabus {
+  grid-row: auto !important;
+  flex: 0 0 auto !important;
+  align-self: stretch !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+}
+
+.a4.a4-course-skeleton .syllabus-wrap {
+  display: block !important;
+  overflow: visible !important;
+}
+
+.a4.a4-course-skeleton .syllabus-table,
+.a4.a4-course-skeleton .syllabus-table tbody {
+  height: auto !important;
+}
+
+.a4.a4-course-skeleton .school-value-after-syllabus {
+  min-height: 34px !important;
+  max-height: none !important;
+}
+
+@media print {
+  .a4.a4-course-skeleton .a4-body,
+  body.catalog-courses-print .a4.a4-course-skeleton .a4-body,
+  body.catalog-view .a4.a4-course-skeleton .a4-body {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 4px !important;
+    padding: 0 10mm 4px !important;
+    overflow: hidden !important;
+  }
+
+  .a4.a4-course-skeleton .course-summary,
+  .a4.a4-course-skeleton .core-plain-card,
+  .a4.a4-course-skeleton .course-description,
+  .a4.a4-course-skeleton .learning-process-section,
+  .a4.a4-course-skeleton .full-width-card,
+  .a4.a4-course-skeleton .domain-before-syllabus,
+  .a4.a4-course-skeleton .syllabus-wrap,
+  .a4.a4-course-skeleton .school-value-after-syllabus {
+    grid-row: auto !important;
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+  }
+
+  .a4.a4-course-skeleton .syllabus-wrap {
+    display: block !important;
+    overflow: visible !important;
+  }
+}
+
 </style>
 </head>
 <body>
