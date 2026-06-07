@@ -3550,8 +3550,6 @@ function chunkActivities(items, size) {
       const totalWorkshopPages = allGroupPages.reduce((sum, g) => sum + g.pages.length, 0);
       const totalPages = totalWorkshopPages + (includeCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
       const fragment = document.createDocumentFragment();
-
-      const fragment = document.createDocumentFragment();
       let globalPageIndex = 0;
       if (includeCoverLetter) {
         fragment.appendChild(renderCoverLetterPage(coverLetterItems, globalPageIndex, totalPages, coverLetterGradeLabel, contactLine));
