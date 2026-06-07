@@ -713,10 +713,10 @@
       height: 297mm;
       position: relative;
       overflow: hidden;
-      padding: 9mm 9mm 8mm;
+      padding: 9mm 9mm 7mm;
       display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto auto;
-      row-gap: 2.4mm;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      row-gap: 1.6mm;
       background:
         radial-gradient(circle at 12% 7%, rgba(52,195,213,.15), transparent 29%),
         radial-gradient(circle at 92% 10%, rgba(216,47,120,.13), transparent 27%),
@@ -851,7 +851,7 @@
     }
 
     .cover-letter-page {
-      grid-template-rows: auto auto auto minmax(0, 1fr) auto auto;
+      grid-template-rows: auto auto auto minmax(0, 1fr) auto;
       row-gap: 2mm;
     }
 
@@ -1796,51 +1796,71 @@
       height: 52mm;
     }
 
+    .page-footer-zone {
+      align-self: end;
+      width: 100%;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(23,32,51,.10);
+      padding: 1mm 0 0.5mm;
+    }
+
+    .page-footer-zone.has-contact {
+      padding-top: 1.2mm;
+      padding-bottom: 0.6mm;
+    }
+
     .page-contact {
-      position: relative;
-      left: auto;
-      right: auto;
-      bottom: auto;
       text-align: center;
       font-size: 12.5px;
       font-weight: 700;
       color: #1e3a5f;
       direction: rtl;
       letter-spacing: 0.01em;
+      padding: 0.8mm 0;
+      margin: 0;
+      line-height: 1.25;
     }
 
     .page-footer {
       position: relative;
-      left: auto;
-      right: auto;
-      bottom: auto;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
       align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
+      min-height: 3.2mm;
+      padding-top: 0.6mm;
       color: #6b7280;
       font-size: 8.8px;
       font-weight: 800;
-      border-top: 1px solid rgba(23,32,51,.10);
-      padding-top: 1.5mm;
+    }
+
+    .page-footer-zone.has-contact .page-footer {
+      margin-top: 0.4mm;
+      padding-top: 0.8mm;
+      border-top: 1px solid rgba(23,32,51,.06);
+    }
+
+    .page-number {
+      grid-row: 1;
+      grid-column: 1;
+      justify-self: start;
+      z-index: 1;
+      color: #9ca3af;
+      font-size: 8.5px;
+      font-weight: 600;
+      line-height: 1;
     }
 
     .page-footer-org {
-      position: absolute;
-      left: 0;
-      right: 0;
+      grid-row: 1;
+      grid-column: 1;
+      justify-self: center;
       text-align: center;
       font-size: 8px;
       font-weight: 700;
       color: #9ca3af;
       white-space: nowrap;
       pointer-events: none;
-    }
-
-    .page-number {
-      color: #9ca3af;
-      font-size: 8.5px;
-      font-weight: 600;
     }
 
     .section-divider {
@@ -2022,15 +2042,15 @@
         height: 297mm !important;
         overflow: hidden !important;
         margin: 0 !important;
-        padding: 9mm !important;
+        padding: 9mm 9mm 7mm !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         border: none !important;
         break-after: page;
         page-break-after: always;
         display: grid !important;
-        grid-template-rows: auto minmax(0, 1fr) auto auto !important;
-        row-gap: 2.4mm !important;
+        grid-template-rows: auto minmax(0, 1fr) auto !important;
+        row-gap: 1.6mm !important;
       }
 
       .a4-page:last-child {
@@ -2039,7 +2059,7 @@
       }
 
       .cover-letter-page {
-        grid-template-rows: auto auto auto minmax(0, 1fr) auto auto !important;
+        grid-template-rows: auto auto auto minmax(0, 1fr) auto !important;
       }
 
       .cover-catalog-grid {
@@ -2190,28 +2210,49 @@
       margin: .3mm 0;
     }
 
-    .page-contact {
-        position: relative !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
+    .page-footer-zone {
+        align-self: end !important;
+        width: 100% !important;
+        border-top: 1px solid rgba(23,32,51,.10) !important;
+        padding: 1mm 0 0.5mm !important;
         margin-top: 0 !important;
-        padding-top: 0.5mm !important;
+      }
+
+      .page-footer-zone.has-contact {
+        padding-top: 1.2mm !important;
+        padding-bottom: 0.6mm !important;
+      }
+
+      .page-contact {
+        padding: 0.8mm 0 !important;
+        margin: 0 !important;
       }
 
       .page-footer {
-        position: relative !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        min-height: 3.2mm !important;
+        padding-top: 0.6mm !important;
         margin-top: 0 !important;
-        justify-content: flex-end !important;
+        border-top: none !important;
+      }
+
+      .page-footer-zone.has-contact .page-footer {
+        margin-top: 0.4mm !important;
+        padding-top: 0.8mm !important;
+        border-top: 1px solid rgba(23,32,51,.06) !important;
+      }
+
+      .page-number {
+        justify-self: start !important;
+        grid-row: 1 !important;
+        grid-column: 1 !important;
       }
 
       .page-footer-org {
-        position: absolute !important;
-        left: 0 !important;
-        right: 0 !important;
+        justify-self: center !important;
+        grid-row: 1 !important;
+        grid-column: 1 !important;
         text-align: center !important;
         transform: none !important;
       }
@@ -3282,11 +3323,7 @@ function chunkActivities(items, size) {
             <div class="ms-bottom-row"></div>
           </div>
         </div>
-        ${contactLine}
-        <footer class="page-footer">
-          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
-          <span class="page-number">${pageIndex + 1}</span>
-        </footer>`;
+        ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const activitiesGrid = page.querySelector(".ms-bottom-row");
       msActivities.slice(0, 2).forEach(activity => {
@@ -3340,11 +3377,7 @@ function chunkActivities(items, size) {
           </div>
           <div class="escape-cards-row"></div>
         </div>
-        ${contactLine}
-        <footer class="page-footer">
-          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
-          <span class="page-number">${pageIndex + 1}</span>
-        </footer>`;
+        ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const cardsRow = page.querySelector(".escape-cards-row");
       if (escapeActivities.length === 1) cardsRow.classList.add("escape-cards-row--single");
@@ -3402,11 +3435,7 @@ function chunkActivities(items, size) {
           </div>
         </header>
         <div class="cover-catalog-grid"></div>
-        ${contactLine}
-        <footer class="page-footer">
-          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
-          <span class="page-number">${pageIndex + 1}</span>
-        </footer>`;
+        ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const grid = page.querySelector(".cover-catalog-grid");
       items.slice(0, COVER_LETTER_ACTIVITIES).forEach((activity, index) => grid.appendChild(renderCard(activity, index === 0)));
@@ -3431,12 +3460,7 @@ function chunkActivities(items, size) {
           </div>
         </header>
         <div class="page-grid"></div>
-        ${contactLine}
-        <footer class="page-footer">
-
-          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
-          <span class="page-number">${pageIndex + 1}</span>
-        </footer>`;
+        ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const grid = page.querySelector(".page-grid");
       const layoutKey = PAGE_LAYOUT_SEQUENCE[layoutIndex % PAGE_LAYOUT_SEQUENCE.length];
@@ -3499,6 +3523,17 @@ function chunkActivities(items, size) {
         return `<div class="page-contact">לפרטים נוספים: איסראא אבו-ראס &nbsp;–&nbsp; 054-5419396 &nbsp;|&nbsp; <a href="mailto:esraas@think.org.il" style="color:inherit;text-decoration:none;">esraas@think.org.il</a></div>`;
       }
       return "";
+    }
+
+    function footerZoneHTML(pageIndex, contactLine = "") {
+      const hasContact = Boolean(contactLine);
+      return `<div class="page-footer-zone${hasContact ? " has-contact" : ""}">
+        ${contactLine}
+        <footer class="page-footer">
+          <span class="page-number">${pageIndex + 1}</span>
+          <span class="page-footer-org">© כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</span>
+        </footer>
+      </div>`;
     }
 
     function renderCatalog(filteredActivities) {
@@ -3886,7 +3921,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=203").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=204").then(registration => registration.update());
       });
     }
 
