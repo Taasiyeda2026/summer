@@ -1889,6 +1889,20 @@
       display: flex;
     }
 
+    .catalog-mode .a4-page {
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(20,34,66,.1);
+    }
+
+    .catalog-mode .a4-page::before {
+      display: none;
+    }
+
+    .catalog-mode .activity-card,
+    .catalog-mode .escape-cards-row .escape-room-card {
+      box-shadow: none;
+    }
+
     .back-bar {
       display: none;
       position: fixed;
@@ -1950,6 +1964,15 @@
         margin: 0;
       }
 
+      *, *::before, *::after {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+        text-shadow: none !important;
+        transition: none !important;
+        animation: none !important;
+      }
+
       html, body {
         width: 210mm;
         margin: 0 !important;
@@ -1957,6 +1980,31 @@
         background: white !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+
+      .a4-page,
+      .catalog-page {
+        background: #fff !important;
+      }
+
+      .a4-page::before {
+        display: none !important;
+      }
+
+      .product-box {
+        background: #f2f8ff !important;
+      }
+
+      .image-placeholder {
+        background: #eef2f8 !important;
+      }
+
+      .escape-room-card--bio {
+        background: #f0faf5 !important;
+      }
+
+      .escape-room-card--astro {
+        background: #f2f6ff !important;
       }
 
       .screen-controls,
@@ -3035,6 +3083,40 @@ function chunkActivities(items, size) {
         .replace(/'/g, "&#039;");
     }
 
+    function toWebpSrc(src) {
+      if (!src || !/\.png$/i.test(src)) return "";
+      return src.replace(/\.png$/i, ".webp");
+    }
+
+    function activityImageHTML(src, alt, className = "") {
+      const classAttr = className ? ` class="${className}"` : "";
+      const altAttr = escapeHTML(alt);
+      const webpSrc = toWebpSrc(src);
+      if (webpSrc) {
+        return `<picture><source srcset="${escapeHTML(webpSrc)}" type="image/webp"><img src="${escapeHTML(src)}" alt="${altAttr}"${classAttr} decoding="async" loading="eager" onerror="this.closest('picture')?.replaceWith(createImagePlaceholder())"></picture>`;
+      }
+      return `<img src="${escapeHTML(src)}" alt="${altAttr}"${classAttr} decoding="async" loading="eager" onerror="this.replaceWith(createImagePlaceholder())">`;
+    }
+
+    function collectCatalogImageUrls(activities) {
+      const urls = new Set(["image/ai.webp"]);
+      activities.forEach(activity => {
+        if (!activity.image) return;
+        const webpSrc = toWebpSrc(activity.image);
+        urls.add(webpSrc || activity.image);
+      });
+      return [...urls];
+    }
+
+    function preloadImages(urls) {
+      return Promise.all(urls.map(url => new Promise(resolve => {
+        const img = new Image();
+        img.decoding = "async";
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+        img.src = url;
+      })));
+    }
 
     function toWebpPath(path) {
       return String(path || "").replace(/\.png(\?.*)?$/i, ".webp$1");
@@ -3421,7 +3503,6 @@ function chunkActivities(items, size) {
 
     function renderCatalog(filteredActivities) {
       selectedCount.textContent = `${filteredActivities.length} נבחרו`;
-      booklet.innerHTML = "";
 
       if (!filteredActivities.length) {
         const emptySection = document.createElement("section");
@@ -3470,6 +3551,7 @@ function chunkActivities(items, size) {
       const totalPages = totalWorkshopPages + (includeCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
       const fragment = document.createDocumentFragment();
 
+      const fragment = document.createDocumentFragment();
       let globalPageIndex = 0;
       if (includeCoverLetter) {
         fragment.appendChild(renderCoverLetterPage(coverLetterItems, globalPageIndex, totalPages, coverLetterGradeLabel, contactLine));
