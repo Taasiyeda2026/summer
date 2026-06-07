@@ -713,7 +713,7 @@
       height: 297mm;
       position: relative;
       overflow: hidden;
-      padding: 9mm 9mm 2mm;
+      padding: 9mm 9mm 3mm;
       display: flex;
       flex-direction: column;
       background:
@@ -1111,7 +1111,7 @@
 
     .escape-room-page {
       padding-top: 7mm;
-      padding-bottom: 2mm;
+      padding-bottom: 3mm;
     }
 
     .escape-room-page .page-grid {
@@ -2045,7 +2045,7 @@
         height: 297mm !important;
         overflow: hidden !important;
         margin: 0 !important;
-        padding: 9mm 9mm 2mm !important;
+        padding: 9mm 9mm 3mm !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         border: none !important;
@@ -3925,7 +3925,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=209").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=210").then(registration => registration.update());
       });
     }
 
