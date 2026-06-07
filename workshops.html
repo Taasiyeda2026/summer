@@ -2396,6 +2396,40 @@
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
+
+      .catalog-page,
+      .activity-card,
+      .escape-info-card,
+      .ms-activity-panel,
+      .product-box,
+      .goals-box,
+      .cover-letter-block,
+      .cover-catalog-header,
+      .escape-hero {
+        box-shadow: none !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+      }
+
+      .catalog-page::before {
+        display: none !important;
+      }
+
+      .activity-card,
+      .escape-info-card,
+      .ms-activity-panel,
+      .product-box,
+      .goals-box {
+        background-image: none !important;
+      }
+
+      .activity-card { background-color: #ffffff !important; }
+      .escape-info-card,
+      .ms-activity-panel { background-color: #f8fbff !important; }
+      .product-box,
+      .goals-box { background-color: #f6f8fc !important; }
+      .escape-room-card--bio { background-color: #f3fbf6 !important; }
+      .escape-room-card--astro { background-color: #f4f7ff !important; }
     }
 
     @media print {
@@ -2982,6 +3016,14 @@ function chunkActivities(items, size) {
     }
 
 
+    function optimizedImageMarkup({ src, alt = "", className = "", imgAttrs = "" }) {
+      if (!src) return "";
+      const safeSrc = escapeHTML(src);
+      const safeAlt = escapeHTML(alt);
+      const safeClass = className ? ` class="${escapeHTML(className)}"` : "";
+      return `<img src="${safeSrc}" alt="${safeAlt}"${safeClass} loading="eager" decoding="async" ${imgAttrs} onerror="this.replaceWith(createImagePlaceholder())" />`;
+    }
+
     function imageMarkup(activity) {
       const isEscape = activity.type === "חדר בריחה";
       const productHTML = isEscape ? "" : `
@@ -2998,7 +3040,7 @@ function chunkActivities(items, size) {
         <div class="media-column">
           ${escapeBadge}
           <div class="image-box">
-            <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+            ${optimizedImageMarkup({ src: activity.image, alt: activity.title })}
           </div>
           ${productHTML}
           ${tagHTML}
@@ -3048,7 +3090,7 @@ function chunkActivities(items, size) {
         <div class="horizontal-body">
           <div class="horizontal-media">
             <div class="image-box">
-              <img src="${escapeHTML(activity.image)}" alt="${escapeHTML(activity.title)}" onerror="this.replaceWith(createImagePlaceholder())" />
+              ${optimizedImageMarkup({ src: activity.image, alt: activity.title })}
             </div>
             <div class="product-box">
               <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
@@ -3097,7 +3139,7 @@ function chunkActivities(items, size) {
           <div class="ms-main-zone">
             <div class="ms-top-row">
               <div class="ms-image-col">
-                <img src="image/ai.png" alt="בינה מלאכותית" class="ms-center-img" />
+                ${optimizedImageMarkup({ src: "image/ai.png", alt: "בינה מלאכותית", className: "ms-center-img" })}
               </div>
               <div class="ms-info-col">
                 <div class="escape-info-card">
@@ -3342,7 +3384,10 @@ function chunkActivities(items, size) {
       booklet.innerHTML = "";
 
       if (!filteredActivities.length) {
-        booklet.innerHTML = `<section class="empty-booklet"><strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.</section>`;
+        const emptySection = document.createElement("section");
+        emptySection.className = "empty-booklet";
+        emptySection.innerHTML = `<strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.`;
+        booklet.replaceChildren(emptySection);
         return;
       }
 
@@ -3383,28 +3428,31 @@ function chunkActivities(items, size) {
 
       const totalWorkshopPages = allGroupPages.reduce((sum, g) => sum + g.pages.length, 0);
       const totalPages = totalWorkshopPages + (includeCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
+      const fragment = document.createDocumentFragment();
 
       let globalPageIndex = 0;
       if (includeCoverLetter) {
-        booklet.appendChild(renderCoverLetterPage(coverLetterItems, globalPageIndex, totalPages, coverLetterGradeLabel, contactLine));
+        fragment.appendChild(renderCoverLetterPage(coverLetterItems, globalPageIndex, totalPages, coverLetterGradeLabel, contactLine));
         globalPageIndex++;
       }
 
       allGroupPages.forEach(({ label, pages }) => {
         pages.forEach((items, localIndex) => {
-          booklet.appendChild(renderPage(items, globalPageIndex, totalPages, false, label, localIndex, contactLine));
+          fragment.appendChild(renderPage(items, globalPageIndex, totalPages, false, label, localIndex, contactLine));
           globalPageIndex++;
         });
       });
 
       if (hasEscape) {
-        booklet.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages, contactLine));
+        fragment.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages, contactLine));
         globalPageIndex++;
       }
 
       if (hasMiddleSchool) {
-        booklet.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages, contactLine));
+        fragment.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages, contactLine));
       }
+
+      booklet.replaceChildren(fragment);
     }
 
     
@@ -3576,10 +3624,28 @@ function chunkActivities(items, size) {
       renderSelection();
     });
 
-    catalogModeBtn.addEventListener("click", () => {
-      renderCatalog(getSelectedActivities());
-      document.body.classList.remove("is-course-catalog");
-      document.body.classList.add("catalog-mode");
+    async function waitForCatalogImages(timeout = 2500) {
+      const images = [...booklet.querySelectorAll("img")].filter(img => !img.complete);
+      if (!images.length) return;
+      await Promise.race([
+        Promise.allSettled(images.map(img => img.decode ? img.decode().catch(() => undefined) : new Promise(resolve => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        }))),
+        new Promise(resolve => setTimeout(resolve, timeout))
+      ]);
+    }
+
+    catalogModeBtn.addEventListener("click", async () => {
+      catalogModeBtn.disabled = true;
+      try {
+        renderCatalog(getSelectedActivities());
+        document.body.classList.remove("is-course-catalog");
+        document.body.classList.add("catalog-mode");
+        await waitForCatalogImages();
+      } finally {
+        catalogModeBtn.disabled = getSelectedActivities().length === 0;
+      }
     });
 
     document.getElementById("backBtn").addEventListener("click", () => {
@@ -3700,7 +3766,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=202").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=203").then(registration => registration.update());
       });
     }
 

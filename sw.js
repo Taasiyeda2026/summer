@@ -1,7 +1,6 @@
-const CACHE_NAME = "summer-catalog-v2026-06-07-v202";
-const ASSETS = [
+const CACHE_NAME = "summer-catalog-v2026-06-07-v203";
+const CORE_ASSETS = [
   "./",
-  "./sw.js",
   "./index.html",
   "./workshops.html",
   "./course-page.html",
@@ -15,62 +14,45 @@ const ASSETS = [
   "./tashpaz/taasiyeda-logo.png",
   "./logo.png",
   "./signature-logo.png",
-  "./image/001.png",
-  "./image/002.png",
-  "./image/003.png",
-  "./image/004.png",
-  "./image/005.png",
-  "./image/006.png",
-  "./image/007.png",
-  "./image/008.png",
-  "./image/009.png",
-  "./image/009%20(2).png",
-  "./image/010.png",
-  "./image/011.png",
-  "./image/012.png",
-  "./image/013.png",
-  "./image/014.png",
-  "./image/015.png",
-  "./image/016.png",
-  "./image/017.png",
-  "./image/018.png",
-  "./image/019.png",
-  "./image/020.png",
-  "./image/021.png",
-  "./image/022.png",
-  "./image/023.png",
-  "./image/024.png",
-  "./image/025.png",
-  "./image/026.png",
-  "./image/027.png",
-  "./image/028.png",
-  "./image/029.png",
-  "./image/030.png",
-  "./image/031.png",
-  "./image/032.png",
-  "./image/033.png",
-  "./image/034.png",
-  "./image/035.png",
-  "./image/036.png",
-  "./image/037.png",
-  "./image/038.png",
-  "./image/039.png",
-  "./image/26.png",
-  "./image/ai.png",
   "./image/course-page-tech-bg.webp"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(CORE_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
+
+function cacheFresh(request) {
+  return fetch(request, { cache: "no-store" }).then(response => {
+    const copy = response.clone();
+    caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+    return response;
+  }).catch(() => caches.match(request));
+}
+
+function cacheOnDemand(request) {
+  return caches.match(request).then(cached => {
+    if (cached) return cached;
+    return fetch(request).then(response => {
+      if (response && response.ok) {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+      }
+      return response;
+    });
+  });
+}
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
@@ -79,38 +61,23 @@ self.addEventListener("fetch", event => {
 
   if (event.request.mode === "navigate" ||
       url.pathname.endsWith(".html") ||
-      url.pathname === "/") {
-    event.respondWith(
-      fetch(event.request, { cache: "no-store" }).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        return response;
-      }).catch(() => caches.match(event.request))
-    );
+      url.pathname === "/" ||
+      url.pathname.endsWith("/summer/")) {
+    event.respondWith(cacheFresh(event.request));
     return;
   }
 
   if (url.pathname.endsWith("/activities.json") ||
       url.pathname.endsWith("/catalog-data.json") ||
       url.pathname.endsWith("/catalog_programs_tashpaz.json")) {
-    event.respondWith(
-      fetch(event.request, { cache: "no-store" }).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        return response;
-      }).catch(() => caches.match(event.request))
-    );
+    event.respondWith(cacheFresh(event.request));
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        return response;
-      });
-    })
-  );
+  if (/\.(?:png|webp|jpg|jpeg|svg|gif)$/i.test(url.pathname)) {
+    event.respondWith(cacheOnDemand(event.request));
+    return;
+  }
+
+  event.respondWith(cacheOnDemand(event.request));
 });
