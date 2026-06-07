@@ -1180,6 +1180,11 @@
       padding: 3mm;
     }
 
+    .ms-image-col picture {
+      display: block;
+      width: 100%;
+    }
+
     .ms-center-img {
       width: 100%;
       height: auto;
@@ -1479,15 +1484,11 @@
     .image-box img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       display: block;
     }
 
-    .image-box picture img {
-      width: 100%;
-      height: 100%;
+    .image-box img {
       object-fit: cover;
-      display: block;
     }
 
     .image-placeholder {
@@ -2339,6 +2340,11 @@
         justify-content: center !important;
       }
 
+      .ms-image-col picture {
+        display: block !important;
+        width: 62mm !important;
+      }
+
       .ms-center-img {
         width: 62mm !important;
         height: 62mm !important;
@@ -2377,6 +2383,10 @@
         justify-content: center !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+      }
+
+      .ms-image-col picture {
+        width: 100% !important;
       }
 
       .ms-center-img {
@@ -2452,6 +2462,40 @@
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
+
+      .catalog-page,
+      .activity-card,
+      .escape-info-card,
+      .ms-activity-panel,
+      .product-box,
+      .goals-box,
+      .cover-letter-block,
+      .cover-catalog-header,
+      .escape-hero {
+        box-shadow: none !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+      }
+
+      .catalog-page::before {
+        display: none !important;
+      }
+
+      .activity-card,
+      .escape-info-card,
+      .ms-activity-panel,
+      .product-box,
+      .goals-box {
+        background-image: none !important;
+      }
+
+      .activity-card { background-color: #ffffff !important; }
+      .escape-info-card,
+      .ms-activity-panel { background-color: #f8fbff !important; }
+      .product-box,
+      .goals-box { background-color: #f6f8fc !important; }
+      .escape-room-card--bio { background-color: #f3fbf6 !important; }
+      .escape-room-card--astro { background-color: #f4f7ff !important; }
     }
 
     @media print {
@@ -2983,6 +3027,7 @@
       const manualImage = rawActivity.image ?? rawActivity.imageUrl ?? rawActivity.imagePath ?? "";
       const paddedId = String(rawActivity.id ?? "").padStart(3, "0");
       const image = manualImage || (rawActivity.id ? `image/${paddedId}.png` : "");
+      const imageWebp = toWebpPath(image);
 
       return {
         ...rawActivity,
@@ -2996,6 +3041,7 @@
         goals,
         grades,
         image,
+        imageWebp,
         accent: DOMAIN_COLORS[rawActivity.domain ?? ""] || rawActivity.accent || "#203b7a"
       };
     }
@@ -3072,6 +3118,34 @@ function chunkActivities(items, size) {
       })));
     }
 
+    function toWebpPath(path) {
+      return String(path || "").replace(/\.png(\?.*)?$/i, ".webp$1");
+    }
+
+    function handleCatalogImageError(img) {
+      const fallbackSrc = img.dataset.fallbackSrc;
+      const fallbackUrl = fallbackSrc ? new URL(fallbackSrc, window.location.href).href : "";
+      if (fallbackSrc && img.src !== fallbackUrl) {
+        img.closest("picture")?.querySelectorAll("source").forEach(source => source.remove());
+        img.src = fallbackSrc;
+        return;
+      }
+      img.closest("picture")?.replaceWith(createImagePlaceholder()) || img.replaceWith(createImagePlaceholder());
+    }
+
+    function responsiveImageMarkup({ src, webpSrc = toWebpPath(src), alt = "", className = "", imgAttrs = "" }) {
+      if (!src) return "";
+      const safeSrc = escapeHTML(src);
+      const safeWebpSrc = escapeHTML(webpSrc || src);
+      const safeAlt = escapeHTML(alt);
+      const safeClass = className ? ` class="${escapeHTML(className)}"` : "";
+      return `
+        <picture>
+          <source srcset="${safeWebpSrc}" type="image/webp">
+          <img src="${safeSrc}" data-fallback-src="${safeSrc}" alt="${safeAlt}"${safeClass} loading="eager" decoding="async" ${imgAttrs} onerror="handleCatalogImageError(this)" />
+        </picture>`;
+    }
+
     function imageMarkup(activity) {
       const isEscape = activity.type === "חדר בריחה";
       const productHTML = isEscape ? "" : `
@@ -3088,7 +3162,7 @@ function chunkActivities(items, size) {
         <div class="media-column">
           ${escapeBadge}
           <div class="image-box">
-            ${activityImageHTML(activity.image, activity.title)}
+            ${responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title })}
           </div>
           ${productHTML}
           ${tagHTML}
@@ -3138,7 +3212,7 @@ function chunkActivities(items, size) {
         <div class="horizontal-body">
           <div class="horizontal-media">
             <div class="image-box">
-              ${activityImageHTML(activity.image, activity.title)}
+              ${responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title })}
             </div>
             <div class="product-box">
               <p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p>
@@ -3187,7 +3261,7 @@ function chunkActivities(items, size) {
           <div class="ms-main-zone">
             <div class="ms-top-row">
               <div class="ms-image-col">
-                ${activityImageHTML("image/ai.png", "בינה מלאכותית", "ms-center-img")}
+                ${responsiveImageMarkup({ src: "image/ai.png", webpSrc: "image/ai.webp", alt: "בינה מלאכותית", className: "ms-center-img" })}
               </div>
               <div class="ms-info-col">
                 <div class="escape-info-card">
@@ -3431,8 +3505,10 @@ function chunkActivities(items, size) {
       selectedCount.textContent = `${filteredActivities.length} נבחרו`;
 
       if (!filteredActivities.length) {
-        booklet.replaceChildren();
-        booklet.innerHTML = `<section class="empty-booklet"><strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.</section>`;
+        const emptySection = document.createElement("section");
+        emptySection.className = "empty-booklet";
+        emptySection.innerHTML = `<strong>לא נבחרו פעילויות</strong>בחר לפחות פעילות אחת כדי לבנות את קטלוג ה־A4.`;
+        booklet.replaceChildren(emptySection);
         return;
       }
 
@@ -3473,6 +3549,7 @@ function chunkActivities(items, size) {
 
       const totalWorkshopPages = allGroupPages.reduce((sum, g) => sum + g.pages.length, 0);
       const totalPages = totalWorkshopPages + (includeCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
+      const fragment = document.createDocumentFragment();
 
       const fragment = document.createDocumentFragment();
       let globalPageIndex = 0;
@@ -3669,22 +3746,27 @@ function chunkActivities(items, size) {
       renderSelection();
     });
 
+    async function waitForCatalogImages(timeout = 2500) {
+      const images = [...booklet.querySelectorAll("img")].filter(img => !img.complete);
+      if (!images.length) return;
+      await Promise.race([
+        Promise.allSettled(images.map(img => img.decode ? img.decode().catch(() => undefined) : new Promise(resolve => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        }))),
+        new Promise(resolve => setTimeout(resolve, timeout))
+      ]);
+    }
+
     catalogModeBtn.addEventListener("click", async () => {
-      const filteredActivities = getSelectedActivities();
-      if (!filteredActivities.length) return;
-
-      const originalLabel = catalogModeBtn.textContent;
       catalogModeBtn.disabled = true;
-      catalogModeBtn.textContent = "מכין קטלוג...";
-
       try {
-        await preloadImages(collectCatalogImageUrls(filteredActivities));
-        renderCatalog(filteredActivities);
+        renderCatalog(getSelectedActivities());
         document.body.classList.remove("is-course-catalog");
         document.body.classList.add("catalog-mode");
+        await waitForCatalogImages();
       } finally {
-        catalogModeBtn.disabled = false;
-        catalogModeBtn.textContent = originalLabel;
+        catalogModeBtn.disabled = getSelectedActivities().length === 0;
       }
     });
 
