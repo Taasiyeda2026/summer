@@ -36,7 +36,21 @@ body { font-family: Arial, sans-serif; direction: rtl; background: #D8DFE6; colo
   gap: 14px;
 }
 .a4-banner-text { flex: 1; }
-.a4-logo { width: 62px; height: 62px; object-fit: contain; flex-shrink: 0; }
+.a4-logo { width: 92px; height: 92px; object-fit: contain; flex-shrink: 0; display: block; }
+.a4-banner-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.a4-banner-date {
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.78);
+  font-weight: bold;
+  white-space: nowrap;
+  direction: rtl;
+}
 .a4-gefen { font-size: 10px; color: rgba(255,255,255,0.52); letter-spacing: 0.1em; margin-bottom: 3px; }
 .a4-title  { font-size: 29px; font-weight: bold; color: #fff; line-height: 1.1; margin-bottom: 2px; }
 .a4-subtitle { font-size: 14px; color: rgba(255,255,255,0.82); margin-bottom: 10px; }
@@ -177,6 +191,7 @@ function render(i) {
   const p = programs[i];
   const skills = p.develops.split(",").map(s=>`<span class="pill">${s.trim()}</span>`).join("");
   const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6}`;
+  const dateStr = new Date().toLocaleDateString("he-IL", { day: "numeric", month: "long", year: "numeric" });
   document.getElementById("a4-container").innerHTML = `
     <div class="a4" style="${style}">
       <div class="a4-banner">
@@ -186,7 +201,10 @@ function render(i) {
           <p class="a4-subtitle">${p.subtitle}</p>
           <div class="a4-badges"><span class="badge">${p.grades}</span><span class="badge">${p.sessions}</span><span class="badge">${p.duration}</span></div>
         </div>
-        <img class="a4-logo" src="${LOGO}" alt="לוגו תעשיידע">
+        <div class="a4-banner-left">
+          <img class="a4-logo" src="${LOGO}" alt="לוגו תעשיידע">
+          <span class="a4-banner-date">${dateStr}</span>
+        </div>
       </div>
       <div class="a4-body">
         <p class="a4-opening">${p.opening}</p>
