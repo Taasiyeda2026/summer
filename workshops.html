@@ -1665,6 +1665,21 @@
       font-weight: 400;
     }
 
+    .price-tag {
+      display: inline-block;
+      margin-top: 3.5mm;
+      padding: 1.5px 7px;
+      background: #EEF3FB;
+      color: #1A3560;
+      font-size: 9.5px;
+      font-weight: 700;
+      border-radius: 4px;
+      border: 1px solid #C5D3EA;
+      letter-spacing: 0.01em;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
     .activity-card.horizontal-card,
     .activity-card.side-card {
       grid-column: 1 / -1;
@@ -2746,6 +2761,10 @@
                   <option value="israa">איסראא אבו-ראס</option>
                 </select>
               </div>
+              <label class="cover-letter-toggle" for="showPricesCheckbox">
+                <input id="showPricesCheckbox" type="checkbox" />
+                <span>תוויות מחיר</span>
+              </label>
             </div>
             <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
           </div>
@@ -2789,6 +2808,8 @@
     const domainFilters = document.getElementById("domainFilters");
     const catalogModeBtn = document.getElementById("catalogModeBtn");
     const coverLetterCheckbox = document.getElementById("coverLetterCheckbox");
+    const showPricesCheckbox = document.getElementById("showPricesCheckbox");
+    let showPrices = false;
     const ACTIVITIES_PER_PAGE = 5;
     const COVER_LETTER_ACTIVITIES = 3;
     const PAGE_LAYOUT_SEQUENCE = ["bottom", "middle", "top", "middle", "bottom"];
@@ -3269,6 +3290,7 @@ function chunkActivities(items, size) {
               <p class="goals-title">מטרות מרכזיות</p>
               <ul>${goals}</ul>
             </div>
+            ${showPrices && activity.price ? `<div class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</div>` : ""}
           </div>
         </div>`;
         return card;
@@ -3285,7 +3307,8 @@ function chunkActivities(items, size) {
         <div class="goals-box">
           <p class="goals-title">מטרות מרכזיות</p>
           <ul>${goals}</ul>
-        </div>`;
+        </div>
+        ${showPrices && activity.price ? `<div class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</div>` : ""}`;
       return card;
     }
 
@@ -3552,6 +3575,7 @@ function chunkActivities(items, size) {
       }
 
       const includeCoverLetter = coverLetterCheckbox.checked;
+      showPrices = showPricesCheckbox.checked;
       const marketer = document.getElementById("marketerSelect").value;
       const contactLine = contactLineHTML(marketer);
       const gradeGroupsOrder = ["א-ג", "ד-ו"];
