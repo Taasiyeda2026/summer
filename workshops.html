@@ -1665,9 +1665,12 @@
       font-weight: 400;
     }
 
+    .price-tag-row {
+      margin-top: 3.5mm;
+      text-align: right;
+    }
     .price-tag {
       display: inline-block;
-      margin-top: 3.5mm;
       padding: 1.5px 7px;
       background: #EEF3FB;
       color: #1A3560;
@@ -3290,7 +3293,7 @@ function chunkActivities(items, size) {
               <p class="goals-title">מטרות מרכזיות</p>
               <ul>${goals}</ul>
             </div>
-            ${showPrices && activity.price ? `<div class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</div>` : ""}
+            ${showPrices && activity.price ? `<div class="price-tag-row"><span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span></div>` : ""}
           </div>
         </div>`;
         return card;
@@ -3308,7 +3311,7 @@ function chunkActivities(items, size) {
           <p class="goals-title">מטרות מרכזיות</p>
           <ul>${goals}</ul>
         </div>
-        ${showPrices && activity.price ? `<div class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</div>` : ""}`;
+        ${showPrices && activity.price ? `<div class="price-tag-row"><span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span></div>` : ""}`;
       return card;
     }
 
