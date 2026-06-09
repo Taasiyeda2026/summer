@@ -1665,12 +1665,7 @@
       font-weight: 400;
     }
 
-    .price-tag-row {
-      margin-top: 2.5mm;
-      text-align: right;
-    }
     .price-tag {
-      display: inline-block;
       color: #6B7A90;
       font-size: 9px;
       font-weight: 600;
@@ -3218,6 +3213,7 @@ function chunkActivities(items, size) {
       const tagHTML = isEscape ? "" : `
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
+            ${showPrices && activity.price ? `<span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span>` : ""}
           </div>`;
       const escapeBadge = isEscape ? `
           <div class="escape-domain-badge"><span class="tag">${escapeHTML(activity.domain)}</span></div>` : "";
@@ -3270,6 +3266,7 @@ function chunkActivities(items, size) {
           <h2>${escapeHTML(activity.title)}</h2>
           <div class="card-topline">
             <span class="tag">${escapeHTML(activity.domain)}</span>
+            ${showPrices && activity.price ? `<span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span>` : ""}
           </div>
         </div>
         <div class="horizontal-body">
@@ -3287,7 +3284,6 @@ function chunkActivities(items, size) {
               <p class="goals-title">מטרות מרכזיות</p>
               <ul>${goals}</ul>
             </div>
-            ${showPrices && activity.price ? `<div class="price-tag-row"><span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span></div>` : ""}
           </div>
         </div>`;
         return card;
@@ -3305,7 +3301,7 @@ function chunkActivities(items, size) {
           <p class="goals-title">מטרות מרכזיות</p>
           <ul>${goals}</ul>
         </div>
-        ${showPrices && activity.price ? `<div class="price-tag-row"><span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span></div>` : ""}`;
+`;
       return card;
     }
 
