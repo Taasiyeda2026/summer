@@ -1540,7 +1540,7 @@
     .card-topline {
       display: flex;
       flex-wrap: wrap;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       gap: 0.5mm;
     }
@@ -3212,8 +3212,8 @@ function chunkActivities(items, size) {
           </div>`;
       const tagHTML = isEscape ? "" : `
           <div class="card-topline">
-            <span class="tag">${escapeHTML(activity.domain)}</span>
             ${showPrices && activity.price ? `<span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span>` : ""}
+            <span class="tag">${escapeHTML(activity.domain)}</span>
           </div>`;
       const escapeBadge = isEscape ? `
           <div class="escape-domain-badge"><span class="tag">${escapeHTML(activity.domain)}</span></div>` : "";
@@ -3265,8 +3265,8 @@ function chunkActivities(items, size) {
         <div class="horizontal-title">
           <h2>${escapeHTML(activity.title)}</h2>
           <div class="card-topline">
-            <span class="tag">${escapeHTML(activity.domain)}</span>
             ${showPrices && activity.price ? `<span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span>` : ""}
+            <span class="tag">${escapeHTML(activity.domain)}</span>
           </div>
         </div>
         <div class="horizontal-body">
