@@ -1328,12 +1328,12 @@
     }
     .ai-flyer-pg .ai-corner-tl {
       position:absolute;top:0;left:0;width:62mm;height:24mm;
-      background:linear-gradient(120deg,#1d4ed8,#3b82f6 60%,#60a5fa);
+      background:linear-gradient(120deg,#3b82f6,#60a5fa 60%,#93c5fd);
       border-bottom-right-radius:60mm;z-index:2;
     }
     .ai-flyer-pg .ai-corner-tr {
       position:absolute;top:0;right:0;width:78mm;height:34mm;
-      background:linear-gradient(250deg,#1e40af,#3b82f6 55%,#6366f1);
+      background:linear-gradient(250deg,#3b82f6,#60a5fa 55%,#818cf8);
       border-bottom-left-radius:70mm;z-index:2;
     }
     .ai-flyer-pg .ai-corner-bl {
@@ -1373,7 +1373,7 @@
       font-size:15mm;line-height:1.02;font-weight:900;letter-spacing:-.3mm;
       background:none;border:none;margin:0;padding:0;
     }
-    .ai-flyer-pg .ai-header h1 .l1 { color:#1e3a8a;display:block; }
+    .ai-flyer-pg .ai-header h1 .l1 { color:#2563eb;display:block; }
     .ai-flyer-pg .ai-header h1 .l2 {
       display:block;
       background:linear-gradient(90deg,#2563eb 10%,#7c3aed 90%);
@@ -1381,7 +1381,7 @@
     }
     .ai-flyer-pg .ai-meta {
       display:flex;justify-content:center;align-items:center;gap:4mm;
-      margin-top:4mm;font-weight:700;font-size:3.9mm;color:#1e3a8a;flex-wrap:nowrap;
+      margin-top:4mm;font-weight:700;font-size:3.9mm;color:#3b82f6;flex-wrap:nowrap;
     }
     .ai-flyer-pg .ai-meta .item { display:flex;align-items:center;gap:1.8mm;white-space:nowrap; }
     .ai-flyer-pg .ai-meta .sep { color:#94a3b8;font-weight:400; }
@@ -1464,7 +1464,7 @@
     }
     .ai-flyer-pg .ai-skills-title {
       display:flex;align-items:center;justify-content:center;gap:2.5mm;
-      font-weight:900;font-size:5mm;color:#1e3a8a;margin-bottom:2.5mm;
+      font-weight:900;font-size:5mm;color:#3b82f6;margin-bottom:2.5mm;
     }
     .ai-flyer-pg .ai-skills-title::before,.ai-flyer-pg .ai-skills-title::after {
       content:'';width:1.8mm;height:1.8mm;border-radius:50%;background:#2563eb;
@@ -1484,28 +1484,28 @@
     /* page 2 */
     .ai-flyer-pg .ai-p2-content {
       position:relative;z-index:4;
-      padding:5mm 12mm 12mm;flex:1;display:flex;flex-direction:column;
+      padding:3mm 8mm 6mm;flex:1;display:flex;flex-direction:column;
     }
     .ai-flyer-pg .ai-p2-title {
       text-align:center;font-size:7.6mm;font-weight:900;
-      background:linear-gradient(90deg,#1e3a8a 15%,#7c3aed 85%);
+      background:linear-gradient(90deg,#2563eb 15%,#7c3aed 85%);
       -webkit-background-clip:text;background-clip:text;color:transparent;
-      margin:6mm 0 3mm;
+      margin:2mm 0 2mm;
     }
     .ai-flyer-pg .ai-p2-intro {
       background:linear-gradient(90deg,rgba(124,58,237,.09),rgba(37,99,235,.09));
-      border-radius:3.5mm;padding:2.4mm 4.5mm;margin-bottom:3.2mm;
-      font-size:3.15mm;line-height:1.55;text-align:center;font-weight:500;color:#1e293b;
+      border-radius:3.5mm;padding:1.8mm 4mm;margin-bottom:2mm;
+      font-size:3.05mm;line-height:1.48;text-align:center;font-weight:500;color:#1e293b;
     }
     .ai-flyer-pg .ai-p2-intro b { color:#6d28d9;font-weight:800; }
     .ai-flyer-pg .ai-sec {
       background:rgba(255,255,255,.82);border-radius:3.5mm;
-      padding:3mm 4.4mm 3.2mm;margin-bottom:3mm;
+      padding:2mm 4mm 2.2mm;margin-bottom:2mm;
       box-shadow:0 1px 5px rgba(30,58,138,.07);border-right:1.3mm solid;
     }
     .ai-flyer-pg .ai-sec h2 {
       display:flex;align-items:center;gap:2.2mm;
-      font-size:4.05mm;font-weight:800;line-height:1.25;margin:0 0 1.5mm;
+      font-size:4.05mm;font-weight:800;line-height:1.25;margin:0 0 1mm;
       background:none;-webkit-background-clip:unset;background-clip:unset;color:inherit;
     }
     .ai-flyer-pg .ai-n {
@@ -1514,8 +1514,8 @@
       display:flex;align-items:center;justify-content:center;
     }
     .ai-flyer-pg .ai-sec p {
-      font-size:3.08mm;line-height:1.5;color:#1e293b;text-align:right;
-      font-weight:400;margin-bottom:1.2mm;
+      font-size:3.08mm;line-height:1.42;color:#1e293b;text-align:right;
+      font-weight:400;margin-bottom:0.8mm;
     }
     .ai-flyer-pg .ai-sec p:last-of-type { margin-bottom:0; }
     .ai-flyer-pg .ai-sec strong { font-weight:700;color:#0f172a; }
@@ -4508,68 +4508,6 @@ function chunkActivities(items, size) {
       return card;
     }
 
-    function renderMiddleSchoolPage(msActivities, pageIndex, totalPages, contactLine = "") {
-      const page = document.createElement("section");
-      page.className = "a4-page catalog-page escape-room-page ms-page";
-      page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
-
-      page.innerHTML = `
-        <header class="page-header">
-          <img class="page-header-logo" src="logo.png" alt="לוגו" />
-          <div><h1 class="page-title">סדנאות AI – חט"ב</h1></div>
-        </header>
-        <div class="page-grid">
-          <div class="escape-hero ms-hero">
-            <p class="escape-hero-subtitle">עולם הבינה המלאכותית כבר נמצא סביבנו — בלמידה, ביצירת תוכן, בחיפוש מידע, בתקשורת, בעולם העבודה ובחיי היומיום. סדנאות הבינה המלאכותית של תעשיידע נועדו לאפשר לתלמידי חטיבת הביניים לפגוש את העולם הזה בצורה חווייתית, נגישה ומעשית, תוך התנסות בכלים עכשוויים ופיתוח חשיבה ביקורתית, יצירתית ואחראית.</p>
-          </div>
-          <div class="ms-main-zone">
-            <div class="ms-top-row">
-              <div class="ms-image-col">
-                ${responsiveImageMarkup({ src: "image/ai.png", webpSrc: "image/ai.webp", alt: "בינה מלאכותית", className: "ms-center-img" })}
-              </div>
-              <div class="ms-info-col">
-                <div class="escape-info-card">
-                  <p class="escape-info-card-title">למי ומתי?</p>
-                  <p class="escape-info-card-body">הפעילויות מותאמות לתלמידי כיתות ז׳–ט׳ ולמסגרות קיץ, ימי שיא, ימי העשרה או רצף קצר של מפגשים. הן מאפשרות לתלמידים לחוות את הבינה המלאכותית לא כנושא רחוק או מורכב, אלא ככלי עכשווי שמזמין חשיבה, יצירה, אחריות ואתיקה טכנולוגית.</p>
-                </div>
-                <div class="escape-info-card">
-                  <p class="escape-info-card-title">למידה פעילה עם AI</p>
-                  <p class="escape-info-card-body">הסדנאות משלבות למידה פעילה, עבודה בקבוצות, אתגרי חשיבה, יצירת רעיונות ותוצרים קצרים. התלמידים מתנסים בשימוש בכלי AI ככלי עזר לחשיבה, חקר, למידה ויצירה ובמקביל לומדים לעצור, לשאול, לבדוק ולהפעיל שיקול דעת.</p>
-                </div>
-                <div class="escape-info-card">
-                  <span class="escape-info-card-tag">בינה מלאכותית</span>
-                  <p class="escape-info-card-title">יותר מסתם שימוש בכלי</p>
-                  <p class="escape-info-card-body">הדגש בפעילות אינו רק על "איך משתמשים בכלי", אלא על הבנה רחבה יותר: איך שואלים שאלה טובה, איך בודקים מידע, איך מזהים מגבלות, איך משתמשים בטכנולוגיה בצורה הוגנת ואחראית ואיך משלבים בין סקרנות אנושית לבין כלים דיגיטליים מתקדמים.</p>
-                </div>
-              </div>
-            </div>
-            <div class="ms-bottom-row"></div>
-          </div>
-        </div>
-        ${footerZoneHTML(pageIndex, contactLine)}`;
-
-      const activitiesGrid = page.querySelector(".ms-bottom-row");
-      msActivities.slice(0, 2).forEach(activity => {
-        const goals = activity.goals.map(g => `<li>${escapeHTML(g)}</li>`).join("");
-        const panel = document.createElement("div");
-        panel.className = "ms-activity-panel";
-        panel.innerHTML = `
-          <div class="ms-activity-panel-header">
-            <p class="ms-activity-panel-title">${escapeHTML(activity.title)} <span class="ms-activity-panel-title-tag">AI</span></p>
-          </div>
-          <div class="ms-activity-panel-body">
-            <p class="ms-activity-panel-desc">${escapeHTML(activity.text)}</p>
-            <p class="ms-activity-panel-goals-title">מטרות הסדנה</p>
-            <ul class="ms-activity-panel-goals">${goals}</ul>
-            ${activity.summary ? `<p class="ms-activity-panel-summary">${escapeHTML(activity.summary)}</p>` : ""}
-          </div>
-          ${activity.personalProduct ? `<div class="ms-activity-panel-footer"><p class="ms-activity-panel-product">תוצר: <span>${escapeHTML(activity.personalProduct)}</span></p></div>` : ""}
-        `;
-        activitiesGrid.appendChild(panel);
-      });
-      return page;
-    }
-
     function renderApprovedAiFlyerPages(startPageIndex, totalPages, contactLine = "") {
       const frag = document.createDocumentFragment();
 
@@ -5771,7 +5709,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=307").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=308").then(registration => registration.update());
       });
     }
 
