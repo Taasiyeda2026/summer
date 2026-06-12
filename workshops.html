@@ -4963,9 +4963,13 @@ function chunkActivities(items, size) {
         .replace(/^-+|-+$/g, "") || "activity";
     }
 
+    const PRESETS = {
+      summer: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37"
+    };
+
     function isClientCatalogRequest() {
       const params = new URLSearchParams(window.location.search);
-      return params.has("client");
+      return params.has("client") || params.has("set");
     }
 
     function expandClientItemToken(token) {
@@ -4986,12 +4990,55 @@ function chunkActivities(items, size) {
 
     function selectedClientItemIds() {
       const params = new URLSearchParams(window.location.search);
-      const rawItems = params.get("w") || params.get("items") || "";
-      return rawItems
+
+      // 1. w / items — highest priority, no overrides applied
+      const wParam = params.get("w") || params.get("items") || "";
+      if (wParam) {
+        return wParam
+          .split(",")
+          .flatMap(expandClientItemToken)
+          .map(item => item.trim())
+          .filter(Boolean);
+      }
+
+      // 2. set= preset
+      const setName = (params.get("set") || "").toLowerCase().trim();
+      if (!setName || !PRESETS[setName]) return [];
+
+      let ids = PRESETS[setName]
         .split(",")
         .flatMap(expandClientItemToken)
-        .map(item => item.trim())
+        .map(s => s.trim())
         .filter(Boolean);
+
+      // 3. remove=ID[,ID…]
+      const removeParam = params.get("remove") || "";
+      if (removeParam) {
+        const toRemove = new Set(removeParam.split(",").map(s => s.trim()).filter(Boolean));
+        ids = ids.filter(id => !toRemove.has(id));
+      }
+
+      // 4. replace=OLD:NEW[,OLD:NEW…]  — preserves original position
+      const replaceParam = params.get("replace") || "";
+      if (replaceParam) {
+        const pairs = replaceParam.split(",")
+          .map(s => s.trim())
+          .filter(s => s.includes(":"))
+          .map(s => s.split(":").map(p => p.trim()));
+        for (const [oldId, newId] of pairs) {
+          const idx = ids.indexOf(oldId);
+          if (idx !== -1) ids[idx] = newId;
+        }
+      }
+
+      // 5. add=ID[,ID…] — appended at end
+      const addParam = params.get("add") || "";
+      if (addParam) {
+        const toAdd = addParam.split(",").map(s => s.trim()).filter(Boolean);
+        ids = [...ids, ...toAdd];
+      }
+
+      return ids;
     }
 
     function getClientCatalogActivities() {
@@ -5709,7 +5756,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=308").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=309").then(registration => registration.update());
       });
     }
 
