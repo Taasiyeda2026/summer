@@ -3112,7 +3112,7 @@
 
     .workshop-modal-inner {
       display: grid;
-      grid-template-columns: minmax(200px, .86fr) minmax(0, 1.14fr);
+      grid-template-columns: 1fr 1fr;
       gap: 0;
       max-height: 80vh;
       overflow: hidden;
@@ -3131,10 +3131,9 @@
     }
 
     .workshop-modal-media img {
-      width: auto;
+      width: min(100%, calc(80vh - 32px));
       height: auto;
-      max-width: 100%;
-      max-height: calc(80vh - 32px);
+      aspect-ratio: 1 / 1;
       object-fit: contain;
       object-position: center center;
       border-radius: 14px;
@@ -3196,15 +3195,25 @@
       color: #344054;
       font-size: 12px;
       font-weight: 800;
-      line-height: 1.3;
+      line-height: 1.4;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     .workshop-modal-meta-item strong {
-      display: block;
+      display: inline;
       color: var(--pink);
       font-size: 10px;
       font-weight: 950;
-      margin-bottom: 1px;
+      flex-shrink: 0;
+    }
+
+    .workshop-modal-meta-item strong::after {
+      content: ":";
+      margin-inline-start: 1px;
     }
 
     .workshop-modal-section {
