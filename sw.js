@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-12-v282";
+const CACHE_NAME = "summer-catalog-v2026-06-12-v284";
 
 const CORE_ASSETS = [
   "./",
@@ -8,6 +8,7 @@ const CORE_ASSETS = [
   "./opening.html",
   "./tour.html",
   "./catalog-generator.html",
+  "./catalog/index.html",
   "./catalog-data.json",
   "./activities.json",
   "./tashpaz/catalogtashpaz.html",

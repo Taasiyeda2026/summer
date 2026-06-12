@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>קטלוג סדנאות דיגיטלי | תעשיידע</title>
+  <meta name="description" content="קטלוג הסדנאות הדיגיטלי של תעשיידע ללקוחות" />
+  <style>
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      background: #f7fbff;
+    }
+
+    .catalog-frame {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      border: 0;
+      background: #f7fbff;
+    }
+
+    .catalog-fallback {
+      position: fixed;
+      inset: auto 16px 16px;
+      z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.92);
+      color: #172033;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(20,34,66,.12);
+    }
+
+    .catalog-fallback a {
+      color: #203b7a;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <iframe class="catalog-frame" id="catalogFrame" title="קטלוג סדנאות דיגיטלי ללקוחות"></iframe>
+  <noscript>
+    <p class="catalog-fallback">
+      להפעלת הקטלוג הדיגיטלי יש לאפשר JavaScript, או לפתוח ישירות את
+      <a href="../workshops.html?catalog=workshops&amp;client">קטלוג הסדנאות במצב לקוח</a>.
+    </p>
+  </noscript>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    params.set("catalog", "workshops");
+    params.set("client", "");
+    document.getElementById("catalogFrame").src = `../workshops.html?${params.toString()}`;
+  </script>
+</body>
+</html>

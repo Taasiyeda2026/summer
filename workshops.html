@@ -1994,6 +1994,27 @@
       .section-divider { display: none; }
     }
 
+
+    /* ─── Customer catalog mode uses the existing catalog layout and only hides internal controls. ─── */
+    .catalog-mode.client-catalog-mode .back-bar {
+      display: none !important;
+    }
+
+    .client-link-status {
+      flex-basis: 100%;
+      margin: 8px 0 0;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .client-link-status a {
+      color: inherit;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
     .empty-booklet {
       width: min(620px, calc(100% - 40px));
       margin: 26px auto 70px;
@@ -3239,7 +3260,9 @@
                 <span>תוויות מחיר</span>
               </label>
             </div>
+            <button class="action-btn" id="clientLinkBtn" type="button" disabled>יצירת קישור ללקוח</button>
             <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
+            <p class="client-link-status" id="clientLinkStatus" aria-live="polite"></p>
           </div>
         </section>
       </section>
@@ -3280,6 +3303,8 @@
     const gradeFilters = document.getElementById("gradeFilters");
     const domainFilters = document.getElementById("domainFilters");
     const catalogModeBtn = document.getElementById("catalogModeBtn");
+    const clientLinkBtn = document.getElementById("clientLinkBtn");
+    const clientLinkStatus = document.getElementById("clientLinkStatus");
     const coverLetterCheckbox = document.getElementById("coverLetterCheckbox");
     const showPricesCheckbox = document.getElementById("showPricesCheckbox");
     let showPrices = false;
@@ -3580,6 +3605,7 @@
       const paddedId = String(rawActivity.id ?? "").padStart(3, "0");
       const image = manualImage || (rawActivity.id ? `image/${paddedId}.png` : "");
       const imageWebp = toWebpPath(image);
+      const clientId = stableActivitySlug(rawActivity, title);
 
       return {
         ...rawActivity,
@@ -3595,6 +3621,7 @@
         grades,
         image,
         imageWebp,
+        clientId,
         accent: DOMAIN_COLORS[rawActivity.domain ?? ""] || rawActivity.accent || "#203b7a"
       };
     }
@@ -4143,6 +4170,74 @@ function chunkActivities(items, size) {
 
 
 
+
+    function stableActivitySlug(rawActivity = {}, title = "") {
+      const explicitSlug = String(rawActivity.slug ?? rawActivity.clientId ?? "").trim();
+      if (explicitSlug) return explicitSlug;
+      const explicitId = String(rawActivity.id ?? "").trim();
+      if (explicitId) return explicitId;
+      return String(title || "activity")
+        .trim()
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, "-")
+        .replace(/^-+|-+$/g, "") || "activity";
+    }
+
+    function isClientCatalogRequest() {
+      const params = new URLSearchParams(window.location.search);
+      return params.has("client") || params.get("mode") === "client";
+    }
+
+    function selectedClientItemIds() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("items")
+        ?.split(",")
+        .map(item => decodeURIComponent(item).trim())
+        .filter(Boolean) || [];
+    }
+
+    function getClientCatalogActivities() {
+      const ids = selectedClientItemIds();
+      if (!ids.length) return activities.slice();
+      const requested = new Set(ids);
+      return activities.filter(activity => requested.has(String(activity.clientId)) || requested.has(String(activity.id ?? "")));
+    }
+
+    async function showClientCatalog() {
+      coverLetterCheckbox.checked = false;
+      document.querySelector('input[name="marketerRadio"][value="none"]').checked = true;
+      const params = new URLSearchParams(window.location.search);
+      showPricesCheckbox.checked = params.get("prices") === "1";
+      renderCatalog(getClientCatalogActivities());
+      document.body.classList.remove("is-course-catalog");
+      document.body.classList.add("catalog-mode", "client-catalog-mode");
+      document.title = "קטלוג סדנאות דיגיטלי | תעשיידע";
+      await waitForCatalogImages();
+    }
+
+    function buildClientCatalogUrl() {
+      const params = [];
+      const ids = getSelectedActivities().map(activity => activity.clientId).filter(Boolean);
+      if (ids.length) params.push(`items=${ids.map(encodeURIComponent).join(",")}`);
+      if (showPricesCheckbox.checked) params.push("prices=1");
+      return `https://taasiyeda2026.github.io/summer/catalog/${params.length ? `?${params.join("&")}` : ""}`;
+    }
+
+    async function shareClientCatalogLink() {
+      const url = buildClientCatalogUrl();
+      clientLinkStatus.innerHTML = `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(url)}</a>`;
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(url);
+          clientLinkStatus.insertAdjacentText("afterbegin", "הקישור הועתק: ");
+        } catch (error) {
+          clientLinkStatus.insertAdjacentText("afterbegin", "קישור ללקוח: ");
+        }
+      } else {
+        clientLinkStatus.insertAdjacentText("afterbegin", "קישור ללקוח: ");
+      }
+    }
+
     function getSelectedActivities() {
       return activities
         .map((activity, index) => ({ ...activity, originalIndex: index }))
@@ -4320,6 +4415,8 @@ function chunkActivities(items, size) {
       const sel = getSelectedActivities();
       selectedCount.textContent = `נבחרו ${sel.length} פעילויות`;
       catalogModeBtn.disabled = sel.length === 0;
+      clientLinkBtn.disabled = sel.length === 0;
+      if (!sel.length) clientLinkStatus.textContent = "";
       document.querySelectorAll("[data-action]").forEach(button => {
         const action = button.dataset.action;
         const active = (selectedType === null && action === "all" && sel.length === activities.length && activities.length > 0) ||
@@ -4450,6 +4547,8 @@ function chunkActivities(items, size) {
       }
     });
 
+    clientLinkBtn.addEventListener("click", shareClientCatalogLink);
+
     catalogModeBtn.addEventListener("click", async () => {
       catalogModeBtn.disabled = true;
       try {
@@ -4568,7 +4667,9 @@ function chunkActivities(items, size) {
         activities = await loadActivities();
         renderSelection();
         const params = new URLSearchParams(window.location.search);
-        if (params.get("catalog") === "workshops") {
+        if (isClientCatalogRequest()) {
+          await showClientCatalog();
+        } else if (params.get("catalog") === "workshops") {
           showWorkshopInterface();
         } else {
           applyCoursePreset("manual");
@@ -4583,7 +4684,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=210").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=212").then(registration => registration.update());
       });
     }
 
