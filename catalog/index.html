@@ -46,12 +46,18 @@
   </style>
 </head>
 <body>
-  <iframe class="catalog-frame" src="../workshops.html?client" title="קטלוג סדנאות דיגיטלי ללקוחות"></iframe>
+  <iframe class="catalog-frame" id="catalogFrame" title="קטלוג סדנאות דיגיטלי ללקוחות"></iframe>
   <noscript>
     <p class="catalog-fallback">
       להפעלת הקטלוג הדיגיטלי יש לאפשר JavaScript, או לפתוח ישירות את
-      <a href="../workshops.html?client">קטלוג הסדנאות במצב לקוח</a>.
+      <a href="../workshops.html?catalog=workshops&amp;client">קטלוג הסדנאות במצב לקוח</a>.
     </p>
   </noscript>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    params.set("catalog", "workshops");
+    params.set("client", "");
+    document.getElementById("catalogFrame").src = `../workshops.html?${params.toString()}`;
+  </script>
 </body>
 </html>
