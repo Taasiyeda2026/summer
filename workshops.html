@@ -3647,6 +3647,9 @@ function chunkActivities(items, size) {
         const ga = gradeOrder[a.gradeGroup] ?? 9;
         const gb = gradeOrder[b.gradeGroup] ?? 9;
         if (ga !== gb) return ga - gb;
+        const oa = a.sortOffset ?? 0;
+        const ob = b.sortOffset ?? 0;
+        if (oa !== ob) return oa - ob;
         return a.title.localeCompare(b.title, "he");
       });
     }
