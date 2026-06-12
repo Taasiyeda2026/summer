@@ -1989,57 +1989,10 @@
       z-index: 1;
       flex: 1 1 auto;
       min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 2mm;
-    }
-
-    .domain-grade-section {
-      display: flex;
-      flex-direction: column;
-      flex: 1 1 0;
-      min-height: 0;
-      gap: 1.2mm;
-    }
-
-    .domain-grade-header-strip {
-      flex-shrink: 0;
-      height: 5.5mm;
-      display: flex;
-      align-items: center;
-      gap: 2.5mm;
-      padding: 0 2mm;
-      border-radius: 2mm;
-      background: linear-gradient(to left, transparent, rgba(32,59,122,.06));
-      border-right: 3px solid var(--blue);
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
-    .domain-grade-header-strip-label {
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 900;
-      direction: rtl;
-      white-space: nowrap;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
-    .domain-grade-header-strip-line {
-      flex: 1;
-      height: 1px;
-      background: var(--blue);
-      opacity: 0.18;
-    }
-
-    .domain-grade-cards {
-      flex: 1 1 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
       gap: 2.2mm;
-      align-items: stretch;
-      min-height: 0;
     }
 
     /* ─── Domain cards ─── */
@@ -2789,46 +2742,11 @@
 
       /* ─── Domain catalog in print ─── */
       .page-grid-domains {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2mm !important;
-        flex: 1 1 auto !important;
-        min-height: 0 !important;
-      }
-
-      .domain-grade-section {
-        display: flex !important;
-        flex-direction: column !important;
-        flex: 1 1 0 !important;
-        min-height: 0 !important;
-        gap: 1.2mm !important;
-      }
-
-      .domain-grade-header-strip {
-        flex-shrink: 0 !important;
-        height: 5mm !important;
-        display: flex !important;
-        align-items: center !important;
-        background: linear-gradient(to left, transparent, rgba(32,59,122,.06)) !important;
-        border-right: 3px solid #203b7a !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      .domain-grade-header-strip-label {
-        color: #203b7a !important;
-        font-size: 11px !important;
-        font-weight: 900 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      .domain-grade-cards {
-        flex: 1 1 0 !important;
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-rows: repeat(4, 1fr) !important;
         gap: 2.2mm !important;
-        align-items: stretch !important;
+        flex: 1 1 auto !important;
         min-height: 0 !important;
       }
 
@@ -3948,38 +3866,15 @@ function chunkActivities(items, size) {
         <div class="page-grid-domains"></div>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
-      const container = page.querySelector(".page-grid-domains");
-
-      // Group consecutive activities by gradeGroup, maintaining order
-      const sections = [];
+      const grid = page.querySelector(".page-grid-domains");
       activities.forEach(activity => {
-        if (!activity) return;
-        const g = activity.gradeGroup || "א-ו";
-        if (!sections.length || sections[sections.length - 1].gradeGroup !== g) {
-          sections.push({ gradeGroup: g, items: [] });
+        if (!activity) {
+          const empty = document.createElement("div");
+          empty.className = "domain-grid-empty";
+          grid.appendChild(empty);
+        } else {
+          grid.appendChild(renderDomainCard(activity, true));
         }
-        sections[sections.length - 1].items.push(activity);
-      });
-
-      sections.forEach(({ gradeGroup, items }) => {
-        const section = document.createElement("div");
-        section.className = "domain-grade-section";
-        // Proportional flex-grow: 1 grow unit per card row so cards are equal height across sections
-        const numRows = Math.ceil(items.length / 3);
-        section.style.flexGrow = String(numRows);
-
-        const strip = document.createElement("div");
-        strip.className = "domain-grade-header-strip";
-        const label = GRADE_STRIP_LABELS[gradeGroup] || gradeGroup;
-        strip.innerHTML = `<span class="domain-grade-header-strip-label">${escapeHTML(label)}</span><span class="domain-grade-header-strip-line"></span>`;
-
-        const cardsGrid = document.createElement("div");
-        cardsGrid.className = "domain-grade-cards";
-        items.forEach(activity => cardsGrid.appendChild(renderDomainCard(activity, true)));
-
-        section.appendChild(strip);
-        section.appendChild(cardsGrid);
-        container.appendChild(section);
       });
 
       return page;
