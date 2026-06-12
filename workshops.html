@@ -5088,6 +5088,22 @@ function chunkActivities(items, size) {
       return SHORT_LINK_PRESETS[sKey] || null;
     }
 
+    function tryCanonicalizeUrl() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("s")) return;
+      const rawW = (params.get("w") || params.get("items") || "").trim();
+      if (!rawW) return;
+      const hasP = hasTruthyParam(params, "p") || hasTruthyParam(params, "prices");
+      const hasM = hasTruthyParam(params, "m");
+      const rawC = marketerShortCode(normalizeMarketerParam(params.get("c")));
+      for (const [key, preset] of Object.entries(SHORT_LINK_PRESETS)) {
+        if (rawW === preset.w && hasP === preset.p && hasM === preset.m && rawC === preset.c) {
+          history.replaceState(null, "", "?s=" + key);
+          return;
+        }
+      }
+    }
+
     function isClientCatalogRequest() {
       const params = new URLSearchParams(window.location.search);
       if (params.has("client") || params.has("set")) return true;
@@ -5198,6 +5214,7 @@ function chunkActivities(items, size) {
     }
 
     async function showClientCatalog() {
+      tryCanonicalizeUrl();
       const params = new URLSearchParams(window.location.search);
       const sPreset = resolveShortPreset(params);
 
@@ -5897,7 +5914,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=313").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=314").then(registration => registration.update());
       });
     }
 
