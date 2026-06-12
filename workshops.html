@@ -1306,6 +1306,252 @@
       font-size: 10px;
     }
 
+    /* ===== AI Approved Flyer Pages ===== */
+    .a4-page.ai-flyer-outer { padding: 0; background: none; border-radius: 5mm; }
+    .a4-page.ai-flyer-outer::before { display: none; }
+    .ai-flyer-pg {
+      width: 100%; height: 100%;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      font-family: 'Assistant', sans-serif;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      color: #1e293b;
+      background: linear-gradient(135deg,#f1f5f9 0%,#ffffff 38%,#f8fafc 70%,#eef2ff 100%);
+    }
+    .ai-flyer-pg.pg2 {
+      background:
+        radial-gradient(60mm 75mm at 0% 88%,rgba(167,139,250,.32),transparent 70%),
+        radial-gradient(55mm 60mm at -2% 42%,rgba(125,211,252,.30),transparent 70%),
+        radial-gradient(70mm 45mm at 100% 0%,rgba(99,102,241,.16),transparent 72%),
+        radial-gradient(40mm 40mm at 100% 75%,rgba(196,181,253,.18),transparent 70%),
+        linear-gradient(135deg,#f1f5f9 0%,#ffffff 45%,#eef2ff 100%);
+    }
+    .ai-flyer-pg .ai-corner-tl {
+      position:absolute;top:0;left:0;width:62mm;height:24mm;
+      background:linear-gradient(120deg,#1d4ed8,#3b82f6 60%,#60a5fa);
+      border-bottom-right-radius:60mm;z-index:2;
+    }
+    .ai-flyer-pg .ai-corner-tr {
+      position:absolute;top:0;right:0;width:78mm;height:34mm;
+      background:linear-gradient(250deg,#1e40af,#3b82f6 55%,#6366f1);
+      border-bottom-left-radius:70mm;z-index:2;
+    }
+    .ai-flyer-pg .ai-corner-bl {
+      position:absolute;bottom:0;right:0;width:60mm;height:50mm;
+      background:linear-gradient(45deg,rgba(167,139,250,.25),rgba(96,165,250,.12) 70%,transparent);
+      border-top-left-radius:60mm;z-index:1;
+    }
+    .ai-flyer-pg .ai-blob-left {
+      position:absolute;top:30%;left:-14mm;width:34mm;height:80mm;z-index:1;
+      background:linear-gradient(160deg,rgba(125,211,252,.35),rgba(196,181,253,.3));
+      border-radius:50% 60% 55% 45%/55% 45% 60% 50%;
+      filter:blur(1px);
+    }
+    .ai-flyer-pg .ai-circuit {
+      position:absolute;top:0;right:0;width:78mm;height:34mm;z-index:3;opacity:.5;
+    }
+    .ai-flyer-pg .ai-badge {
+      position:absolute;top:5mm;right:8mm;z-index:4;
+      color:#fff;font-weight:900;font-size:8.2mm;letter-spacing:.2mm;
+    }
+    .ai-flyer-pg .ai-dots { position:absolute;z-index:1;opacity:.55; }
+    .ai-flyer-pg .ai-dots.d1 { top:38mm;right:4mm; }
+    .ai-flyer-pg .ai-dots.d2 { bottom:46mm;left:4mm; }
+    .ai-flyer-pg .ai-logo { position:absolute;top:5mm;left:7mm;z-index:5; }
+    .ai-flyer-pg .ai-logo img { width:17mm;height:auto;display:block; }
+    .ai-flyer-pg .ai-logo-bottom {
+      position:absolute;bottom:3mm;left:50%;transform:translateX(-50%);z-index:5;
+    }
+    .ai-flyer-pg .ai-logo-bottom img { width:9mm;height:auto;display:block; }
+    .ai-flyer-pg .ai-header {
+      position:relative;z-index:4;text-align:center;padding-top:27mm;
+    }
+    .ai-flyer-pg .ai-grades {
+      color:#b91c1c;font-weight:800;font-size:5mm;margin-bottom:1mm;
+    }
+    .ai-flyer-pg .ai-header h1 {
+      font-size:15mm;line-height:1.02;font-weight:900;letter-spacing:-.3mm;
+      background:none;border:none;margin:0;padding:0;
+    }
+    .ai-flyer-pg .ai-header h1 .l1 { color:#1e3a8a;display:block; }
+    .ai-flyer-pg .ai-header h1 .l2 {
+      display:block;
+      background:linear-gradient(90deg,#2563eb 10%,#7c3aed 90%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .ai-flyer-pg .ai-meta {
+      display:flex;justify-content:center;align-items:center;gap:4mm;
+      margin-top:4mm;font-weight:700;font-size:3.9mm;color:#1e3a8a;flex-wrap:nowrap;
+    }
+    .ai-flyer-pg .ai-meta .item { display:flex;align-items:center;gap:1.8mm;white-space:nowrap; }
+    .ai-flyer-pg .ai-meta .sep { color:#94a3b8;font-weight:400; }
+    .ai-flyer-pg .ai-meta svg { flex:0 0 auto; }
+    .ai-flyer-pg .ai-pill {
+      margin:3.5mm auto 0;width:fit-content;
+      background:linear-gradient(90deg,#7c3aed,#6366f1);
+      color:#fff;font-weight:700;font-size:4mm;
+      padding:1.6mm 9mm;border-radius:8mm;
+      box-shadow:0 2px 6px rgba(99,102,241,.35);
+    }
+    .ai-flyer-pg .ai-intro {
+      display:flex;justify-content:center;align-items:center;gap:3mm;
+      margin-top:4mm;font-size:4.3mm;font-weight:600;color:#334155;text-align:right;
+    }
+    .ai-flyer-pg .ai-intro b { color:#1d4ed8;font-weight:800; }
+    .ai-flyer-pg .ai-cards {
+      position:relative;z-index:4;flex:1;
+      padding:4mm 9mm 0;display:flex;flex-direction:column;gap:4mm;
+    }
+    .ai-flyer-pg .ai-row { display:grid;grid-template-columns:1fr 1fr;gap:5mm; }
+    .ai-flyer-pg .ai-row.single { grid-template-columns:1fr;padding:0 14mm; }
+    .ai-flyer-pg .ai-card {
+      background:#fff;border-radius:5mm;
+      box-shadow:0 3px 12px rgba(30,58,138,.10);
+      position:relative;overflow:hidden;padding:5mm 6mm 4.5mm;
+    }
+    .ai-flyer-pg .ai-num {
+      position:absolute;top:0;right:0;width:13mm;height:12mm;
+      border-bottom-left-radius:12mm;
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:900;font-size:6.5mm;
+      padding-left:2mm;padding-bottom:1.5mm;
+    }
+    .ai-flyer-pg .ai-accent-bar {
+      position:absolute;left:0;top:14%;height:72%;width:1.6mm;border-radius:2mm;
+    }
+    .ai-flyer-pg .ai-body {
+      display:grid;grid-template-columns:24mm 1fr;gap:4mm;align-items:center;
+    }
+    .ai-flyer-pg .ai-icon-circle {
+      width:24mm;height:24mm;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .ai-flyer-pg .ai-card h3 {
+      font-size:5mm;font-weight:800;line-height:1.15;margin-bottom:1.5mm;
+      white-space:nowrap;border:none;background:none;
+    }
+    .ai-flyer-pg .ai-card p { font-size:3.8mm;color:#475569;line-height:1.45;font-weight:500;margin:0; }
+    .ai-flyer-pg .ai-time {
+      display:inline-flex;align-items:center;gap:1.6mm;
+      margin-top:2.5mm;font-weight:800;font-size:3.6mm;
+      padding:1mm 4mm;border-radius:6mm;
+    }
+    .ai-flyer-pg .ai-card.c-blue .ai-num{background:#2563eb;}
+    .ai-flyer-pg .ai-card.c-blue .ai-icon-circle{background:#eff6ff;}
+    .ai-flyer-pg .ai-card.c-blue h3{color:#2563eb;}
+    .ai-flyer-pg .ai-card.c-blue .ai-time{background:#dbeafe;color:#1d4ed8;}
+    .ai-flyer-pg .ai-card.c-purple .ai-num{background:#7c3aed;}
+    .ai-flyer-pg .ai-card.c-purple .ai-icon-circle{background:#f5f3ff;}
+    .ai-flyer-pg .ai-card.c-purple h3{color:#7c3aed;}
+    .ai-flyer-pg .ai-card.c-purple .ai-time{background:#ede9fe;color:#6d28d9;}
+    .ai-flyer-pg .ai-card.c-teal .ai-num{background:#0d9488;}
+    .ai-flyer-pg .ai-card.c-teal .ai-icon-circle{background:#f0fdfa;}
+    .ai-flyer-pg .ai-card.c-teal h3{color:#0d9488;}
+    .ai-flyer-pg .ai-card.c-teal .ai-time{background:#ccfbf1;color:#0f766e;}
+    .ai-flyer-pg .ai-card.c-teal .ai-accent-bar{background:#0d9488;}
+    .ai-flyer-pg .ai-card.c-green .ai-num{background:#16a34a;}
+    .ai-flyer-pg .ai-card.c-green .ai-icon-circle{background:#f0fdf4;}
+    .ai-flyer-pg .ai-card.c-green h3{color:#16a34a;}
+    .ai-flyer-pg .ai-card.c-green .ai-time{background:#dcfce7;color:#15803d;}
+    .ai-flyer-pg .ai-card.c-green .ai-accent-bar{background:#16a34a;}
+    .ai-flyer-pg .ai-card.c-orange .ai-num{background:#f97316;}
+    .ai-flyer-pg .ai-card.c-orange .ai-icon-circle{background:#fff7ed;}
+    .ai-flyer-pg .ai-card.c-orange h3{color:#f97316;}
+    .ai-flyer-pg .ai-card.c-orange .ai-time{background:#ffedd5;color:#c2410c;}
+    .ai-flyer-pg .ai-card.c-orange .ai-accent-bar{background:#f97316;}
+    .ai-flyer-pg .ai-skills {
+      position:relative;z-index:4;margin:4.5mm 9mm 29mm;
+    }
+    .ai-flyer-pg .ai-skills-title {
+      display:flex;align-items:center;justify-content:center;gap:2.5mm;
+      font-weight:900;font-size:5mm;color:#1e3a8a;margin-bottom:2.5mm;
+    }
+    .ai-flyer-pg .ai-skills-title::before,.ai-flyer-pg .ai-skills-title::after {
+      content:'';width:1.8mm;height:1.8mm;border-radius:50%;background:#2563eb;
+    }
+    .ai-flyer-pg .ai-skills-grid {
+      background:#fff;border-radius:5mm;
+      box-shadow:0 3px 12px rgba(30,58,138,.10);
+      display:grid;grid-template-columns:repeat(6,1fr);
+      padding:4mm 2mm;
+    }
+    .ai-flyer-pg .ai-skill {
+      display:flex;flex-direction:column;align-items:center;gap:1.8mm;
+      font-size:3.3mm;font-weight:700;color:#334155;text-align:center;line-height:1.25;
+      border-left:.3mm solid #e2e8f0;padding:0 1.5mm;
+    }
+    .ai-flyer-pg .ai-skill:last-child { border-left:none; }
+    /* page 2 */
+    .ai-flyer-pg .ai-p2-content {
+      position:relative;z-index:4;
+      padding:5mm 12mm 12mm;flex:1;display:flex;flex-direction:column;
+    }
+    .ai-flyer-pg .ai-p2-title {
+      text-align:center;font-size:7.6mm;font-weight:900;
+      background:linear-gradient(90deg,#1e3a8a 15%,#7c3aed 85%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      margin:6mm 0 3mm;
+    }
+    .ai-flyer-pg .ai-p2-intro {
+      background:linear-gradient(90deg,rgba(124,58,237,.09),rgba(37,99,235,.09));
+      border-radius:3.5mm;padding:2.4mm 4.5mm;margin-bottom:3.2mm;
+      font-size:3.15mm;line-height:1.55;text-align:center;font-weight:500;color:#1e293b;
+    }
+    .ai-flyer-pg .ai-p2-intro b { color:#6d28d9;font-weight:800; }
+    .ai-flyer-pg .ai-sec {
+      background:rgba(255,255,255,.82);border-radius:3.5mm;
+      padding:3mm 4.4mm 3.2mm;margin-bottom:3mm;
+      box-shadow:0 1px 5px rgba(30,58,138,.07);border-right:1.3mm solid;
+    }
+    .ai-flyer-pg .ai-sec h2 {
+      display:flex;align-items:center;gap:2.2mm;
+      font-size:4.05mm;font-weight:800;line-height:1.25;margin:0 0 1.5mm;
+      background:none;-webkit-background-clip:unset;background-clip:unset;color:inherit;
+    }
+    .ai-flyer-pg .ai-n {
+      flex:0 0 auto;width:5.6mm;height:5.6mm;border-radius:50%;
+      color:#fff;font-size:3.2mm;font-weight:800;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .ai-flyer-pg .ai-sec p {
+      font-size:3.08mm;line-height:1.5;color:#1e293b;text-align:right;
+      font-weight:400;margin-bottom:1.2mm;
+    }
+    .ai-flyer-pg .ai-sec p:last-of-type { margin-bottom:0; }
+    .ai-flyer-pg .ai-sec strong { font-weight:700;color:#0f172a; }
+    .ai-flyer-pg .ai-t-badge {
+      display:inline-block;font-weight:800;font-size:2.8mm;
+      padding:.2mm 2.6mm;border-radius:4mm;margin-right:1.2mm;white-space:nowrap;
+    }
+    .ai-flyer-pg .ai-sec.s-blue{border-color:#2563eb;}
+    .ai-flyer-pg .ai-sec.s-blue h2{color:#2563eb;}
+    .ai-flyer-pg .ai-sec.s-blue .ai-n{background:#2563eb;}
+    .ai-flyer-pg .ai-sec.s-blue .ai-t-badge{background:#dbeafe;color:#1d4ed8;}
+    .ai-flyer-pg .ai-sec.s-purple{border-color:#7c3aed;}
+    .ai-flyer-pg .ai-sec.s-purple h2{color:#7c3aed;}
+    .ai-flyer-pg .ai-sec.s-purple .ai-n{background:#7c3aed;}
+    .ai-flyer-pg .ai-sec.s-purple .ai-t-badge{background:#ede9fe;color:#6d28d9;}
+    .ai-flyer-pg .ai-sec.s-teal{border-color:#0d9488;}
+    .ai-flyer-pg .ai-sec.s-teal h2{color:#0d9488;}
+    .ai-flyer-pg .ai-sec.s-teal .ai-n{background:#0d9488;}
+    .ai-flyer-pg .ai-sec.s-teal .ai-t-badge{background:#ccfbf1;color:#0f766e;}
+    .ai-flyer-pg .ai-sec.s-green{border-color:#16a34a;}
+    .ai-flyer-pg .ai-sec.s-green h2{color:#16a34a;}
+    .ai-flyer-pg .ai-sec.s-green .ai-n{background:#16a34a;}
+    .ai-flyer-pg .ai-sec.s-green .ai-t-badge{background:#dcfce7;color:#15803d;}
+    .ai-flyer-pg .ai-sec.s-orange{border-color:#f97316;}
+    .ai-flyer-pg .ai-sec.s-orange h2{color:#f97316;}
+    .ai-flyer-pg .ai-sec.s-orange .ai-n{background:#f97316;}
+    .ai-flyer-pg .ai-sec.s-orange .ai-t-badge{background:#ffedd5;color:#c2410c;}
+    .ai-flyer-pg .ai-p2-footer {
+      position:absolute;bottom:4mm;left:50%;transform:translateX(-50%);z-index:5;
+    }
+    .ai-flyer-pg .ai-contact-line {
+      position:relative;z-index:6;text-align:center;
+      font-size:3mm;color:#334155;font-weight:600;
+      padding:1.5mm 0 2mm;margin-top:auto;
+    }
+
     .ms-info-col .escape-info-card-body {
       font-size: 12px;
     }
@@ -4323,6 +4569,289 @@ function chunkActivities(items, size) {
       return page;
     }
 
+    function renderApprovedAiFlyerPages(startPageIndex, totalPages, contactLine = "") {
+      const frag = document.createDocumentFragment();
+
+      /* ── PAGE 1: cover ── */
+      const sec1 = document.createElement("section");
+      sec1.className = "a4-page catalog-page ai-flyer-outer";
+      sec1.setAttribute("aria-label", `עמוד ${startPageIndex + 1} מתוך ${totalPages}`);
+      const pg1 = document.createElement("div");
+      pg1.className = "ai-flyer-pg";
+      pg1.innerHTML = `
+        <div class="ai-corner-tr"></div>
+        <div class="ai-corner-tl"></div>
+        <svg class="ai-circuit" viewBox="0 0 295 129">
+          <g stroke="#bfdbfe" stroke-width="1.4" fill="none">
+            <path d="M260 10 h-40 v25 h-30"/><path d="M285 40 h-55 v30 h-25"/>
+            <path d="M250 75 h-35 v25"/><path d="M220 5 v20 h-25"/>
+          </g>
+          <g fill="#dbeafe">
+            <circle cx="190" cy="35" r="3"/><circle cx="205" cy="70" r="3"/>
+            <circle cx="215" cy="100" r="3"/><circle cx="195" cy="25" r="3"/>
+          </g>
+        </svg>
+        <div class="ai-badge">מכינת הקיץ</div>
+        <div class="ai-logo"><img src="logo.png" alt="תעשיידע"></div>
+        <div class="ai-header">
+          <div class="ai-grades">כיתות ז׳–ט׳</div>
+          <h1><span class="l1">סדנאות</span><span class="l2">בינה מלאכותית</span></h1>
+          <div class="ai-meta">
+            <span class="item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg>
+              5 סדנאות מודולריות
+            </span>
+            <span class="sep">|</span>
+            <span class="item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>
+              כל סדנה 90 דקות
+            </span>
+            <span class="sep">|</span>
+            <span class="item">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+              התנסות מעשית בכלים של העתיד
+            </span>
+          </div>
+          <div class="ai-pill">ניתן להזמין כסדנה בודדת או כסדרה מלאה</div>
+          <div class="ai-intro">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+              <path d="M9 18h6"/><path d="M10 22h4"/>
+            </svg>
+            <span>לומדים להשתמש בבינה מלאכותית ככלי לחשיבה, יצירה,<br><b>למידה וקבלת החלטות.</b></span>
+          </div>
+        </div>
+        <div class="ai-cards">
+          <div class="ai-row">
+            <div class="ai-card c-blue">
+              <div class="ai-num">1</div>
+              <div class="ai-body">
+                <div class="ai-icon-circle">
+                  <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
+                    <g transform="rotate(-10 24 32)">
+                      <rect x="12" y="14" width="24" height="34" rx="3.5" fill="#fff" stroke="#2563eb" stroke-width="2.6"/>
+                      <g transform="translate(15.5 22.5) scale(0.72)" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+                        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+                      </g>
+                    </g>
+                    <g transform="rotate(10 42 34)">
+                      <rect x="30" y="16" width="24" height="34" rx="3.5" fill="#fff" stroke="#2563eb" stroke-width="2.6"/>
+                      <text x="42" y="40" font-size="19" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Assistant,Arial">?</text>
+                    </g>
+                  </svg>
+                </div>
+                <div>
+                  <h3>איך הבינה המלאכותית חושבת</h3>
+                  <p>משחקים ואתגרי זיהוי להבנת נתונים, דפוסים וקבלת החלטות.</p>
+                  <span class="ai-time"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>90 דקות</span>
+                </div>
+              </div>
+            </div>
+            <div class="ai-card c-purple">
+              <div class="ai-num">2</div>
+              <div class="ai-body">
+                <div class="ai-icon-circle">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 15v-4a8 8 0 0 1 16 0v4" stroke="#7c3aed" stroke-width="1.9" stroke-linecap="round"/>
+                    <path d="M3 14h2a1.6 1.6 0 0 1 1.6 1.6v3.2A1.6 1.6 0 0 1 5 20.4h-.4A1.6 1.6 0 0 1 3 18.8V14Z" fill="#7c3aed"/>
+                    <path d="M21 14h-2a1.6 1.6 0 0 0-1.6 1.6v3.2a1.6 1.6 0 0 0 1.6 1.6h.4a1.6 1.6 0 0 0 1.6-1.6V14Z" fill="#7c3aed"/>
+                    <g stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.2 10.2v6"/><circle cx="12.6" cy="16.6" r="1.6" fill="#7c3aed"/>
+                      <path d="M14.2 10.2l2.6 1v2"/>
+                    </g>
+                  </svg>
+                </div>
+                <div>
+                  <h3>יוצרים מוזיקה עם AI</h3>
+                  <p>הופכים רעיון, משפט או רגש ליצירה מוזיקלית בעזרת AI.</p>
+                  <span class="ai-time"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>90 דקות</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ai-row single">
+            <div class="ai-card c-teal">
+              <div class="ai-num">3</div>
+              <span class="ai-accent-bar"></span>
+              <div class="ai-body">
+                <div class="ai-icon-circle">
+                  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+                    <path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>הבינה כמורה פרטי</h3>
+                  <p>כלים ללמידה, שיעורי בית, סיכומים, מבחנים והכנת עבודות.</p>
+                  <span class="ai-time"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>90 דקות</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ai-row">
+            <div class="ai-card c-green">
+              <div class="ai-num">4</div>
+              <span class="ai-accent-bar"></span>
+              <div class="ai-body">
+                <div class="ai-icon-circle">
+                  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="19" r="3"/>
+                    <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/>
+                    <path d="M18 2a3 3 0 0 1 3 3c0 1.9-3 4.5-3 4.5S15 6.9 15 5a3 3 0 0 1 3-3z" fill="#16a34a" stroke="#15803d"/>
+                    <circle cx="18" cy="5" r="1" fill="#fff" stroke="none"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>מתכננים טיול עם AI</h3>
+                  <p>מסלול מותאם לפי יעד, גיל, תקציב, זמן ותחומי עניין.</p>
+                  <span class="ai-time"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>90 דקות</span>
+                </div>
+              </div>
+            </div>
+            <div class="ai-card c-orange">
+              <div class="ai-num">5</div>
+              <span class="ai-accent-bar"></span>
+              <div class="ai-body">
+                <div class="ai-icon-circle">
+                  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/>
+                    <path d="M2 5h12"/><path d="M7 2h1"/>
+                    <path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>לומדים שפות עם AI</h3>
+                  <p>תרגול שיחה, אוצר מילים, דקדוק, תרגום ודיאלוגים בקצב אישי.</p>
+                  <span class="ai-time"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg>90 דקות</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ai-skills">
+          <div class="ai-skills-title">מה מפתחים בסדנאות?</div>
+          <div class="ai-skills-grid">
+            <div class="ai-skill">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.5 2.5a7.5 7.5 0 0 1 7.5 7.5c0 1.9-.7 3.6-1.9 4.9L19 21.5h-5.5v-2.6h-2.2A7.5 7.5 0 0 1 12.5 2.5Z"/>
+                <circle cx="12" cy="10" r="2"/>
+                <path d="M12 6.6v1.2M12 12.2v1.2M15 8.3l-1 .6M10 11.1l-1 .6M9 8.3l1 .6M14 11.1l1 .6"/>
+              </svg>חשיבה<br>ביקורתית
+            </div>
+            <div class="ai-skill">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                <path d="M9 18h6"/><path d="M10 22h4"/>
+              </svg>יצירתיות<br>והבעה
+            </div>
+            <div class="ai-skill">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8"/><path d="M12 17v4"/>
+              </svg>אוריינות<br>דיגיטלית
+            </div>
+            <div class="ai-skill">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 17a2 2 0 0 1-2 2H6l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <path d="M7 8h10"/><path d="M7 12h6"/>
+              </svg>ניסוח<br>פרומפטים
+            </div>
+            <div class="ai-skill">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 7v14"/>
+                <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+              </svg>למידה<br>עצמאית
+            </div>
+            <div class="ai-skill">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>שימוש אחראי<br>ב-AI
+            </div>
+          </div>
+        </div>
+        <div class="ai-logo-bottom"><img src="logo.png" alt="תעשיידע"></div>
+        <svg class="ai-dots d1" width="50" height="70" viewBox="0 0 50 70">
+          <g fill="#c7d2fe"><circle cx="6" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="34" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="20" cy="20" r="2"/><circle cx="34" cy="20" r="2"/><circle cx="6" cy="34" r="2"/><circle cx="20" cy="34" r="2"/><circle cx="34" cy="34" r="2"/></g>
+        </svg>
+        <svg class="ai-dots d2" width="50" height="70" viewBox="0 0 50 70">
+          <g fill="#ddd6fe"><circle cx="6" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="34" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="20" cy="20" r="2"/><circle cx="34" cy="20" r="2"/><circle cx="6" cy="34" r="2"/><circle cx="20" cy="34" r="2"/><circle cx="34" cy="34" r="2"/></g>
+        </svg>
+        ${contactLine ? `<div class="ai-contact-line">${contactLine}</div>` : ""}
+      `;
+      sec1.appendChild(pg1);
+      frag.appendChild(sec1);
+
+      /* ── PAGE 2: details ── */
+      const sec2 = document.createElement("section");
+      sec2.className = "a4-page catalog-page ai-flyer-outer";
+      sec2.setAttribute("aria-label", `עמוד ${startPageIndex + 2} מתוך ${totalPages}`);
+      const pg2 = document.createElement("div");
+      pg2.className = "ai-flyer-pg pg2";
+      pg2.innerHTML = `
+        <svg class="ai-circuit" viewBox="0 0 295 129" style="opacity:.45">
+          <g stroke="#bfdbfe" stroke-width="1.4" fill="none">
+            <path d="M260 10 h-40 v25 h-30"/><path d="M285 40 h-55 v30 h-25"/>
+            <path d="M250 75 h-35 v25"/><path d="M220 5 v20 h-25"/>
+          </g>
+          <g fill="#dbeafe">
+            <circle cx="190" cy="35" r="3"/><circle cx="205" cy="70" r="3"/>
+            <circle cx="215" cy="100" r="3"/><circle cx="195" cy="25" r="3"/>
+          </g>
+        </svg>
+        <div class="ai-blob-left"></div>
+        <div class="ai-corner-bl"></div>
+        <svg class="ai-dots d1" width="50" height="70" viewBox="0 0 50 70">
+          <g fill="#c7d2fe"><circle cx="6" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="34" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="20" cy="20" r="2"/><circle cx="34" cy="20" r="2"/><circle cx="6" cy="34" r="2"/><circle cx="20" cy="34" r="2"/><circle cx="34" cy="34" r="2"/></g>
+        </svg>
+        <div class="ai-logo"><img src="logo.png" alt="תעשיידע"></div>
+        <div class="ai-p2-content">
+          <div class="ai-p2-title">פירוט סדנאות הבינה המלאכותית</div>
+          <div class="ai-p2-intro">סדרת סדנאות הבינה המלאכותית חושפת את המשתתפים לשימושים מגוונים, מעשיים ויצירתיים של AI בחיי היום-יום. כל סדנה מאפשרת לתלמידים להתנסות בכלים מתקדמים בדרך חווייתית, לפתח חשיבה ביקורתית, אוריינות דיגיטלית, יצירתיות ושימוש אחראי בבינה מלאכותית בעולם משתנה.</div>
+          <div class="ai-sec s-blue">
+            <h2><span class="ai-n">1</span>איך הבינה המלאכותית חושבת</h2>
+            <p>סדנת פתיחה חווייתית לעולם הבינה המלאכותית, המשלבת משחקים בצוותים, תחרות, אתגרי זיהוי וקבלת החלטות. דרך פעילות משחקית ומעוררת סקרנות, המשתתפים נחשפים לעקרונות המרכזיים של AI: נתונים, דפוסים, למידת מכונה, חיזוי וקבלת החלטות. התלמידים "נכנסים לנעליים" של מערכת חכמה, מתנסים בתהליכי מיון, הסקה וזיהוי קשרים ומבינים כיצד מכונה יכולה ללמוד מתוך מידע.</p>
+            <p>הסדנה מעניקה בסיס פדגוגי חשוב להמשך הלמידה בתחום הבינה המלאכותית. היא מפתחת חשיבה ביקורתית, עבודת צוות, שאילת שאלות, הסקת מסקנות והבנה ראשונית של האופן שבו מערכות AI פועלות סביבנו. המשתתפים יוצאים מהסדנה עם הבנה נגישה וברורה יותר של עולם הבינה המלאכותית ועם תחושת מסוגלות לפגוש טכנולוגיה מתקדמת בדרך פשוטה, משחקית ומשמעותית. <span class="ai-t-badge">2 שעות לימוד (90 דקות)</span></p>
+          </div>
+          <div class="ai-sec s-purple">
+            <h2><span class="ai-n">2</span>איך ליצור מוזיקה בעזרת בינה מלאכותית</h2>
+            <p>סדנה יצירתית ומלהיבה שבה המשתתפים מגלים כיצד בינה מלאכותית יכולה להפוך רעיון, משפט או רגש ליצירה מוזיקלית שלמה. במהלך הסדנה הם יתנסו בכלי AI ליצירת מוזיקה, ילמדו כיצד לנסח הנחיות מדויקות, לבחור סגנון מוזיקלי, להגדיר קצב, אווירה, נושא ומסר ולראות כיצד כל בחירה משפיעה על התוצר הסופי. הסדנה מחברת בין טכנולוגיה, דמיון, שפה, מוזיקה וביטוי אישי.</p>
+            <p>יחד עם זאת, היא נוגעת בשאלות של חלוקת התפקידים והסינרגיה בין היוצר האנושי לבין המערכת הטכנולוגית, זכויות יוצרים ושיתוף קהל ביצירת המוזיקה. מעבר לחוויה היצירתית, הסדנה מפתחת מיומנויות חשובות של תכנון, ניסוח, דיוק מחשבתי, הקשבה ביקורתית ושיפור תוצר.</p>
+            <p>המשתתפים לומדים שבינה מלאכותית אינה רק כלי טכני, אלא שותפה לתהליך יצירה — כאשר איכות התוצאה תלויה באיכות החשיבה, ההנחיה והבחירות של המשתמש. הפעילות מאפשרת לכל תלמיד ותלמידה לחוות הצלחה, ליצור תוצר אישי ולגלות כיצד ניתן להשתמש ב-AI ככלי להבעה, השראה וחדשנות. <span class="ai-t-badge">2 שעות לימוד (90 דקות)</span></p>
+          </div>
+          <div class="ai-sec s-teal">
+            <h2><span class="ai-n">3</span>הבינה כמורה פרטי – כלים ללמידה, שיעורי בית והכנת עבודות</h2>
+            <p>סדנה מעשית במיוחד המציגה לתלמידים כיצד להשתמש בבינה מלאכותית ככלי אישי ללמידה, הבנה וארגון ידע. המשתתפים ילמדו כיצד להיעזר ב-AI להסבר מושגים מורכבים, תרגול נושאים לימודיים, בניית סיכומים, הכנה למבחנים, פיתוח רעיונות לעבודות וארגון משימות לימודיות. הדגש המרכזי הוא לא "לקבל תשובה", אלא ללמוד כיצד לשאול נכון, לבדוק, להבין, לשפר ולבנות תהליך למידה עצמאי.</p>
+            <p>הערך הפדגוגי של הסדנה נמצא בפיתוח לומד עצמאי, ביקורתי ואחראי. התלמידים מתרגלים שימוש נכון בכלי AI: איך לבקש הסבר ברמה שמתאימה להם, איך לפרק שאלה גדולה לשלבים, איך לבדוק אם תשובה אמינה ואיך להשתמש בבינה מלאכותית ככלי שמחזק הבנה ולא מחליף חשיבה. הסדנה מקנה מיומנויות למידה רלוונטיות לעולם החדש ומראה כיצד AI יכול להפוך לשותף לימודי נגיש, סבלני ומותאם אישית. <span class="ai-t-badge">2 שעות לימוד (90 דקות)</span></p>
+          </div>
+          <div class="ai-sec s-green">
+            <h2><span class="ai-n">4</span>תכנון טיולים בעזרת בינה מלאכותית</h2>
+            <p>סדנה יישומית ומהנה שבה המשתתפים לומדים כיצד להפוך רעיון כללי לטיול מתוכנן, חכם ומותאם אישית באמצעות בינה מלאכותית. במהלך הסדנה הם יתנסו בבחירת יעד, הגדרת מטרת הטיול, התאמת מסלול לפי גיל, תקציב, זמן, תחומי עניין, מזג אוויר, תחבורה ושיקולים אישיים כגון הגבלות מזון ורמת מאמץ.</p>
+            <p>המשתתפים ילמדו כיצד AI יכול לסייע באיסוף מידע, השוואת אפשרויות, קבלת החלטות וארגון מסלול ברור ונוח לשימוש. הם ילמדו גם כיצד לתכנן טיול מזווית ההסתכלות של תושבים מקומיים ולא של תיירים.</p>
+            <p>הסדנה משלבת חשיבה תכנונית, אוריינות מידע, פתרון בעיות וקבלת החלטות. המשתתפים מבינים שתכנון טוב דורש הגדרת צרכים, שאילת שאלות מדויקות, בדיקת מגבלות והתאמת פתרון לקהל יעד. דרך נושא קרוב ומוכר כמו טיולים, הם לומדים להשתמש בבינה מלאכותית באופן מעשי, אחראי ויצירתי. בסיום הפעילות ניתן להגיע לתוצר ממשי: מסלול טיול מותאם, מאורגן ומנומק, שממחיש כיצד AI יכול לסייע בתכנון חכם של חוויות בעולם האמיתי. <span class="ai-t-badge">2 שעות לימוד (90 דקות)</span></p>
+          </div>
+          <div class="ai-sec s-orange">
+            <h2><span class="ai-n">5</span>שימוש בבינה מלאכותית ללימוד שפות</h2>
+            <p>סדנה חווייתית ומעצימה המציגה כיצד בינה מלאכותית יכולה להפוך את לימוד השפות לאישי, פעיל ונגיש יותר. המשתתפים יתנסו בשימוש ב-AI לתרגול שיחה, הרחבת אוצר מילים, תיקון משפטים, תרגום, בניית דיאלוגים, הסבר של כללי דקדוק ותרגול מצבים מחיי היום-יום כמו הזמנה במסעדה, היכרות, נסיעה לחו״ל או שיחה קצרה בכיתה. התלמידים יראו גם כיצד להפוך למידת שפה למשחק וכיצד ליצור חוברת למידה חווייתית לאחים קטנים יותר.</p>
+            <p>מבחינה פדגוגית, הסדנה מחזקת ביטחון, תקשורת, הקשבה, ניסוח ושיפור עצמי. המשתתפים לומדים כיצד להשתמש בבינה מלאכותית כשותף לתרגול שפה — כזה שמאפשר לטעות, לתקן, לנסות שוב ולהתקדם בקצב אישי. הפעילות מראה כיצד AI יכול לסייע לכל תלמיד ותלמידה להתגבר על חסמי שפה, לקבל משוב מיידי ולתרגל שימוש אמיתי בשפה בצורה ידידותית, גמישה ומעודדת. הסדנה מחברת בין טכנולוגיה, תקשורת בין-תרבותית ולמידה עצמאית. <span class="ai-t-badge">2 שעות לימוד (90 דקות)</span></p>
+          </div>
+        </div>
+        <div class="ai-p2-footer">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <text x="12" y="14.4" font-size="6.5" font-weight="800" fill="#2563eb" stroke="none" text-anchor="middle" font-family="Assistant,Arial">AI</text>
+            <path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>
+          </svg>
+        </div>
+        ${contactLine ? `<div class="ai-contact-line">${contactLine}</div>` : ""}
+      `;
+      sec2.appendChild(pg2);
+      frag.appendChild(sec2);
+
+      return frag;
+    }
+
     function renderEscapeRoomPage(escapeActivities, pageIndex, totalPages, contactLine = "") {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page escape-room-page";
@@ -4769,7 +5298,7 @@ function chunkActivities(items, size) {
 
       const slotPages = buildSlotPages(activitiesForPages);
       const hasCoverLetter = includeCoverLetter && coverLetterItems.length > 0;
-      const totalPages = slotPages.length + (hasCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
+      const totalPages = slotPages.length + (hasCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 2 : 0);
       const fragment = document.createDocumentFragment();
       let globalPageIndex = 0;
 
@@ -4784,8 +5313,8 @@ function chunkActivities(items, size) {
       });
 
       if (hasMiddleSchool) {
-        fragment.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages, contactLine));
-        globalPageIndex++;
+        fragment.appendChild(renderApprovedAiFlyerPages(globalPageIndex, totalPages, contactLine));
+        globalPageIndex += 2;
       }
 
       if (hasEscape) {
@@ -5240,7 +5769,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=303").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=304").then(registration => registration.update());
       });
     }
 
