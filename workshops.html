@@ -3285,18 +3285,31 @@
     };
 
     const DOMAIN_COLORS = {
-      "חלל":        "#1e3a8a",
-      "אסטרונומיה": "#5b21b6",
-      "אופטיקה":    "#0e7490",
-      "תעופה":      "#1d4ed8",
-      "ביומימיקרי": "#065f46",
-      "קיימות":     "#047857",
-      "כימיה":      "#c2410c",
-      "ביולוגיה":   "#9d174d",
-      "פיזיקה":     "#78350f",
-      "הנדסה":      "#4338ca",
-      "AI":         "#0369a1",
+      "חלל":        "#6C4BD8",
+      "אסטרונומיה": "#6C4BD8",
+      "אופטיקה":    "#3B82F6",
+      "תעופה":      "#E53167",
+      "ביומימיקרי": "#46B96C",
+      "קיימות":     "#18A6A6",
+      "כימיה":      "#FEE346",
+      "ביולוגיה":   "#46B96C",
+      "פיזיקה":     "#FDAA3A",
+      "הנדסה":      "#18A6A6",
+      "טכנולוגיה":  "#18A6A6",
+      "AI":         "#3B82F6",
     };
+
+    // Light-background domains need dark text for readability
+    const DOMAIN_TEXT_COLORS = {
+      "כימיה":  "#1e293b",
+      "פיזיקה": "#1e293b",
+    };
+
+    function domainTagStyle(domain) {
+      const bg = DOMAIN_COLORS[domain] || "#203b7a";
+      const color = DOMAIN_TEXT_COLORS[domain] || "#ffffff";
+      return `background:${bg};color:${color};border-color:${bg}`;
+    }
 
     function showMainGateway() {
       selectedProgram = null;
@@ -3901,8 +3914,10 @@ function chunkActivities(items, size) {
       const priceHTML = showPrices && activity.price
         ? `<span class="domain-card-price">מחיר: ${escapeHTML(String(activity.price))} ₪</span>`
         : "";
+      const accentBg = activity.accent || "#203b7a";
+      const accentText = DOMAIN_TEXT_COLORS[activity.domain] || "#ffffff";
       const domainTagHTML = showDomainTag
-        ? `<span class="domain-card-domain-tag" style="background:${escapeHTML(activity.accent || "#203b7a")}">${escapeHTML(activity.domain)}</span>`
+        ? `<span class="domain-card-domain-tag" style="background:${escapeHTML(accentBg)};color:${accentText}">${escapeHTML(activity.domain)}</span>`
         : "";
       const imgMarkup = responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title })
         || '<div class="image-placeholder" style="width:26mm;height:26mm;border-radius:2mm;"></div>';
@@ -4059,13 +4074,13 @@ function chunkActivities(items, size) {
             <div class="cl-col">
               <p class="cl-col-label">תחומים לדוגמה</p>
               <div class="cl-domain-tags">
-                <span class="cl-tag">אופטיקה</span>
-                <span class="cl-tag">פיזיקה</span>
-                <span class="cl-tag">הנדסה</span>
-                <span class="cl-tag">כימיה</span>
-                <span class="cl-tag">ביולוגיה</span>
-                <span class="cl-tag">חלל</span>
-                <span class="cl-tag">טכנולוגיה</span>
+                <span class="cl-tag" style="${domainTagStyle("אופטיקה")}">אופטיקה</span>
+                <span class="cl-tag" style="${domainTagStyle("פיזיקה")}">פיזיקה</span>
+                <span class="cl-tag" style="${domainTagStyle("הנדסה")}">הנדסה</span>
+                <span class="cl-tag" style="${domainTagStyle("כימיה")}">כימיה</span>
+                <span class="cl-tag" style="${domainTagStyle("ביולוגיה")}">ביולוגיה</span>
+                <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
+                <span class="cl-tag" style="${domainTagStyle("טכנולוגיה")}">טכנולוגיה</span>
               </div>
             </div>
             <div class="cl-col">
