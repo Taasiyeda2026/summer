@@ -2299,6 +2299,71 @@
       display: none !important;
     }
 
+    /* ─── Short link banner ─── */
+    .short-link-banner {
+      position: fixed;
+      top: 12px;
+      inset-inline-end: 16px;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #fff;
+      border: 1.5px solid #2563eb;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(37,99,235,.18);
+      font-family: inherit;
+      direction: rtl;
+    }
+    .short-link-banner[hidden] { display: none !important; }
+
+    .short-link-banner-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      white-space: nowrap;
+    }
+
+    .short-link-banner-url {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #2563eb;
+      text-decoration: none;
+      word-break: break-all;
+      max-width: 280px;
+    }
+    .short-link-banner-url:hover { text-decoration: underline; }
+
+    .short-link-banner-copy {
+      flex-shrink: 0;
+      padding: 4px 11px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+    }
+    .short-link-banner-copy:hover { background: #1d4ed8; }
+
+    @media screen and (max-width: 600px) {
+      .short-link-banner {
+        inset-inline-end: 8px;
+        top: 8px;
+        padding: 6px 10px;
+        gap: 6px;
+      }
+      .short-link-banner-url { max-width: 160px; font-size: 11px; }
+    }
+
+    @media print {
+      .short-link-banner { display: none !important; }
+    }
+
     .client-link-status {
       flex-basis: 100%;
       margin: 8px 0 0;
@@ -3746,6 +3811,11 @@
   <div class="back-bar" id="backBar">
     <button class="back-btn" id="backBtn" type="button">← חזרה לבחירה</button>
     <button class="back-btn print-catalog-btn" type="button" onclick="window.print()">🖨 הדפסה / PDF</button>
+  </div>
+  <div class="short-link-banner" id="shortLinkBanner" hidden>
+    <span class="short-link-banner-label">קישור מקוצר:</span>
+    <a class="short-link-banner-url" id="shortLinkBannerUrl" href="" target="_blank" rel="noopener"></a>
+    <button class="short-link-banner-copy" id="shortLinkBannerCopy" type="button">העתק</button>
   </div>
   <header class="screen-controls">
     <section class="control-hero">
@@ -5229,6 +5299,29 @@ function chunkActivities(items, size) {
       return marketer === "israa" ? "i" : "y";
     }
 
+    async function showShortLinkBanner() {
+      const params = new URLSearchParams(window.location.search);
+      const sKey = (params.get("s") || "").trim().toLowerCase();
+      if (!sKey || !SHORT_LINK_PRESETS[sKey]) return;
+      const shortUrl = window.location.href;
+      const banner = document.getElementById("shortLinkBanner");
+      const urlEl = document.getElementById("shortLinkBannerUrl");
+      const copyBtn = document.getElementById("shortLinkBannerCopy");
+      if (!banner || !urlEl || !copyBtn) return;
+      urlEl.href = shortUrl;
+      urlEl.textContent = shortUrl;
+      banner.hidden = false;
+      const doCopy = async () => {
+        try {
+          await navigator.clipboard.writeText(shortUrl);
+          copyBtn.textContent = "הועתק ✓";
+          setTimeout(() => { copyBtn.textContent = "העתק"; }, 2200);
+        } catch { copyBtn.textContent = "העתק"; }
+      };
+      copyBtn.addEventListener("click", doCopy);
+      doCopy();
+    }
+
     async function showClientCatalog() {
       tryCanonicalizeUrl();
       const params = new URLSearchParams(window.location.search);
@@ -5251,6 +5344,7 @@ function chunkActivities(items, size) {
       document.body.classList.add("catalog-mode", "client-catalog-mode");
       document.title = "קטלוג סדנאות דיגיטלי | תעשיידע";
       await waitForCatalogImages();
+      await showShortLinkBanner();
     }
 
     function compressNumericRanges(values) {
@@ -5947,7 +6041,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=316").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=317").then(registration => registration.update());
       });
     }
 
