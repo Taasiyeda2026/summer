@@ -5078,9 +5078,20 @@ function chunkActivities(items, size) {
       summer: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37"
     };
 
+    const SHORT_LINK_PRESETS = {
+      wy: { w: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37,24", p: true, m: true, c: "y" },
+      wi: { w: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37,24", p: true, m: true, c: "i" }
+    };
+
+    function resolveShortPreset(params) {
+      const sKey = (params.get("s") || "").trim().toLowerCase();
+      return SHORT_LINK_PRESETS[sKey] || null;
+    }
+
     function isClientCatalogRequest() {
       const params = new URLSearchParams(window.location.search);
-      return params.has("client") || params.has("set");
+      if (params.has("client") || params.has("set")) return true;
+      return !!resolveShortPreset(params);
     }
 
     function expandClientItemToken(token) {
@@ -5106,6 +5117,16 @@ function chunkActivities(items, size) {
       const wParam = params.get("w") || params.get("items") || "";
       if (wParam) {
         return wParam
+          .split(",")
+          .flatMap(expandClientItemToken)
+          .map(item => item.trim())
+          .filter(Boolean);
+      }
+
+      // 1.5. s= short preset — supplies w when no explicit w
+      const sPreset = resolveShortPreset(params);
+      if (sPreset) {
+        return sPreset.w
           .split(",")
           .flatMap(expandClientItemToken)
           .map(item => item.trim())
@@ -5178,11 +5199,20 @@ function chunkActivities(items, size) {
 
     async function showClientCatalog() {
       const params = new URLSearchParams(window.location.search);
-      coverLetterCheckbox.checked = hasTruthyParam(params, "m");
-      const marketer = normalizeMarketerParam(params.get("c"));
+      const sPreset = resolveShortPreset(params);
+
+      // p / m: true if explicit in URL or supplied by s= preset
+      const showPrices = hasTruthyParam(params, "p") || hasTruthyParam(params, "prices") || !!(sPreset && sPreset.p);
+      const showCoverLetter = hasTruthyParam(params, "m") || !!(sPreset && sPreset.m);
+
+      // c: explicit URL value overrides s= preset default
+      const cParam = params.has("c") ? params.get("c") : (sPreset ? sPreset.c : null);
+      const marketer = normalizeMarketerParam(cParam);
+
+      coverLetterCheckbox.checked = showCoverLetter;
       const marketerRadio = document.querySelector(`input[name="marketerRadio"][value="${marketer}"]`);
       if (marketerRadio) marketerRadio.checked = true;
-      showPricesCheckbox.checked = hasTruthyParam(params, "p") || hasTruthyParam(params, "prices");
+      showPricesCheckbox.checked = showPrices;
       renderCatalog(getClientCatalogActivities());
       document.body.classList.remove("is-course-catalog");
       document.body.classList.add("catalog-mode", "client-catalog-mode");
@@ -5867,7 +5897,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=311").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=312").then(registration => registration.update());
       });
     }
 
