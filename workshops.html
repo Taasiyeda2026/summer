@@ -5227,8 +5227,8 @@ function chunkActivities(items, size) {
       const marketer = normalizeMarketerParam(cParam);
 
       coverLetterCheckbox.checked = showCoverLetter;
-      const marketerRadio = document.querySelector(`input[name="marketerRadio"][value="${marketer}"]`);
-      if (marketerRadio) marketerRadio.checked = true;
+      const marketerSelectEl = document.getElementById("marketerSelect");
+      if (marketerSelectEl) marketerSelectEl.value = marketer;
       showPricesCheckbox.checked = showPrices;
       renderCatalog(getClientCatalogActivities());
       document.body.classList.remove("is-course-catalog");
@@ -5914,7 +5914,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=314").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=315").then(registration => registration.update());
       });
     }
 
