@@ -897,7 +897,8 @@
       box-shadow: 0 10px 24px rgba(20,34,66,.08);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 5mm;
     }
 
     .cover-letter-title {
@@ -974,144 +975,80 @@
       border-bottom: 1.4pt solid rgba(32,59,122,.88);
     }
 
-    /* ─── Cover letter block: 3-zone flex column ─── */
-    .cl-zone-a {
+    /* ─── Cover letter: spacious single-column layout ─── */
+    .cl-hero {
       text-align: center;
-      padding: 2mm 0 2.5mm;
-      margin-bottom: 2.5mm;
+      padding-bottom: 3mm;
       border-bottom: 1px solid rgba(32,59,122,.13);
-      flex-shrink: 0;
     }
     .cl-brand-title {
       margin: 0;
-      font-size: 27px;
+      font-size: 28px;
       font-weight: 950;
       color: var(--blue);
-      line-height: 1;
+      line-height: 1.05;
       letter-spacing: -.3px;
     }
     .cl-brand-tagline {
-      margin: 1.2mm 0 0;
-      font-size: 14.5px;
+      margin: 2mm 0 0;
+      font-size: 15px;
       font-weight: 950;
       color: var(--pink);
       letter-spacing: .5px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .cl-brand-sub {
-      margin: 1mm 0 0;
-      font-size: 11.5px;
-      font-weight: 700;
+    .cl-intro {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
       color: #334155;
-      line-height: 1.35;
+      line-height: 1.6;
     }
-    .cl-zone-b {
+    .cl-values-grid {
       display: grid;
-      grid-template-columns: 1.25fr 1fr 1fr;
-      gap: 3.5mm;
-      flex: 1 1 auto;
-      min-height: 0;
-      margin-bottom: 2.5mm;
-      align-items: start;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5mm;
     }
-    .cl-section-label {
-      margin: 0 0 1.2mm;
-      font-size: 10px;
-      font-weight: 950;
-      color: var(--blue);
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      padding-bottom: 0.8mm;
-      border-bottom: 1.5pt solid var(--blue);
+    .cl-value {
+      padding: 2.8mm 4mm 2.8mm 3mm;
+      font-size: 13px;
+      font-weight: 800;
+      color: #1a2744;
+      line-height: 1.35;
+      background: rgba(32,59,122,.04);
+      border-radius: 2mm;
+      border-right: 3pt solid var(--pink);
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .cl-desc-col {
+    .cl-domains {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
       gap: 2mm;
     }
-    .cl-desc-text {
-      margin: 0;
+    .cl-domains-label {
       font-size: 11.5px;
-      font-weight: 600;
-      color: #334155;
-      line-height: 1.45;
+      font-weight: 950;
+      color: var(--blue);
+      white-space: nowrap;
     }
     .cl-tags-wrap {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2mm;
+      gap: 1.5mm;
     }
     .cl-tag {
       display: inline-block;
-      padding: .6mm 2.2mm;
+      padding: .7mm 2.5mm;
       border-radius: 999px;
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 800;
       white-space: nowrap;
-      border: 1px solid currentColor;
+      border: 1.2px solid currentColor;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
-    }
-    .cl-values-col {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2mm;
-    }
-    .cl-values-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1mm;
-    }
-    .cl-value-item {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: #1a2744;
-      line-height: 1.3;
-      padding: 0.8mm 1.8mm 0.8mm 1mm;
-      background: rgba(32,59,122,.045);
-      border-radius: 1.5mm;
-      border-right: 2.5pt solid var(--pink);
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .cl-how-col {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2mm;
-    }
-    .cl-how-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5mm;
-    }
-    .cl-how-card {
-      display: flex;
-      flex-direction: column;
-      gap: .5mm;
-      padding: 1.8mm 2mm;
-      border-radius: 2mm;
-      border: 1px solid rgba(32,59,122,.15);
-      background: rgba(32,59,122,.04);
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .cl-how-name {
-      font-size: 10.5px;
-      font-weight: 950;
-      color: var(--blue);
-      line-height: 1.2;
-    }
-    .cl-how-desc {
-      font-size: 10px;
-      font-weight: 600;
-      color: #475569;
-      line-height: 1.2;
     }
     .cl-product-banner {
       text-align: center;
@@ -4053,64 +3990,41 @@ function chunkActivities(items, size) {
             <h1 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle}</h1>
           </div>
         </header>
-        <div class="cover-bottom-grid"></div>
+
         <section class="cover-letter-block" aria-label="מכתב מקדים">
 
-          <!-- א. כותרת מותג -->
-          <div class="cl-zone-a">
+          <div class="cl-hero">
             <h2 class="cl-brand-title">קטלוג סדנאות טכנו-כיף</h2>
             <p class="cl-brand-tagline">חוקרים · יוצרים · מגלים</p>
-            <p class="cl-brand-sub">סדנאות ${stemHTML} חווייתיות עם תוצר אישי לכל משתתף — לכיתות א׳ עד ו׳</p>
           </div>
 
-          <!-- ב. שלושה עמודים: תיאור | יתרונות | איך זה עובד -->
-          <div class="cl-zone-b">
+          <p class="cl-intro">תעשיידע מזמינה את תלמידי כיתות א׳–ו׳ לחוויה של עשייה, יצירה, מדע וטכנולוגיה. הסדנאות משלבות ידע מדעי, התנסות מעשית ותוצר אישי שהתלמיד בונה ולוקח הביתה. הקטלוג מרכז מגוון סדנאות בתחומי STEM ומייקרים — לבחירה גמישה, מסדנה בודדת ועד קייטנה מלאה.</p>
 
-            <div class="cl-desc-col">
-              <p class="cl-section-label">על הקטלוג</p>
-              <p class="cl-desc-text">תעשיידע מזמינה את תלמידי כיתות א׳–ו׳ לחוויה של עשייה, יצירה, מדע וטכנולוגיה. הסדנאות משלבות ידע, התנסות מעשית, סקרנות והנאה — ובכל אחת התלמידים בונים תוצר אישי שהולך הביתה.</p>
-              <div>
-                <p class="cl-section-label">תחומי הקטלוג</p>
-                <div class="cl-tags-wrap">
-                  <span class="cl-tag" style="${domainTagStyle("אופטיקה")}">אופטיקה</span>
-                  <span class="cl-tag" style="${domainTagStyle("פיזיקה")}">פיזיקה</span>
-                  <span class="cl-tag" style="${domainTagStyle("הנדסה")}">הנדסה</span>
-                  <span class="cl-tag" style="${domainTagStyle("כימיה")}">כימיה</span>
-                  <span class="cl-tag" style="${domainTagStyle("ביולוגיה")}">ביולוגיה</span>
-                  <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
-                  <span class="cl-tag" style="${domainTagStyle("טכנולוגיה")}">טכנולוגיה</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="cl-values-col">
-              <p class="cl-section-label">למה טכנו-כיף?</p>
-              <ul class="cl-values-list">
-                <li class="cl-value-item">תוצר אישי לכל משתתף</li>
-                <li class="cl-value-item">למידה חווייתית ומעשית</li>
-                <li class="cl-value-item">תחומי STEM מגוונים</li>
-                <li class="cl-value-item">מתאים לקייטנות ולתוכניות קיץ</li>
-                <li class="cl-value-item">סדנאות קצרות וממוקדות — 45 דקות</li>
-                <li class="cl-value-item">מעודד סקרנות, יצירה וביטוי אישי</li>
-              </ul>
-            </div>
-
-            <div class="cl-how-col">
-              <p class="cl-section-label">איך זה עובד?</p>
-              <div class="cl-how-grid">
-                <div class="cl-how-card"><b class="cl-how-name">סדנה בודדת</b><span class="cl-how-desc">45 דקות — ידע + יצירה + תוצר</span></div>
-                <div class="cl-how-card"><b class="cl-how-name">יום פעילות</b><span class="cl-how-desc">מספר סדנאות ביום אחד</span></div>
-                <div class="cl-how-card"><b class="cl-how-name">קייטנה מלאה</b><span class="cl-how-desc">תוכנית קיץ — 5 ימים</span></div>
-                <div class="cl-how-card"><b class="cl-how-name">שילוב גמיש</b><span class="cl-how-desc">חדרי בריחה + סדנאות</span></div>
-              </div>
-            </div>
-
+          <div class="cl-values-grid">
+            <div class="cl-value">תוצר אישי לכל משתתף בכל סדנה</div>
+            <div class="cl-value">תחומי STEM מגוונים — 7 תחומי דעת</div>
+            <div class="cl-value">למידה חווייתית, מעשית ומעוררת סקרנות</div>
+            <div class="cl-value">מתאים לבתי ספר, קייטנות ותוכניות קיץ</div>
           </div>
 
-          <!-- ג. מסר מסכם -->
+          <div class="cl-domains">
+            <span class="cl-domains-label">תחומים בקטלוג:</span>
+            <div class="cl-tags-wrap">
+              <span class="cl-tag" style="${domainTagStyle("אופטיקה")}">אופטיקה</span>
+              <span class="cl-tag" style="${domainTagStyle("פיזיקה")}">פיזיקה</span>
+              <span class="cl-tag" style="${domainTagStyle("הנדסה")}">הנדסה</span>
+              <span class="cl-tag" style="${domainTagStyle("כימיה")}">כימיה</span>
+              <span class="cl-tag" style="${domainTagStyle("ביולוגיה")}">ביולוגיה</span>
+              <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
+              <span class="cl-tag" style="${domainTagStyle("תעופה")}">תעופה</span>
+            </div>
+          </div>
+
           <div class="cl-product-banner">✦ בכל סדנה כל משתתף בונה תוצר אישי ולוקח אותו הביתה ✦</div>
 
         </section>
+
+        <div class="cover-bottom-grid"></div>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const grid = page.querySelector(".cover-bottom-grid");
