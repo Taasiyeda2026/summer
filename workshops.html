@@ -864,12 +864,20 @@
 
     .cover-letter-logo {
       position: absolute;
-      top: 7mm;
-      left: 8mm;
+      top: 8mm;
+      left: 10mm;
       z-index: 2;
-      height: 10mm;
-      width: auto;
+      width: 21mm;
+      height: auto;
+      max-height: 18mm;
       object-fit: contain;
+      padding: 1.5mm 2mm;
+      border-radius: 3mm;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(32,59,122,.10);
+      box-shadow: 0 7px 18px rgba(20,34,66,.08);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     .cover-letter-page-title {
@@ -995,7 +1003,7 @@
     /* ─── Cover letter: spacious single-column layout ─── */
     .cl-hero {
       text-align: center;
-      padding-bottom: 1.5mm;
+      padding: 0 24mm 1.5mm;
       border-bottom: 1px solid rgba(32,59,122,.13);
     }
     .cl-brand-title {
@@ -2494,6 +2502,17 @@
         min-height: 0 !important;
       }
 
+      .cover-letter-logo {
+        left: 8mm !important;
+        width: 17mm !important;
+        max-height: 15mm !important;
+        padding: 1mm 1.5mm !important;
+      }
+
+      .cl-hero {
+        padding-inline: 18mm !important;
+      }
+
       .cover-bottom-grid {
         grid-template-columns: repeat(3, 1fr) !important;
         grid-template-rows: repeat(2, 1fr) !important;
@@ -3033,7 +3052,11 @@
       }
     }
 
-    /* ─── Image zoom overlay ─── */
+    /* ─── Rich workshop details modal ─── */
+    body.workshop-modal-open {
+      overflow: hidden;
+    }
+
     .img-zoom-overlay {
       position: fixed;
       inset: 0;
@@ -3041,18 +3064,184 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(23, 32, 51, 0.45);
-      cursor: zoom-out;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(52,195,213,.22), transparent 30%),
+        radial-gradient(circle at 88% 14%, rgba(216,47,120,.18), transparent 34%),
+        rgba(23, 32, 51, 0.58);
+      backdrop-filter: blur(8px);
     }
 
-    .img-zoom-overlay img {
-      border-radius: 10px;
-      background: #fff;
-      padding: 6px;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
-      max-width: 90vw;
-      max-height: 85vh;
+    .workshop-modal {
+      width: min(1060px, 96vw);
+      max-height: min(88vh, 820px);
+      overflow: hidden;
+      direction: rtl;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(52,195,213,.12), transparent 28%),
+        radial-gradient(circle at 96% 10%, rgba(216,47,120,.10), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,253,247,.96));
+      border: 1px solid rgba(255,255,255,.92);
+      border-radius: 30px;
+      box-shadow: 0 28px 80px rgba(10, 22, 50, .34);
+      position: relative;
+    }
+
+    .workshop-modal-close {
+      position: absolute;
+      top: 14px;
+      inset-inline-start: 14px;
+      z-index: 2;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      background: #172033;
+      color: white;
+      font-size: 25px;
+      line-height: 1;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(23,32,51,.25);
+    }
+
+    .workshop-modal-inner {
+      display: grid;
+      grid-template-columns: minmax(300px, .92fr) minmax(0, 1.08fr);
+      gap: 0;
+      max-height: inherit;
+    }
+
+    .workshop-modal-media {
+      min-height: 520px;
+      padding: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(32,59,122,.06), rgba(52,195,213,.08));
+      border-inline-start: 1px solid rgba(23,32,51,.08);
+    }
+
+    .workshop-modal-media img {
+      width: 100%;
+      max-height: 72vh;
       object-fit: contain;
+      border-radius: 24px;
+      background: #fff;
+      padding: 10px;
+      box-shadow: 0 18px 45px rgba(20,34,66,.16);
+    }
+
+    .workshop-modal-content {
+      padding: 34px 34px 30px;
+      overflow: auto;
+      text-align: right;
+    }
+
+    .workshop-modal-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .workshop-modal-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(32,59,122,.08);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .workshop-modal h2 {
+      margin: 0 0 12px;
+      color: var(--blue);
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.06;
+      font-weight: 950;
+      letter-spacing: -.03em;
+    }
+
+    .workshop-modal-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .workshop-modal-meta-item {
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(23,32,51,.09);
+      color: #344054;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .workshop-modal-meta-item strong {
+      display: block;
+      color: var(--pink);
+      font-size: 12px;
+      font-weight: 950;
+      margin-bottom: 2px;
+    }
+
+    .workshop-modal-section {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(32,59,122,.12);
+    }
+
+    .workshop-modal-section h3 {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .workshop-modal-section p {
+      margin: 0;
+      color: #334155;
+      font-size: 16px;
+      font-weight: 650;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    .workshop-modal-section ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .workshop-modal-section li {
+      position: relative;
+      padding-inline-start: 0;
+      padding-inline-end: 18px;
+      color: #334155;
+      font-size: 15.5px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .workshop-modal-section li::before {
+      content: "•";
+      position: absolute;
+      inset-inline-end: 0;
+      color: var(--pink);
+      font-size: 20px;
+      line-height: 1;
     }
 
     .catalog-mode .image-box img,
@@ -3060,6 +3249,44 @@
     .catalog-mode .domain-card img,
     .catalog-mode .activity-card img {
       cursor: pointer;
+    }
+
+    @media screen and (max-width: 760px) {
+      .img-zoom-overlay {
+        align-items: stretch;
+        padding: 12px;
+      }
+
+      .workshop-modal {
+        width: 100%;
+        max-height: calc(100vh - 24px);
+        border-radius: 24px;
+      }
+
+      .workshop-modal-inner {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .workshop-modal-media {
+        min-height: auto;
+        padding: 18px 18px 8px;
+        border-inline-start: 0;
+        border-bottom: 1px solid rgba(23,32,51,.08);
+      }
+
+      .workshop-modal-media img {
+        max-height: 34vh;
+        border-radius: 18px;
+      }
+
+      .workshop-modal-content {
+        padding: 20px 18px 24px;
+      }
+
+      .workshop-modal-meta {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media print {
@@ -3904,6 +4131,7 @@ function chunkActivities(items, size) {
       const isEscape = activity.type === "חדר בריחה";
       const escapeLayout = isEscape || useEscapeLayout;
       card.className = escapeLayout ? "activity-card escape-room-card" : "activity-card";
+      card.dataset.activityId = activity.clientId || activity.id || "";
       if (!escapeLayout && isHorizontal) card.classList.add("horizontal-card");
       card.style.setProperty("--accent", activity.accent || "#203b7a");
 
@@ -3971,6 +4199,7 @@ function chunkActivities(items, size) {
     function renderDomainCard(activity, showDomainTag = false) {
       const card = document.createElement("article");
       card.className = "domain-card";
+      card.dataset.activityId = activity.clientId || activity.id || "";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
 
       const priceHTML = showPrices && activity.price
@@ -4238,12 +4467,29 @@ function chunkActivities(items, size) {
       return params.has("client");
     }
 
+    function expandClientItemToken(token) {
+      const trimmed = decodeURIComponent(String(token || "")).trim();
+      if (!trimmed) return [];
+      const rangeMatch = trimmed.match(/^(\d+)\s*-\s*(\d+)$/);
+      if (!rangeMatch) return [trimmed];
+      const start = Number(rangeMatch[1]);
+      const end = Number(rangeMatch[2]);
+      if (!Number.isInteger(start) || !Number.isInteger(end)) return [trimmed];
+      const step = start <= end ? 1 : -1;
+      const values = [];
+      for (let value = start; step > 0 ? value <= end : value >= end; value += step) {
+        values.push(String(value));
+      }
+      return values;
+    }
+
     function selectedClientItemIds() {
       const params = new URLSearchParams(window.location.search);
       const rawItems = params.get("w") || params.get("items") || "";
       return rawItems
         .split(",")
-        .map(item => decodeURIComponent(item).trim())
+        .flatMap(expandClientItemToken)
+        .map(item => item.trim())
         .filter(Boolean);
     }
 
@@ -4254,13 +4500,30 @@ function chunkActivities(items, size) {
       return activities.filter(activity => requested.has(String(activity.clientId)) || requested.has(String(activity.id ?? "")));
     }
 
+    function hasTruthyParam(params, key) {
+      if (!params.has(key)) return false;
+      const value = params.get(key);
+      return value === "" || value === "1" || String(value).toLowerCase() === "true";
+    }
+
+    function normalizeMarketerParam(value) {
+      const marketer = String(value || "").trim().toLowerCase();
+      if (marketer === "i" || marketer === "israa") return "israa";
+      if (marketer === "y" || marketer === "yael") return "yael";
+      return "yael";
+    }
+
+    function marketerShortCode(marketer) {
+      return marketer === "israa" ? "i" : "y";
+    }
+
     async function showClientCatalog() {
       const params = new URLSearchParams(window.location.search);
-      coverLetterCheckbox.checked = params.get("m") === "1";
-      const marketer = ["yael", "israa"].includes(params.get("c")) ? params.get("c") : "yael";
+      coverLetterCheckbox.checked = hasTruthyParam(params, "m");
+      const marketer = normalizeMarketerParam(params.get("c"));
       const marketerSelect = document.getElementById("marketerSelect");
       if (marketerSelect) marketerSelect.value = marketer;
-      showPricesCheckbox.checked = params.get("p") === "1" || params.get("prices") === "1";
+      showPricesCheckbox.checked = hasTruthyParam(params, "p") || hasTruthyParam(params, "prices");
       renderCatalog(getClientCatalogActivities());
       document.body.classList.remove("is-course-catalog");
       document.body.classList.add("catalog-mode", "client-catalog-mode");
@@ -4268,15 +4531,48 @@ function chunkActivities(items, size) {
       await waitForCatalogImages();
     }
 
+    function compressNumericRanges(values) {
+      const result = [];
+      let index = 0;
+      while (index < values.length) {
+        const current = String(values[index]);
+        if (!/^\d+$/.test(current)) {
+          result.push(current);
+          index++;
+          continue;
+        }
+        const start = Number(current);
+        let end = start;
+        let cursor = index + 1;
+        while (cursor < values.length && /^\d+$/.test(String(values[cursor])) && Number(values[cursor]) === end + 1) {
+          end = Number(values[cursor]);
+          cursor++;
+        }
+        result.push(start === end ? String(start) : `${start}-${end}`);
+        index = cursor;
+      }
+      return result.join(",");
+    }
+
+    function selectedActivitiesIncludeFullCatalog(selectedActivities) {
+      if (!activities.length || selectedActivities.length !== activities.length) return false;
+      const selectedIds = new Set(selectedActivities.map(activity => String(activity.clientId || activity.id || "")));
+      return activities.every(activity => selectedIds.has(String(activity.clientId || activity.id || "")));
+    }
+
     function buildClientCatalogUrl() {
       const params = [];
-      const ids = getSelectedActivities().map(activity => activity.clientId).filter(Boolean);
+      const selectedActivities = getSelectedActivities();
+      const ids = selectedActivities.map(activity => activity.clientId).filter(Boolean).map(String);
       if (!ids.length) return "";
-      params.push(`w=${ids.map(encodeURIComponent).join(",")}`);
-      if (showPricesCheckbox.checked) params.push("p=1");
-      if (coverLetterCheckbox.checked) params.push("m=1");
-      params.push(`c=${encodeURIComponent(getSelectedMarketer() || "yael")}`);
-      return `https://taasiyeda2026.github.io/summer/catalog/?${params.join("&")}`;
+      if (!selectedActivitiesIncludeFullCatalog(selectedActivities)) {
+        params.push(`w=${compressNumericRanges(ids).split(",").map(encodeURIComponent).join(",")}`);
+      }
+      if (showPricesCheckbox.checked) params.push("p");
+      if (coverLetterCheckbox.checked) params.push("m");
+      const marketer = getSelectedMarketer() || "yael";
+      params.push(`c=${encodeURIComponent(marketerShortCode(marketer))}`);
+      return `https://taasiyeda2026.github.io/summer/catalog/${params.length ? `?${params.join("&")}` : ""}`;
     }
 
     async function shareClientCatalogLink() {
@@ -4310,6 +4606,7 @@ function chunkActivities(items, size) {
     function renderClientCatalogCard(activity) {
       const card = document.createElement("article");
       card.className = "client-workshop-card";
+      card.dataset.activityId = activity.clientId || activity.id || "";
       const gradeText = clientGradeLabels(activity);
       const productText = activity.product || activity.personalProduct || "";
       const description = activity.shortLine || activity.text || "";
@@ -4325,7 +4622,7 @@ function chunkActivities(items, size) {
           <h2>${escapeHTML(activity.title)}</h2>
           ${description ? `<p class="client-card-description">${escapeHTML(description)}</p>` : ""}
           ${productText ? `<p class="client-product">תוצר אישי: ${escapeHTML(productText)}</p>` : ""}
-          ${activity.price ? `<p class="client-price">מחיר: ${escapeHTML(String(activity.price))} ₪</p>` : ""}
+          ${showPrices && activity.price ? `<p class="client-price">מחיר: ${escapeHTML(String(activity.price))} ₪</p>` : ""}
         </div>`;
       return card;
     }
@@ -4656,31 +4953,114 @@ function chunkActivities(items, size) {
       ]);
     }
 
-    function openImageZoom(img) {
-      document.querySelector(".img-zoom-overlay")?.remove();
+    function normalizeModalList(value) {
+      if (Array.isArray(value)) return value.map(item => String(item || "").trim()).filter(Boolean);
+      const text = String(value || "").trim();
+      if (!text) return [];
+      return text
+        .split(/\n|;|•/)
+        .map(item => item.replace(/^[-–—]\s*/, "").trim())
+        .filter(Boolean);
+    }
 
-      const rect = img.getBoundingClientRect();
+    function firstTextValue(...values) {
+      return values.map(value => String(value || "").trim()).find(Boolean) || "";
+    }
+
+    function findActivityForImage(img) {
+      const holder = img.closest("[data-activity-id]");
+      const id = holder?.dataset.activityId || "";
+      if (id) {
+        const match = activities.find(activity => String(activity.clientId) === String(id) || String(activity.id ?? "") === String(id));
+        if (match) return match;
+      }
+      const alt = String(img.alt || "").trim();
+      if (alt) return activities.find(activity => activity.title === alt) || null;
+      return null;
+    }
+
+    function renderModalMeta(label, value) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      return `<div class="workshop-modal-meta-item"><strong>${escapeHTML(label)}</strong>${escapeHTML(text)}</div>`;
+    }
+
+    function renderModalSection(title, content, isList = false) {
+      if (isList) {
+        const items = normalizeModalList(content);
+        if (!items.length) return "";
+        return `<section class="workshop-modal-section"><h3>${escapeHTML(title)}</h3><ul>${items.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></section>`;
+      }
+      const text = firstTextValue(content);
+      if (!text) return "";
+      return `<section class="workshop-modal-section"><h3>${escapeHTML(title)}</h3><p>${escapeHTML(text)}</p></section>`;
+    }
+
+    function closeWorkshopModal() {
+      document.querySelector(".img-zoom-overlay")?.remove();
+      document.body.classList.remove("workshop-modal-open");
+    }
+
+    function openWorkshopDetailsModal(img) {
+      const activity = findActivityForImage(img);
+      if (!activity) return;
+
+      closeWorkshopModal();
 
       const overlay = document.createElement("div");
       overlay.className = "img-zoom-overlay";
+      overlay.setAttribute("role", "presentation");
 
-      const big = document.createElement("img");
-      big.src = img.currentSrc || img.src;
-      big.alt = img.alt || "";
-      big.style.width = Math.min(rect.width * 3, window.innerWidth * 0.9) + "px";
+      const gradeText = clientGradeLabels(activity);
+      const description = firstTextValue(activity.fullDescription, activity.description, activity.details, activity.text, activity.shortLine);
+      const goals = normalizeModalList(activity.goals).length ? activity.goals : (normalizeModalList(activity.objectives).length ? activity.objectives : activity.outcomes);
+      const productText = firstTextValue(activity.personalProduct, activity.product);
+      const durationText = firstTextValue(activity.duration, activity.durationMinutes ? `${activity.durationMinutes} דקות` : "");
+      const priceText = showPrices && activity.price ? `${activity.price} ₪` : "";
+      const imageSrc = img.currentSrc || img.src || activity.image;
 
-      overlay.appendChild(big);
+      overlay.innerHTML = `
+        <article class="workshop-modal" role="dialog" aria-modal="true" aria-label="${escapeHTML(activity.title)}">
+          <button class="workshop-modal-close" type="button" aria-label="סגירת חלון">×</button>
+          <div class="workshop-modal-inner">
+            <div class="workshop-modal-content">
+              <div class="workshop-modal-kicker">
+                ${activity.domain ? `<span class="workshop-modal-tag" style="${domainTagStyle(activity.domain)}">${escapeHTML(activity.domain)}</span>` : ""}
+                ${gradeText ? `<span class="workshop-modal-tag">${escapeHTML(gradeText)}</span>` : ""}
+              </div>
+              <h2>${escapeHTML(activity.title)}</h2>
+              <div class="workshop-modal-meta">
+                ${renderModalMeta("תחום", activity.domain)}
+                ${renderModalMeta("שכבות גיל", gradeText)}
+                ${renderModalMeta("משך פעילות", durationText)}
+                ${renderModalMeta("מחיר", priceText)}
+              </div>
+              ${renderModalSection("תיאור הסדנה", description)}
+              ${renderModalSection("מטרות הסדנה", goals, true)}
+              ${renderModalSection("תוצר אישי", productText)}
+            </div>
+            <div class="workshop-modal-media">
+              <img src="${escapeHTML(imageSrc)}" alt="${escapeHTML(activity.title)}" decoding="async">
+            </div>
+          </div>
+        </article>`;
 
-      overlay.addEventListener("click", () => overlay.remove());
+      overlay.addEventListener("click", event => {
+        if (event.target === overlay || event.target.closest(".workshop-modal-close")) {
+          closeWorkshopModal();
+        }
+      });
 
       document.addEventListener("keydown", function esc(e) {
         if (e.key === "Escape") {
-          overlay.remove();
+          closeWorkshopModal();
           document.removeEventListener("keydown", esc);
         }
       });
 
       document.body.appendChild(overlay);
+      document.body.classList.add("workshop-modal-open");
+      overlay.querySelector(".workshop-modal-close")?.focus({ preventScroll: true });
     }
 
     booklet.addEventListener("click", event => {
@@ -4689,7 +5069,7 @@ function chunkActivities(items, size) {
       const img = event.target.closest(".image-box img, .ms-center-img, .domain-card img, .activity-card img");
 
       if (img) {
-        openImageZoom(img);
+        openWorkshopDetailsModal(img);
       }
     });
 
