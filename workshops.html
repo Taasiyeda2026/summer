@@ -2080,7 +2080,7 @@
 
     .domain-card-desc {
       margin: 0;
-      font-size: 9.5px;
+      font-size: 10.5px;
       line-height: 1.35;
       font-weight: 600;
       color: #334155;
@@ -2095,7 +2095,9 @@
     }
 
     .domain-card-title-pill {
-      align-self: stretch;
+      align-self: center;
+      width: 82%;
+      max-width: 82%;
       text-align: center;
       padding: 1mm 3mm;
       border-radius: 999px;
@@ -2116,8 +2118,8 @@
 
     .domain-card-img-wrap {
       flex-shrink: 0;
-      width: 38mm;
-      height: 38mm;
+      width: 34mm;
+      height: 34mm;
       aspect-ratio: 1/1;
       align-self: center;
       border-radius: 2.5mm;
@@ -3747,9 +3749,8 @@ function chunkActivities(items, size) {
           <div class="domain-card-img-wrap">${imgMarkup}</div>
           <p class="domain-card-desc">${escapeHTML(activity.shortLine || activity.text)}</p>
           <div class="domain-card-footer">
-            <span class="domain-card-product">תוצר: ${escapeHTML(activity.product)}</span>
-            ${priceHTML}
             ${domainTagHTML}
+            ${priceHTML}
           </div>
         </div>`;
 
