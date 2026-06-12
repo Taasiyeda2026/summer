@@ -3696,10 +3696,28 @@ function chunkActivities(items, size) {
     function buildSlotPages(sortedActivities) {
       // Flat 12-per-page pagination with null-padding on the last page.
       // Guarantees every page has exactly 12 items → fixed 4×3 grid on every page.
+      // Grade-group boundaries are row-aligned (3 cols) so a new grade group
+      // always starts at the leftmost column of a row.
       const PAGE_SIZE = 12;
+      const COLS = 3;
+
+      // Insert row-alignment nulls at every grade-group boundary
+      const padded = [];
+      for (let i = 0; i < sortedActivities.length; i++) {
+        const a = sortedActivities[i];
+        const prev = sortedActivities[i - 1];
+        if (i > 0 && a && prev && a.gradeGroup !== prev.gradeGroup) {
+          const rem = padded.length % COLS;
+          if (rem !== 0) {
+            for (let p = 0; p < COLS - rem; p++) padded.push(null);
+          }
+        }
+        padded.push(a);
+      }
+
       const pages = [];
-      for (let i = 0; i < sortedActivities.length; i += PAGE_SIZE) {
-        const page = sortedActivities.slice(i, i + PAGE_SIZE);
+      for (let i = 0; i < padded.length; i += PAGE_SIZE) {
+        const page = padded.slice(i, i + PAGE_SIZE);
         while (page.length < PAGE_SIZE) page.push(null);
         pages.push(page);
       }
