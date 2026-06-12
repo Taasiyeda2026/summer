@@ -2061,9 +2061,11 @@
 
     .domain-card-img-wrap {
       flex-shrink: 0;
-      width: 26mm;
-      height: 26mm;
-      border-radius: 2mm;
+      width: 36mm;
+      height: 36mm;
+      aspect-ratio: 1/1;
+      align-self: flex-start;
+      border-radius: 2.5mm;
       overflow: hidden;
     }
 
@@ -2075,17 +2077,13 @@
       display: block;
     }
 
-    .domain-card-desc {
-      flex: 1;
-      margin: 0;
-      font-size: 9.8px;
-      line-height: 1.45;
-      text-align: center;
-      color: #374151;
-      font-weight: 500;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+    .mosaic-img-small {
+      flex-shrink: 0;
+      width: 16mm;
+      height: 16mm;
+      aspect-ratio: 1/1;
+      align-self: flex-start;
+      border-radius: 2mm;
       overflow: hidden;
       min-height: 0;
       align-self: stretch;
