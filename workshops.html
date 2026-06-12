@@ -2324,7 +2324,7 @@
 
     .domain-card-footer {
       margin-top: auto;
-      padding-top: 1mm;
+      padding-top: 3mm;
       border-top: 1px solid rgba(23,32,51,.08);
       display: flex;
       flex-wrap: wrap;
@@ -5240,7 +5240,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=302").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=303").then(registration => registration.update());
       });
     }
 
