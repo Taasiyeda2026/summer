@@ -887,7 +887,7 @@
       overflow: hidden;
       direction: rtl;
       text-align: right;
-      padding: 3.5mm 6mm 3.2mm;
+      padding: 4.5mm 7mm 4mm;
       border: 1px solid rgba(32,59,122,.16);
       border-radius: 4mm;
       background:
@@ -895,45 +895,48 @@
         radial-gradient(circle at 94% 10%, rgba(216,47,120,.12), transparent 28%),
         linear-gradient(135deg, rgba(255,255,255,.96), rgba(250,253,255,.9));
       box-shadow: 0 10px 24px rgba(20,34,66,.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .cover-letter-title {
       margin: 0;
       color: var(--blue);
-      font-size: 24px;
-      line-height: 1.02;
+      font-size: 22px;
+      line-height: 1.1;
       font-weight: 950;
       letter-spacing: 0;
     }
 
     .cover-letter-tagline {
-      margin: .8mm 0 1.4mm;
+      margin: 0;
       color: #0f766e;
-      font-size: 14px;
+      font-size: 13.5px;
       line-height: 1.25;
       font-weight: 900;
     }
 
     .cover-letter-heading {
-      margin: 1.6mm 0 .8mm;
+      margin: 0;
       color: var(--ink);
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.15;
       font-weight: 950;
     }
 
     .cover-letter-text {
-      margin: 0 0 1mm;
+      margin: 0;
       color: #334155;
-      font-size: 12.2px;
-      line-height: 1.42;
+      font-size: 12px;
+      line-height: 1.4;
       font-weight: 600;
     }
 
     .cover-letter-section-title {
-      margin: 1.3mm 0 .6mm;
+      margin: 0;
       color: var(--blue);
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.2;
       font-weight: 950;
     }
@@ -944,7 +947,7 @@
       list-style: none;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: .8mm 4mm;
+      gap: .5mm 4mm;
     }
 
     .cover-letter-list li {
@@ -3728,7 +3731,6 @@ function chunkActivities(items, size) {
       card.className = "domain-card";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
 
-      const gradeLabel = ({"א-ג": "א׳–ג׳", "ד-ו": "ד׳–ו׳", "א-ו": "א׳–ו׳"})[activity.gradeGroup] || activity.gradeGroup;
       const priceHTML = showPrices && activity.price
         ? `<span class="domain-card-price">מחיר: ${escapeHTML(String(activity.price))} ₪</span>`
         : "";
@@ -3746,7 +3748,6 @@ function chunkActivities(items, size) {
           <p class="domain-card-desc">${escapeHTML(activity.shortLine || activity.text)}</p>
           <div class="domain-card-footer">
             <span class="domain-card-product">תוצר: ${escapeHTML(activity.product)}</span>
-            <span class="domain-card-grade">${escapeHTML(gradeLabel)}</span>
             ${priceHTML}
             ${domainTagHTML}
           </div>
@@ -3866,12 +3867,12 @@ function chunkActivities(items, size) {
       return ({ "א-ג": "כיתות א׳–ג׳", "ד-ו": "כיתות ד׳–ו׳", "א-ו": "כיתות א׳–ו׳" })[g] || g;
     }
 
-    function renderCoverLetterPage(items, pageIndex, totalPages, gradeLabel = "", contactLine = "") {
+    function renderCoverLetterPage(items, pageIndex, totalPages, _unused = "", contactLine = "") {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page cover-letter-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages} עם מכתב מקדים`);
       const stemHTML = `<span class="stem-word" dir="ltr"><span class="stem-s">S</span><span class="stem-t">T</span><span class="stem-e">E</span><span class="stem-m">M</span></span>`;
-      const gradeTitle = gradeLabel ? ` | ${escapeHTML(gradeLabel)}` : "";
+      const gradeTitle = escapeHTML(pageGradeTitle(items.slice(0, COVER_LETTER_ACTIVITIES)));
 
       page.innerHTML = `
         <header class="page-header">
@@ -3918,17 +3919,29 @@ function chunkActivities(items, size) {
       "א-ו": "כיתות א׳–ו׳",
     };
 
+    function pageGradeTitle(activities) {
+      const seen = new Set();
+      const ordered = [];
+      activities.forEach(a => {
+        const g = a && (a.gradeGroup || "");
+        if (g && !seen.has(g)) { seen.add(g); ordered.push(g); }
+      });
+      if (!ordered.length) return "";
+      return " | " + ordered.map(g => GRADE_STRIP_LABELS[g] || g).join(" | ");
+    }
+
     function renderContinuousPage(activities, pageIndex, totalPages, _unused = "", contactLine = "") {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page domain-catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
       const stemHTML = `<span class="stem-word" dir="ltr"><span class="stem-s">S</span><span class="stem-t">T</span><span class="stem-e">E</span><span class="stem-m">M</span></span>`;
+      const gradeTitle = escapeHTML(pageGradeTitle(activities));
 
       page.innerHTML = `
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
-            <h1 class="page-title">סדנאות ${stemHTML} חווייתיות</h1>
+            <h1 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle}</h1>
           </div>
         </header>
         <div class="page-grid-domains"></div>
