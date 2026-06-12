@@ -851,12 +851,13 @@
       grid-template-rows: var(--regular-card-row-height) var(--regular-card-row-height) var(--horizontal-card-height);
     }
 
-    .cover-letter-page .cover-letter-block,
-    .cover-letter-page .cover-catalog-header {
-      flex-shrink: 0;
+    .cover-letter-page .cover-bottom-grid {
+      flex: 0 0 130mm;
+      height: 130mm;
+      min-height: 0;
     }
 
-    .cover-letter-page .cover-bottom-grid {
+    .cover-letter-page .cover-letter-block {
       flex: 1 1 auto;
       min-height: 0;
     }
@@ -881,8 +882,7 @@
     .cover-letter-block {
       position: relative;
       z-index: 1;
-      flex: 0 0 50%;
-      max-height: 50%;
+      flex: 1 1 auto;
       min-height: 0;
       overflow: hidden;
       direction: rtl;
@@ -2438,6 +2438,12 @@
       }
 
       .cover-letter-page .cover-bottom-grid {
+        flex: 0 0 130mm !important;
+        height: 130mm !important;
+        min-height: 0 !important;
+      }
+
+      .cover-letter-page .cover-letter-block {
         flex: 1 1 auto !important;
         min-height: 0 !important;
       }
@@ -4014,9 +4020,10 @@ function chunkActivities(items, size) {
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
-            <h1 class="page-title cover-letter-page-title">טכנו-כיף</h1>
+            <h1 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle}</h1>
           </div>
         </header>
+        <div class="cover-bottom-grid"></div>
         <section class="cover-letter-block" aria-label="מכתב מקדים">
           <div class="cl-hero">
             <h2 class="cl-hero-title">טכנו-כיף</h2>
@@ -4050,13 +4057,6 @@ function chunkActivities(items, size) {
           </div>
           <div class="cl-product-banner">✦ בכל סדנה כל משתתף בונה תוצר אישי — ולוקח אותו הביתה ✦</div>
         </section>
-        <header class="cover-catalog-header" aria-label="כותרת הקטלוג">
-          <img class="page-header-logo" src="logo.png" alt="לוגו" />
-          <div>
-            <h2 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle}</h2>
-          </div>
-        </header>
-        <div class="cover-bottom-grid"></div>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const grid = page.querySelector(".cover-bottom-grid");
