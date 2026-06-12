@@ -2609,7 +2609,7 @@
     }
 
     .domain-card-price {
-      font-size: 8.5px;
+      font-size: 9.5px;
       color: #6B7A90;
       font-weight: 500;
     }
@@ -2618,9 +2618,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.3mm 2mm;
+      padding: 0.4mm 2.5mm;
       border-radius: 999px;
-      font-size: 8.5px;
+      font-size: 9.5px;
       font-weight: 700;
       color: white;
       -webkit-print-color-adjust: exact;
@@ -3472,7 +3472,7 @@
 
     .workshop-modal-section h3 {
       margin: 0 0 5px;
-      color: #0f8fa8;
+      color: var(--domain-color, #0f8fa8);
       font-size: 14px;
       font-weight: 800;
     }
@@ -5581,6 +5581,7 @@ function chunkActivities(items, size) {
       overlay.className = "img-zoom-overlay";
       overlay.setAttribute("role", "presentation");
 
+      const accentBg = activity.accent || "#203b7a";
       const gradeText = clientGradeLabels(activity);
       const description = firstTextValue(activity.fullDescription, activity.description, activity.details, activity.text, activity.shortLine);
       const goals = normalizeModalList(activity.goals).length ? activity.goals : (normalizeModalList(activity.objectives).length ? activity.objectives : activity.outcomes);
@@ -5590,7 +5591,7 @@ function chunkActivities(items, size) {
       const imageSrc = img.currentSrc || img.src || activity.image;
 
       overlay.innerHTML = `
-        <article class="workshop-modal" role="dialog" aria-modal="true" aria-label="${escapeHTML(activity.title)}">
+        <article class="workshop-modal" role="dialog" aria-modal="true" aria-label="${escapeHTML(activity.title)}" style="--domain-color:${escapeHTML(accentBg)}">
           <button class="workshop-modal-close" type="button" aria-label="סגירת חלון">×</button>
           <div class="workshop-modal-inner">
             <div class="workshop-modal-content">
@@ -5770,7 +5771,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=305").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=306").then(registration => registration.update());
       });
     }
 
