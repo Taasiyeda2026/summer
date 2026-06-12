@@ -5065,12 +5065,6 @@ function chunkActivities(items, size) {
           <div class="workshop-modal-inner">
             <div class="workshop-modal-content">
               <h2>${escapeHTML(activity.title)}</h2>
-              <div class="workshop-modal-meta">
-                ${renderModalMeta("תחום", activity.domain)}
-                ${renderModalMeta("שכבות גיל", gradeText)}
-                ${renderModalMeta("משך פעילות", durationText)}
-                ${renderModalMeta("מחיר", priceText)}
-              </div>
               ${renderModalSection("תיאור הסדנה", description)}
               ${renderModalSection("מטרות הסדנה", goals, true)}
               ${renderModalSection("תוצר אישי", productText)}
