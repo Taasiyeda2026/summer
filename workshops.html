@@ -4185,7 +4185,7 @@ function chunkActivities(items, size) {
 
     function isClientCatalogRequest() {
       const params = new URLSearchParams(window.location.search);
-      return params.has("client") || params.get("mode") === "client";
+      return params.has("client");
     }
 
     function selectedClientItemIds() {
@@ -4236,6 +4236,8 @@ function chunkActivities(items, size) {
       } else {
         clientLinkStatus.insertAdjacentText("afterbegin", "קישור ללקוח: ");
       }
+    }
+
     function clientGradeLabels(activity) {
       const grades = Array.isArray(activity.grades) && activity.grades.length
         ? activity.grades
@@ -4750,7 +4752,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=212").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=213").then(registration => registration.update());
       });
     }
 
