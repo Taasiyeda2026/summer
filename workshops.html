@@ -2118,6 +2118,7 @@
       min-height: 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
       gap: 2.2mm;
       align-items: stretch;
     }
@@ -2903,6 +2904,7 @@
       .page-grid-domains {
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-rows: repeat(4, 1fr) !important;
         gap: 2.2mm !important;
         flex: 1 1 auto !important;
         min-height: 0 !important;
@@ -3655,82 +3657,17 @@ function chunkActivities(items, size) {
       return sortedActivities;
     }
 
-    function buildGradeAwareSlotPages(sortedActivities) {
-      const PAGE_SLOTS = 12; // card-equivalent slots per page (4 rows × 3 cols)
-      const HEADER_SLOTS = 3; // a header spans a full row = 3 card slots
-
-      // Build flat item sequence: insert a grade-header item before each new grade group
-      const allItems = [];
-      let lastGrade = null;
-      sortedActivities.forEach(activity => {
-        const g = activity.gradeGroup || "א-ו";
-        if (g !== lastGrade) {
-          allItems.push({ type: "grade-header", gradeGroup: g });
-          lastGrade = g;
-        }
-        allItems.push({ type: "card", activity });
-      });
-
-      // Paginate: each page holds PAGE_SLOTS card-equivalent slots
+    function buildSlotPages(sortedActivities) {
+      // Flat 12-per-page pagination with null-padding on the last page.
+      // Guarantees every page has exactly 12 items → fixed 4×3 grid on every page.
+      const PAGE_SIZE = 12;
       const pages = [];
-      let currentPage = [];
-      let usedSlots = 0;
-      let currentCol = 0; // column position within the current card row (0-2)
-
-      allItems.forEach(item => {
-        if (item.type === "grade-header") {
-          // If mid-row, fill remainder with empty cells to align header to row start
-          if (currentCol > 0) {
-            const fill = 3 - currentCol;
-            for (let i = 0; i < fill; i++) {
-              currentPage.push({ type: "empty" });
-            }
-            usedSlots += fill;
-            currentCol = 0;
-          }
-          // If header alone won't fit, flush page
-          if (usedSlots + HEADER_SLOTS > PAGE_SLOTS) {
-            if (currentPage.length) { pages.push(currentPage); }
-            currentPage = [];
-            usedSlots = 0;
-            currentCol = 0;
-          }
-          currentPage.push(item);
-          usedSlots += HEADER_SLOTS;
-          // col stays at 0 after a header row
-        } else {
-          // Card: if page is full, flush
-          if (usedSlots + 1 > PAGE_SLOTS) {
-            pages.push(currentPage);
-            currentPage = [];
-            usedSlots = 0;
-            currentCol = 0;
-          }
-          currentPage.push(item);
-          usedSlots += 1;
-          currentCol = (currentCol + 1) % 3;
-        }
-      });
-
-      if (currentPage.length) pages.push(currentPage);
+      for (let i = 0; i < sortedActivities.length; i += PAGE_SIZE) {
+        const page = sortedActivities.slice(i, i + PAGE_SIZE);
+        while (page.length < PAGE_SIZE) page.push(null);
+        pages.push(page);
+      }
       return pages;
-    }
-
-    function calculateGridTemplateRows(items) {
-      // Returns a CSS grid-template-rows string:
-      // header rows → min-content, card rows → 1fr
-      const rows = [];
-      let col = 0;
-      items.forEach(item => {
-        if (item.type === "grade-header") {
-          rows.push("min-content");
-          col = 0;
-        } else if (item.type === "card" || item.type === "empty") {
-          if (col === 0) rows.push("1fr");
-          col = (col + 1) % 3;
-        }
-      });
-      return rows.join(" ");
     }
 
     function escapeHTML(value) {
@@ -4131,8 +4068,7 @@ function chunkActivities(items, size) {
       page.className = "a4-page catalog-page domain-catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
       const stemHTML = `<span class="stem-word" dir="ltr"><span class="stem-s">S</span><span class="stem-t">T</span><span class="stem-e">E</span><span class="stem-m">M</span></span>`;
-      const rawActs = activities.filter(i => i && i.type === "card").map(i => i.activity);
-      const gradeTitle = escapeHTML(pageGradeTitle(rawActs));
+      const gradeTitle = escapeHTML(pageGradeTitle(activities.filter(Boolean)));
 
       page.innerHTML = `
         <header class="page-header">
@@ -4145,24 +4081,13 @@ function chunkActivities(items, size) {
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const grid = page.querySelector(".page-grid-domains");
-      grid.style.gridTemplateRows = calculateGridTemplateRows(activities);
-
-      activities.forEach(item => {
-        if (!item || item.type === "empty") {
+      activities.forEach(activity => {
+        if (!activity) {
           const empty = document.createElement("div");
           empty.className = "domain-grid-empty";
           grid.appendChild(empty);
-        } else if (item.type === "grade-header") {
-          const hdr = document.createElement("div");
-          hdr.className = "domain-grade-inline-header";
-          const label = GRADE_STRIP_LABELS[item.gradeGroup] || item.gradeGroup;
-          hdr.innerHTML = `<span class="domain-grade-inline-header-label">${escapeHTML(label)}</span><span class="domain-grade-inline-header-line"></span>`;
-          grid.appendChild(hdr);
-        } else if (item.type === "card") {
-          grid.appendChild(renderDomainCard(item.activity, true));
         } else {
-          // Legacy: plain activity object (fallback)
-          grid.appendChild(renderDomainCard(item, true));
+          grid.appendChild(renderDomainCard(activity, true));
         }
       });
 
@@ -4228,7 +4153,7 @@ function chunkActivities(items, size) {
         activitiesForPages = sortedActivities.slice(COVER_LETTER_ACTIVITIES);
       }
 
-      const slotPages = buildGradeAwareSlotPages(activitiesForPages);
+      const slotPages = buildSlotPages(activitiesForPages);
       const hasCoverLetter = includeCoverLetter && coverLetterItems.length > 0;
       const totalPages = slotPages.length + (hasCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
       const fragment = document.createDocumentFragment();
