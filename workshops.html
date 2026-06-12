@@ -871,11 +871,11 @@
       height: auto;
       max-height: 18mm;
       object-fit: contain;
-      padding: 1.5mm 2mm;
-      border-radius: 3mm;
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(32,59,122,.10);
-      box-shadow: 0 7px 18px rgba(20,34,66,.08);
+      padding: 0;
+      border-radius: 0;
+      background: none;
+      border: none;
+      box-shadow: none;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -2084,7 +2084,7 @@
 
     .catalog-mode .a4-page {
       background-color: #FFFFFF;
-      background-image: url("./image/summer-fantasy-bg-3.webp");
+      background-image: url("./image/summer-fantasy-bg-3.png");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -2506,7 +2506,11 @@
         left: 8mm !important;
         width: 17mm !important;
         max-height: 15mm !important;
-        padding: 1mm 1.5mm !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
       }
 
       .cl-hero {
@@ -3073,9 +3077,9 @@
     }
 
     .workshop-modal {
-      width: min(1060px, 96vw);
-      max-height: min(88vh, 820px);
-      overflow: hidden;
+      width: min(860px, 88vw);
+      max-height: 88vh;
+      overflow: visible;
       direction: rtl;
       color: var(--ink);
       background:
@@ -3090,32 +3094,34 @@
 
     .workshop-modal-close {
       position: absolute;
-      top: 14px;
-      inset-inline-start: 14px;
-      z-index: 2;
-      width: 42px;
-      height: 42px;
+      top: -14px;
+      inset-inline-start: -14px;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
       border: 0;
       border-radius: 999px;
       background: #172033;
       color: white;
-      font-size: 25px;
+      font-size: 22px;
       line-height: 1;
       font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 10px 24px rgba(23,32,51,.25);
+      box-shadow: 0 8px 20px rgba(23,32,51,.32);
     }
 
     .workshop-modal-inner {
       display: grid;
-      grid-template-columns: minmax(300px, .92fr) minmax(0, 1.08fr);
+      grid-template-columns: minmax(240px, .88fr) minmax(0, 1.12fr);
       gap: 0;
-      max-height: inherit;
+      max-height: 88vh;
+      overflow: hidden;
+      border-radius: 28px;
     }
 
     .workshop-modal-media {
-      min-height: 520px;
-      padding: 26px;
+      min-height: 0;
+      padding: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3125,17 +3131,18 @@
 
     .workshop-modal-media img {
       width: 100%;
-      max-height: 72vh;
+      max-height: clamp(180px, 54vh, 380px);
       object-fit: contain;
-      border-radius: 24px;
+      border-radius: 20px;
       background: #fff;
-      padding: 10px;
-      box-shadow: 0 18px 45px rgba(20,34,66,.16);
+      padding: 8px;
+      box-shadow: 0 14px 36px rgba(20,34,66,.14);
     }
 
     .workshop-modal-content {
-      padding: 34px 34px 30px;
-      overflow: auto;
+      padding: 28px 28px 24px;
+      overflow-y: auto;
+      overflow-x: hidden;
       text-align: right;
     }
 
@@ -3161,12 +3168,12 @@
     }
 
     .workshop-modal h2 {
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       color: var(--blue);
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.06;
+      font-size: clamp(18px, 2.6vw, 28px);
+      line-height: 1.1;
       font-weight: 950;
-      letter-spacing: -.03em;
+      letter-spacing: -.02em;
     }
 
     .workshop-modal-meta {
@@ -3211,9 +3218,9 @@
     .workshop-modal-section p {
       margin: 0;
       color: #334155;
-      font-size: 16px;
+      font-size: 14.5px;
       font-weight: 650;
-      line-height: 1.65;
+      line-height: 1.6;
       white-space: pre-line;
     }
 
@@ -3222,26 +3229,28 @@
       padding: 0;
       list-style: none;
       display: grid;
-      gap: 8px;
+      gap: 7px;
+      direction: rtl;
     }
 
     .workshop-modal-section li {
-      position: relative;
-      padding-inline-start: 0;
-      padding-inline-end: 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      direction: rtl;
       color: #334155;
-      font-size: 15.5px;
+      font-size: 14px;
       font-weight: 750;
-      line-height: 1.45;
+      line-height: 1.5;
+      padding: 0;
     }
 
     .workshop-modal-section li::before {
-      content: "•";
-      position: absolute;
-      inset-inline-end: 0;
+      content: "✦";
       color: var(--pink);
-      font-size: 20px;
-      line-height: 1;
+      font-size: 9px;
+      flex-shrink: 0;
+      margin-top: 4px;
     }
 
     .catalog-mode .image-box img,
@@ -3263,9 +3272,15 @@
         border-radius: 24px;
       }
 
+      .workshop-modal-close {
+        top: 8px;
+        inset-inline-start: 8px;
+      }
+
       .workshop-modal-inner {
         display: flex;
         flex-direction: column;
+        max-height: calc(100vh - 24px);
       }
 
       .workshop-modal-media {
@@ -3273,15 +3288,18 @@
         padding: 18px 18px 8px;
         border-inline-start: 0;
         border-bottom: 1px solid rgba(23,32,51,.08);
+        flex-shrink: 0;
       }
 
       .workshop-modal-media img {
-        max-height: 34vh;
-        border-radius: 18px;
+        max-height: 32vh;
+        border-radius: 16px;
       }
 
       .workshop-modal-content {
         padding: 20px 18px 24px;
+        overflow-y: auto;
+        flex: 1;
       }
 
       .workshop-modal-meta {
@@ -3297,7 +3315,7 @@
       .a4-page,
       .catalog-page {
         background-color: #FFFFFF !important;
-        background-image: url("./image/summer-fantasy-bg-3.webp") !important;
+        background-image: url("./image/summer-fantasy-bg-3.png") !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
@@ -4521,8 +4539,8 @@ function chunkActivities(items, size) {
       const params = new URLSearchParams(window.location.search);
       coverLetterCheckbox.checked = hasTruthyParam(params, "m");
       const marketer = normalizeMarketerParam(params.get("c"));
-      const marketerSelect = document.getElementById("marketerSelect");
-      if (marketerSelect) marketerSelect.value = marketer;
+      const marketerRadio = document.querySelector(`input[name="marketerRadio"][value="${marketer}"]`);
+      if (marketerRadio) marketerRadio.checked = true;
       showPricesCheckbox.checked = hasTruthyParam(params, "p") || hasTruthyParam(params, "prices");
       renderCatalog(getClientCatalogActivities());
       document.body.classList.remove("is-course-catalog");
@@ -4597,9 +4615,16 @@ function chunkActivities(items, size) {
     }
 
     function clientGradeLabels(activity) {
-      const grades = Array.isArray(activity.grades) && activity.grades.length
-        ? activity.grades
-        : (activity.gradeGroup ? [activity.gradeGroup] : []);
+      const GROUP_LABELS = {
+        "א-ג": "כיתות א׳–ג׳",
+        "ד-ו": "כיתות ד׳–ו׳",
+        "א-ו": "כיתות א׳–ו׳",
+        "ז-ט": "כיתות ז׳–ט׳"
+      };
+      if (activity.gradeGroup && GROUP_LABELS[activity.gradeGroup]) {
+        return GROUP_LABELS[activity.gradeGroup];
+      }
+      const grades = Array.isArray(activity.grades) && activity.grades.length ? activity.grades : [];
       return grades.map(formatGrade).join(" · ");
     }
 
@@ -5024,10 +5049,6 @@ function chunkActivities(items, size) {
           <button class="workshop-modal-close" type="button" aria-label="סגירת חלון">×</button>
           <div class="workshop-modal-inner">
             <div class="workshop-modal-content">
-              <div class="workshop-modal-kicker">
-                ${activity.domain ? `<span class="workshop-modal-tag" style="${domainTagStyle(activity.domain)}">${escapeHTML(activity.domain)}</span>` : ""}
-                ${gradeText ? `<span class="workshop-modal-tag">${escapeHTML(gradeText)}</span>` : ""}
-              </div>
               <h2>${escapeHTML(activity.title)}</h2>
               <div class="workshop-modal-meta">
                 ${renderModalMeta("תחום", activity.domain)}
