@@ -969,6 +969,133 @@
       line-height: 1;
     }
 
+    /* ─── Cover letter hero redesign ─── */
+    .cover-letter-page .page-header {
+      border-bottom: none;
+    }
+    .cover-letter-page .page-header > div {
+      display: none;
+    }
+    .cover-letter-block {
+      flex: 0 0 54%;
+      max-height: 54%;
+    }
+    .cl-hero {
+      text-align: center;
+      padding: 1.5mm 0 2.5mm;
+      margin-bottom: 3mm;
+      border-bottom: 1px solid rgba(32,59,122,.13);
+    }
+    .cl-hero-title {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 950;
+      color: var(--blue);
+      line-height: 1;
+      letter-spacing: -.3px;
+    }
+    .cl-hero-tagline {
+      margin: 1mm 0 0;
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f766e;
+      line-height: 1.25;
+    }
+    .cl-hero-slogan {
+      margin: 1.5mm 0 0;
+      font-size: 16px;
+      font-weight: 950;
+      color: var(--pink);
+      letter-spacing: .3px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cl-intro {
+      margin: 0 0 2mm;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .cl-body-text {
+      margin: 0 0 3mm;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.38;
+    }
+    .cl-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+      margin-bottom: 3mm;
+      align-items: start;
+    }
+    .cl-col-label {
+      margin: 0 0 1.5mm;
+      font-size: 12px;
+      font-weight: 950;
+      color: var(--blue);
+    }
+    .cl-domain-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2mm;
+    }
+    .cl-tag {
+      display: inline-block;
+      padding: .8mm 2.5mm;
+      border-radius: 999px;
+      background: rgba(32,59,122,.08);
+      border: 1px solid rgba(32,59,122,.18);
+      color: var(--blue);
+      font-size: 10.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cl-how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm;
+    }
+    .cl-how-card {
+      display: flex;
+      flex-direction: column;
+      gap: .4mm;
+      padding: 1.5mm 2mm;
+      border-radius: 2mm;
+      border: 1px solid rgba(32,59,122,.14);
+      background: rgba(32,59,122,.03);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cl-how-name {
+      font-size: 10.5px;
+      font-weight: 950;
+      color: var(--blue);
+      line-height: 1.2;
+    }
+    .cl-how-desc {
+      font-size: 10px;
+      font-weight: 600;
+      color: #475569;
+      line-height: 1.2;
+    }
+    .cl-product-banner {
+      text-align: center;
+      padding: 2mm 4mm;
+      background: linear-gradient(to left, rgba(216,47,120,.08), rgba(32,59,122,.06));
+      border-radius: 2mm;
+      border: 1px solid rgba(32,59,122,.13);
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--blue);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
     .cover-bottom-grid {
       position: relative;
       z-index: 1;
@@ -3921,22 +4048,37 @@ function chunkActivities(items, size) {
           </div>
         </header>
         <section class="cover-letter-block" aria-label="מכתב מקדים">
-          <h2 class="cover-letter-title">טכנולוגיה וכיף מתחברים בתוך טכנו-כיף אחד גדול</h2>
-          <p class="cover-letter-tagline">חוקרים. יוצרים. מגלים.</p>
-          <h3 class="cover-letter-heading">סדנאות מייקרים ${stemHTML}</h3>
-          <p class="cover-letter-text">למידה חווייתית דרך עשייה, חקר, בנייה ויצירה.</p>
-          <p class="cover-letter-text">בכל סדנה המשתתפים בונים תוצר אישי משלהם, תוך היכרות עם עקרונות מדעיים וטכנולוגיים בדרך פעילה ומסקרנת.</p>
-          <p class="cover-letter-text">הסדנאות משלבות התנסות מעשית, חשיבה יצירתית, פתרון בעיות וחיבור בין רעיון, תכנון, ניסוי ותוצאה.</p>
-          <p class="cover-letter-section-title">תחומים לדוגמה:</p>
-          <p class="cover-letter-text">אופטיקה, פיזיקה, הנדסה, כימיה, ביולוגיה, חלל וטכנולוגיה.</p>
-          <p class="cover-letter-section-title">איך זה עובד?</p>
-          <ul class="cover-letter-list">
-            <li>בוחרים פעילות בודדת: סדנה אחת של 45 דקות</li>
-            <li>יום מרוכז: מספר סדנאות ביום אחד</li>
-            <li>קייטנה מלאה: תוכנית קיץ של 5 ימים</li>
-            <li>שילוב גמיש: בחירה בין חדרי בריחה וסדנאות מייקרים</li>
-          </ul>
-          <p class="cover-letter-section-title">הפעילות כוללת את כל הציוד והחומרים הנדרשים.</p>
+          <div class="cl-hero">
+            <h2 class="cl-hero-title">טכנו-כיף</h2>
+            <p class="cl-hero-tagline">טכנולוגיה וכיף מתחברים בתוך טכנו-כיף אחד גדול</p>
+            <p class="cl-hero-slogan">חוקרים. יוצרים. מגלים.</p>
+          </div>
+          <p class="cl-intro">תעשיידע מזמינה את תלמידי כיתות א׳–ו׳ לחוויית קיץ מעשירה, מעשית ומלאת יצירה, המחברת בין מדע, טכנולוגיה, הנדסה וחשיבה יצירתית.</p>
+          <p class="cl-body-text">קטלוג טכנו-כיף מרכז מגוון סדנאות STEM ומייקרים לבחירה גמישה — מסדנה בודדת, דרך יום פעילות מרוכז ועד תוכנית קיץ מלאה. בכל סדנה התלמידים נחשפים לרעיון מדעי, מתנסים בו בפועל ובונים תוצר אישי משלהם.</p>
+          <div class="cl-two-col">
+            <div class="cl-col">
+              <p class="cl-col-label">תחומים לדוגמה</p>
+              <div class="cl-domain-tags">
+                <span class="cl-tag">אופטיקה</span>
+                <span class="cl-tag">פיזיקה</span>
+                <span class="cl-tag">הנדסה</span>
+                <span class="cl-tag">כימיה</span>
+                <span class="cl-tag">ביולוגיה</span>
+                <span class="cl-tag">חלל</span>
+                <span class="cl-tag">טכנולוגיה</span>
+              </div>
+            </div>
+            <div class="cl-col">
+              <p class="cl-col-label">איך זה עובד?</p>
+              <div class="cl-how-grid">
+                <div class="cl-how-card"><b class="cl-how-name">סדנה בודדת</b><span class="cl-how-desc">45 דקות</span></div>
+                <div class="cl-how-card"><b class="cl-how-name">יום פעילות מרוכז</b><span class="cl-how-desc">מספר סדנאות ביום</span></div>
+                <div class="cl-how-card"><b class="cl-how-name">קייטנה מלאה</b><span class="cl-how-desc">תוכנית קיץ — 5 ימים</span></div>
+                <div class="cl-how-card"><b class="cl-how-name">שילוב גמיש</b><span class="cl-how-desc">חדרי בריחה וסדנאות</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="cl-product-banner">✦ בכל סדנה כל משתתף בונה תוצר אישי — ולוקח אותו הביתה ✦</div>
         </section>
         <header class="cover-catalog-header" aria-label="כותרת הקטלוג">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
