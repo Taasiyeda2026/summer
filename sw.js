@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-06-12-v239";
+const CACHE_NAME = "summer-catalog-v2026-06-12-v240";
 
 const CORE_ASSETS = [
   "./",
@@ -15,7 +15,8 @@ const CORE_ASSETS = [
   "./tashpaz/taasiyeda-logo.png",
   "./logo.png",
   "./signature-logo.png",
-  "./image/course-page-tech-bg.webp"
+  "./image/course-page-tech-bg.webp",
+  "./image/summer-fantasy-bg.svg"
 ];
 
 self.addEventListener("install", event => {

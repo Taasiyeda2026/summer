@@ -856,7 +856,7 @@
       flex-shrink: 0;
     }
 
-    .cover-letter-page .cover-catalog-grid {
+    .cover-letter-page .cover-bottom-grid {
       flex: 1 1 auto;
       min-height: 0;
     }
@@ -872,14 +872,17 @@
       grid-template-columns: auto 1fr;
       align-items: end;
       gap: 12px;
-      min-height: 9mm;
+      min-height: 7mm;
       padding: 0 1mm 1mm;
       border-bottom: 1.4pt solid rgba(32,59,122,.88);
+      font-size: 20px;
     }
 
     .cover-letter-block {
       position: relative;
       z-index: 1;
+      flex: 0 0 50%;
+      max-height: 50%;
       min-height: 0;
       overflow: hidden;
       direction: rtl;
@@ -963,34 +966,16 @@
       line-height: 1;
     }
 
-    .cover-catalog-grid {
+    .cover-bottom-grid {
       position: relative;
       z-index: 1;
-      min-height: 52mm;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 52mm minmax(0, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
       gap: 2.2mm;
-      align-content: start;
     }
 
-    .cover-catalog-grid .activity-card {
-      width: 100%;
-    }
-
-    .cover-catalog-grid .activity-card.horizontal-card {
-      grid-column: 1 / -1;
-      height: 52mm;
-      min-height: 52mm;
-      max-height: 52mm;
-    }
-
-    .cover-catalog-grid .activity-card:not(.horizontal-card) {
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .cover-catalog-grid:empty::before {
+    .cover-bottom-grid:empty::before {
       content: "הקטלוג ממשיך בעמודים הבאים";
       grid-column: 1 / -1;
       display: grid;
@@ -1920,7 +1905,11 @@
     }
 
     .catalog-mode .a4-page {
-      background: #fff;
+      background-color: #FFFFFF;
+      background-image: url("./image/summer-fantasy-bg.svg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       box-shadow: 0 2px 10px rgba(20,34,66,.1);
     }
 
@@ -2001,6 +1990,11 @@
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(4, 1fr);
       gap: 2.2mm;
+    }
+
+    /* ─── Domain grid empty slot ─── */
+    .domain-grid-empty {
+      visibility: hidden;
     }
 
     /* ─── Domain cards ─── */
@@ -2258,26 +2252,14 @@
         flex: 1 1 auto !important;
       }
 
-      .cover-letter-page .cover-catalog-grid {
+      .cover-letter-page .cover-bottom-grid {
         flex: 1 1 auto !important;
         min-height: 0 !important;
       }
 
-      .cover-catalog-grid {
-        min-height: 52mm !important;
-        grid-template-columns: 1fr 1fr !important;
-        grid-template-rows: 52mm minmax(0, 1fr) !important;
-        align-content: start !important;
-      }
-
-      .cover-catalog-grid .activity-card.horizontal-card {
-        overflow: hidden !important;
-        grid-column: 1 / -1 !important;
-      }
-
-      .cover-catalog-grid .activity-card:not(.horizontal-card) {
-        min-height: 0 !important;
-        overflow: hidden !important;
+      .cover-bottom-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
       }
 
       .page-grid {
@@ -2769,6 +2751,51 @@
       }
     }
 
+    /* ─── Image zoom overlay ─── */
+    .img-zoom-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(23, 32, 51, 0.45);
+      cursor: zoom-out;
+    }
+
+    .img-zoom-overlay img {
+      border-radius: 10px;
+      background: #fff;
+      padding: 6px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    .catalog-mode .image-box img,
+    .catalog-mode .ms-center-img,
+    .catalog-mode .domain-card img,
+    .catalog-mode .activity-card img {
+      cursor: zoom-in;
+    }
+
+    @media print {
+      .img-zoom-overlay {
+        display: none !important;
+      }
+
+      .a4-page,
+      .catalog-page {
+        background-color: #FFFFFF !important;
+        background-image: url("./image/summer-fantasy-bg.svg") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
     @media print {
       body.is-course-catalog .screen-controls {
         display: none !important;
@@ -3021,7 +3048,7 @@
     const coverLetterCheckbox = document.getElementById("coverLetterCheckbox");
     const showPricesCheckbox = document.getElementById("showPricesCheckbox");
     let showPrices = false;
-    const COVER_LETTER_ACTIVITIES = 3;
+    const COVER_LETTER_ACTIVITIES = 6;
 
     const ACTIVITIES_PER_DOMAIN_PAGE = 12;
 
@@ -3378,7 +3405,7 @@ function chunkActivities(items, size) {
       });
     }
 
-    function buildDomainPages(workshopActivities) {
+    function buildContinuousCatalogSlots(workshopActivities) {
       const domainMap = new Map();
       workshopActivities.forEach(activity => {
         const d = (activity.domain || "ללא תחום").trim();
@@ -3391,21 +3418,40 @@ function chunkActivities(items, size) {
         return a[0].localeCompare(b[0], "he");
       });
 
-      const majorDomains = sortedDomains.filter(([, items]) => items.length >= 4);
-      const minorItems = sortedDomains
-        .filter(([, items]) => items.length < 4)
-        .flatMap(([, items]) => items);
+      const sortedActivities = [];
+      sortedDomains.forEach(([, items]) => {
+        sortDomainActivities(items).forEach(a => sortedActivities.push(a));
+      });
+      return sortedActivities;
+    }
+
+    function buildSlotPages(sortedActivities) {
+      const COLS = 3;
+      const PAGE_SLOTS = 12;
+
+      const domainGroups = [];
+      let currentDomain = null;
+      sortedActivities.forEach(activity => {
+        const d = (activity.domain || "ללא תחום").trim();
+        if (d !== currentDomain) {
+          domainGroups.push({ domain: d, items: [] });
+          currentDomain = d;
+        }
+        domainGroups[domainGroups.length - 1].items.push(activity);
+      });
+
+      const slots = [];
+      domainGroups.forEach(({ items }) => {
+        const rem = slots.length % COLS;
+        if (rem !== 0) {
+          for (let i = 0; i < COLS - rem; i++) slots.push(null);
+        }
+        items.forEach(a => slots.push(a));
+      });
 
       const pages = [];
-      majorDomains.forEach(([domain, items]) => {
-        balancedChunk(sortDomainActivities(items), ACTIVITIES_PER_DOMAIN_PAGE).forEach(chunk => {
-          pages.push({ domain, items: chunk, showDomainTag: false });
-        });
-      });
-      if (minorItems.length > 0) {
-        balancedChunk(sortDomainActivities(minorItems), ACTIVITIES_PER_DOMAIN_PAGE).forEach(chunk => {
-          pages.push({ domain: "תחומים נוספים", items: chunk, showDomainTag: true });
-        });
+      for (let i = 0; i < slots.length; i += PAGE_SLOTS) {
+        pages.push(slots.slice(i, i + PAGE_SLOTS));
       }
       return pages;
     }
@@ -3764,36 +3810,41 @@ function chunkActivities(items, size) {
             <h2 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle}</h2>
           </div>
         </header>
-        <div class="cover-catalog-grid"></div>
+        <div class="cover-bottom-grid"></div>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
-      const grid = page.querySelector(".cover-catalog-grid");
-      items.slice(0, COVER_LETTER_ACTIVITIES).forEach((activity, index) => grid.appendChild(renderCard(activity, index === 0)));
+      const grid = page.querySelector(".cover-bottom-grid");
+      items.slice(0, COVER_LETTER_ACTIVITIES).forEach(activity => grid.appendChild(renderDomainCard(activity, true)));
       return page;
     }
 
-    function renderDomainPage({ domain, items, showDomainTag }, pageIndex, totalPages, contactLine = "") {
+    function renderContinuousPage(slots, pageIndex, totalPages, gradeLabel = "", contactLine = "") {
       const page = document.createElement("section");
       page.className = "a4-page catalog-page domain-catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
-
-      const domainColor = domain === "תחומים נוספים"
-        ? "#203b7a"
-        : (DOMAIN_COLORS[domain] || "#203b7a");
-      const pillLabel = domain === "תחומים נוספים" ? "תחומים נוספים" : `סדנאות ${domain}`;
+      const stemHTML = `<span class="stem-word" dir="ltr"><span class="stem-s">S</span><span class="stem-t">T</span><span class="stem-e">E</span><span class="stem-m">M</span></span>`;
+      const gradeTitle = gradeLabel ? ` | ${escapeHTML(gradeLabel)}` : "";
 
       page.innerHTML = `
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
-          <div class="domain-page-title-wrap">
-            <span class="domain-page-pill" style="background:${escapeHTML(domainColor)}">${escapeHTML(pillLabel)}</span>
+          <div>
+            <h1 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle}</h1>
           </div>
         </header>
         <div class="page-grid-domains"></div>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
       const grid = page.querySelector(".page-grid-domains");
-      items.forEach(activity => grid.appendChild(renderDomainCard(activity, showDomainTag)));
+      slots.forEach(activity => {
+        if (!activity) {
+          const empty = document.createElement("div");
+          empty.className = "domain-grid-empty";
+          grid.appendChild(empty);
+        } else {
+          grid.appendChild(renderDomainCard(activity, true));
+        }
+      });
 
       return page;
     }
@@ -3848,17 +3899,18 @@ function chunkActivities(items, size) {
       const hasEscape = escapeRoomActivities.length > 0;
       const hasMiddleSchool = middleSchoolActivities.length > 0;
 
-      const domainPages = buildDomainPages(workshopActivities);
+      const sortedActivities = buildContinuousCatalogSlots(workshopActivities);
 
       let coverLetterItems = [];
-      if (includeCoverLetter && domainPages.length > 0) {
-        const firstPage = domainPages[0];
-        coverLetterItems = firstPage.items.splice(0, COVER_LETTER_ACTIVITIES);
-        if (firstPage.items.length === 0) domainPages.shift();
+      let activitiesForPages = sortedActivities;
+      if (includeCoverLetter && sortedActivities.length > 0) {
+        coverLetterItems = sortedActivities.slice(0, COVER_LETTER_ACTIVITIES);
+        activitiesForPages = sortedActivities.slice(COVER_LETTER_ACTIVITIES);
       }
 
+      const slotPages = buildSlotPages(activitiesForPages);
       const hasCoverLetter = includeCoverLetter && coverLetterItems.length > 0;
-      const totalPages = domainPages.length + (hasCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
+      const totalPages = slotPages.length + (hasCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
       const fragment = document.createDocumentFragment();
       let globalPageIndex = 0;
 
@@ -3867,8 +3919,8 @@ function chunkActivities(items, size) {
         globalPageIndex++;
       }
 
-      domainPages.forEach(pageData => {
-        fragment.appendChild(renderDomainPage(pageData, globalPageIndex, totalPages, contactLine));
+      slotPages.forEach(slots => {
+        fragment.appendChild(renderContinuousPage(slots, globalPageIndex, totalPages, "", contactLine));
         globalPageIndex++;
       });
 
@@ -4064,6 +4116,43 @@ function chunkActivities(items, size) {
         new Promise(resolve => setTimeout(resolve, timeout))
       ]);
     }
+
+    function openImageZoom(img) {
+      document.querySelector(".img-zoom-overlay")?.remove();
+
+      const rect = img.getBoundingClientRect();
+
+      const overlay = document.createElement("div");
+      overlay.className = "img-zoom-overlay";
+
+      const big = document.createElement("img");
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt || "";
+      big.style.width = Math.min(rect.width * 1.5, window.innerWidth * 0.9) + "px";
+
+      overlay.appendChild(big);
+
+      overlay.addEventListener("click", () => overlay.remove());
+
+      document.addEventListener("keydown", function esc(e) {
+        if (e.key === "Escape") {
+          overlay.remove();
+          document.removeEventListener("keydown", esc);
+        }
+      });
+
+      document.body.appendChild(overlay);
+    }
+
+    booklet.addEventListener("click", event => {
+      if (!document.body.classList.contains("catalog-mode")) return;
+
+      const img = event.target.closest(".image-box img, .ms-center-img, .domain-card img, .activity-card img");
+
+      if (img) {
+        openImageZoom(img);
+      }
+    });
 
     catalogModeBtn.addEventListener("click", async () => {
       catalogModeBtn.disabled = true;
