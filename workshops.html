@@ -1994,6 +1994,282 @@
       .section-divider { display: none; }
     }
 
+
+    /* ─── Clean customer catalog (/catalog/ and ?client) ─── */
+    .client-catalog-mode {
+      background:
+        radial-gradient(circle at 8% 8%, rgba(52,195,213,.18), transparent 30%),
+        radial-gradient(circle at 92% 6%, rgba(216,47,120,.14), transparent 30%),
+        linear-gradient(180deg, #f7fbff 0%, #eef6fb 45%, #fff7e8 100%);
+    }
+
+    .client-catalog-mode .screen-controls,
+    .client-catalog-mode .back-bar {
+      display: none !important;
+    }
+
+    .client-catalog-mode .booklet {
+      display: block;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 44px;
+    }
+
+    .client-catalog-shell {
+      display: grid;
+      gap: 24px;
+    }
+
+    .client-catalog-hero,
+    .client-contact-card {
+      border: 1px solid rgba(255,255,255,.86);
+      border-radius: 32px;
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 18px 50px rgba(20,34,66,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .client-catalog-hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      padding: clamp(24px, 4vw, 42px);
+    }
+
+    .client-catalog-hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -70px -120px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(52,195,213,.26), transparent 68%);
+      pointer-events: none;
+    }
+
+    .client-catalog-logo {
+      width: min(190px, 34vw);
+      height: auto;
+      object-fit: contain;
+      justify-self: end;
+      filter: drop-shadow(0 10px 18px rgba(32,59,122,.14));
+    }
+
+    .client-kicker {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--pink);
+      letter-spacing: .02em;
+    }
+
+    .client-catalog-hero h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      color: var(--blue);
+      font-weight: 950;
+    }
+
+    .client-catalog-hero p {
+      max-width: 760px;
+      margin: 14px 0 0;
+      color: #344054;
+      font-size: clamp(17px, 2.2vw, 22px);
+      line-height: 1.58;
+      font-weight: 700;
+    }
+
+    .client-hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .client-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      color: #172033;
+      background: rgba(52,195,213,.12);
+      border: 1px solid rgba(52,195,213,.22);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .client-section-title {
+      margin: 4px 0 0;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.15;
+      color: var(--ink);
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .client-workshop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .client-workshop-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 100%;
+      border-radius: 26px;
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(23,32,51,.10);
+      box-shadow: 0 14px 34px rgba(20,34,66,.10);
+    }
+
+    .client-card-media {
+      position: relative;
+      height: 190px;
+      background: linear-gradient(135deg, rgba(32,59,122,.08), rgba(52,195,213,.14));
+      overflow: hidden;
+    }
+
+    .client-card-media picture,
+    .client-card-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .client-card-media img {
+      object-fit: cover;
+    }
+
+    .client-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      padding: 18px;
+    }
+
+    .client-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .client-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 950;
+      border: 1px solid rgba(23,32,51,.10);
+      color: #172033;
+      background: #f8fafc;
+    }
+
+    .client-domain-tag {
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .client-workshop-card h2 {
+      margin: 0;
+      color: var(--blue);
+      font-size: 22px;
+      line-height: 1.14;
+      font-weight: 950;
+    }
+
+    .client-card-description {
+      margin: 0;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .client-product,
+    .client-price {
+      margin: 0;
+      padding: 10px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .client-product {
+      color: #0f5132;
+      background: rgba(26,156,116,.11);
+      border: 1px solid rgba(26,156,116,.18);
+    }
+
+    .client-price {
+      color: #7a1745;
+      background: rgba(216,47,120,.10);
+      border: 1px solid rgba(216,47,120,.18);
+    }
+
+    .client-contact-card {
+      padding: clamp(20px, 3vw, 30px);
+      text-align: center;
+    }
+
+    .client-contact-card h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.15;
+      color: var(--blue);
+      font-weight: 950;
+    }
+
+    .client-contact-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 18px;
+      margin: 0;
+      color: #344054;
+      font-size: 16px;
+      line-height: 1.55;
+      font-weight: 800;
+    }
+
+    .client-contact-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    @media (max-width: 760px) {
+      .client-catalog-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .client-catalog-logo {
+        justify-self: center;
+        order: -1;
+      }
+
+      .client-hero-badges {
+        justify-content: center;
+      }
+
+      .client-workshop-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .empty-booklet {
       width: min(620px, calc(100% - 40px));
       margin: 26px auto 70px;
@@ -4143,6 +4419,80 @@ function chunkActivities(items, size) {
 
 
 
+
+    function isClientCatalogRequest() {
+      const params = new URLSearchParams(window.location.search);
+      return params.has("client") || params.get("mode") === "client";
+    }
+
+    function clientGradeLabels(activity) {
+      const grades = Array.isArray(activity.grades) && activity.grades.length
+        ? activity.grades
+        : (activity.gradeGroup ? [activity.gradeGroup] : []);
+      return grades.map(formatGrade).join(" · ");
+    }
+
+    function renderClientCatalogCard(activity) {
+      const card = document.createElement("article");
+      card.className = "client-workshop-card";
+      const gradeText = clientGradeLabels(activity);
+      const productText = activity.product || activity.personalProduct || "";
+      const description = activity.shortLine || activity.text || "";
+      card.innerHTML = `
+        <div class="client-card-media">
+          ${responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title }) || `<div class="image-placeholder">תמונה תתווסף כאן</div>`}
+        </div>
+        <div class="client-card-body">
+          <div class="client-card-tags">
+            ${activity.domain ? `<span class="client-tag client-domain-tag" style="${domainTagStyle(activity.domain)}">${escapeHTML(activity.domain)}</span>` : ""}
+            ${gradeText ? `<span class="client-tag">${escapeHTML(gradeText)}</span>` : ""}
+          </div>
+          <h2>${escapeHTML(activity.title)}</h2>
+          ${description ? `<p class="client-card-description">${escapeHTML(description)}</p>` : ""}
+          ${productText ? `<p class="client-product">תוצר אישי: ${escapeHTML(productText)}</p>` : ""}
+          ${activity.price ? `<p class="client-price">מחיר: ${escapeHTML(String(activity.price))} ₪</p>` : ""}
+        </div>`;
+      return card;
+    }
+
+    function renderClientCatalog() {
+      const customerActivities = activities.filter(Boolean);
+      document.body.classList.remove("catalog-mode", "is-course-catalog");
+      document.body.classList.add("client-catalog-mode");
+      document.title = "קטלוג סדנאות דיגיטלי | תעשיידע";
+
+      const shell = document.createElement("section");
+      shell.className = "client-catalog-shell";
+      shell.setAttribute("aria-label", "קטלוג סדנאות דיגיטלי ללקוחות");
+      shell.innerHTML = `
+        <header class="client-catalog-hero">
+          <div>
+            <p class="client-kicker">קטלוג דיגיטלי ללקוחות</p>
+            <h1>סדנאות STEM חווייתיות לתלמידים</h1>
+            <p>תעשיידע מזמינה את התלמידים להיכנס לעולם של גילוי, יצירה והתנסות מעשית. הקטלוג מרכז סדנאות מייקרים חווייתיות המחברות בין מדע, טכנולוגיה וחשיבה יצירתית – עם תוצר אישי בכל סדנה.</p>
+            <div class="client-hero-badges" aria-label="מאפייני הקטלוג">
+              <span class="client-hero-badge">תמונות ותקצירי פעילות</span>
+              <span class="client-hero-badge">תחומי תוכן ושכבות גיל</span>
+              <span class="client-hero-badge">תוצר אישי לכל משתתף</span>
+            </div>
+          </div>
+          <img class="client-catalog-logo" src="logo.png" alt="לוגו תעשיידע" />
+        </header>
+        <h2 class="client-section-title">קטלוג הסדנאות</h2>
+        <div class="client-workshop-grid" id="clientWorkshopGrid"></div>
+        <section class="client-contact-card" aria-label="פרטי קשר">
+          <h2>לפרטים נוספים</h2>
+          <p class="client-contact-list">
+            <span>יעל אביב · 054-7790073 · <a href="mailto:yael_aviv@think.org.il">yael_aviv@think.org.il</a></span>
+            <span>איסראא אבו-ראס · 054-5419396 · <a href="mailto:esraas@think.org.il">esraas@think.org.il</a></span>
+          </p>
+        </section>`;
+
+      const grid = shell.querySelector("#clientWorkshopGrid");
+      customerActivities.forEach(activity => grid.appendChild(renderClientCatalogCard(activity)));
+      booklet.replaceChildren(shell);
+    }
+
     function getSelectedActivities() {
       return activities
         .map((activity, index) => ({ ...activity, originalIndex: index }))
@@ -4568,7 +4918,9 @@ function chunkActivities(items, size) {
         activities = await loadActivities();
         renderSelection();
         const params = new URLSearchParams(window.location.search);
-        if (params.get("catalog") === "workshops") {
+        if (isClientCatalogRequest()) {
+          renderClientCatalog();
+        } else if (params.get("catalog") === "workshops") {
           showWorkshopInterface();
         } else {
           applyCoursePreset("manual");
@@ -4583,7 +4935,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=210").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=211").then(registration => registration.update());
       });
     }
 
