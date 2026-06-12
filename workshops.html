@@ -1964,116 +1964,102 @@
       background: #0f766e;
     }
 
-    /* ─── Mosaic page layouts ─── */
-    .page-grid.page-mosaic {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-template-rows: repeat(4, minmax(0, 1fr));
-      gap: 2.2mm;
-      align-content: stretch;
+    /* ─── Domain catalog page ─── */
+    .domain-catalog-page .page-header {
+      height: auto;
+      min-height: 9mm;
+      align-items: center;
     }
 
-    .page-mosaic-m9 {
-      grid-template-areas:
-        "a a b c"
-        "a a d d"
-        "e f g g"
-        "e f h i";
-    }
-    .page-mosaic-m6 {
-      grid-template-areas:
-        "a a b c"
-        "a a b c"
-        "d e f f"
-        "d e f f";
-    }
-    .page-mosaic-m8 {
-      grid-template-areas:
-        "a a b c"
-        "d d b c"
-        "e f g g"
-        "e f h h";
-    }
-    .page-mosaic-m7 {
-      grid-template-areas:
-        "a a b b"
-        "a a c c"
-        "d e f f"
-        "d e g g";
-    }
-
-    .page-grid.page-mosaic-fallback {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 2.2mm;
-    }
-
-    /* ─── Mosaic cards ─── */
-    .mosaic-card {
-      break-inside: avoid;
-      page-break-inside: avoid;
-      overflow: hidden;
-      min-height: 0;
+    .domain-page-title-wrap {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .domain-page-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2mm 8mm;
+      border-radius: 999px;
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.2;
+      text-align: center;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
-      padding: 2.5mm 3mm 2.5mm 4mm;
+    }
+
+    .page-grid-domains {
+      position: relative;
+      z-index: 1;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 2.2mm;
+    }
+
+    /* ─── Domain cards ─── */
+    .domain-card {
+      --accent: #203b7a;
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(23,32,51,.11);
+      border-radius: 3mm;
+      display: flex;
+      flex-direction: column;
+      break-inside: avoid;
+      page-break-inside: avoid;
       direction: rtl;
       text-align: right;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
-    .mosaic-card h2 {
-      margin: 0 0 1mm;
-      color: var(--ink);
-      letter-spacing: 0;
-      border-bottom: 1px solid rgba(23,32,51,.15);
-      padding-bottom: .5mm;
-    }
-    .mosaic-card--l h2 { font-size: 15px; line-height: 1.2; font-weight: 950; }
-    .mosaic-card--t h2 { font-size: 13px; line-height: 1.2; font-weight: 950; }
-    .mosaic-card--w h2 { font-size: 12.5px; line-height: 1.15; font-weight: 950; margin: 0; border-bottom: none; flex: 1; }
-    .mosaic-card--s h2 {
-      font-size: 12.5px;
-      line-height: 1.15;
-      font-weight: 950;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: .3mm 0;
-      border-bottom: none;
-    }
-
-    .mosaic-card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1mm;
-      margin-bottom: .8mm;
+    .domain-card-top-bar {
+      height: 1mm;
+      background: var(--accent);
+      border-radius: 3mm 3mm 0 0;
       flex-shrink: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
-    .mosaic-card .card-description {
+    .domain-card-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5mm 2mm;
+      gap: 1.2mm;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .domain-card-title-pill {
+      align-self: stretch;
+      text-align: center;
+      padding: 1mm 3mm;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: white;
+      color: var(--accent);
+      font-size: 11.5px;
+      font-weight: 900;
+      line-height: 1.15;
       display: -webkit-box;
       -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
       overflow: hidden;
-      min-height: 0;
-      margin: 0;
-      color: #374151;
-      font-weight: 500;
-    }
-    .mosaic-card--l .card-description { -webkit-line-clamp: 6; }
-    .mosaic-card--t .card-description { -webkit-line-clamp: 4; font-size: 10.5px; line-height: 1.45; }
-    .mosaic-card--w .card-description { -webkit-line-clamp: 3; font-size: 10.8px; line-height: 1.45; }
-    .mosaic-card--s .card-description { -webkit-line-clamp: 1; font-size: 9.8px; line-height: 1.35; }
-
-    .mosaic-card .product-box {
-      margin-top: auto;
       flex-shrink: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
-    .mosaic-img-full {
+    .domain-card-img-wrap {
       flex-shrink: 0;
       width: 36mm;
       height: 36mm;
@@ -2081,28 +2067,12 @@
       align-self: flex-start;
       border-radius: 2.5mm;
       overflow: hidden;
-      margin-bottom: 1.5mm;
-    }
-    .mosaic-img-full picture,
-    .mosaic-img-full img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
     }
 
-    .mosaic-img-square {
-      flex-shrink: 0;
-      aspect-ratio: 1/1;
-      max-height: 34mm;
-      border-radius: 2.5mm;
-      overflow: hidden;
-      margin-bottom: 1.5mm;
-    }
-    .mosaic-img-square picture,
-    .mosaic-img-square img {
-      width: 100%;
-      height: 100%;
+    .domain-card-img-wrap picture,
+    .domain-card-img-wrap img {
+      width: 26mm;
+      height: 26mm;
       object-fit: cover;
       display: block;
     }
@@ -2115,81 +2085,66 @@
       align-self: flex-start;
       border-radius: 2mm;
       overflow: hidden;
-      margin-bottom: .8mm;
-    }
-    .mosaic-img-small picture,
-    .mosaic-img-small img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .mosaic-w-title {
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
-      gap: 2mm;
-      padding-bottom: .7mm;
-      border-bottom: 1px solid rgba(23,32,51,.12);
-      flex-shrink: 0;
-      margin-bottom: 1.5mm;
-    }
-
-    .mosaic-w-body {
-      display: grid;
-      grid-template-columns: 24mm minmax(0, 1fr);
-      gap: 2.5mm;
-      flex: 1;
       min-height: 0;
-      direction: rtl;
-      align-items: start;
-      margin-bottom: 1.5mm;
+      align-self: stretch;
     }
 
-    .mosaic-w-img {
-      flex: none;
-      width: 24mm;
-      height: 24mm;
-      border-radius: 2mm;
-      overflow: hidden;
-    }
-    .mosaic-w-img picture,
-    .mosaic-w-img img {
+    .domain-card-footer {
+      margin-top: auto;
+      padding-top: 1mm;
+      border-top: 1px solid rgba(23,32,51,.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8mm 1.5mm;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      flex-shrink: 0;
+      direction: rtl;
     }
 
-    .mosaic-goals {
-      flex-shrink: 0;
-      margin-bottom: 1mm;
-    }
-    .mosaic-goals-title {
-      margin: 0 0 .5mm;
-      font-size: 10.5px;
+    .domain-card-product {
+      font-size: 9px;
       font-weight: 800;
-      color: var(--accent);
+      color: #172033;
+      text-align: center;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .mosaic-goals ul {
-      margin: 0;
-      padding: 0 3.5mm 0 0;
-      list-style: none;
+
+    .domain-card-grade {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3mm 2mm;
+      border-radius: 999px;
+      font-size: 8.5px;
+      font-weight: 700;
+      color: white;
+      background: var(--accent);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
-    .mosaic-goals li {
-      font-size: 10.5px;
-      line-height: 1.35;
-      color: #374151;
-      margin: .25mm 0;
-      position: relative;
-      padding-right: 3mm;
+
+    .domain-card-price {
+      font-size: 8.5px;
+      color: #6B7A90;
+      font-weight: 500;
     }
-    .mosaic-goals li::before {
-      content: "•";
-      position: absolute;
-      right: 0;
-      color: var(--accent);
+
+    .domain-card-domain-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3mm 2mm;
+      border-radius: 999px;
+      font-size: 8.5px;
+      font-weight: 700;
+      color: white;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     @media print {
@@ -2777,28 +2732,17 @@
       .escape-room-card--bio { background-color: #f3fbf6 !important; }
       .escape-room-card--astro { background-color: #f4f7ff !important; }
 
-      /* ─── Mosaic in print ─── */
-      .page-grid.page-mosaic {
+      /* ─── Domain catalog in print ─── */
+      .page-grid-domains {
         display: grid !important;
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-        grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-rows: repeat(4, 1fr) !important;
         gap: 2.2mm !important;
-        align-content: stretch !important;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
       }
 
-      .page-mosaic-m9 { grid-template-areas: "a a b c" "a a d d" "e f g g" "e f h i" !important; }
-      .page-mosaic-m6 { grid-template-areas: "a a b c" "a a b c" "d e f f" "d e f f" !important; }
-      .page-mosaic-m8 { grid-template-areas: "a a b c" "d d b c" "e f g g" "e f h h" !important; }
-      .page-mosaic-m7 { grid-template-areas: "a a b b" "a a c c" "d e f f" "d e g g" !important; }
-
-      .page-grid.page-mosaic-fallback {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        grid-auto-rows: 1fr !important;
-        gap: 2.2mm !important;
-      }
-
-      .mosaic-card {
+      .domain-card {
         overflow: hidden !important;
         break-inside: avoid !important;
         page-break-inside: avoid !important;
@@ -2806,20 +2750,22 @@
         print-color-adjust: exact !important;
         display: flex !important;
         flex-direction: column !important;
+        background: #fff !important;
       }
 
-      .mosaic-img-full,
-      .mosaic-img-square,
-      .mosaic-img-small,
-      .mosaic-w-img {
+      .domain-card-top-bar,
+      .domain-card-grade,
+      .domain-card-domain-tag,
+      .domain-card-title-pill,
+      .domain-page-pill {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
-      .mosaic-goals-title,
-      .mosaic-card .tag.accent {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+      .domain-catalog-page .page-header {
+        height: auto !important;
+        min-height: 9mm !important;
+        align-items: center !important;
       }
     }
 
@@ -3077,14 +3023,7 @@
     let showPrices = false;
     const COVER_LETTER_ACTIVITIES = 3;
 
-    const MOSAIC_LAYOUTS = {
-      m9: { capacity: 9, sizes: ["l","s","s","w","t","t","w","s","s"] },
-      m6: { capacity: 6, sizes: ["l","t","t","t","t","l"] },
-      m8: { capacity: 8, sizes: ["w","t","t","w","t","t","w","w"] },
-      m7: { capacity: 7, sizes: ["l","w","w","t","t","w","w"] },
-    };
-    const MOSAIC_SEQUENCE = ["m9", "m6", "m8", "m7"];
-    const MOSAIC_AREAS = ["a","b","c","d","e","f","g","h","i"];
+    const ACTIVITIES_PER_DOMAIN_PAGE = 12;
 
     const selected = new Set();
     const selectedCourses = new Set();
@@ -3354,6 +3293,10 @@
         : (rawActivity.duration ?? "");
       const product = rawActivity.personalProduct ?? rawActivity.product ?? "";
       const text = rawActivity.description ?? rawActivity.text ?? "";
+      const rawShortLine = rawActivity.shortLine ?? "";
+      const shortLine = rawShortLine
+        ? String(rawShortLine)
+        : (String(text).match(/^[^.。]+[.。]?/) || [""])[0].trim();
       const goals = Array.isArray(rawActivity.goals) ? rawActivity.goals.filter(Boolean) : [];
       const grades = Array.isArray(rawActivity.grades)
         ? rawActivity.grades.filter(Boolean)
@@ -3372,6 +3315,7 @@
         duration,
         product,
         text,
+        shortLine,
         goals,
         grades,
         image,
@@ -3408,50 +3352,62 @@ function chunkActivities(items, size) {
       return result;
     }
 
-    function chunkActivitiesMosaic(items) {
-      const result = [];
-      let remaining = [...items];
-      let seqIndex = 0;
-
-      while (remaining.length > 0) {
-        const R = remaining.length;
-
-        if (R <= 5) {
-          result.push({ layoutKey: "fallback", items: remaining });
-          break;
-        }
-
-        if (R <= 9) {
-          const layoutKey = Object.keys(MOSAIC_LAYOUTS).find(k => MOSAIC_LAYOUTS[k].capacity === R);
-          result.push({ layoutKey, items: remaining.slice() });
-          break;
-        }
-
-        // R >= 10
-        let layoutKey = MOSAIC_SEQUENCE[seqIndex % MOSAIC_SEQUENCE.length];
-        seqIndex++;
-        let cap = MOSAIC_LAYOUTS[layoutKey].capacity;
-
-        if (R - cap >= 1 && R - cap <= 5) {
-          let found = false;
-          for (const tryCap of [9, 8, 7, 6]) {
-            const tryR = R - tryCap;
-            if (tryR === 0 || tryR >= 6) {
-              const tryKey = Object.keys(MOSAIC_LAYOUTS).find(k => MOSAIC_LAYOUTS[k].capacity === tryCap);
-              if (tryKey) { layoutKey = tryKey; cap = tryCap; found = true; break; }
-            }
-          }
-          if (!found) {
-            layoutKey = Object.keys(MOSAIC_LAYOUTS).find(k => MOSAIC_LAYOUTS[k].capacity === 6);
-            cap = 6;
-          }
-        }
-
-        result.push({ layoutKey, items: remaining.slice(0, cap) });
-        remaining = remaining.slice(cap);
+    function balancedChunk(items, maxSize) {
+      const n = items.length;
+      if (n <= maxSize) return [items.slice()];
+      const numPages = Math.ceil(n / maxSize);
+      const baseSize = Math.floor(n / numPages);
+      const extra = n % numPages;
+      const chunks = [];
+      let offset = 0;
+      for (let i = 0; i < numPages; i++) {
+        const size = baseSize + (i < extra ? 1 : 0);
+        chunks.push(items.slice(offset, offset + size));
+        offset += size;
       }
+      return chunks;
+    }
 
-      return result;
+    function sortDomainActivities(items) {
+      const gradeOrder = { "א-ג": 0, "ד-ו": 1, "א-ו": 2, "ז-ט": 3 };
+      return [...items].sort((a, b) => {
+        const ga = gradeOrder[a.gradeGroup] ?? 9;
+        const gb = gradeOrder[b.gradeGroup] ?? 9;
+        if (ga !== gb) return ga - gb;
+        return a.title.localeCompare(b.title, "he");
+      });
+    }
+
+    function buildDomainPages(workshopActivities) {
+      const domainMap = new Map();
+      workshopActivities.forEach(activity => {
+        const d = (activity.domain || "ללא תחום").trim();
+        if (!domainMap.has(d)) domainMap.set(d, []);
+        domainMap.get(d).push(activity);
+      });
+
+      const sortedDomains = [...domainMap.entries()].sort((a, b) => {
+        if (b[1].length !== a[1].length) return b[1].length - a[1].length;
+        return a[0].localeCompare(b[0], "he");
+      });
+
+      const majorDomains = sortedDomains.filter(([, items]) => items.length >= 4);
+      const minorItems = sortedDomains
+        .filter(([, items]) => items.length < 4)
+        .flatMap(([, items]) => items);
+
+      const pages = [];
+      majorDomains.forEach(([domain, items]) => {
+        balancedChunk(sortDomainActivities(items), ACTIVITIES_PER_DOMAIN_PAGE).forEach(chunk => {
+          pages.push({ domain, items: chunk, showDomainTag: false });
+        });
+      });
+      if (minorItems.length > 0) {
+        balancedChunk(sortDomainActivities(minorItems), ACTIVITIES_PER_DOMAIN_PAGE).forEach(chunk => {
+          pages.push({ domain: "תחומים נוספים", items: chunk, showDomainTag: true });
+        });
+      }
+      return pages;
     }
 
     function escapeHTML(value) {
@@ -3627,59 +3583,34 @@ function chunkActivities(items, size) {
       return card;
     }
 
-    function renderMosaicCard(activity, size) {
+    function renderDomainCard(activity, showDomainTag = false) {
       const card = document.createElement("article");
-      card.className = `activity-card mosaic-card mosaic-card--${size}`;
+      card.className = "domain-card";
       card.style.setProperty("--accent", activity.accent || "#203b7a");
 
-      const priceHTML = showPrices && activity.price && size !== "s"
-        ? `<span class="price-tag">₪${escapeHTML(String(activity.price))} לסדנה</span>`
+      const gradeLabel = ({"א-ג": "א׳–ג׳", "ד-ו": "ד׳–ו׳", "א-ו": "א׳–ו׳"})[activity.gradeGroup] || activity.gradeGroup;
+      const priceHTML = showPrices && activity.price
+        ? `<span class="domain-card-price">מחיר: ${escapeHTML(String(activity.price))} ₪</span>`
         : "";
-      const domainTag = `<span class="tag accent">${escapeHTML(activity.domain)}</span>`;
-      const productHTML = `<div class="product-box"><p class="product-line">תוצר: <strong class="product-name">${escapeHTML(activity.product)}</strong></p></div>`;
+      const domainTagHTML = showDomainTag
+        ? `<span class="domain-card-domain-tag" style="background:${escapeHTML(activity.accent || "#203b7a")}">${escapeHTML(activity.domain)}</span>`
+        : "";
       const imgMarkup = responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title })
-        || '<div class="image-placeholder">תמונה תתווסף כאן</div>';
+        || '<div class="image-placeholder" style="width:26mm;height:26mm;border-radius:2mm;"></div>';
 
-      if (size === "l") {
-        const goalItems = activity.goals.slice(0, 3).map(g => `<li>${escapeHTML(g)}</li>`).join("");
-        const goalsHTML = goalItems ? `
-          <div class="mosaic-goals">
-            <p class="mosaic-goals-title">מטרות מרכזיות</p>
-            <ul>${goalItems}</ul>
-          </div>` : "";
-        card.innerHTML = `
-          <div class="mosaic-card-tags">${domainTag}${priceHTML}</div>
-          <h2>${escapeHTML(activity.title)}</h2>
-          <div class="mosaic-img-full">${imgMarkup}</div>
-          <p class="card-description">${escapeHTML(activity.text)}</p>
-          ${goalsHTML}
-          ${productHTML}`;
-      } else if (size === "t") {
-        card.innerHTML = `
-          <div class="mosaic-card-tags">${domainTag}${priceHTML}</div>
-          <h2>${escapeHTML(activity.title)}</h2>
-          <div class="mosaic-img-square">${imgMarkup}</div>
-          <p class="card-description">${escapeHTML(activity.text)}</p>
-          ${productHTML}`;
-      } else if (size === "w") {
-        card.innerHTML = `
-          <div class="mosaic-w-title">
-            <h2>${escapeHTML(activity.title)}</h2>
-            <div class="mosaic-card-tags">${domainTag}${priceHTML}</div>
+      card.innerHTML = `
+        <div class="domain-card-top-bar"></div>
+        <div class="domain-card-body">
+          <div class="domain-card-title-pill">${escapeHTML(activity.title)}</div>
+          <div class="domain-card-img-wrap">${imgMarkup}</div>
+          <p class="domain-card-desc">${escapeHTML(activity.shortLine || activity.text)}</p>
+          <div class="domain-card-footer">
+            <span class="domain-card-product">תוצר: ${escapeHTML(activity.product)}</span>
+            <span class="domain-card-grade">${escapeHTML(gradeLabel)}</span>
+            ${priceHTML}
+            ${domainTagHTML}
           </div>
-          <div class="mosaic-w-body">
-            <div class="mosaic-w-img">${imgMarkup}</div>
-            <p class="card-description">${escapeHTML(activity.text)}</p>
-          </div>
-          ${productHTML}`;
-      } else {
-        card.innerHTML = `
-          <div class="mosaic-card-tags">${domainTag}</div>
-          <h2>${escapeHTML(activity.title)}</h2>
-          <div class="mosaic-img-small">${imgMarkup}</div>
-          <p class="card-description">${escapeHTML(activity.text)}</p>
-          ${productHTML}`;
-      }
+        </div>`;
 
       return card;
     }
@@ -3841,80 +3772,33 @@ function chunkActivities(items, size) {
       return page;
     }
 
-    function renderPage(chunk, pageIndex, totalPages, gradeLabel = "", contactLine = "") {
-      const { layoutKey, items } = chunk;
+    function renderDomainPage({ domain, items, showDomainTag }, pageIndex, totalPages, contactLine = "") {
       const page = document.createElement("section");
-      page.className = "a4-page catalog-page";
+      page.className = "a4-page catalog-page domain-catalog-page";
       page.setAttribute("aria-label", `עמוד ${pageIndex + 1} מתוך ${totalPages}`);
-      const stemHTML = `<span class="stem-word" dir="ltr"><span class="stem-s">S</span><span class="stem-t">T</span><span class="stem-e">E</span><span class="stem-m">M</span></span>`;
-      const durationLabel = items?.[0]?.duration || "";
-      const pageTitleHTML = `סדנאות ${stemHTML} חווייתיות${gradeLabel ? ` | ${escapeHTML(gradeLabel)}` : ""}${durationLabel ? ` <span class="duration-inline">(${escapeHTML(durationLabel)})</span>` : ""}`;
 
-      const isFallback = layoutKey === "fallback";
-      const gridClass = isFallback ? "page-mosaic page-mosaic-fallback" : `page-mosaic page-mosaic-${layoutKey}`;
+      const domainColor = domain === "תחומים נוספים"
+        ? "#203b7a"
+        : (DOMAIN_COLORS[domain] || "#203b7a");
+      const pillLabel = domain === "תחומים נוספים" ? "תחומים נוספים" : `סדנאות ${domain}`;
 
       page.innerHTML = `
         <header class="page-header">
           <img class="page-header-logo" src="logo.png" alt="לוגו" />
-          <div>
-            <h1 class="page-title">${pageTitleHTML}</h1>
+          <div class="domain-page-title-wrap">
+            <span class="domain-page-pill" style="background:${escapeHTML(domainColor)}">${escapeHTML(pillLabel)}</span>
           </div>
         </header>
-        <div class="page-grid ${gridClass}"></div>
+        <div class="page-grid-domains"></div>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
-      const grid = page.querySelector(".page-grid");
-
-      if (isFallback) {
-        const isSingle = items.length === 1;
-        const isOdd = items.length % 2 !== 0;
-        items.forEach((activity, index) => {
-          const isLast = index === items.length - 1;
-          let size = "t";
-          if (isSingle) size = "l";
-          else if (isOdd && isLast) size = "w";
-          const card = renderMosaicCard(activity, size);
-          if (isSingle || (isOdd && isLast)) card.style.gridColumn = "1 / -1";
-          grid.appendChild(card);
-        });
-      } else {
-        const layout = MOSAIC_LAYOUTS[layoutKey];
-        items.forEach((activity, index) => {
-          const card = renderMosaicCard(activity, layout.sizes[index]);
-          card.style.gridArea = MOSAIC_AREAS[index];
-          grid.appendChild(card);
-        });
-      }
+      const grid = page.querySelector(".page-grid-domains");
+      items.forEach(activity => grid.appendChild(renderDomainCard(activity, showDomainTag)));
 
       return page;
     }
 
 
-
-    function mixActivitiesByDomain(items) {
-      const buckets = new Map();
-      items.forEach(activity => {
-        const key = (activity.domain || "ללא תחום").trim();
-        if (!buckets.has(key)) buckets.set(key, []);
-        buckets.get(key).push(activity);
-      });
-
-      const domains = [...buckets.keys()].sort((a, b) => a.localeCompare(b, "he"));
-      const mixed = [];
-
-      while (domains.some(domain => buckets.get(domain).length > 0)) {
-        let pickedInRound = false;
-        domains.forEach(domain => {
-          const bucket = buckets.get(domain);
-          if (!bucket.length) return;
-          mixed.push(bucket.shift());
-          pickedInRound = true;
-        });
-        if (!pickedInRound) break;
-      }
-
-      return mixed;
-    }
 
     function getSelectedActivities() {
       return activities
@@ -3958,52 +3842,34 @@ function chunkActivities(items, size) {
       showPrices = showPricesCheckbox.checked;
       const marketer = document.getElementById("marketerSelect").value;
       const contactLine = contactLineHTML(marketer);
-      const gradeGroupsOrder = ["א-ג", "ד-ו"];
       const workshopActivities = filteredActivities.filter(a => a.type !== "חדר בריחה" && a.gradeGroup !== "ז-ט");
       const escapeRoomActivities = filteredActivities.filter(a => a.type === "חדר בריחה");
       const middleSchoolActivities = filteredActivities.filter(a => a.gradeGroup === "ז-ט");
       const hasEscape = escapeRoomActivities.length > 0;
       const hasMiddleSchool = middleSchoolActivities.length > 0;
 
-      const allGroups = gradeGroupsOrder
-        .map(group => ({
-          group,
-          label: formatGradeGroup(group),
-          items: mixActivitiesByDomain(workshopActivities.filter(a => a.gradeGroup === group))
-        }))
-        .filter(g => g.items.length > 0);
+      const domainPages = buildDomainPages(workshopActivities);
 
       let coverLetterItems = [];
-      let coverLetterGradeLabel = "";
-      if (includeCoverLetter) {
-        const firstGroup = allGroups.find(g => g.items.length > 0);
-        if (firstGroup) {
-          coverLetterItems = firstGroup.items.splice(0, COVER_LETTER_ACTIVITIES);
-          coverLetterGradeLabel = firstGroup.label;
-        }
+      if (includeCoverLetter && domainPages.length > 0) {
+        const firstPage = domainPages[0];
+        coverLetterItems = firstPage.items.splice(0, COVER_LETTER_ACTIVITIES);
+        if (firstPage.items.length === 0) domainPages.shift();
       }
 
-      const allGroupChunks = allGroups
-        .map(group => ({
-          ...group,
-          chunks: chunkActivitiesMosaic(group.items)
-        }))
-        .filter(g => g.chunks.length > 0);
-
-      const totalWorkshopPages = allGroupChunks.reduce((sum, g) => sum + g.chunks.length, 0);
-      const totalPages = totalWorkshopPages + (includeCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
+      const hasCoverLetter = includeCoverLetter && coverLetterItems.length > 0;
+      const totalPages = domainPages.length + (hasCoverLetter ? 1 : 0) + (hasEscape ? 1 : 0) + (hasMiddleSchool ? 1 : 0);
       const fragment = document.createDocumentFragment();
       let globalPageIndex = 0;
-      if (includeCoverLetter) {
-        fragment.appendChild(renderCoverLetterPage(coverLetterItems, globalPageIndex, totalPages, coverLetterGradeLabel, contactLine));
+
+      if (hasCoverLetter) {
+        fragment.appendChild(renderCoverLetterPage(coverLetterItems, globalPageIndex, totalPages, "", contactLine));
         globalPageIndex++;
       }
 
-      allGroupChunks.forEach(({ label, chunks }) => {
-        chunks.forEach(chunk => {
-          fragment.appendChild(renderPage(chunk, globalPageIndex, totalPages, label, contactLine));
-          globalPageIndex++;
-        });
+      domainPages.forEach(pageData => {
+        fragment.appendChild(renderDomainPage(pageData, globalPageIndex, totalPages, contactLine));
+        globalPageIndex++;
       });
 
       if (hasEscape) {
