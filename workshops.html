@@ -969,119 +969,149 @@
       line-height: 1;
     }
 
-    /* ─── Cover letter hero redesign ─── */
+    /* ─── Cover letter: page-header shows normally ─── */
     .cover-letter-page .page-header {
-      border-bottom: none;
+      border-bottom: 1.4pt solid rgba(32,59,122,.88);
     }
-    .cover-letter-page .page-header > div {
-      display: none;
-    }
-    .cover-letter-block {
-      flex: 0 0 54%;
-      max-height: 54%;
-    }
-    .cl-hero {
+
+    /* ─── Cover letter block: 3-zone flex column ─── */
+    .cl-zone-a {
       text-align: center;
-      padding: 1mm 0 1.5mm;
-      margin-bottom: 1.5mm;
+      padding: 2mm 0 2.5mm;
+      margin-bottom: 2.5mm;
       border-bottom: 1px solid rgba(32,59,122,.13);
+      flex-shrink: 0;
     }
-    .cl-hero-title {
+    .cl-brand-title {
       margin: 0;
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 950;
       color: var(--blue);
       line-height: 1;
       letter-spacing: -.3px;
     }
-    .cl-hero-tagline {
-      margin: 1mm 0 0;
-      font-size: 13px;
-      font-weight: 800;
-      color: #0f766e;
-      line-height: 1.25;
-    }
-    .cl-hero-slogan {
-      margin: 1.5mm 0 0;
-      font-size: 16px;
+    .cl-brand-tagline {
+      margin: 1.2mm 0 0;
+      font-size: 14.5px;
       font-weight: 950;
       color: var(--pink);
-      letter-spacing: .3px;
+      letter-spacing: .5px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .cl-intro {
-      margin: 0 0 1.5mm;
-      font-size: 12.5px;
-      font-weight: 800;
-      color: var(--ink);
-      line-height: 1.45;
+    .cl-brand-sub {
+      margin: 1mm 0 0;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
+      line-height: 1.35;
     }
-    .cl-body-text {
-      margin: 0 0 2mm;
-      font-size: 12px;
+    .cl-zone-b {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr;
+      gap: 3.5mm;
+      flex: 1 1 auto;
+      min-height: 0;
+      margin-bottom: 2.5mm;
+      align-items: start;
+    }
+    .cl-section-label {
+      margin: 0 0 1.2mm;
+      font-size: 10px;
+      font-weight: 950;
+      color: var(--blue);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding-bottom: 0.8mm;
+      border-bottom: 1.5pt solid var(--blue);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cl-desc-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+    }
+    .cl-desc-text {
+      margin: 0;
+      font-size: 11.5px;
       font-weight: 600;
       color: #334155;
       line-height: 1.45;
     }
-    .cl-two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4mm;
-      margin-bottom: 2.5mm;
-      align-items: start;
-    }
-    .cl-col-label {
-      margin: 0 0 1.5mm;
-      font-size: 12px;
-      font-weight: 950;
-      color: var(--blue);
-    }
-    .cl-domain-tags {
+    .cl-tags-wrap {
       display: flex;
       flex-wrap: wrap;
       gap: 1.2mm;
     }
     .cl-tag {
       display: inline-block;
-      padding: .8mm 2.5mm;
+      padding: .6mm 2.2mm;
       border-radius: 999px;
-      background: rgba(32,59,122,.08);
-      border: 1px solid rgba(32,59,122,.18);
-      color: var(--blue);
       font-size: 10.5px;
       font-weight: 800;
       white-space: nowrap;
+      border: 1px solid currentColor;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+    }
+    .cl-values-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
+    }
+    .cl-values-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1mm;
+    }
+    .cl-value-item {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #1a2744;
+      line-height: 1.3;
+      padding: 0.8mm 1.8mm 0.8mm 1mm;
+      background: rgba(32,59,122,.045);
+      border-radius: 1.5mm;
+      border-right: 2.5pt solid var(--pink);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cl-how-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
     }
     .cl-how-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2mm;
+      gap: 1.5mm;
     }
     .cl-how-card {
       display: flex;
       flex-direction: column;
-      gap: .8mm;
-      padding: 2mm 2.5mm;
+      gap: .5mm;
+      padding: 1.8mm 2mm;
       border-radius: 2mm;
-      border: 1px solid rgba(32,59,122,.14);
-      background: rgba(32,59,122,.03);
+      border: 1px solid rgba(32,59,122,.15);
+      background: rgba(32,59,122,.04);
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
     .cl-how-name {
-      font-size: 11.5px;
+      font-size: 10.5px;
       font-weight: 950;
       color: var(--blue);
-      line-height: 1.25;
+      line-height: 1.2;
     }
     .cl-how-desc {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 600;
       color: #475569;
-      line-height: 1.25;
+      line-height: 1.2;
     }
     .cl-product-banner {
       text-align: center;
@@ -4025,37 +4055,61 @@ function chunkActivities(items, size) {
         </header>
         <div class="cover-bottom-grid"></div>
         <section class="cover-letter-block" aria-label="מכתב מקדים">
-          <div class="cl-hero">
-            <h2 class="cl-hero-title">טכנו-כיף</h2>
-            <p class="cl-hero-tagline">טכנולוגיה וכיף מתחברים בתוך טכנו-כיף אחד גדול</p>
-            <p class="cl-hero-slogan">חוקרים. יוצרים. מגלים.</p>
+
+          <!-- א. כותרת מותג -->
+          <div class="cl-zone-a">
+            <h2 class="cl-brand-title">קטלוג סדנאות טכנו-כיף</h2>
+            <p class="cl-brand-tagline">חוקרים · יוצרים · מגלים</p>
+            <p class="cl-brand-sub">סדנאות ${stemHTML} חווייתיות עם תוצר אישי לכל משתתף — לכיתות א׳ עד ו׳</p>
           </div>
-          <p class="cl-intro">תעשיידע מזמינה את תלמידי כיתות א׳–ו׳ לחוויית קיץ מעשירה, מעשית ומלאת יצירה, המחברת בין מדע, טכנולוגיה, הנדסה וחשיבה יצירתית.</p>
-          <p class="cl-body-text">קטלוג טכנו-כיף מרכז מגוון סדנאות STEM ומייקרים לבחירה גמישה — מסדנה בודדת, דרך יום פעילות מרוכז ועד תוכנית קיץ מלאה. בכל סדנה התלמידים נחשפים לרעיון מדעי, מתנסים בו בפועל ובונים תוצר אישי משלהם.</p>
-          <div class="cl-two-col">
-            <div class="cl-col">
-              <p class="cl-col-label">תחומים לדוגמה</p>
-              <div class="cl-domain-tags">
-                <span class="cl-tag" style="${domainTagStyle("אופטיקה")}">אופטיקה</span>
-                <span class="cl-tag" style="${domainTagStyle("פיזיקה")}">פיזיקה</span>
-                <span class="cl-tag" style="${domainTagStyle("הנדסה")}">הנדסה</span>
-                <span class="cl-tag" style="${domainTagStyle("כימיה")}">כימיה</span>
-                <span class="cl-tag" style="${domainTagStyle("ביולוגיה")}">ביולוגיה</span>
-                <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
-                <span class="cl-tag" style="${domainTagStyle("טכנולוגיה")}">טכנולוגיה</span>
+
+          <!-- ב. שלושה עמודים: תיאור | יתרונות | איך זה עובד -->
+          <div class="cl-zone-b">
+
+            <div class="cl-desc-col">
+              <p class="cl-section-label">על הקטלוג</p>
+              <p class="cl-desc-text">תעשיידע מזמינה את תלמידי כיתות א׳–ו׳ לחוויה של עשייה, יצירה, מדע וטכנולוגיה. הסדנאות משלבות ידע, התנסות מעשית, סקרנות והנאה — ובכל אחת התלמידים בונים תוצר אישי שהולך הביתה.</p>
+              <div>
+                <p class="cl-section-label">תחומי הקטלוג</p>
+                <div class="cl-tags-wrap">
+                  <span class="cl-tag" style="${domainTagStyle("אופטיקה")}">אופטיקה</span>
+                  <span class="cl-tag" style="${domainTagStyle("פיזיקה")}">פיזיקה</span>
+                  <span class="cl-tag" style="${domainTagStyle("הנדסה")}">הנדסה</span>
+                  <span class="cl-tag" style="${domainTagStyle("כימיה")}">כימיה</span>
+                  <span class="cl-tag" style="${domainTagStyle("ביולוגיה")}">ביולוגיה</span>
+                  <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
+                  <span class="cl-tag" style="${domainTagStyle("טכנולוגיה")}">טכנולוגיה</span>
+                </div>
               </div>
             </div>
-            <div class="cl-col">
-              <p class="cl-col-label">איך זה עובד?</p>
+
+            <div class="cl-values-col">
+              <p class="cl-section-label">למה טכנו-כיף?</p>
+              <ul class="cl-values-list">
+                <li class="cl-value-item">תוצר אישי לכל משתתף</li>
+                <li class="cl-value-item">למידה חווייתית ומעשית</li>
+                <li class="cl-value-item">תחומי STEM מגוונים</li>
+                <li class="cl-value-item">מתאים לקייטנות ולתוכניות קיץ</li>
+                <li class="cl-value-item">סדנאות קצרות וממוקדות — 45 דקות</li>
+                <li class="cl-value-item">מעודד סקרנות, יצירה וביטוי אישי</li>
+              </ul>
+            </div>
+
+            <div class="cl-how-col">
+              <p class="cl-section-label">איך זה עובד?</p>
               <div class="cl-how-grid">
-                <div class="cl-how-card"><b class="cl-how-name">סדנה בודדת</b><span class="cl-how-desc">45 דקות</span></div>
-                <div class="cl-how-card"><b class="cl-how-name">יום פעילות מרוכז</b><span class="cl-how-desc">מספר סדנאות ביום</span></div>
+                <div class="cl-how-card"><b class="cl-how-name">סדנה בודדת</b><span class="cl-how-desc">45 דקות — ידע + יצירה + תוצר</span></div>
+                <div class="cl-how-card"><b class="cl-how-name">יום פעילות</b><span class="cl-how-desc">מספר סדנאות ביום אחד</span></div>
                 <div class="cl-how-card"><b class="cl-how-name">קייטנה מלאה</b><span class="cl-how-desc">תוכנית קיץ — 5 ימים</span></div>
-                <div class="cl-how-card"><b class="cl-how-name">שילוב גמיש</b><span class="cl-how-desc">חדרי בריחה וסדנאות</span></div>
+                <div class="cl-how-card"><b class="cl-how-name">שילוב גמיש</b><span class="cl-how-desc">חדרי בריחה + סדנאות</span></div>
               </div>
             </div>
+
           </div>
-          <div class="cl-product-banner">✦ בכל סדנה כל משתתף בונה תוצר אישי — ולוקח אותו הביתה ✦</div>
+
+          <!-- ג. מסר מסכם -->
+          <div class="cl-product-banner">✦ בכל סדנה כל משתתף בונה תוצר אישי ולוקח אותו הביתה ✦</div>
+
         </section>
         ${footerZoneHTML(pageIndex, contactLine)}`;
 
