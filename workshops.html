@@ -3204,8 +3204,9 @@
           </div>
           <div class="action-row" style="margin-top:10px;">
             <button class="action-btn" type="button" data-action="all">כל הפעילויות</button>
-            <button class="action-btn" type="button" data-action="workshops">סדנאות בלבד</button>
-            <button class="action-btn" type="button" data-action="escapes">חדרי בריחה בלבד</button>
+            <button class="action-btn" type="button" data-action="workshops">סדנאות</button>
+            <button class="action-btn" type="button" data-action="ai">בינה מלאכותית</button>
+            <button class="action-btn" type="button" data-action="escapes">חדרי בריחה</button>
             <button class="action-btn" type="button" data-action="manual">בחירה ידנית</button>
             <span class="selected-count" id="selectedCount">0 נבחרו</span>
           </div>
@@ -4277,7 +4278,10 @@ function chunkActivities(items, size) {
 
 
     function matchesAdvancedFilters(activity) {
-      const typeMatch = !selectedType || activity.type === selectedType;
+      const typeMatch = !selectedType ||
+        (selectedType === "סדנה" && activity.type === "סדנה" && activity.domain !== "AI") ||
+        (selectedType === "חדר בריחה" && activity.type === "חדר בריחה") ||
+        (selectedType === "AI" && activity.domain === "AI");
       const gradeMatch = !selectedGrades.size ||
         (selectedGrades.has("ז-ט") && activity.gradeGroup === "ז-ט") ||
         activity.grades.some(grade => selectedGrades.has(grade));
@@ -4338,6 +4342,7 @@ function chunkActivities(items, size) {
         const action = button.dataset.action;
         const active = (selectedType === null && action === "all" && sel.length === activities.length && activities.length > 0) ||
           (selectedType === "סדנה" && action === "workshops") ||
+          (selectedType === "AI" && action === "ai") ||
           (selectedType === "חדר בריחה" && action === "escapes");
         button.classList.toggle("is-active", active && !button.classList.contains("secondary-action"));
       });
@@ -4551,7 +4556,10 @@ function chunkActivities(items, size) {
         selectedType = null;
       } else if (action === "workshops") {
         selectedType = "סדנה";
-        activities.forEach((activity, index) => { if (activity.type === "סדנה") selected.add(index); });
+        activities.forEach((activity, index) => { if (activity.type === "סדנה" && activity.domain !== "AI") selected.add(index); });
+      } else if (action === "ai") {
+        selectedType = "AI";
+        activities.forEach((activity, index) => { if (activity.domain === "AI") selected.add(index); });
       } else if (action === "escapes") {
         selectedType = "חדר בריחה";
         activities.forEach((activity, index) => { if (activity.type === "חדר בריחה") selected.add(index); });
