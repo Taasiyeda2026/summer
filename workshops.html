@@ -3125,18 +3125,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       background: linear-gradient(180deg, rgba(32,59,122,.06), rgba(52,195,213,.08));
       border-inline-start: 1px solid rgba(23,32,51,.08);
     }
 
     .workshop-modal-media img {
-      width: 100%;
-      max-height: clamp(180px, 54vh, 380px);
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: calc(88vh - 44px);
       object-fit: contain;
+      object-position: center center;
       border-radius: 20px;
       background: #fff;
       padding: 8px;
       box-shadow: 0 14px 36px rgba(20,34,66,.14);
+      display: block;
     }
 
     .workshop-modal-content {
