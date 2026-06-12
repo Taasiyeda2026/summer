@@ -5166,7 +5166,8 @@ function chunkActivities(items, size) {
 
     const SHORT_LINK_PRESETS = {
       wy: { w: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37,24", p: true, m: true, c: "y" },
-      wi: { w: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37,24", p: true, m: true, c: "i" }
+      wi: { w: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37,24", p: true, m: true, c: "i" },
+      i:  { w: "1-6,8-12,26-27,29-31,36,38-39,7,13-23,28,32-35,37",    p: true, m: true, c: "i" }
     };
 
     function resolveShortPreset(params) {
@@ -6041,7 +6042,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=317").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=318").then(registration => registration.update());
       });
     }
 
