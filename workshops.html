@@ -4236,6 +4236,72 @@ function chunkActivities(items, size) {
       } else {
         clientLinkStatus.insertAdjacentText("afterbegin", "קישור ללקוח: ");
       }
+    function clientGradeLabels(activity) {
+      const grades = Array.isArray(activity.grades) && activity.grades.length
+        ? activity.grades
+        : (activity.gradeGroup ? [activity.gradeGroup] : []);
+      return grades.map(formatGrade).join(" · ");
+    }
+
+    function renderClientCatalogCard(activity) {
+      const card = document.createElement("article");
+      card.className = "client-workshop-card";
+      const gradeText = clientGradeLabels(activity);
+      const productText = activity.product || activity.personalProduct || "";
+      const description = activity.shortLine || activity.text || "";
+      card.innerHTML = `
+        <div class="client-card-media">
+          ${responsiveImageMarkup({ src: activity.image, webpSrc: activity.imageWebp, alt: activity.title }) || `<div class="image-placeholder">תמונה תתווסף כאן</div>`}
+        </div>
+        <div class="client-card-body">
+          <div class="client-card-tags">
+            ${activity.domain ? `<span class="client-tag client-domain-tag" style="${domainTagStyle(activity.domain)}">${escapeHTML(activity.domain)}</span>` : ""}
+            ${gradeText ? `<span class="client-tag">${escapeHTML(gradeText)}</span>` : ""}
+          </div>
+          <h2>${escapeHTML(activity.title)}</h2>
+          ${description ? `<p class="client-card-description">${escapeHTML(description)}</p>` : ""}
+          ${productText ? `<p class="client-product">תוצר אישי: ${escapeHTML(productText)}</p>` : ""}
+          ${activity.price ? `<p class="client-price">מחיר: ${escapeHTML(String(activity.price))} ₪</p>` : ""}
+        </div>`;
+      return card;
+    }
+
+    function renderClientCatalog() {
+      const customerActivities = activities.filter(Boolean);
+      document.body.classList.remove("catalog-mode", "is-course-catalog");
+      document.body.classList.add("client-catalog-mode");
+      document.title = "קטלוג סדנאות דיגיטלי | תעשיידע";
+
+      const shell = document.createElement("section");
+      shell.className = "client-catalog-shell";
+      shell.setAttribute("aria-label", "קטלוג סדנאות דיגיטלי ללקוחות");
+      shell.innerHTML = `
+        <header class="client-catalog-hero">
+          <div>
+            <p class="client-kicker">קטלוג דיגיטלי ללקוחות</p>
+            <h1>סדנאות STEM חווייתיות לתלמידים</h1>
+            <p>תעשיידע מזמינה את התלמידים להיכנס לעולם של גילוי, יצירה והתנסות מעשית. הקטלוג מרכז סדנאות מייקרים חווייתיות המחברות בין מדע, טכנולוגיה וחשיבה יצירתית – עם תוצר אישי בכל סדנה.</p>
+            <div class="client-hero-badges" aria-label="מאפייני הקטלוג">
+              <span class="client-hero-badge">תמונות ותקצירי פעילות</span>
+              <span class="client-hero-badge">תחומי תוכן ושכבות גיל</span>
+              <span class="client-hero-badge">תוצר אישי לכל משתתף</span>
+            </div>
+          </div>
+          <img class="client-catalog-logo" src="logo.png" alt="לוגו תעשיידע" />
+        </header>
+        <h2 class="client-section-title">קטלוג הסדנאות</h2>
+        <div class="client-workshop-grid" id="clientWorkshopGrid"></div>
+        <section class="client-contact-card" aria-label="פרטי קשר">
+          <h2>לפרטים נוספים</h2>
+          <p class="client-contact-list">
+            <span>יעל אביב · 054-7790073 · <a href="mailto:yael_aviv@think.org.il">yael_aviv@think.org.il</a></span>
+            <span>איסראא אבו-ראס · 054-5419396 · <a href="mailto:esraas@think.org.il">esraas@think.org.il</a></span>
+          </p>
+        </section>`;
+
+      const grid = shell.querySelector("#clientWorkshopGrid");
+      customerActivities.forEach(activity => grid.appendChild(renderClientCatalogCard(activity)));
+      booklet.replaceChildren(shell);
     }
 
     function getSelectedActivities() {
