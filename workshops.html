@@ -2182,7 +2182,13 @@
     }
 
     .domain-card-top-bar {
-      display: none;
+      display: block;
+      height: 3pt;
+      background: var(--accent);
+      flex-shrink: 0;
+      align-self: stretch;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     .domain-card-body {
@@ -2218,7 +2224,7 @@
       margin-right: -2mm;
       text-align: center;
       padding: 1.4mm 2mm 1mm;
-      border-top: 2.5pt solid var(--accent);
+      border-top: none;
       border-right: none;
       border-bottom: 1pt solid var(--accent);
       border-left: none;
@@ -2956,7 +2962,13 @@
       }
 
       .domain-card-top-bar {
-        display: none !important;
+        display: block !important;
+        height: 3pt !important;
+        background: var(--accent) !important;
+        flex-shrink: 0 !important;
+        align-self: stretch !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .domain-card-title-pill {
@@ -2964,7 +2976,7 @@
         margin-left: -2mm !important;
         margin-right: -2mm !important;
         padding: 1.4mm 2mm 1mm !important;
-        border-top: 2.5pt solid var(--accent) !important;
+        border-top: none !important;
         border-right: none !important;
         border-bottom: 1pt solid var(--accent) !important;
         border-left: none !important;
