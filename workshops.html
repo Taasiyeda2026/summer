@@ -206,6 +206,31 @@
       box-sizing: border-box;
     }
 
+    .marketer-field {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      color: #172033;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .marketer-field select {
+      min-width: 70px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
     .selected-count {
       display: inline-flex;
       align-items: center;
@@ -339,7 +364,7 @@
       cursor: pointer;
     }
 
-    .cover-letter-toggle:has(input[type="radio"]:checked) {
+    .cover-letter-toggle:has(input:checked) {
       background: rgba(108, 77, 230, 0.10);
       border-color: var(--purple);
       color: var(--purple);
@@ -400,6 +425,7 @@
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
+    .picker-grid.ai,
     .picker-grid.escapes {
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
@@ -836,6 +862,16 @@
       margin-bottom: auto;
     }
 
+    .cover-letter-logo {
+      position: absolute;
+      top: 7mm;
+      left: 8mm;
+      z-index: 2;
+      height: 10mm;
+      width: auto;
+      object-fit: contain;
+    }
+
     .cover-letter-page-title {
       color: var(--pink);
     }
@@ -844,12 +880,12 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 1fr;
       align-items: end;
       gap: 12px;
       min-height: 7mm;
       padding: 0 1mm 1mm;
-      border-bottom: 1.4pt solid rgba(32,59,122,.88);
+      border-bottom: 0;
       font-size: 20px;
     }
 
@@ -953,7 +989,7 @@
 
     /* ─── Cover letter: page-header shows normally ─── */
     .cover-letter-page .page-header {
-      border-bottom: 1.4pt solid rgba(32,59,122,.88);
+      border-bottom: 0;
     }
 
     /* ─── Cover letter: spacious single-column layout ─── */
@@ -3243,17 +3279,12 @@
                 <input id="coverLetterCheckbox" type="checkbox" />
                 <span>מכתב מקדים</span>
               </label>
-              <label class="cover-letter-toggle" for="marketerNone">
-                <input type="radio" id="marketerNone" name="marketerRadio" value="none" checked />
-                <span>ללא שיווק</span>
-              </label>
-              <label class="cover-letter-toggle" for="marketerYael">
-                <input type="radio" id="marketerYael" name="marketerRadio" value="yael" />
-                <span>יעל אביב</span>
-              </label>
-              <label class="cover-letter-toggle" for="marketerIsraa">
-                <input type="radio" id="marketerIsraa" name="marketerRadio" value="israa" />
-                <span>איסראא אבו-ראש</span>
+              <label class="marketer-field" for="marketerSelect">
+                <span>איש קשר</span>
+                <select id="marketerSelect" name="marketerSelect">
+                  <option value="yael" selected>יעל</option>
+                  <option value="israa">איסראא</option>
+                </select>
               </label>
               <label class="cover-letter-toggle" for="showPricesCheckbox">
                 <input id="showPricesCheckbox" type="checkbox" />
@@ -3308,6 +3339,7 @@
     const coverLetterCheckbox = document.getElementById("coverLetterCheckbox");
     const showPricesCheckbox = document.getElementById("showPricesCheckbox");
     let showPrices = false;
+    const getSelectedMarketer = () => document.getElementById("marketerSelect")?.value || "yael";
     const COVER_LETTER_ACTIVITIES = 6;
 
     const ACTIVITIES_PER_DOMAIN_PAGE = 12;
@@ -3359,6 +3391,20 @@
       "כימיה":  "#1e293b",
       "פיזיקה": "#1e293b",
     };
+
+    const DOMAIN_DISPLAY_ORDER = ["אופטיקה", "טכנולוגיה", "חלל"];
+
+    function domainDisplayRank(domain) {
+      const index = DOMAIN_DISPLAY_ORDER.indexOf(domain);
+      return index === -1 ? 100 : index;
+    }
+
+    function compareDomainsForDisplay(a, b) {
+      const rankA = domainDisplayRank(a);
+      const rankB = domainDisplayRank(b);
+      if (rankA !== rankB) return rankA - rankB;
+      return String(a).localeCompare(String(b), "he");
+    }
 
     function domainTagStyle(domain) {
       const bg = DOMAIN_COLORS[domain] || "#203b7a";
@@ -3703,10 +3749,13 @@ function chunkActivities(items, size) {
 
       const sortedActivities = [];
       sortedGradeGroups.forEach(([, domainMap]) => {
-        // Within each grade group, sort domains by count desc, then alphabetically
+        // Within each grade group, keep the requested display order before count-based ordering.
         const sortedDomains = [...domainMap.entries()].sort((a, b) => {
+          const rankA = domainDisplayRank(a[0]);
+          const rankB = domainDisplayRank(b[0]);
+          if (rankA !== rankB && (rankA < 100 || rankB < 100)) return rankA - rankB;
           if (b[1].length !== a[1].length) return b[1].length - a[1].length;
-          return a[0].localeCompare(b[0], "he");
+          return compareDomainsForDisplay(a[0], b[0]);
         });
         sortedDomains.forEach(([, items]) => {
           sortDomainActivities(items).forEach(a => sortedActivities.push(a));
@@ -4069,6 +4118,7 @@ function chunkActivities(items, size) {
       const gradeTitle = escapeHTML(pageGradeTitle(items.slice(0, COVER_LETTER_ACTIVITIES)));
 
       page.innerHTML = `
+        <img class="cover-letter-logo" src="logo.png" alt="לוגו תעשיידע" />
         <section class="cover-letter-block" aria-label="מכתב מקדים">
 
           <div class="cl-hero">
@@ -4090,11 +4140,12 @@ function chunkActivities(items, size) {
             <span class="cl-domains-label">תחומים בקטלוג:</span>
             <div class="cl-tags-wrap">
               <span class="cl-tag" style="${domainTagStyle("אופטיקה")}">אופטיקה</span>
+              <span class="cl-tag" style="${domainTagStyle("טכנולוגיה")}">טכנולוגיה</span>
+              <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
               <span class="cl-tag" style="${domainTagStyle("פיזיקה")}">פיזיקה</span>
               <span class="cl-tag" style="${domainTagStyle("הנדסה")}">הנדסה</span>
               <span class="cl-tag" style="${domainTagStyle("כימיה")}">כימיה</span>
               <span class="cl-tag" style="${domainTagStyle("ביולוגיה")}">ביולוגיה</span>
-              <span class="cl-tag" style="${domainTagStyle("חלל")}">חלל</span>
               <span class="cl-tag" style="${domainTagStyle("תעופה")}">תעופה</span>
             </div>
           </div>
@@ -4106,7 +4157,6 @@ function chunkActivities(items, size) {
         </section>
 
         <header class="cover-catalog-header" aria-label="כותרת מקטע הסדנאות">
-          <img class="page-header-logo" src="logo.png" alt="לוגו" />
           <div>
             <h2 class="page-title">סדנאות ${stemHTML} חווייתיות${gradeTitle} <span class="page-title-duration">(${escapeHTML(String(items.find(Boolean)?.durationMinutes ?? 45))} דקות)</span></h2>
           </div>
@@ -4190,10 +4240,11 @@ function chunkActivities(items, size) {
 
     function selectedClientItemIds() {
       const params = new URLSearchParams(window.location.search);
-      return params.get("items")
-        ?.split(",")
+      const rawItems = params.get("w") || params.get("items") || "";
+      return rawItems
+        .split(",")
         .map(item => decodeURIComponent(item).trim())
-        .filter(Boolean) || [];
+        .filter(Boolean);
     }
 
     function getClientCatalogActivities() {
@@ -4204,10 +4255,12 @@ function chunkActivities(items, size) {
     }
 
     async function showClientCatalog() {
-      coverLetterCheckbox.checked = false;
-      document.querySelector('input[name="marketerRadio"][value="none"]').checked = true;
       const params = new URLSearchParams(window.location.search);
-      showPricesCheckbox.checked = params.get("prices") === "1";
+      coverLetterCheckbox.checked = params.get("m") === "1";
+      const marketer = ["yael", "israa"].includes(params.get("c")) ? params.get("c") : "yael";
+      const marketerSelect = document.getElementById("marketerSelect");
+      if (marketerSelect) marketerSelect.value = marketer;
+      showPricesCheckbox.checked = params.get("p") === "1" || params.get("prices") === "1";
       renderCatalog(getClientCatalogActivities());
       document.body.classList.remove("is-course-catalog");
       document.body.classList.add("catalog-mode", "client-catalog-mode");
@@ -4218,13 +4271,22 @@ function chunkActivities(items, size) {
     function buildClientCatalogUrl() {
       const params = [];
       const ids = getSelectedActivities().map(activity => activity.clientId).filter(Boolean);
-      if (ids.length) params.push(`items=${ids.map(encodeURIComponent).join(",")}`);
-      if (showPricesCheckbox.checked) params.push("prices=1");
-      return `https://taasiyeda2026.github.io/summer/catalog/${params.length ? `?${params.join("&")}` : ""}`;
+      if (!ids.length) return "";
+      params.push(`w=${ids.map(encodeURIComponent).join(",")}`);
+      if (showPricesCheckbox.checked) params.push("p=1");
+      if (coverLetterCheckbox.checked) params.push("m=1");
+      params.push(`c=${encodeURIComponent(getSelectedMarketer() || "yael")}`);
+      return `https://taasiyeda2026.github.io/summer/catalog/?${params.join("&")}`;
     }
 
     async function shareClientCatalogLink() {
       const url = buildClientCatalogUrl();
+      if (!url) {
+        clientLinkStatus.dataset.empty = "1";
+        clientLinkStatus.textContent = "יש לבחור לפחות סדנה אחת ליצירת קישור ללקוח.";
+        return;
+      }
+      clientLinkStatus.dataset.empty = "0";
       clientLinkStatus.innerHTML = `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(url)}</a>`;
       if (navigator.clipboard?.writeText) {
         try {
@@ -4346,11 +4408,11 @@ function chunkActivities(items, size) {
 
       const includeCoverLetter = coverLetterCheckbox.checked;
       showPrices = showPricesCheckbox.checked;
-      const marketer = document.querySelector('input[name="marketerRadio"]:checked')?.value || "none";
+      const marketer = getSelectedMarketer();
       const contactLine = contactLineHTML(marketer);
-      const workshopActivities = filteredActivities.filter(a => a.type !== "חדר בריחה" && a.gradeGroup !== "ז-ט");
+      const workshopActivities = filteredActivities.filter(a => a.type !== "חדר בריחה" && a.domain !== "AI" && a.gradeGroup !== "ז-ט");
+      const middleSchoolActivities = filteredActivities.filter(a => a.domain === "AI" || a.gradeGroup === "ז-ט");
       const escapeRoomActivities = filteredActivities.filter(a => a.type === "חדר בריחה");
-      const middleSchoolActivities = filteredActivities.filter(a => a.gradeGroup === "ז-ט");
       const hasEscape = escapeRoomActivities.length > 0;
       const hasMiddleSchool = middleSchoolActivities.length > 0;
 
@@ -4358,9 +4420,14 @@ function chunkActivities(items, size) {
 
       let coverLetterItems = [];
       let activitiesForPages = sortedActivities;
-      if (includeCoverLetter && sortedActivities.length > 0) {
-        coverLetterItems = sortedActivities.slice(0, COVER_LETTER_ACTIVITIES);
-        activitiesForPages = sortedActivities.slice(COVER_LETTER_ACTIVITIES);
+      if (includeCoverLetter) {
+        const coverSourceActivities = sortedActivities.length
+          ? sortedActivities
+          : sortDomainActivities(filteredActivities).filter(Boolean);
+        coverLetterItems = coverSourceActivities.slice(0, COVER_LETTER_ACTIVITIES);
+        if (sortedActivities.length > 0) {
+          activitiesForPages = sortedActivities.slice(COVER_LETTER_ACTIVITIES);
+        }
       }
 
       const slotPages = buildSlotPages(activitiesForPages);
@@ -4379,13 +4446,13 @@ function chunkActivities(items, size) {
         globalPageIndex++;
       });
 
-      if (hasEscape) {
-        fragment.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages, contactLine));
+      if (hasMiddleSchool) {
+        fragment.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages, contactLine));
         globalPageIndex++;
       }
 
-      if (hasMiddleSchool) {
-        fragment.appendChild(renderMiddleSchoolPage(middleSchoolActivities, globalPageIndex, totalPages, contactLine));
+      if (hasEscape) {
+        fragment.appendChild(renderEscapeRoomPage(escapeRoomActivities, globalPageIndex, totalPages, contactLine));
       }
 
       booklet.replaceChildren(fragment);
@@ -4418,7 +4485,7 @@ function chunkActivities(items, size) {
 
     function renderFilters() {
       renderFilterChips(gradeFilters, GRADE_ORDER, "grade");
-      renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]), "domain");
+      renderFilterChips(domainFilters, uniqueValues(activity => [activity.domain]).sort(compareDomainsForDisplay), "domain");
     }
 
 
@@ -4439,6 +4506,8 @@ function chunkActivities(items, size) {
 
       const workshopGrid = document.createElement("div");
       workshopGrid.className = "picker-grid workshops";
+      const aiGrid = document.createElement("div");
+      aiGrid.className = "picker-grid ai";
       const escapeGrid = document.createElement("div");
       escapeGrid.className = "picker-grid escapes";
 
@@ -4458,6 +4527,8 @@ function chunkActivities(items, size) {
           </span>`;
         if (activity.type === "חדר בריחה") {
           escapeGrid.appendChild(label);
+        } else if (activity.domain === "AI") {
+          aiGrid.appendChild(label);
         } else {
           workshopGrid.appendChild(label);
         }
@@ -4466,9 +4537,16 @@ function chunkActivities(items, size) {
       if (workshopGrid.children.length) {
         const lbl = document.createElement("p");
         lbl.className = "picker-section-label";
-        lbl.textContent = "סדנאות";
+        lbl.textContent = "סדנאות STEM ומייקרים";
         picker.appendChild(lbl);
         picker.appendChild(workshopGrid);
+      }
+      if (aiGrid.children.length) {
+        const lbl = document.createElement("p");
+        lbl.className = "picker-section-label";
+        lbl.textContent = "בינה מלאכותית";
+        picker.appendChild(lbl);
+        picker.appendChild(aiGrid);
       }
       if (escapeGrid.children.length) {
         const lbl = document.createElement("p");
@@ -4483,8 +4561,8 @@ function chunkActivities(items, size) {
       const sel = getSelectedActivities();
       selectedCount.textContent = `נבחרו ${sel.length} פעילויות`;
       catalogModeBtn.disabled = sel.length === 0;
-      clientLinkBtn.disabled = sel.length === 0;
-      if (!sel.length) clientLinkStatus.textContent = "";
+      clientLinkBtn.disabled = false;
+      if (!sel.length && clientLinkStatus.dataset.empty !== "1") clientLinkStatus.textContent = "";
       document.querySelectorAll("[data-action]").forEach(button => {
         const action = button.dataset.action;
         const active = (selectedType === null && action === "all" && sel.length === activities.length && activities.length > 0) ||
@@ -4752,7 +4830,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=213").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=286").then(registration => registration.update());
       });
     }
 
