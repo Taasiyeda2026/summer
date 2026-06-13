@@ -4098,7 +4098,7 @@
                 <span>תוויות מחיר</span>
               </label>
             </div>
-            <button class="action-btn" id="clientLinkBtn" type="button" disabled>יצירת קישור ללקוח</button>
+            <button class="action-btn" id="clientLinkBtn" type="button" disabled>יצירת קישור</button>
             <button class="print-btn" id="catalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
             <p class="client-link-status" id="clientLinkStatus" aria-live="polite"></p>
           </div>
@@ -5496,7 +5496,7 @@ function chunkActivities(items, size) {
       const url = buildClientCatalogUrl();
       if (!url) {
         clientLinkStatus.dataset.empty = "1";
-        clientLinkStatus.textContent = "יש לבחור לפחות סדנה אחת ליצירת קישור ללקוח.";
+        clientLinkStatus.textContent = "יש לבחור לפחות סדנה אחת ליצירת קישור.";
         return;
       }
       clientLinkStatus.dataset.empty = "0";
@@ -5506,10 +5506,10 @@ function chunkActivities(items, size) {
           await navigator.clipboard.writeText(url);
           clientLinkStatus.insertAdjacentText("afterbegin", "הקישור הועתק: ");
         } catch (error) {
-          clientLinkStatus.insertAdjacentText("afterbegin", "קישור ללקוח: ");
+          clientLinkStatus.insertAdjacentText("afterbegin", "קישור: ");
         }
       } else {
-        clientLinkStatus.insertAdjacentText("afterbegin", "קישור ללקוח: ");
+        clientLinkStatus.insertAdjacentText("afterbegin", "קישור: ");
       }
     }
 
@@ -6143,7 +6143,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=326").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=327").then(registration => registration.update());
       });
     }
 
