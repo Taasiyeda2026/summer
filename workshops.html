@@ -3835,7 +3835,20 @@
     }
 
     @media print {
-      .img-zoom-overlay {
+      .img-zoom-overlay,
+      .workshop-modal {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+      }
+
+      body.workshop-modal-open {
+        overflow: auto !important;
+      }
+
+      .ai-html-frame {
         display: none !important;
       }
 
@@ -5633,11 +5646,7 @@ function chunkActivities(items, size) {
       });
 
       if (hasMiddleSchool) {
-        const aiCatalogFrame = document.createElement("iframe");
-        aiCatalogFrame.src = "./ai.html";
-        aiCatalogFrame.className = "ai-html-frame";
-        aiCatalogFrame.title = "סדנאות בינה מלאכותית";
-        fragment.appendChild(aiCatalogFrame);
+        fragment.appendChild(renderApprovedAiFlyerPages(globalPageIndex, totalPages, contactLine));
         globalPageIndex += 2;
       }
 
@@ -6105,9 +6114,14 @@ function chunkActivities(items, size) {
       }
     }
 
+    window.addEventListener("beforeprint", () => {
+      document.querySelector(".img-zoom-overlay")?.remove();
+      document.body.classList.remove("workshop-modal-open");
+    });
+
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=324").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=325").then(registration => registration.update());
       });
     }
 
