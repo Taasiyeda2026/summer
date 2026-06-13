@@ -4401,6 +4401,10 @@
       return `./course-page.html?${params.toString()}`;
     }
 
+    function isEscapeRoom(activity) {
+      return activity.type === "חדר בריחה" || activity.activityType === "חדר בריחה";
+    }
+
     function normalizeActivity(rawActivity = {}, gradeGroup = "") {
       const title = rawActivity.workshopName ?? rawActivity.title ?? "";
       const domain = rawActivity.domain ?? "";
@@ -4503,6 +4507,9 @@ function chunkActivities(items, size) {
 
     function buildContinuousCatalogSlots(workshopActivities) {
       const GRADE_ORDER = { "א-ג": 0, "ד-ו": 1, "א-ו": 2 };
+
+      // Safety guard: escape rooms must never enter the workshop slot pipeline
+      workshopActivities = workshopActivities.filter(a => !isEscapeRoom(a));
 
       // Group by gradeGroup → then by domain within each grade group
       const gradeGroupMap = new Map();
@@ -5205,6 +5212,11 @@ function chunkActivities(items, size) {
           const empty = document.createElement("div");
           empty.className = "domain-grid-empty";
           grid.appendChild(empty);
+        } else if (isEscapeRoom(activity)) {
+          // Safety guard: escape rooms are rendered on their own dedicated page, never here
+          const empty = document.createElement("div");
+          empty.className = "domain-grid-empty";
+          grid.appendChild(empty);
         } else {
           grid.appendChild(renderDomainCard(activity, true));
         }
@@ -5584,9 +5596,9 @@ function chunkActivities(items, size) {
       showPrices = showPricesCheckbox.checked;
       const marketer = getSelectedMarketer();
       const contactLine = contactLineHTML(marketer);
-      const workshopActivities = filteredActivities.filter(a => a.type !== "חדר בריחה" && a.domain !== "AI" && a.gradeGroup !== "ז-ט");
+      const workshopActivities = filteredActivities.filter(a => !isEscapeRoom(a) && a.domain !== "AI" && a.gradeGroup !== "ז-ט");
       const middleSchoolActivities = filteredActivities.filter(a => a.domain === "AI" || a.gradeGroup === "ז-ט");
-      const escapeRoomActivities = filteredActivities.filter(a => a.type === "חדר בריחה");
+      const escapeRoomActivities = filteredActivities.filter(a => isEscapeRoom(a));
       const hasEscape = escapeRoomActivities.length > 0;
       const hasMiddleSchool = middleSchoolActivities.length > 0;
 
@@ -5597,7 +5609,7 @@ function chunkActivities(items, size) {
       if (includeCoverLetter) {
         const coverSourceActivities = sortedActivities.length
           ? sortedActivities
-          : sortDomainActivities(filteredActivities).filter(Boolean);
+          : sortDomainActivities(filteredActivities.filter(a => !isEscapeRoom(a))).filter(Boolean);
         coverLetterItems = coverSourceActivities.slice(0, COVER_LETTER_ACTIVITIES);
         if (sortedActivities.length > 0) {
           activitiesForPages = sortedActivities.slice(COVER_LETTER_ACTIVITIES);
@@ -6095,7 +6107,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=323").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=324").then(registration => registration.update());
       });
     }
 
