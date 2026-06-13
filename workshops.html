@@ -3767,41 +3767,46 @@
 
     @media screen and (max-width: 760px) {
       .img-zoom-overlay {
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
         padding: 12px;
       }
 
+      /* Modal: centered in viewport, scrolls internally */
       .workshop-modal {
         zoom: 1;
-        width: calc(100vw - 24px);
+        position: relative;
+        width: min(92vw, 520px);
         max-width: none;
         height: auto;
         max-height: calc(100dvh - 24px);
         border-radius: 20px;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
+        margin: 0;
       }
 
+      /* Close button: absolute inside modal, never scrolls away */
       .workshop-modal-close {
-        position: sticky;
-        top: 10px;
-        inset-inline-start: unset;
-        inset-inline-end: 10px;
-        float: inline-end;
+        position: absolute;
+        top: 12px;
+        inset-inline-start: 12px;
+        inset-inline-end: unset;
+        float: unset;
         width: 30px;
         height: 30px;
         font-size: 17px;
         z-index: 5;
-        margin: 10px 0 -40px 10px;
+        margin: 0;
       }
 
+      /* Inner: the only scrollable area */
       .workshop-modal-inner {
         display: flex;
         flex-direction: column;
         height: auto;
-        max-height: none;
-        overflow-y: visible;
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
       /* Content first, image below */
@@ -3838,11 +3843,11 @@
         box-shadow: 0 6px 20px rgba(20,34,66,.14);
       }
 
-      /* Title: leave room for X button */
+      /* Title: leave room for close button (RTL → inline-start = right) */
       .workshop-modal h2 {
         font-size: 16px !important;
-        padding-inline-start: 0;
-        padding-inline-end: 36px;
+        padding-inline-start: 46px;
+        padding-inline-end: 0;
         line-height: 1.25;
         margin-bottom: 10px;
       }
@@ -6143,7 +6148,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=328").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=329").then(registration => registration.update());
       });
     }
 
