@@ -5400,11 +5400,11 @@ function chunkActivities(items, size) {
 
       const shell = document.createElement("section");
       shell.className = "client-catalog-shell";
-      shell.setAttribute("aria-label", "קטלוג סדנאות דיגיטלי ללקוחות");
+      shell.setAttribute("aria-label", "קטלוג סדנאות דיגיטלי");
       shell.innerHTML = `
         <header class="client-catalog-hero">
           <div>
-            <p class="client-kicker">קטלוג דיגיטלי ללקוחות</p>
+            <p class="client-kicker">קטלוג דיגיטלי</p>
             <h1>סדנאות STEM חווייתיות לתלמידים</h1>
             <p>תעשיידע מזמינה את התלמידים להיכנס לעולם של גילוי, יצירה והתנסות מעשית. הקטלוג מרכז סדנאות מייקרים חווייתיות המחברות בין מדע, טכנולוגיה וחשיבה יצירתית – עם תוצר אישי בכל סדנה.</p>
             <div class="client-hero-badges" aria-label="מאפייני הקטלוג">
@@ -5983,7 +5983,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=321").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=322").then(registration => registration.update());
       });
     }
 
