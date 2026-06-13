@@ -2658,6 +2658,16 @@
       .catalog-type-grid,
       .program-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .a4-page { transform: scale(.62); transform-origin: top center; margin-bottom: -112mm; }
+      /* Catalog mode: always natural flow, never clipped */
+      body.catalog-mode .a4-page {
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: unset !important;
+        margin-bottom: 16px !important;
+        border-radius: 12px !important;
+        padding: 10px 8px 14px !important;
+      }
     }
 
     /* ─── Mobile catalog: screen-friendly card grid ─── */
@@ -2673,11 +2683,20 @@
         padding: 10px 8px 14px !important;
       }
 
-      /* Hide print-only chrome */
+      /* Hide print-only chrome, but keep contact details */
       body.catalog-mode .page-header,
-      body.catalog-mode .catalog-footer-zone,
-      body.catalog-mode .page-contact {
+      body.catalog-mode .catalog-footer-zone {
         display: none !important;
+      }
+
+      /* Always show footer / contact in catalog mode */
+      body.catalog-mode .page-footer-zone,
+      body.catalog-mode .page-contact,
+      body.catalog-mode .page-footer {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        overflow: visible !important;
       }
 
       /* Domain card grid: 2 columns */
@@ -5957,7 +5976,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=319").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=320").then(registration => registration.update());
       });
     }
 

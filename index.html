@@ -132,6 +132,16 @@ body {
 </div>
 
 <script>
+  (function () {
+    const s = new URLSearchParams(window.location.search).get("s");
+    if (s) {
+      document.querySelectorAll('a[href^="workshops.html"]').forEach(function (a) {
+        const base = a.getAttribute("href");
+        a.href = base + (base.includes("?") ? "&" : "?") + "s=" + encodeURIComponent(s);
+      });
+    }
+  })();
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js?v=303").then(registration => registration.update());
