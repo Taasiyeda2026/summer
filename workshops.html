@@ -3767,31 +3767,41 @@
 
     @media screen and (max-width: 760px) {
       .img-zoom-overlay {
-        align-items: stretch;
+        align-items: flex-end;
+        justify-content: center;
         padding: 12px;
       }
 
       .workshop-modal {
         zoom: 1;
-        width: 100%;
+        width: calc(100vw - 24px);
+        max-width: none;
+        height: auto;
         max-height: calc(100dvh - 24px);
         border-radius: 20px;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
       .workshop-modal-close {
+        position: sticky;
         top: 10px;
-        inset-inline-start: 10px;
+        inset-inline-start: unset;
+        inset-inline-end: 10px;
+        float: inline-end;
         width: 30px;
         height: 30px;
         font-size: 17px;
+        z-index: 5;
+        margin: 10px 0 -40px 10px;
       }
 
       .workshop-modal-inner {
         display: flex;
         flex-direction: column;
-        max-height: calc(100dvh - 24px);
-        overflow-y: auto;
+        height: auto;
+        max-height: none;
+        overflow-y: visible;
       }
 
       /* Content first, image below */
@@ -3804,23 +3814,35 @@
 
       .workshop-modal-media {
         order: 2;
-        min-height: auto;
-        padding: 8px 16px 16px;
+        height: auto;
+        min-height: 0;
+        padding: 12px 16px 20px;
         border-inline-start: 0;
         border-top: 1px solid rgba(23,32,51,.08);
-        flex-shrink: 0;
+        flex-shrink: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .workshop-modal-media img {
-        max-height: 28vh;
-        width: 100%;
+        width: 78%;
+        max-width: 78%;
+        height: auto;
+        max-height: none;
+        aspect-ratio: auto;
+        object-fit: contain;
         border-radius: 12px;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 6px 20px rgba(20,34,66,.14);
       }
 
       /* Title: leave room for X button */
       .workshop-modal h2 {
         font-size: 16px !important;
-        padding-inline-start: 40px;
+        padding-inline-start: 0;
+        padding-inline-end: 36px;
         line-height: 1.25;
         margin-bottom: 10px;
       }
@@ -6121,7 +6143,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=325").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=326").then(registration => registration.update());
       });
     }
 
