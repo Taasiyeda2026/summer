@@ -2697,6 +2697,13 @@
         visibility: visible !important;
         opacity: 1 !important;
         overflow: visible !important;
+        text-align: center !important;
+      }
+      body.catalog-mode .page-footer-org,
+      body.catalog-mode .page-number {
+        justify-self: center !important;
+        text-align: center !important;
+        width: 100% !important;
       }
 
       /* Domain card grid: 2 columns */
@@ -5976,7 +5983,7 @@ function chunkActivities(items, size) {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=320").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=321").then(registration => registration.update());
       });
     }
 
