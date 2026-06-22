@@ -4097,6 +4097,13 @@
                 <input id="courseIndexCheckbox" type="checkbox" />
                 <span>מקרא</span>
               </label>
+              <label class="marketer-field" for="courseCatalogMarketerSelect">
+                <span>בחרו איש קשר לקטלוג</span>
+                <select id="courseCatalogMarketerSelect" name="courseCatalogMarketerSelect">
+                  <option value="yael" selected>יעל</option>
+                  <option value="israa">איסראא</option>
+                </select>
+              </label>
             </div>
             <div class="course-link-actions">
               <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
@@ -4225,6 +4232,7 @@
     let generatedCourseCatalogUrl = "";
     const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
     const getCourseMarketer = () => document.querySelector('input[name="courseMarketerRadio"]:checked')?.value || "none";
+    const getCourseCatalogLinkMarketer = () => document.getElementById("courseCatalogMarketerSelect")?.value || "yael";
     const courseIndexCheckbox = document.getElementById("courseIndexCheckbox");
     const courseLevelFilter = document.getElementById("courseLevelFilter");
     const toggleCoursePickerBtn = document.getElementById("toggleCoursePickerBtn");
@@ -4534,8 +4542,8 @@
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
     }
 
-    function buildClientCatalogShortUrl(absolute = false) {
-      const relativeUrl = "./catalog.html";
+    function buildClientCatalogShortUrl(absolute = false, marketer = "yael") {
+      const relativeUrl = marketer === "israa" ? "./catalog-israa.html" : "./catalog-yael.html";
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
     }
 
@@ -4576,7 +4584,7 @@
         showCourseCatalogMessage("יש לבחור לפחות קורס אחד לקטלוג.", true);
         return;
       }
-      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true);
+      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseCatalogLinkMarketer());
       courseCatalogLinkName.href = generatedCourseCatalogUrl;
       courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
       courseCatalogLinkCard.classList.remove("is-hidden");
@@ -6185,6 +6193,13 @@ function chunkActivities(items, size) {
     });
 
     courseCatalogLinkBtn.addEventListener("click", createCourseCatalogLink);
+
+    document.getElementById("courseCatalogMarketerSelect")?.addEventListener("change", () => {
+      if (!generatedCourseCatalogUrl || courseCatalogLinkCard.classList.contains("is-hidden")) return;
+      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseCatalogLinkMarketer());
+      courseCatalogLinkName.href = generatedCourseCatalogUrl;
+      courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
+    });
 
     copyCourseCatalogLinkBtn.addEventListener("click", async () => {
       if (!generatedCourseCatalogUrl) return;
