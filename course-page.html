@@ -6809,6 +6809,12 @@ function bindCatalogFloatIndexButton(floatBtn) {
 
  if (!floatBtn.dataset.catalogNavBound) {
    floatBtn.dataset.catalogNavBound = "1";
+   floatBtn.addEventListener("click", function(e) {
+     e.preventDefault();
+     catalogIndex.scrollIntoView({ behavior: "smooth", block: "start" });
+     history.replaceState(null, "", "#catalog-index");
+     setTimeout(updateVisibility, 400);
+   });
    window.addEventListener("hashchange", updateVisibility, { passive: true });
    window.addEventListener("scroll", updateVisibility, { passive: true });
  }
@@ -6976,7 +6982,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=340").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=341").then(registration => registration.update());
     });
   }
 </script>
