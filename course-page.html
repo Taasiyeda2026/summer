@@ -6857,13 +6857,26 @@ function bindCatalogFloatIndexButton(floatBtn) {
  updateVisibility();
 }
 
+function scrollToCourseAnchor(href) {
+ if (!href || href === "#") return;
+ const id = href.replace(/^#/, "");
+ const target = document.getElementById(id);
+ if (!target) { window.location.hash = href; return; }
+ const top = target.getBoundingClientRect().top + window.pageYOffset;
+ window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+ history.pushState(null, "", href);
+}
+
 function bindIndexRowNavigation() {
  document.querySelectorAll(".idx-table tbody tr.idx-row[data-href]").forEach(row => {
    row.addEventListener("click", event => {
-     if (event.target.closest("a")) return;
-     const href = row.getAttribute("data-href");
-     if (!href || href === "#") return;
-     window.location.hash = href;
+     const link = event.target.closest("a.idx-course-link");
+     if (link) {
+       event.preventDefault();
+       scrollToCourseAnchor(link.getAttribute("href"));
+       return;
+     }
+     scrollToCourseAnchor(row.getAttribute("data-href"));
    });
  });
 }
@@ -7018,7 +7031,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=342").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=343").then(registration => registration.update());
     });
   }
 </script>
