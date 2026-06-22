@@ -1,10 +1,11 @@
-const CACHE_NAME = "summer-catalog-v2026-06-22-v333";
+const CACHE_NAME = "summer-catalog-v2026-06-22-v334";
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./workshops.html",
   "./course-page.html",
+  "./catalog.html",
   "./opening.html",
   "./tour.html",
   "./catalog-generator.html",
