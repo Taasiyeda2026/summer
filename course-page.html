@@ -5840,23 +5840,29 @@ body.client-view .course-catalog-separator {
 }
 
 body.client-view.catalog-view .catalog-course-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "prev index next";
+  align-items: stretch;
   padding: 14px 18px;
   margin-top: 6px;
   border-top: 1px solid rgba(32,59,122,.09);
   direction: rtl;
-  gap: 8px;
+  gap: 10px;
 }
 
+body.client-view.catalog-view .catalog-nav-prev { grid-area: prev; }
+body.client-view.catalog-view .catalog-nav-index { grid-area: index; }
+body.client-view.catalog-view .catalog-nav-next { grid-area: next; }
+
 body.client-view.catalog-view .catalog-nav-index,
+body.client-view.catalog-view .catalog-nav-prev,
 body.client-view.catalog-view .catalog-nav-next {
   font-size: 14px;
   font-weight: 700;
   color: #203b7a;
   text-decoration: none;
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 999px;
   background: rgba(32,59,122,.07);
   transition: background .15s;
@@ -5864,8 +5870,16 @@ body.client-view.catalog-view .catalog-nav-next {
 }
 
 body.client-view.catalog-view .catalog-nav-index:hover,
-body.client-view.catalog-view .catalog-nav-next:hover {
+body.client-view.catalog-view .catalog-nav-prev:not(:disabled):hover,
+body.client-view.catalog-view .catalog-nav-next:not(:disabled):hover {
   background: rgba(32,59,122,.14);
+}
+
+body.client-view.catalog-view .catalog-nav-prev:disabled,
+body.client-view.catalog-view .catalog-nav-next:disabled {
+  opacity: .45;
+  cursor: default;
+  pointer-events: none;
 }
 
 body.client-view.catalog-view .catalog-nav-end {
@@ -5954,6 +5968,19 @@ body.catalog-courses-print .a4:not(.index-page) {
     box-shadow: none !important;
     overflow: visible !important;
     display: block !important;
+  }
+
+  body.client-digital-catalog .catalog-opening-frame {
+    min-height: 0 !important;
+    max-height: calc(100svh - 68px) !important;
+    margin: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  body.client-digital-catalog .digital-cover {
+    min-height: 100svh !important;
+    max-height: 100svh !important;
+    overflow: hidden !important;
   }
 
   body.client-view.catalog-view .a4,
@@ -6210,9 +6237,13 @@ body.catalog-courses-print .a4:not(.index-page) {
   }
 
   body.client-view.catalog-view .catalog-course-nav {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "prev next"
+      "index index" !important;
+    align-items: stretch !important;
+    gap: 10px !important;
     padding: 14px 16px !important;
     margin-top: 8px !important;
     border-top: 1px solid rgba(32,59,122,.09) !important;
@@ -6220,15 +6251,28 @@ body.catalog-courses-print .a4:not(.index-page) {
   }
 
   body.client-view.catalog-view .catalog-nav-index,
+  body.client-view.catalog-view .catalog-nav-prev,
   body.client-view.catalog-view .catalog-nav-next {
     font-size: 14px !important;
     font-weight: 700 !important;
     color: #203b7a !important;
     text-decoration: none !important;
-    padding: 8px 14px !important;
+    padding: 10px 14px !important;
     border-radius: 999px !important;
     background: rgba(32,59,122,.07) !important;
     transition: background .15s !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  body.client-view.catalog-view .catalog-nav-prev:disabled,
+  body.client-view.catalog-view .catalog-nav-next:disabled {
+    opacity: .45 !important;
+    cursor: default !important;
+    pointer-events: none !important;
   }
 
   body.client-view.catalog-view .catalog-nav-end {
@@ -6480,6 +6524,44 @@ body.client-digital-catalog .catalog-float-to-index {
   display: none !important;
 }
 
+body.client-digital-catalog .digital-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100svh;
+  max-height: 100svh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+body.client-digital-catalog .catalog-opening-frame {
+  width: min(210mm, 100%);
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto !important;
+  max-height: calc(100svh - 68px);
+  margin: 0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
+}
+
+body.client-digital-catalog .catalog-cover-continue-wrap {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 10px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+}
+
+body.client-digital-catalog .page-wrap {
+  padding: 0 !important;
+}
+
+body.client-digital-catalog #a4-container {
+  align-items: stretch !important;
+}
+
 .client-catalog-viewport {
   width: 100%;
   opacity: 1;
@@ -6495,7 +6577,7 @@ body.client-digital-catalog .catalog-float-to-index {
 .catalog-cover-continue-wrap {
   display: flex;
   justify-content: center;
-  padding: 18px 16px 28px;
+  padding: 12px 16px 18px;
 }
 
 .catalog-cover-continue {
@@ -6519,30 +6601,45 @@ body.client-digital-catalog .catalog-float-to-index {
 }
 
 body.client-view.catalog-view .catalog-course-nav {
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "prev index next";
+  align-items: stretch;
   gap: 10px;
 }
 
 body.client-view.catalog-view .catalog-course-nav-secondary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: contents;
 }
 
 body.client-view.catalog-view .catalog-nav-prev,
 body.client-view.catalog-view .catalog-nav-index,
 body.client-view.catalog-view .catalog-nav-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 0;
+  padding: 10px 14px;
   border: 0;
   font: inherit;
   cursor: pointer;
   font-family: "Assistant", Arial, sans-serif;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 body.client-view.catalog-view .catalog-nav-prev:hover,
 body.client-view.catalog-view .catalog-nav-index:hover,
 body.client-view.catalog-view .catalog-nav-next:hover {
   background: rgba(32, 59, 122, .14);
+}
+
+body.client-view.catalog-view .catalog-nav-prev:disabled,
+body.client-view.catalog-view .catalog-nav-next:disabled {
+  opacity: .45;
+  cursor: default;
+  pointer-events: none;
 }
 
 body.client-view.catalog-view .client-syllabus .syllabus-table {
@@ -6572,7 +6669,7 @@ body.client-view.catalog-view .client-syllabus-desc {
 
 @media screen and (max-width: 768px) {
   body.client-view.catalog-view .catalog-cover-continue-wrap {
-    padding: 14px 12px 22px;
+    padding: 10px 12px calc(14px + env(safe-area-inset-bottom, 0px));
   }
 
   body.client-view.catalog-view .catalog-cover-continue {
@@ -6581,13 +6678,10 @@ body.client-view.catalog-view .client-syllabus-desc {
   }
 
   body.client-view.catalog-view .catalog-course-nav {
-    flex-direction: column;
-    align-items: stretch !important;
-  }
-
-  body.client-view.catalog-view .catalog-course-nav-secondary {
-    justify-content: space-between;
-    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "prev next"
+      "index index";
   }
 }
 
@@ -6873,7 +6967,7 @@ function buildProgramPageHtml(p, marketer = "none", coursePosition = null, cours
  const contactLine = contactLineHTML(marketer);
  const courseId = escapeHtml(p.id || "");
  const courseAnchorId = courseId ? ` id="course-${courseId}"` : "";
- const backToIndexLink = includeBackToIndex ? `<a class="catalog-back-to-index" href="#catalog-index">↑ חזרה למקרא</a>` : "";
+ const backToIndexLink = includeBackToIndex ? `<a class="catalog-back-to-index" href="#catalog-index">↑ חזרה לכל התוכניות</a>` : "";
  const courseTag = "";
  const syllabusHtml = (program) => buildSyllabus(program, clientCatalog);
 
@@ -7045,7 +7139,7 @@ function buildCourseNavHtml(nextAnchor) {
     ? `<a class="catalog-nav-next" href="${nextAnchor}">לתוכנית הבאה ↓</a>`
     : `<span class="catalog-nav-end">סוף הקטלוג</span>`;
   return `<div class="catalog-course-nav" aria-label="ניווט בין תוכניות">
-  <a class="catalog-nav-index" href="#catalog-index">↑ מקרא</a>
+  <a class="catalog-nav-index" href="#catalog-index">↑ כל התוכניות</a>
   ${nextLink}
 </div>`;
 }
@@ -7085,7 +7179,7 @@ function buildIndexPageHtml(selectedPrograms, clientMode = false) {
     <div class="idx-header">
       <img class="idx-logo" src="logo.png" alt="תעשיידע">
       <div class="idx-title-block">
-        <div class="idx-main-title">מקרא: תוכניות תעשיידע</div>
+        <div class="idx-main-title">כל התוכניות</div>
         <div class="idx-sub-title">רשימת התוכניות הנכללות בקטלוג זה</div>
       </div>
     </div>
@@ -7118,7 +7212,7 @@ function buildClientCoverHtml(marketer) {
   return `<div class="digital-section digital-cover" id="client-catalog-cover">
     <iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>
     <div class="catalog-cover-continue-wrap">
-      <button type="button" class="catalog-cover-continue" data-catalog-action="index">המשך למקרא התוכניות</button>
+      <button type="button" class="catalog-cover-continue" data-catalog-action="index">המשך לכל התוכניות</button>
     </div>
   </div>`;
 }
@@ -7127,18 +7221,12 @@ function buildClientCourseNavHtml(selectedPrograms, activeCourseId) {
   const currentIndex = selectedPrograms.findIndex(program => program.id === activeCourseId);
   const isFirst = currentIndex <= 0;
   const isLast = currentIndex < 0 || currentIndex >= selectedPrograms.length - 1;
-  const prevBtn = !isFirst
-    ? `<button type="button" class="catalog-nav-prev" data-catalog-action="prev">לתוכנית הקודמת ↑</button>`
-    : "";
-  const nextBtn = !isLast
-    ? `<button type="button" class="catalog-nav-next" data-catalog-action="next">לתוכנית הבאה ↓</button>`
-    : "";
+  const prevBtn = `<button type="button" class="catalog-nav-prev" data-catalog-action="prev"${isFirst ? " disabled" : ""}>לתוכנית הקודמת ↑</button>`;
+  const nextBtn = `<button type="button" class="catalog-nav-next" data-catalog-action="next"${isLast ? " disabled" : ""}>לתוכנית הבאה ↓</button>`;
   return `<div class="catalog-course-nav" aria-label="ניווט בין תוכניות">
-    <button type="button" class="catalog-nav-index" data-catalog-action="index">↑ חזרה למקרא</button>
-    <div class="catalog-course-nav-secondary">
-      ${prevBtn}
-      ${nextBtn}
-    </div>
+    ${prevBtn}
+    <button type="button" class="catalog-nav-index" data-catalog-action="index">↑ כל התוכניות</button>
+    ${nextBtn}
   </div>`;
 }
 
@@ -7359,6 +7447,8 @@ function renderCourseCatalog(indexes, includeCover = false, includeIndex = false
 function autosizeCatalogOpeningFrame() {
  const frame = document.querySelector(".catalog-opening-frame");
  if (!frame) return;
+ const isDigitalCatalog = document.body.classList.contains("client-digital-catalog");
+ const maxFrameHeight = isDigitalCatalog ? Math.max(200, window.innerHeight - 68) : null;
  const doResize = () => {
    try {
      const doc = frame.contentDocument || frame.contentWindow?.document;
@@ -7370,13 +7460,16 @@ function autosizeCatalogOpeningFrame() {
        doc.body ? doc.body.offsetHeight : 0
      );
      if (h > 100) {
-       frame.style.height = h + "px";
-       frame.style.minHeight = h + "px";
+       const targetHeight = maxFrameHeight ? Math.min(h, maxFrameHeight) : h;
+       frame.style.height = targetHeight + "px";
+       frame.style.minHeight = isDigitalCatalog ? "0" : targetHeight + "px";
+       if (maxFrameHeight) frame.style.maxHeight = maxFrameHeight + "px";
      }
    } catch(e) {}
  };
  frame.addEventListener("load", doResize);
  if (frame.contentDocument && frame.contentDocument.readyState === "complete") doResize();
+ if (isDigitalCatalog) window.addEventListener("resize", doResize, { passive: true });
 }
 
 function setupCatalogIndexNavigation(includeIndex) {
@@ -7617,7 +7710,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=349").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=350").then(registration => registration.update());
     });
   }
 </script>
