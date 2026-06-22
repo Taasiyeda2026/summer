@@ -340,6 +340,71 @@
       justify-content: flex-end;
     }
 
+
+
+    .course-link-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .course-link-card {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border: 1px solid rgba(32,59,122,.14);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,251,255,.94));
+      box-shadow: 0 10px 24px rgba(20,34,66,.08);
+    }
+
+    .course-link-heading {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .course-link-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .course-link-name:hover {
+      text-decoration: underline;
+    }
+
+    .course-link-url {
+      margin: 7px 0 0;
+      color: #667085;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      direction: ltr;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    .course-link-card .course-link-actions {
+      margin-top: 12px;
+    }
+
+    .course-link-message {
+      margin: 10px 0 0;
+      color: #0f7b54;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .course-link-message.is-error {
+      color: #c0392b;
+    }
+
     .cover-letter-toggle {
       min-height: 34px;
       display: inline-flex;
@@ -4033,7 +4098,21 @@
                 <span>מקרא</span>
               </label>
             </div>
-            <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
+            <div class="course-link-actions">
+              <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
+              <button class="action-btn" id="courseCatalogLinkBtn" type="button">יצירת קישור לקטלוג</button>
+            </div>
+          </div>
+          <div class="course-link-card is-hidden" id="courseCatalogLinkCard" aria-live="polite">
+            <h3 class="course-link-heading">קישור לקטלוג שנוצר</h3>
+            <a class="course-link-name" id="courseCatalogLinkName" href="#" target="_blank" rel="noopener">קטלוג התוכניות החינוכיות של תעשיידע</a>
+            <p class="course-link-url" id="courseCatalogLinkUrl"></p>
+            <div class="course-link-actions">
+              <button class="action-btn secondary-action" id="copyCourseCatalogLinkBtn" type="button">העתקת קישור</button>
+              <button class="action-btn secondary-action" id="openCourseCatalogLinkBtn" type="button">פתיחה בחלון חדש</button>
+              <button class="action-btn secondary-action" id="copyCourseCatalogTextBtn" type="button">העתקת טקסט לשליחה</button>
+            </div>
+            <p class="course-link-message" id="courseCatalogLinkMessage"></p>
           </div>
         </section>
       </section>
@@ -4135,6 +4214,15 @@
     const courseSelectionTitle = document.getElementById("courseSelectionTitle");
     const courseSelectionText = document.getElementById("courseSelectionText");
     const courseCatalogModeBtn = document.getElementById("courseCatalogModeBtn");
+    const courseCatalogLinkBtn = document.getElementById("courseCatalogLinkBtn");
+    const courseCatalogLinkCard = document.getElementById("courseCatalogLinkCard");
+    const courseCatalogLinkName = document.getElementById("courseCatalogLinkName");
+    const courseCatalogLinkUrl = document.getElementById("courseCatalogLinkUrl");
+    const courseCatalogLinkMessage = document.getElementById("courseCatalogLinkMessage");
+    const copyCourseCatalogLinkBtn = document.getElementById("copyCourseCatalogLinkBtn");
+    const openCourseCatalogLinkBtn = document.getElementById("openCourseCatalogLinkBtn");
+    const copyCourseCatalogTextBtn = document.getElementById("copyCourseCatalogTextBtn");
+    let generatedCourseCatalogUrl = "";
     const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
     const getCourseMarketer = () => document.querySelector('input[name="courseMarketerRadio"]:checked')?.value || "none";
     const courseIndexCheckbox = document.getElementById("courseIndexCheckbox");
@@ -4352,6 +4440,7 @@
       const selectedPrograms = getSelectedCoursePrograms();
       selectedCourseCount.textContent = `נבחרו ${selectedPrograms.length} תוכניות`;
       courseCatalogModeBtn.disabled = selectedPrograms.length === 0;
+      if (!selectedPrograms.length) clearGeneratedCourseCatalogLink();
       document.querySelectorAll("[data-course-action]").forEach(button => {
         button.classList.toggle("is-active", button.dataset.courseAction === selectedCoursePreset);
       });
@@ -4430,15 +4519,62 @@
       renderCourseSelection();
     }
 
-    function buildCourseCatalogUrl() {
+    function buildCourseCatalogUrl(absolute = false) {
       const ids = [...selectedCourses];
-      const params = new URLSearchParams();
-      params.set("ids", ids.join(","));
-      params.set("catalog", "1");
-      if (courseCoverLetterCheckbox.checked) params.set("cover", "1");
-      if (getCourseMarketer() !== "none") params.set("marketer", getCourseMarketer());
-      if (courseIndexCheckbox.checked) params.set("index", "1");
-      return `./course-page.html?${params.toString()}`;
+      const params = [
+        `ids=${ids.map(encodeURIComponent).join(",")}`,
+        "catalog=1",
+        `cover=${courseCoverLetterCheckbox.checked ? "1" : "0"}`,
+        `index=${courseIndexCheckbox.checked ? "1" : "0"}`
+      ];
+      const marketer = getCourseMarketer();
+      if (marketer !== "none") params.push(`marketer=${encodeURIComponent(marketer)}`);
+      const relativeUrl = `./course-page.html?${params.join("&")}`;
+      return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
+    }
+
+    function clearGeneratedCourseCatalogLink() {
+      generatedCourseCatalogUrl = "";
+      courseCatalogLinkCard.classList.add("is-hidden");
+      courseCatalogLinkMessage.textContent = "";
+      courseCatalogLinkMessage.classList.remove("is-error");
+    }
+
+    function showCourseCatalogMessage(message, isError = false) {
+      courseCatalogLinkMessage.textContent = message;
+      courseCatalogLinkMessage.classList.toggle("is-error", isError);
+    }
+
+    async function copyTextToClipboard(text) {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "readonly");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+
+    function createCourseCatalogLink() {
+      if (!selectedCourses.size) {
+        generatedCourseCatalogUrl = "";
+        courseCatalogLinkCard.classList.remove("is-hidden");
+        courseCatalogLinkName.removeAttribute("href");
+        courseCatalogLinkUrl.textContent = "";
+        showCourseCatalogMessage("יש לבחור לפחות קורס אחד לקטלוג.", true);
+        return;
+      }
+      generatedCourseCatalogUrl = buildCourseCatalogUrl(true);
+      courseCatalogLinkName.href = generatedCourseCatalogUrl;
+      courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
+      courseCatalogLinkCard.classList.remove("is-hidden");
+      showCourseCatalogMessage("", false);
     }
 
     function isEscapeRoom(activity) {
@@ -6040,6 +6176,26 @@ function chunkActivities(items, size) {
     courseCatalogModeBtn.addEventListener("click", () => {
       if (!selectedCourses.size) return;
       window.location.href = buildCourseCatalogUrl();
+    });
+
+    courseCatalogLinkBtn.addEventListener("click", createCourseCatalogLink);
+
+    copyCourseCatalogLinkBtn.addEventListener("click", async () => {
+      if (!generatedCourseCatalogUrl) return;
+      await copyTextToClipboard(generatedCourseCatalogUrl);
+      showCourseCatalogMessage("הקישור הועתק בהצלחה.");
+    });
+
+    openCourseCatalogLinkBtn.addEventListener("click", () => {
+      if (!generatedCourseCatalogUrl) return;
+      window.open(generatedCourseCatalogUrl, "_blank", "noopener");
+    });
+
+    copyCourseCatalogTextBtn.addEventListener("click", async () => {
+      if (!generatedCourseCatalogUrl) return;
+      await copyTextToClipboard(`מצורף קישור לקטלוג התוכניות החינוכיות של תעשיידע:
+${generatedCourseCatalogUrl}`);
+      showCourseCatalogMessage("הטקסט לשליחה הועתק בהצלחה.");
     });
 
     document.addEventListener("click", event => {

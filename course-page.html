@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>קטלוג תוכניות – תעשיידע</title>
+<title>קטלוג התוכניות החינוכיות של תעשיידע</title>
+<meta property="og:title" content="קטלוג התוכניות החינוכיות של תעשיידע">
+<meta name="twitter:title" content="קטלוג התוכניות החינוכיות של תעשיידע">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -5682,6 +5684,39 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
   }
 }
 
+
+
+.course-catalog-separator {
+  width: min(210mm, calc(100vw - 40px));
+  margin: 10px auto -6px;
+  padding: 10px 18px;
+  border: 1px solid rgba(32,59,122,.14);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.96), rgba(231,246,250,.92));
+  color: #203b7a;
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(20,34,66,.08);
+}
+
+body.catalog-view .a4.a4-course-skeleton,
+body.catalog-view .a4:not(.index-page) {
+  margin-top: 12px;
+  outline: 1px solid rgba(32,59,122,.08);
+}
+
+body.catalog-view .a4.a4-course-skeleton + .course-catalog-separator,
+body.catalog-view .a4:not(.index-page) + .course-catalog-separator {
+  margin-top: 26px;
+}
+
+@media print {
+  .course-catalog-separator {
+    display: none !important;
+  }
+}
+
 /* Course catalog — tech background on exported course pages only */
 body.catalog-view .a4:not(.index-page),
 body.catalog-courses-print .a4:not(.index-page) {
@@ -5965,14 +6000,16 @@ function courseNeedsWideSyllabusTopic(p) {
  return String(p.title || "").includes("השמיים אינם הגבול");
 }
 
-function buildProgramPageHtml(p, marketer = "none") {
+function buildProgramPageHtml(p, marketer = "none", coursePosition = null, courseTotal = null) {
  const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6};--theme-rgb:${hexToRgbString(p.c1)}`;
  const contactLine = contactLineHTML(marketer);
+ const courseTag = coursePosition && courseTotal ? `<div class="top-meta-label course-number-label"><span class="meta-main">קורס ${coursePosition} מתוך ${courseTotal}</span></div>` : "";
 
  if (p.courseLayout) {
  const skeletonExtraClass = courseNeedsWideSyllabusTopic(p) ? " syl-topic-wide" : "";
  return `
  <div class="a4 a4-course-skeleton${skeletonExtraClass}" style="${style}">
+ ${courseTag}
  ${buildTopMetaLabel(p)}
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
  <div class="a4-banner">
@@ -6019,6 +6056,7 @@ function buildProgramPageHtml(p, marketer = "none") {
 
  return `
  <div class="a4" style="${style}">
+ ${courseTag}
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
  <div class="a4-banner">
  <div class="a4-banner-text">
@@ -6084,6 +6122,7 @@ function buildProgramPageHtml(p, marketer = "none") {
 function render(i) {
  const p = programs[i];
  if (!p) return;
+ document.title = p.title ? `${p.title} – תעשיידע` : "קטלוג התוכניות החינוכיות של תעשיידע";
  document.getElementById("a4-container").innerHTML = buildProgramPageHtml(p);
 }
 
@@ -6141,13 +6180,19 @@ function buildIndexPageHtml(selectedPrograms) {
 
 function renderCourseCatalog(indexes, includeCover = false, includeIndex = false, marketer = "none") {
  const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
+ document.title = "קטלוג התוכניות החינוכיות של תעשיידע";
  document.body.classList.add("catalog-view", "catalog-courses-print");
  document.querySelector(".nav-toggle")?.setAttribute("hidden", "hidden");
  document.getElementById("nav")?.setAttribute("hidden", "hidden");
  const openingSrc = marketer && marketer !== "none" ? `./opening.html?marketer=${encodeURIComponent(marketer)}` : "./opening.html";
  const openingHtml = includeCover ? `<iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>` : "";
  const indexHtml = includeIndex ? buildIndexPageHtml(selectedPrograms) : "";
- document.getElementById("a4-container").innerHTML = openingHtml + indexHtml + selectedPrograms.map(p => buildProgramPageHtml(p, marketer)).join("");
+ const totalCourses = selectedPrograms.length;
+ const coursePagesHtml = selectedPrograms.map((p, index) => {
+   const separator = index > 0 ? `<div class="course-catalog-separator" aria-hidden="true">קורס ${index + 1} מתוך ${totalCourses}</div>` : "";
+   return separator + buildProgramPageHtml(p, marketer, index + 1, totalCourses);
+ }).join("");
+ document.getElementById("a4-container").innerHTML = openingHtml + indexHtml + coursePagesHtml;
  scheduleA4Fit();
 }
 
