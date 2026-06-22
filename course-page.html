@@ -5970,9 +5970,9 @@ body.catalog-courses-print .a4:not(.index-page) {
     display: block !important;
   }
 
-  body.client-digital-catalog .catalog-opening-frame {
+  body.client-digital-catalog .digital-cover-scale .catalog-opening-frame {
     min-height: 0 !important;
-    max-height: calc(100svh - 68px) !important;
+    max-height: none !important;
     margin: 0 !important;
     flex: 1 1 auto !important;
   }
@@ -6528,11 +6528,39 @@ body.client-digital-catalog .digital-cover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
   min-height: 100svh;
   max-height: 100svh;
   overflow: hidden;
   box-sizing: border-box;
+}
+
+body.client-digital-catalog .digital-cover-scale {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  zoom: 0.9;
+}
+
+@supports not (zoom: 1) {
+  body.client-digital-catalog .digital-cover-scale {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+body.client-digital-catalog .digital-cover-scale .catalog-opening-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  height: auto;
+  width: 100%;
+  min-width: 0;
 }
 
 body.client-digital-catalog .catalog-opening-frame {
@@ -6542,7 +6570,6 @@ body.client-digital-catalog .catalog-opening-frame {
   flex: 1 1 auto;
   min-height: 0;
   height: auto !important;
-  max-height: calc(100svh - 68px);
   margin: 0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
 }
@@ -6686,6 +6713,11 @@ body.client-view.catalog-view .client-syllabus-desc {
 }
 
 @media print {
+  body.client-digital-catalog .digital-cover-scale {
+    zoom: 1 !important;
+    transform: none !important;
+  }
+
   body.client-digital-catalog .catalog-cover-continue-wrap,
   body.client-digital-catalog .catalog-course-nav {
     display: none !important;
@@ -7210,9 +7242,11 @@ let clientCatalogNavBound = false;
 function buildClientCoverHtml(marketer) {
   const openingSrc = marketer && marketer !== "none" ? `./opening.html?marketer=${encodeURIComponent(marketer)}` : "./opening.html";
   return `<div class="digital-section digital-cover" id="client-catalog-cover">
-    <iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>
-    <div class="catalog-cover-continue-wrap">
-      <button type="button" class="catalog-cover-continue" data-catalog-action="index">המשך לכל התוכניות</button>
+    <div class="digital-cover-scale">
+      <iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>
+      <div class="catalog-cover-continue-wrap">
+        <button type="button" class="catalog-cover-continue" data-catalog-action="index">המשך לכל התוכניות</button>
+      </div>
     </div>
   </div>`;
 }
@@ -7710,7 +7744,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=350").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=351").then(registration => registration.update());
     });
   }
 </script>
