@@ -5970,17 +5970,31 @@ body.catalog-courses-print .a4:not(.index-page) {
     display: block !important;
   }
 
+  body.client-view.catalog-view .digital-cover-scale .catalog-opening-frame,
   body.client-digital-catalog .digital-cover-scale .catalog-opening-frame {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     min-height: 0 !important;
     max-height: none !important;
+    height: auto !important;
     margin: 0 !important;
     flex: 1 1 auto !important;
+    overflow: hidden !important;
   }
 
   body.client-digital-catalog .digital-cover {
     min-height: 100svh !important;
     max-height: 100svh !important;
     overflow: hidden !important;
+  }
+
+  body.client-digital-catalog.client-catalog-on-cover,
+  body.client-digital-catalog.client-catalog-on-cover .page-wrap,
+  body.client-digital-catalog.client-catalog-on-cover #a4-container {
+    height: 100svh;
+    max-height: 100svh;
+    overflow: hidden;
   }
 
   body.client-view.catalog-view .a4,
@@ -6525,6 +6539,7 @@ body.client-digital-catalog .catalog-float-to-index {
 }
 
 body.client-digital-catalog .digital-cover {
+  --cover-scale: 0.9;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6540,38 +6555,46 @@ body.client-digital-catalog .digital-cover-scale {
   width: 100%;
   flex: 1 1 auto;
   min-height: 0;
+  max-height: calc(100svh / var(--cover-scale));
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: flex-start;
   box-sizing: border-box;
-  zoom: 0.9;
+  zoom: var(--cover-scale);
 }
 
 @supports not (zoom: 1) {
   body.client-digital-catalog .digital-cover-scale {
-    transform: scale(0.9);
+    transform: scale(var(--cover-scale));
     transform-origin: top center;
+    width: 100%;
+    max-height: 100%;
   }
 }
 
 body.client-digital-catalog .digital-cover-scale .catalog-opening-frame {
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: 0 !important;
   max-height: none;
   height: auto;
-  width: 100%;
-  min-width: 0;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden;
 }
 
 body.client-digital-catalog .catalog-opening-frame {
-  width: min(210mm, 100%);
-  min-width: 0;
-  max-width: 100%;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: min(210mm, 100%) !important;
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: 0 !important;
   height: auto !important;
+  max-height: none !important;
   margin: 0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
+  overflow: hidden;
 }
 
 body.client-digital-catalog .catalog-cover-continue-wrap {
@@ -7240,7 +7263,9 @@ let clientCatalogState = null;
 let clientCatalogNavBound = false;
 
 function buildClientCoverHtml(marketer) {
-  const openingSrc = marketer && marketer !== "none" ? `./opening.html?marketer=${encodeURIComponent(marketer)}` : "./opening.html";
+  const openingParams = new URLSearchParams({ client: "1" });
+  if (marketer && marketer !== "none") openingParams.set("marketer", marketer);
+  const openingSrc = `./opening.html?${openingParams.toString()}`;
   return `<div class="digital-section digital-cover" id="client-catalog-cover">
     <div class="digital-cover-scale">
       <iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>
@@ -7311,6 +7336,7 @@ function renderActiveClientView(animate = true) {
       }
     }
     viewport.innerHTML = html;
+    document.body.classList.toggle("client-catalog-on-cover", state.activeView === "cover");
     if (state.activeView === "cover") autosizeCatalogOpeningFrame();
     scheduleA4Fit();
     updateClientCatalogHash();
@@ -7478,11 +7504,21 @@ function renderCourseCatalog(indexes, includeCover = false, includeIndex = false
  if (includeCover) autosizeCatalogOpeningFrame();
 }
 
+const DIGITAL_COVER_SCALE = 0.9;
+
+function getDigitalCoverMaxFrameHeight(frame) {
+  const cover = frame.closest(".digital-cover");
+  if (!cover) return null;
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  const buttonWrap = cover.querySelector(".catalog-cover-continue-wrap");
+  const buttonVisualHeight = buttonWrap?.getBoundingClientRect().height || 72;
+  return Math.max(160, Math.floor((viewportHeight - buttonVisualHeight - 4) / DIGITAL_COVER_SCALE));
+}
+
 function autosizeCatalogOpeningFrame() {
  const frame = document.querySelector(".catalog-opening-frame");
  if (!frame) return;
  const isDigitalCatalog = document.body.classList.contains("client-digital-catalog");
- const maxFrameHeight = isDigitalCatalog ? Math.max(200, window.innerHeight - 68) : null;
  const doResize = () => {
    try {
      const doc = frame.contentDocument || frame.contentWindow?.document;
@@ -7494,16 +7530,26 @@ function autosizeCatalogOpeningFrame() {
        doc.body ? doc.body.offsetHeight : 0
      );
      if (h > 100) {
+       const maxFrameHeight = isDigitalCatalog ? getDigitalCoverMaxFrameHeight(frame) : null;
        const targetHeight = maxFrameHeight ? Math.min(h, maxFrameHeight) : h;
        frame.style.height = targetHeight + "px";
        frame.style.minHeight = isDigitalCatalog ? "0" : targetHeight + "px";
+       if (isDigitalCatalog) {
+         frame.style.width = "100%";
+         frame.style.minWidth = "0";
+         frame.style.maxWidth = "100%";
+       }
        if (maxFrameHeight) frame.style.maxHeight = maxFrameHeight + "px";
      }
    } catch(e) {}
  };
  frame.addEventListener("load", doResize);
  if (frame.contentDocument && frame.contentDocument.readyState === "complete") doResize();
- if (isDigitalCatalog) window.addEventListener("resize", doResize, { passive: true });
+ if (isDigitalCatalog) {
+   requestAnimationFrame(doResize);
+   window.addEventListener("resize", doResize, { passive: true });
+   window.visualViewport?.addEventListener("resize", doResize, { passive: true });
+ }
 }
 
 function setupCatalogIndexNavigation(includeIndex) {
@@ -7744,7 +7790,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=351").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=352").then(registration => registration.update());
     });
   }
 </script>

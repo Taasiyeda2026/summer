@@ -323,6 +323,31 @@
         font-size: 19px;
       }
     }
+
+    /* Digital catalog embed (client=1 iframe) — fluid layout on all viewports */
+    html.client-cover-embed,
+    html.client-cover-embed body.course-intro-page {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+    }
+
+    html.client-cover-embed .course-intro-sheet {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+    }
+
+    html.client-cover-embed .course-intro-gefen-box {
+      max-width: 100%;
+      white-space: normal;
+    }
   </style>
 </head>
 <body class="course-intro-page">
@@ -371,9 +396,16 @@
   </main>
 
   <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("client") === "1") {
+        document.documentElement.classList.add("client-cover-embed");
+      }
+    })();
+
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=351").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=352").then(registration => registration.update());
       });
     }
   </script>
