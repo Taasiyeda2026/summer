@@ -4543,7 +4543,7 @@
     }
 
     function buildClientCatalogShortUrl(absolute = false, marketer = "yael") {
-      const relativeUrl = marketer === "israa" ? "./catalog-israa.html" : "./catalog-yael.html";
+      const relativeUrl = marketer === "israa" ? "./catalog-esraa.html" : "./catalog-yael.html";
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
     }
 
@@ -6325,7 +6325,7 @@ ${generatedCourseCatalogUrl}`);
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=348").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=356").then(registration => registration.update());
       });
     }
 
