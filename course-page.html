@@ -4026,24 +4026,31 @@ textarea,
   border-color: rgba(32,59,122,.35);
   text-decoration: none;
 }
+body.client-view .catalog-back-to-index {
+  display: none !important;
+}
 .catalog-float-to-index {
+  display: none;
   position: fixed;
   left: 16px;
   bottom: 24px;
   z-index: 100;
-  padding: 8px 14px;
+  padding: 7px 13px;
   border-radius: 999px;
-  border: 1px solid rgba(32,59,122,.22);
-  background: rgba(255,255,255,.95);
-  color: #203b7a;
-  font-size: 12.5px;
-  font-weight: 800;
+  border: 1px solid rgba(32,59,122,.2);
+  background: rgba(255,255,255,.96);
+  color: #3A5068;
+  font-size: 12px;
+  font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(20,34,66,.12);
+  box-shadow: 0 3px 12px rgba(20,34,66,.1);
   opacity: 0;
   pointer-events: none;
   transform: translateY(8px);
   transition: opacity .2s ease, transform .2s ease, background .15s ease;
+}
+body.client-view .catalog-float-to-index {
+  display: block;
 }
 .catalog-float-to-index.is-visible {
   opacity: 1;
@@ -4052,6 +4059,7 @@ textarea,
 }
 .catalog-float-to-index:hover {
   background: #F0F6FB;
+  color: #1A2F50;
   text-decoration: none;
 }
 body.client-view.catalog-view .page-wrap {
@@ -6335,7 +6343,7 @@ function renderCourseCatalog(indexes, includeCover = false, includeIndex = false
  const openingHtml = includeCover ? `<iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>` : "";
  const indexHtml = includeIndex ? buildIndexPageHtml(selectedPrograms) : "";
  const totalCourses = selectedPrograms.length;
- const showBackToIndex = includeIndex;
+ const showBackToIndex = includeIndex && !isClientModeFromUrl();
  const coursePagesHtml = selectedPrograms.map((p, index) => {
    const separator = index > 0 ? `<div class="course-catalog-separator" aria-hidden="true">תוכנית ${index + 1} מתוך ${totalCourses}</div>` : "";
    return separator + buildProgramPageHtml(p, marketer, index + 1, totalCourses, showBackToIndex);
@@ -6348,7 +6356,8 @@ function renderCourseCatalog(indexes, includeCover = false, includeIndex = false
 
 function setupCatalogIndexNavigation(includeIndex) {
  const existing = document.getElementById("catalogFloatToIndex");
- if (!includeIndex) {
+ const isClientMode = isClientModeFromUrl();
+ if (!includeIndex || !isClientMode) {
    existing?.remove();
    document.body.classList.remove("catalog-has-index");
    return;
@@ -6360,7 +6369,7 @@ function setupCatalogIndexNavigation(includeIndex) {
    floatBtn.id = "catalogFloatToIndex";
    floatBtn.className = "catalog-float-to-index";
    floatBtn.href = "#catalog-index";
-   floatBtn.textContent = "↑ מקרא";
+   floatBtn.textContent = "↑ חזרה למקרא";
    floatBtn.setAttribute("aria-label", "חזרה למקרא");
    document.body.appendChild(floatBtn);
  }
@@ -6529,7 +6538,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=337").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=338").then(registration => registration.update());
     });
   }
 </script>
