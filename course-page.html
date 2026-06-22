@@ -616,6 +616,10 @@ body.catalog-view .page-wrap { gap: 22px; }
 body.catalog-view .a4 { margin-bottom: 22px; }
 
 @media print {
+ .syllabus-body { display: block !important; }
+ .catalog-float-to-index { display: none !important; }
+}
+@media print {
  @page { size: A4; margin: 0; }
  .nav, .print-btn, .nav-toggle, .catalog-gen-link, .catalog-toolbar { display: none !important; }
  html, body { width: 210mm; margin: 0; padding: 0; background: #fff; }
@@ -6245,6 +6249,33 @@ body.catalog-courses-print .a4:not(.index-page) {
     font-size: 15px !important;
     padding: 11px 18px !important;
   }
+
+  /* ── כלים ומיומנויות: 2 עמודות במובייל ── */
+  body.client-view.catalog-view .skills-group-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    width: 100% !important;
+  }
+  body.client-view.catalog-view .skill-group-card {
+    width: auto !important;
+  }
+
+  /* ── סילבוס: כפתור toggle ── */
+  body.client-view.catalog-view .syllabus-toggle {
+    cursor: pointer !important;
+    user-select: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+  body.client-view.catalog-view .syllabus-toggle::after {
+    content: "▼";
+    font-size: 12px;
+    margin-inline-start: 8px;
+    transition: transform .2s ease;
+  }
+  body.client-view.catalog-view .syllabus-toggle[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+  }
 }
 
 </style>
@@ -6480,7 +6511,8 @@ function buildSyllabus(p) {
  if (!rows.length) return '';
  const rowsClass = syllabusRowsClass(rows.length);
  return `<div class="syllabus-wrap ${rowsClass}">
- <div class="syllabus-header">סילבוס הקורס</div>
+ <div class="syllabus-header syllabus-toggle" role="button" tabindex="0" aria-expanded="false">סילבוס הקורס</div>
+ <div class="syllabus-body" style="display:none">
  <table class="syllabus-table">
  <thead><tr><th>מפגש</th><th style="text-align:right">נושא</th><th style="text-align:right">תיאור</th></tr></thead>
  <tbody>${rows.map(r=>`<tr class="${syllabusStageClass(r.n)}">
@@ -6488,7 +6520,7 @@ function buildSyllabus(p) {
  <td class="syl-topic">${escapeHtml(r.topic)}</td>
  <td class="syl-desc">${escapeHtml(r.desc)}</td>
  </tr>`).join('')}</tbody>
- </table></div>`;
+ </table></div></div>`;
 }
 
 function contactLineHTML(marketer) {
@@ -6757,8 +6789,8 @@ function setupCatalogIndexNavigation(includeIndex) {
    floatBtn.id = "catalogFloatToIndex";
    floatBtn.className = "catalog-float-to-index";
    floatBtn.href = "#catalog-index";
-   floatBtn.textContent = "↑ מקרא";
-   floatBtn.setAttribute("aria-label", "חזרה למקרא");
+   floatBtn.textContent = "↑ חזרה";
+   floatBtn.setAttribute("aria-label", "חזרה למעלה");
    document.body.appendChild(floatBtn);
  }
  bindCatalogFloatIndexButton(floatBtn);
@@ -6883,6 +6915,24 @@ function setupCourseDrawer() {
 
 init();
 
+/* ── סילבוס toggle — event delegation ── */
+document.getElementById("a4-container").addEventListener("click", function(e) {
+  const toggle = e.target.closest(".syllabus-toggle");
+  if (!toggle) return;
+  const body = toggle.nextElementSibling;
+  if (!body || !body.classList.contains("syllabus-body")) return;
+  const isOpen = body.style.display !== "none";
+  body.style.display = isOpen ? "none" : "";
+  toggle.setAttribute("aria-expanded", String(!isOpen));
+});
+document.getElementById("a4-container").addEventListener("keydown", function(e) {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const toggle = e.target.closest(".syllabus-toggle");
+  if (!toggle) return;
+  e.preventDefault();
+  toggle.click();
+});
+
 function clearLegacyA4FitClasses(a4) {
  const compressModes = ["fit-spacious", "fit-normal", "fit-compact", "fit-tight", "fit-ultra", "a4-fit-scaled", "a4-fill-active"];
  a4.classList.remove(...compressModes);
@@ -6926,7 +6976,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=339").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=340").then(registration => registration.update());
     });
   }
 </script>

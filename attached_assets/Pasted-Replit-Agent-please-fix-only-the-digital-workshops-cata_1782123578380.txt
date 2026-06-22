@@ -1,0 +1,80 @@
+Replit Agent, please fix only the digital workshops catalog page/project.
+
+Important:
+This is NOT the dashboard_system course/program details page.
+This is the digital workshop catalog / קטלוג סדנאות דיגיטלי.
+
+Do not rewrite the app.
+Do not change the data structure.
+Do not change workshop content.
+Do not rename workshop fields.
+Do not refactor unrelated files.
+Only fix the mobile UI and behavior described below.
+
+## 1. Fix the "כלים ומיומנויות" section on mobile
+
+In the digital workshop catalog, the section "כלים ומיומנויות" does not open/display correctly on mobile.
+
+Current problem:
+- The cards are cut off horizontally.
+- The layout overflows outside the phone screen.
+- Some cards are pushed sideways.
+- The section does not fit nicely inside the mobile viewport.
+
+Required fix:
+- No horizontal scrolling.
+- All skill cards must fit inside the screen.
+- Cards should wrap into rows when needed.
+- Text should stay readable.
+- RTL layout must remain correct.
+- Desktop layout should not be damaged.
+
+Relevant cards include:
+- חקר ומידע
+- חשיבה וחדשנות
+- דיגיטל וטכנולוגיה
+- עבודה והצגה
+
+## 2. The syllabus section must be closed by default
+
+In the digital workshop catalog, the "סילבוס הקורס" / syllabus area is currently open by default.
+
+Required behavior:
+- On page load, the syllabus must be closed.
+- Lesson cards must not appear immediately.
+- The syllabus should open only when the user clicks the syllabus button/header.
+- Clicking again should close it.
+- No `open`, `active`, `expanded`, or visible class should be applied by default.
+- Keep the accordion behavior simple and stable.
+
+## 3. Fix the floating "מקרא" button
+
+The floating button currently says "מקרא".
+
+Required:
+- Change the text from "מקרא" to "חזרה".
+- The button must work when clicked.
+- On click, it should return the user upward, preferably to the top of the workshop card/page or the previous relevant section.
+- Use smooth scroll if possible.
+- Make sure it works on mobile.
+
+## 4. Mobile QA
+
+Check in mobile width:
+- No horizontal overflow.
+- "כלים ומיומנויות" is fully visible and wraps correctly.
+- "סילבוס הקורס" is closed by default.
+- Syllabus opens only by click.
+- "חזרה" button works.
+- RTL remains correct.
+
+## 5. Cache / service worker
+
+Because this is a static/digital catalog project, update cache/service worker version only if this project uses cache busting and the old version may stay cached.
+
+Only update the relevant cache/version files if they exist and are actually used.
+
+At the end, summarize:
+1. Which files were changed.
+2. What exactly was fixed.
+3. How to verify it in mobile view.
