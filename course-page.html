@@ -6268,6 +6268,14 @@ body.catalog-courses-print .a4:not(.index-page) {
     display: block !important;
     font-size: 15px !important;
     padding: 11px 18px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity .2s ease, transform .2s ease !important;
+  }
+  body.client-view.catalog-view .catalog-float-to-index.is-visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
   }
 
   /* ── כלים ומיומנויות: 2 עמודות במובייל ── */
@@ -6847,9 +6855,13 @@ function bindCatalogFloatIndexButton(floatBtn) {
    floatBtn.dataset.catalogNavBound = "1";
    floatBtn.addEventListener("click", function(e) {
      e.preventDefault();
-     catalogIndex.scrollIntoView({ behavior: "smooth", block: "start" });
-     history.replaceState(null, "", "#catalog-index");
-     setTimeout(updateVisibility, 400);
+     const top = catalogIndex
+       ? catalogIndex.getBoundingClientRect().top + window.pageYOffset
+       : 0;
+     window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+     history.replaceState(null, "", catalogIndex ? "#catalog-index" : location.pathname + location.search);
+     floatBtn.classList.remove("is-visible");
+     setTimeout(updateVisibility, 500);
    });
    window.addEventListener("hashchange", updateVisibility, { passive: true });
    window.addEventListener("scroll", updateVisibility, { passive: true });
@@ -6865,6 +6877,8 @@ function scrollToCourseAnchor(href) {
  const top = target.getBoundingClientRect().top + window.pageYOffset;
  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
  history.pushState(null, "", href);
+ const floatBtn = document.getElementById("catalogFloatToIndex");
+ if (floatBtn) floatBtn.classList.add("is-visible");
 }
 
 function bindIndexRowNavigation() {
@@ -7031,7 +7045,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=343").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=344").then(registration => registration.update());
     });
   }
 </script>
