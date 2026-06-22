@@ -16,8 +16,8 @@
       --soft: #f3f8fb;
       --line: rgba(31, 47, 61, 0.12);
       --intro-margin-inline: 18mm;
-      --intro-margin-top: 17mm;
-      --intro-margin-bottom: 15mm;
+      --intro-margin-top: 14mm;
+      --intro-margin-bottom: 11mm;
     }
 
     * {
@@ -81,12 +81,12 @@
       position: relative;
       z-index: 3;
       display: block;
-      width: 118px;
-      max-height: 68px;
+      width: 104px;
+      max-height: 60px;
       object-fit: contain;
       flex-shrink: 0;
       align-self: flex-end;
-      margin: 0 0 10px;
+      margin: 0 0 8px;
     }
 
     .content {
@@ -102,7 +102,7 @@
 
     .eyebrow {
       display: block;
-      margin: 6px 0 24px;
+      margin: 4px 0 16px;
       padding: 0;
       border: none;
       border-radius: 0;
@@ -123,7 +123,7 @@
     }
 
     .subtitle {
-      margin: 13px 0 0;
+      margin: 10px 0 0;
       font-size: 22px;
       line-height: 1.35;
       font-weight: 700;
@@ -141,7 +141,7 @@
     }
 
     .meta {
-      margin: 8px 0 34px;
+      margin: 6px 0 22px;
       font-size: 19px;
       line-height: 1.35;
       font-weight: 700;
@@ -150,9 +150,9 @@
 
     .text-block {
       display: grid;
-      gap: 11px;
-      font-size: 16.7px;
-      line-height: 1.58;
+      gap: 9px;
+      font-size: 16.2px;
+      line-height: 1.55;
       color: #263846;
     }
 
@@ -181,7 +181,7 @@
 
     .closing {
       margin-top: auto;
-      padding-top: 16px;
+      padding-top: 12px;
       border-top: 1px solid var(--line);
       display: flex;
       justify-content: center;
@@ -373,7 +373,7 @@
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=348").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=350").then(registration => registration.update());
       });
     }
   </script>
