@@ -5895,12 +5895,14 @@ body.catalog-courses-print .a4:not(.index-page) {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
-    height: 72vh !important;
-    min-height: 360px !important;
+    height: auto !important;
+    min-height: 200px !important;
     max-height: none !important;
     margin: 0 0 18px !important;
     border-radius: 0 !important;
     box-shadow: none !important;
+    overflow: hidden !important;
+    display: block !important;
   }
 
   body.client-view.catalog-view .a4,
@@ -6088,6 +6090,24 @@ body.catalog-courses-print .a4:not(.index-page) {
     content: "גפ״ן: ";
     font-weight: 700;
     color: #607080;
+  }
+
+  body.client-view.catalog-view .idx-body {
+    padding: 0 !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+  }
+  body.client-view.catalog-view .idx-table {
+    width: 100% !important;
+    table-layout: auto !important;
+    display: block !important;
+    font-size: inherit !important;
+  }
+  body.client-view.catalog-view .idx-table thead {
+    display: none !important;
+  }
+  body.client-view.catalog-view .idx-header {
+    padding: 0 0 14px !important;
   }
 
   body.client-view.catalog-view .a4.a4-course-skeleton .a4-body,
@@ -6772,6 +6792,22 @@ function renderCourseCatalog(indexes, includeCover = false, includeIndex = false
  scheduleA4Fit();
  bindIndexRowNavigation();
  setupCatalogIndexNavigation(includeIndex);
+ if (includeCover) autosizeCatalogOpeningFrame();
+}
+
+function autosizeCatalogOpeningFrame() {
+ const frame = document.querySelector(".catalog-opening-frame");
+ if (!frame) return;
+ const doResize = () => {
+   try {
+     const doc = frame.contentDocument || frame.contentWindow?.document;
+     if (!doc) return;
+     const h = doc.documentElement.scrollHeight || doc.body.scrollHeight;
+     if (h > 100) frame.style.height = h + "px";
+   } catch(e) {}
+ };
+ frame.addEventListener("load", doResize);
+ if (frame.contentDocument && frame.contentDocument.readyState === "complete") doResize();
 }
 
 function setupCatalogIndexNavigation(includeIndex) {
@@ -6982,7 +7018,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=341").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=342").then(registration => registration.update());
     });
   }
 </script>
