@@ -1,0 +1,85 @@
+Replit Agent, please fix only the course/program details page in the dashboard_system project.
+
+This is a focused UI/behavior fix based on the mobile view.
+
+Do not rewrite the app.
+Do not change database structure.
+Do not change pedagogical content.
+Do not rename fields.
+Do not refactor unrelated files.
+Only fix the display and behavior described below.
+
+## 1. Fix the "כלים ומיומנויות" section on mobile
+
+In mobile view, the "כלים ומיומנויות" section is not displayed correctly:
+- The cards are cut off horizontally.
+- The layout overflows outside the screen.
+- Some content appears pushed to the side.
+- The section should fit neatly within the phone width.
+
+Please fix the responsive CSS/HTML so that:
+- There is no horizontal scrolling.
+- All skill cards fit inside the screen.
+- Cards wrap into rows when needed.
+- Text remains readable.
+- RTL alignment is preserved.
+- Desktop layout should not be damaged.
+
+Relevant cards include:
+- חקר ומידע
+- חשיבה וחדשנות
+- דיגיטל וטכנולוגיה
+- עבודה והצגה
+
+## 2. Course syllabus should be closed by default
+
+The "סילבוס הקורס" section is currently open by default.
+
+Required behavior:
+- On page load, the syllabus must be closed.
+- The lesson cards should not appear immediately.
+- The syllabus should open only after the user clicks the syllabus button/header.
+- After opening, clicking again should close it.
+- Keep the behavior simple and stable.
+
+If this is an accordion/details section:
+- Set the default state to closed.
+- Make sure no `open`, `active`, `expanded`, or visible class is applied by default.
+
+## 3. Fix the floating "מקרא" button
+
+The floating button currently says "מקרא".
+
+Required:
+- Change the button text from "מקרא" to "חזרה".
+- The button should actually work when clicked.
+- On click, it should return the user to the previous/top relevant section.
+- If this button is intended to scroll back upward, make it scroll to the top of the page or to the legend/top section in a smooth and reliable way.
+- Make sure it works on mobile.
+
+## 4. Mobile QA
+
+After changes, check in mobile width:
+- No horizontal overflow.
+- "כלים ומיומנויות" is fully visible.
+- "סילבוס הקורס" is closed by default.
+- Syllabus opens only by click.
+- "חזרה" button works.
+- RTL layout remains correct.
+
+## 5. Cache / service worker
+
+Because this is a GitHub Pages/static frontend project, update cache/service worker version if needed so the fix is not hidden by old cached files.
+
+Update only what is necessary:
+- frontend/sw.js
+- sw.js
+- frontend/src/config.js
+- index.html
+
+Only if these files are used for cache busting in this project.
+
+At the end, summarize:
+1. Which files were changed.
+2. What exactly was fixed.
+3. How to verify in mobile view.
