@@ -572,6 +572,13 @@ body {
   box-shadow: 0 4px 14px rgba(0,0,0,0.10);
 }
 body.catalog-view .catalog-toolbar { display: flex; }
+body.client-view .nav,
+body.client-view .print-btn,
+body.client-view .nav-toggle,
+body.client-view .catalog-toolbar,
+body.client-view .catalog-print-btn,
+body.client-view .back-btn,
+body.client-view .catalog-gen-link { display: none !important; }
 .catalog-toolbar .back-btn { font-size: 12px; }
 .catalog-print-btn {
   border: 0;
@@ -6119,10 +6126,25 @@ function buildProgramPageHtml(p, marketer = "none", coursePosition = null, cours
  </div>`;
 }
 
+function setPageShareTitle(title) {
+ document.title = title;
+ document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+ document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", title);
+}
+
+function isClientModeFromUrl() {
+ const params = new URLSearchParams(window.location.search);
+ return params.get("client") === "1";
+}
+
+function applyClientModeFromUrl() {
+ document.body.classList.toggle("client-view", isClientModeFromUrl());
+}
+
 function render(i) {
  const p = programs[i];
  if (!p) return;
- document.title = p.title ? `${p.title} – תעשיידע` : "קטלוג התוכניות החינוכיות של תעשיידע";
+ setPageShareTitle(p.title ? `${p.title} – תעשיידע` : "קטלוג התוכניות החינוכיות של תעשיידע");
  document.getElementById("a4-container").innerHTML = buildProgramPageHtml(p);
 }
 
@@ -6180,8 +6202,9 @@ function buildIndexPageHtml(selectedPrograms) {
 
 function renderCourseCatalog(indexes, includeCover = false, includeIndex = false, marketer = "none") {
  const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
- document.title = "קטלוג התוכניות החינוכיות של תעשיידע";
+ setPageShareTitle("קטלוג התוכניות החינוכיות של תעשיידע");
  document.body.classList.add("catalog-view", "catalog-courses-print");
+ applyClientModeFromUrl();
  document.querySelector(".nav-toggle")?.setAttribute("hidden", "hidden");
  document.getElementById("nav")?.setAttribute("hidden", "hidden");
  const openingSrc = marketer && marketer !== "none" ? `./opening.html?marketer=${encodeURIComponent(marketer)}` : "./opening.html";
@@ -6209,6 +6232,7 @@ function showProgramNotFound() {
 }
 
 async function init() {
+  applyClientModeFromUrl();
   try {
     const res = await fetch("catalog-data.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -6326,7 +6350,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=328").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=332").then(registration => registration.update());
     });
   }
 </script>

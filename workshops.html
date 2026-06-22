@@ -4519,7 +4519,7 @@
       renderCourseSelection();
     }
 
-    function buildCourseCatalogUrl(absolute = false) {
+    function buildCourseCatalogUrl(absolute = false, client = false) {
       const ids = [...selectedCourses];
       const params = [
         `ids=${ids.map(encodeURIComponent).join(",")}`,
@@ -4529,6 +4529,7 @@
       ];
       const marketer = getCourseMarketer();
       if (marketer !== "none") params.push(`marketer=${encodeURIComponent(marketer)}`);
+      if (client) params.push("client=1");
       const relativeUrl = `./course-page.html?${params.join("&")}`;
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
     }
@@ -4570,7 +4571,7 @@
         showCourseCatalogMessage("יש לבחור לפחות קורס אחד לקטלוג.", true);
         return;
       }
-      generatedCourseCatalogUrl = buildCourseCatalogUrl(true);
+      generatedCourseCatalogUrl = buildCourseCatalogUrl(true, true);
       courseCatalogLinkName.href = generatedCourseCatalogUrl;
       courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
       courseCatalogLinkCard.classList.remove("is-hidden");
@@ -6304,7 +6305,7 @@ ${generatedCourseCatalogUrl}`);
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=330").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=332").then(registration => registration.update());
       });
     }
 
