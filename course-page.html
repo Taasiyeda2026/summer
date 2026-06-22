@@ -4032,15 +4032,15 @@ body.client-view .catalog-back-to-index {
 .catalog-float-to-index {
   display: none;
   position: fixed;
-  left: 16px;
-  bottom: 24px;
-  z-index: 100;
-  padding: 7px 13px;
+  inset-inline-start: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 9999;
+  padding: 10px 16px;
   border-radius: 999px;
   border: 1px solid rgba(32,59,122,.2);
   background: rgba(255,255,255,.96);
   color: #3A5068;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 3px 12px rgba(20,34,66,.1);
@@ -4048,6 +4048,7 @@ body.client-view .catalog-back-to-index {
   pointer-events: none;
   transform: translateY(8px);
   transition: opacity .2s ease, transform .2s ease, background .15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 body.client-view .catalog-float-to-index {
   display: block;
@@ -4074,17 +4075,20 @@ body.client-view.catalog-view .a4 {
 }
 body.client-view.catalog-view .a4.a4-course-skeleton,
 body.client-view.catalog-view .a4:not(.index-page) {
-  scroll-margin-top: 32px;
+  scroll-margin-top: 20px;
 }
 body.client-view #catalog-index {
-  scroll-margin-top: 32px;
+  scroll-margin-top: 20px;
 }
 body.catalog-view #catalog-index {
-  scroll-margin-top: 32px;
+  scroll-margin-top: 20px;
 }
 body.catalog-view .a4.a4-course-skeleton,
 body.catalog-view .a4:not(.index-page) {
-  scroll-margin-top: 32px;
+  scroll-margin-top: 20px;
+}
+[id^="course-"] {
+  scroll-margin-top: 20px;
 }
 body.client-view .nav-overlay { display: none !important; }
 body.client-view #fit-warning {
@@ -5859,6 +5863,390 @@ body.catalog-courses-print .a4:not(.index-page) {
   }
 }
 
+/* ── Client catalog mobile (client=1) — screen only, print untouched ── */
+@media screen and (max-width: 768px) {
+  body.client-view.catalog-view,
+  body.client-view.catalog-view html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body.client-view.catalog-view {
+    margin: 0;
+    background: #f4f7f9;
+  }
+
+  body.client-view.catalog-view .page-wrap,
+  body.client-view.catalog-view #a4-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+
+  body.client-view.catalog-view .catalog-opening-frame {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 72vh !important;
+    min-height: 360px !important;
+    max-height: none !important;
+    margin: 0 0 18px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body.client-view.catalog-view .a4,
+  body.client-view.catalog-view .index-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: auto !important;
+    max-height: none !important;
+    height: auto !important;
+    box-sizing: border-box;
+    margin: 0 auto 18px !important;
+    padding: 18px 14px !important;
+    transform: none !important;
+    overflow: visible !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06) !important;
+    border-radius: 12px !important;
+    border: 1px solid #d8e1e8 !important;
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  body.client-view.catalog-view .index-page {
+    padding-top: 18px !important;
+  }
+
+  body.client-view.catalog-view .a4.a4-course-skeleton {
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: 18px !important;
+  }
+
+  body.client-view.catalog-view .a4-opening,
+  body.client-view.catalog-view .a4-banner,
+  body.client-view.catalog-view .a4-body,
+  body.client-view.catalog-view .a4-footer,
+  body.client-view.catalog-view .a4-contact {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  body.client-view.catalog-view .a4-banner {
+    margin-bottom: 14px !important;
+    padding: 20px 14px 16px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  body.client-view.catalog-view .a4-title {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+  }
+
+  body.client-view.catalog-view .a4-subtitle {
+    font-size: 17px !important;
+    line-height: 1.45 !important;
+  }
+
+  body.client-view.catalog-view .section-title {
+    font-size: 19px !important;
+    margin-bottom: 8px !important;
+  }
+
+  body.client-view.catalog-view .section-body,
+  body.client-view.catalog-view .course-description .section-body,
+  body.client-view.catalog-view .course-summary .section-body {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  body.client-view.catalog-view .badge {
+    font-size: 14px !important;
+    padding: 5px 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  body.client-view.catalog-view .a4-badges {
+    gap: 8px !important;
+  }
+
+  body.client-view.catalog-view .idx-header {
+    padding: 0 0 14px !important;
+    gap: 12px;
+    border-bottom-width: 2px;
+  }
+
+  body.client-view.catalog-view .idx-main-title {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+  }
+
+  body.client-view.catalog-view .idx-sub-title {
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+    margin-top: 6px;
+  }
+
+  body.client-view.catalog-view .idx-body {
+    padding: 14px 0 0 !important;
+    display: block !important;
+  }
+
+  body.client-view.catalog-view .idx-table {
+    width: 100% !important;
+    display: block !important;
+    font-size: 15px !important;
+    table-layout: auto !important;
+  }
+
+  body.client-view.catalog-view .idx-table thead {
+    display: none !important;
+  }
+
+  body.client-view.catalog-view .idx-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  body.client-view.catalog-view .idx-table tr.idx-row {
+    display: block !important;
+    width: 100% !important;
+    background: #fff !important;
+    border: 1px solid #d8e1e8 !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04) !important;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(32,59,122,.08);
+  }
+
+  body.client-view.catalog-view .idx-table tr.idx-row:active {
+    background: #f0f6fb !important;
+  }
+
+  body.client-view.catalog-view .idx-table td {
+    display: block !important;
+    width: 100% !important;
+    text-align: right !important;
+    border: none !important;
+    padding: 3px 0 !important;
+    overflow: visible !important;
+    line-height: 1.55 !important;
+    font-size: 15px !important;
+  }
+
+  body.client-view.catalog-view .idx-table td.idx-title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 6px !important;
+    border-bottom: 1px solid #eef2f6 !important;
+  }
+
+  body.client-view.catalog-view .idx-table td.idx-title .idx-course-link {
+    font-size: inherit !important;
+    text-decoration: none !important;
+    color: #1a2f50 !important;
+  }
+
+  body.client-view.catalog-view .idx-table td.idx-level::before {
+    content: "שכבת גיל: ";
+    font-weight: 700;
+    color: #607080;
+  }
+
+  body.client-view.catalog-view .idx-table td.idx-grades::before {
+    content: "כיתות: ";
+    font-weight: 700;
+    color: #607080;
+  }
+
+  body.client-view.catalog-view .idx-table td.idx-sessions::before {
+    content: "מפגשים: ";
+    font-weight: 700;
+    color: #607080;
+  }
+
+  body.client-view.catalog-view .idx-table td.idx-gefen::before {
+    content: "גפ״ן: ";
+    font-weight: 700;
+    color: #607080;
+  }
+
+  body.client-view.catalog-view .a4.a4-course-skeleton .a4-body,
+  body.client-view.catalog-view .a4.a4-course-skeleton .course-summary,
+  body.client-view.catalog-view .a4.a4-course-skeleton .core-plain-card,
+  body.client-view.catalog-view .a4.a4-course-skeleton .course-description,
+  body.client-view.catalog-view .a4.a4-course-skeleton .learning-process-section,
+  body.client-view.catalog-view .a4.a4-course-skeleton .full-width-card,
+  body.client-view.catalog-view .a4.a4-course-skeleton .domain-before-syllabus,
+  body.client-view.catalog-view .a4.a4-course-skeleton .school-value-after-syllabus,
+  body.client-view.catalog-view .a4.a4-course-skeleton .syllabus-wrap {
+    display: block !important;
+    grid-row: auto !important;
+    grid-template-rows: none !important;
+    grid-template-columns: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-bottom: 14px !important;
+  }
+
+  body.client-view.catalog-view .a4.a4-course-skeleton .a4-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.client-view.catalog-view .split-grid,
+  body.client-view.catalog-view .course-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  body.client-view.catalog-view .course-catalog-separator {
+    width: calc(100% - 28px) !important;
+    max-width: 100% !important;
+    margin: 24px auto 12px !important;
+    font-size: 15px !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-wrap {
+    overflow: visible !important;
+    margin-bottom: 14px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-header {
+    font-size: 19px !important;
+    padding: 10px 12px !important;
+    margin-bottom: 10px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table {
+    display: block !important;
+    width: 100% !important;
+    table-layout: auto !important;
+    font-size: 15px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table thead {
+    display: none !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table tr {
+    display: block !important;
+    background: #fafbfc !important;
+    border: 1px solid #e4eaef !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table td {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    padding: 2px 0 !important;
+    line-height: 1.55 !important;
+    font-size: 15px !important;
+    text-align: right !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table td.syl-num {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: var(--c0) !important;
+    margin-bottom: 4px !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table td.syl-num::before {
+    content: "מפגש ";
+  }
+
+  body.client-view.catalog-view .syllabus-table td.syl-topic {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    margin: 2px 0 6px !important;
+    width: auto !important;
+  }
+
+  body.client-view.catalog-view .syllabus-table td.syl-desc {
+    font-size: 15px !important;
+    color: #3c4854 !important;
+    width: auto !important;
+  }
+
+  body.client-view.catalog-view .pill {
+    font-size: 13px !important;
+    padding: 5px 10px !important;
+  }
+
+  body.client-view.catalog-view .a4-logo {
+    width: 52px !important;
+    height: 52px !important;
+    max-width: 52px !important;
+    margin-top: 0 !important;
+    align-self: flex-start !important;
+  }
+
+  body.client-view.catalog-view .a4-gefen {
+    position: static !important;
+    margin-bottom: 8px !important;
+    display: inline-flex !important;
+  }
+
+  body.client-view.catalog-view .top-meta-label {
+    max-width: 100% !important;
+    margin-bottom: 10px !important;
+    font-size: 14px !important;
+  }
+
+  body.client-view.catalog-view .a4-footer {
+    margin-top: 16px !important;
+    padding-top: 12px !important;
+  }
+
+  body.client-view.catalog-view .a4-footer-brand {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  body.client-view.catalog-view .a4-contact {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    padding: 8px 0 !important;
+  }
+
+  body.client-view.catalog-view .catalog-float-to-index {
+    display: block !important;
+    font-size: 15px !important;
+    padding: 11px 18px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6369,7 +6757,7 @@ function setupCatalogIndexNavigation(includeIndex) {
    floatBtn.id = "catalogFloatToIndex";
    floatBtn.className = "catalog-float-to-index";
    floatBtn.href = "#catalog-index";
-   floatBtn.textContent = "↑ חזרה למקרא";
+   floatBtn.textContent = "↑ מקרא";
    floatBtn.setAttribute("aria-label", "חזרה למקרא");
    document.body.appendChild(floatBtn);
  }
@@ -6538,7 +6926,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=338").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=339").then(registration => registration.update());
     });
   }
 </script>
