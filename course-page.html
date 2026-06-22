@@ -6063,6 +6063,19 @@ body.catalog-courses-print .a4:not(.index-page) {
     order: 4 !important;
   }
 
+  body.client-view.catalog-view .a4-course-skeleton > .a4-contact {
+    order: 5 !important;
+    margin-top: auto !important;
+    padding-top: 14px !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+  }
+
+  body.client-view.catalog-view .a4-course-skeleton > .a4-footer {
+    order: 6 !important;
+  }
+
   body.client-view.catalog-view .top-meta-logo {
     position: absolute !important;
     top: 18px !important;
@@ -6542,9 +6555,7 @@ body.catalog-courses-print .a4:not(.index-page) {
   }
 
   body.client-view.catalog-view .a4-contact {
-    font-size: 15px !important;
-    line-height: 1.55 !important;
-    padding: 8px 0 !important;
+    padding: 0 !important;
   }
 
   body.client-view.catalog-view .catalog-float-to-index {
@@ -7914,7 +7925,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=353").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=354").then(registration => registration.update());
     });
   }
 </script>
