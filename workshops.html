@@ -4534,6 +4534,11 @@
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
     }
 
+    function buildClientCatalogShortUrl(absolute = false) {
+      const relativeUrl = "./catalog.html";
+      return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
+    }
+
     function clearGeneratedCourseCatalogLink() {
       generatedCourseCatalogUrl = "";
       courseCatalogLinkCard.classList.add("is-hidden");
@@ -4571,7 +4576,7 @@
         showCourseCatalogMessage("יש לבחור לפחות קורס אחד לקטלוג.", true);
         return;
       }
-      generatedCourseCatalogUrl = buildCourseCatalogUrl(true, true);
+      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true);
       courseCatalogLinkName.href = generatedCourseCatalogUrl;
       courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
       courseCatalogLinkCard.classList.remove("is-hidden");
@@ -6305,7 +6310,7 @@ ${generatedCourseCatalogUrl}`);
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=335").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=336").then(registration => registration.update());
       });
     }
 
