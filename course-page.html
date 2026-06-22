@@ -6278,6 +6278,22 @@ body.catalog-courses-print .a4:not(.index-page) {
     transform: translateY(0) !important;
   }
 
+  /* ── מניעת חפיפה: pseudo-elements ── */
+  body.client-view.catalog-view .a4::before {
+    display: none !important;
+  }
+
+  /* ── מניעת חפיפה: #a4-container ── */
+  body.client-view.catalog-view #a4-container {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+  }
+  body.client-view.catalog-view .page-wrap {
+    min-width: 0 !important;
+    display: block !important;
+  }
+
   /* ── כלים ומיומנויות: 2 עמודות במובייל ── */
   body.client-view.catalog-view .skills-group-grid {
     grid-template-columns: repeat(2, 1fr) !important;
@@ -7045,7 +7061,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=344").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=345").then(registration => registration.update());
     });
   }
 </script>

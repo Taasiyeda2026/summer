@@ -270,17 +270,19 @@
       body.course-intro-page {
         width: 100%;
         height: auto;
-        min-height: 100vh;
+        min-height: 0;
         max-height: none;
         overflow: auto;
       }
 
       .course-intro-sheet {
-        width: min(100%, 210mm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
         height: auto;
-        min-height: 297mm;
+        min-height: 0;
         max-height: none;
-        padding: 46px 28px 52px;
+        padding: 32px 20px 40px;
       }
 
       .course-intro-gefen-box {
@@ -370,7 +372,7 @@
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=344").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=345").then(registration => registration.update());
       });
     }
   </script>
