@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
  font-family: "Assistant", Arial, sans-serif;
  direction: rtl;
@@ -3986,6 +3987,77 @@ textarea,
 .idx-table td.idx-sessions { width: 23mm; text-align: right; }
 .idx-table th.idx-gefen,
 .idx-table td.idx-gefen  { width: 21mm; text-align: center; }
+.idx-hint {
+  width: 150mm;
+  max-width: 100%;
+  margin: 0 auto 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #E8F4FA;
+  color: #1A4A6E;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.45;
+}
+.idx-table tbody tr.idx-row {
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.idx-table tbody tr.idx-row:hover td {
+  background: #E3F0F8 !important;
+}
+.idx-course-link {
+  display: block;
+  color: #1A2F50;
+  font-weight: 800;
+  text-decoration: none;
+}
+.idx-course-link:hover {
+  color: #2C6EAA;
+  text-decoration: underline;
+}
+.catalog-back-to-index {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 10mm 8px;
+  padding: 5px 12px;
+  border: 1px solid rgba(32,59,122,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.88);
+  color: #3A5068;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(20,34,66,.06);
+  transition: background .15s ease, color .15s ease;
+}
+.catalog-back-to-index:hover {
+  background: #F0F6FB;
+  color: #203b7a;
+}
+body.client-view.catalog-view .page-wrap {
+  padding: 20px 12px 48px;
+  gap: 36px;
+}
+body.client-view.catalog-view {
+  background: #E4EBF1;
+}
+body.client-view.catalog-view .a4 {
+  box-shadow: 0 10px 30px rgba(0,0,0,.10);
+}
+body.client-view.catalog-view .a4.a4-course-skeleton,
+body.client-view.catalog-view .a4:not(.index-page) {
+  scroll-margin-top: 28px;
+}
+body.client-view #catalog-index {
+  scroll-margin-top: 20px;
+}
+body.client-view .nav-overlay { display: none !important; }
+body.client-view #fit-warning {
+  display: none !important;
+}
 @media print {
   .index-page { padding-top: 14mm; }
   .idx-header { padding-top: 3mm !important; }
@@ -4007,6 +4079,9 @@ textarea,
     border-bottom: 2px solid #2C4560 !important;
   }
   .idx-table td { font-size: 12px !important; }
+  .idx-hint,
+  .catalog-back-to-index { display: none !important; }
+  .idx-course-link { color: inherit !important; text-decoration: none !important; }
 }
 
 /* ── White + light-gray + unique-color accent system ── */
@@ -5695,8 +5770,8 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
 
 .course-catalog-separator {
   width: min(210mm, calc(100vw - 40px));
-  margin: 10px auto -6px;
-  padding: 10px 18px;
+  margin: 18px auto 4px;
+  padding: 12px 18px;
   border: 1px solid rgba(32,59,122,.14);
   border-radius: 999px;
   background: linear-gradient(90deg, rgba(255,255,255,.96), rgba(231,246,250,.92));
@@ -5705,6 +5780,9 @@ body.catalog-view .a4.a4-course-skeleton .a4-body {
   font-weight: 900;
   text-align: center;
   box-shadow: 0 8px 20px rgba(20,34,66,.08);
+}
+body.client-view .course-catalog-separator {
+  margin: 28px auto 8px;
 }
 
 body.catalog-view .a4.a4-course-skeleton,
@@ -6007,15 +6085,19 @@ function courseNeedsWideSyllabusTopic(p) {
  return String(p.title || "").includes("השמיים אינם הגבול");
 }
 
-function buildProgramPageHtml(p, marketer = "none", coursePosition = null, courseTotal = null) {
+function buildProgramPageHtml(p, marketer = "none", coursePosition = null, courseTotal = null, includeBackToIndex = false) {
  const style = `--c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--c4:${p.c4};--c5:${p.c5};--c6:${p.c6};--theme-rgb:${hexToRgbString(p.c1)}`;
  const contactLine = contactLineHTML(marketer);
- const courseTag = coursePosition && courseTotal ? `<div class="top-meta-label course-number-label"><span class="meta-main">קורס ${coursePosition} מתוך ${courseTotal}</span></div>` : "";
+ const courseId = escapeHtml(p.id || "");
+ const courseAnchorId = courseId ? ` id="course-${courseId}"` : "";
+ const backToIndexLink = includeBackToIndex ? `<a class="catalog-back-to-index" href="#catalog-index">↑ חזרה למקרא</a>` : "";
+ const courseTag = coursePosition && courseTotal ? `<div class="top-meta-label course-number-label"><span class="meta-main">תוכנית ${coursePosition} מתוך ${courseTotal}</span></div>` : "";
 
  if (p.courseLayout) {
  const skeletonExtraClass = courseNeedsWideSyllabusTopic(p) ? " syl-topic-wide" : "";
  return `
- <div class="a4 a4-course-skeleton${skeletonExtraClass}" style="${style}">
+ <div class="a4 a4-course-skeleton${skeletonExtraClass}"${courseAnchorId} style="${style}">
+ ${backToIndexLink}
  ${courseTag}
  ${buildTopMetaLabel(p)}
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
@@ -6062,7 +6144,8 @@ function buildProgramPageHtml(p, marketer = "none", coursePosition = null, cours
  }
 
  return `
- <div class="a4" style="${style}">
+ <div class="a4"${courseAnchorId} style="${style}">
+ ${backToIndexLink}
  ${courseTag}
  <p class="a4-opening">${escapeHtml(p.opening)}</p>
  <div class="a4-banner">
@@ -6175,16 +6258,21 @@ function isCatalogModeFromUrl() {
 
 function buildIndexPageHtml(selectedPrograms) {
   const levelLabel = { elementary: "יסודי", "elementary-middle": "יסודי–חטיבה", middle: "חטיבה", "middle-high": "חטיבה–תיכון", high: "תיכון" };
-  const rows = selectedPrograms.map(p => `
-    <tr>
-      <td class="idx-title">${escapeHtml(p.title || "—")}</td>
+  const rows = selectedPrograms.map(p => {
+    const courseId = escapeHtml(p.id || "");
+    const anchor = courseId ? `#course-${courseId}` : "#";
+    const title = escapeHtml(p.title || "—");
+    return `
+    <tr class="idx-row" data-href="${anchor}">
+      <td class="idx-title"><a class="idx-course-link" href="${anchor}">${title}</a></td>
       <td class="idx-level">${escapeHtml(levelLabel[p.audienceLevel] || p.catalogSection || "—")}</td>
       <td class="idx-grades">${escapeHtml(p.grades || "—")}</td>
       <td class="idx-sessions">${escapeHtml(p.sessions || "—")}</td>
       <td class="idx-gefen">${escapeHtml(String(p.gefen || p.activityNo || "—"))}</td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
   return `
-  <div class="a4 index-page" style="page-break-after:always;break-after:page;">
+  <div class="a4 index-page" id="catalog-index" style="page-break-after:always;break-after:page;">
     <div class="idx-header">
       <img class="idx-logo" src="logo.png" alt="תעשיידע">
       <div class="idx-title-block">
@@ -6193,6 +6281,7 @@ function buildIndexPageHtml(selectedPrograms) {
       </div>
     </div>
     <div class="idx-body">
+      <p class="idx-hint">לחצו על שם תוכנית כדי לעבור ישירות לעמוד התוכנית</p>
       <table class="idx-table">
         <thead>
           <tr>
@@ -6223,16 +6312,32 @@ function renderCourseCatalog(indexes, includeCover = false, includeIndex = false
  const openingHtml = includeCover ? `<iframe class="catalog-opening-frame" src="${openingSrc}" title="מכתב מקדים לקטלוג הקורסים"></iframe>` : "";
  const indexHtml = includeIndex ? buildIndexPageHtml(selectedPrograms) : "";
  const totalCourses = selectedPrograms.length;
+ const showBackToIndex = includeIndex && isClientModeFromUrl();
  const coursePagesHtml = selectedPrograms.map((p, index) => {
-   const separator = index > 0 ? `<div class="course-catalog-separator" aria-hidden="true">קורס ${index + 1} מתוך ${totalCourses}</div>` : "";
-   return separator + buildProgramPageHtml(p, marketer, index + 1, totalCourses);
+   const separator = index > 0 ? `<div class="course-catalog-separator" aria-hidden="true">תוכנית ${index + 1} מתוך ${totalCourses}</div>` : "";
+   return separator + buildProgramPageHtml(p, marketer, index + 1, totalCourses, showBackToIndex);
  }).join("");
  document.getElementById("a4-container").innerHTML = openingHtml + indexHtml + coursePagesHtml;
  scheduleA4Fit();
+ bindIndexRowNavigation();
+}
+
+function bindIndexRowNavigation() {
+ document.querySelectorAll(".idx-table tbody tr.idx-row[data-href]").forEach(row => {
+   row.addEventListener("click", event => {
+     if (event.target.closest("a")) return;
+     const href = row.getAttribute("data-href");
+     if (!href || href === "#") return;
+     const target = document.querySelector(href);
+     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+     else window.location.hash = href.slice(1);
+   });
+ });
 }
 
 function showLoadError(msg, showBackLink = false) {
-  const backLink = showBackLink ? `<br><br><a href="./workshops.html?catalog=courses" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת קורסים</a>` : "";
+  const allowBackLink = showBackLink && !isClientModeFromUrl();
+  const backLink = allowBackLink ? `<br><br><a href="./workshops.html?catalog=courses" style="display:inline-block;padding:10px 16px;border-radius:999px;background:#203b7a;color:#fff;text-decoration:none;">חזרה לבחירת קורסים</a>` : "";
   document.getElementById("a4-container").innerHTML =
     `<div style="direction:rtl;font-family:"Assistant",Arial,sans-serif;padding:40px;color:#c0392b;font-size:15px;text-align:center;">
       <strong>שגיאה בטעינת הנתונים</strong><br><br>${msg}${backLink}
@@ -6362,7 +6467,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=333").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=334").then(registration => registration.update());
     });
   }
 </script>
