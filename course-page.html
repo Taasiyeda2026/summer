@@ -6126,6 +6126,8 @@ function buildProgramPageHtml(p, marketer = "none", coursePosition = null, cours
  </div>`;
 }
 
+const CATALOG_PAGE_TITLE = "קטלוג התוכניות החינוכיות של תעשיידע";
+
 function setPageShareTitle(title) {
  document.title = title;
  document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
@@ -6138,7 +6140,17 @@ function isClientModeFromUrl() {
 }
 
 function applyClientModeFromUrl() {
- document.body.classList.toggle("client-view", isClientModeFromUrl());
+ const isClientMode = isClientModeFromUrl();
+ document.body.classList.toggle("client-view", isClientMode);
+ document.querySelectorAll(".nav, .nav-toggle, .print-btn, .catalog-toolbar, .catalog-print-btn, .back-btn, .catalog-gen-link").forEach(element => {
+   if (isClientMode) {
+     element.setAttribute("hidden", "hidden");
+     element.setAttribute("aria-hidden", "true");
+   } else {
+     element.removeAttribute("hidden");
+     element.removeAttribute("aria-hidden");
+   }
+ });
 }
 
 function render(i) {
@@ -6202,7 +6214,7 @@ function buildIndexPageHtml(selectedPrograms) {
 
 function renderCourseCatalog(indexes, includeCover = false, includeIndex = false, marketer = "none") {
  const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
- setPageShareTitle("קטלוג התוכניות החינוכיות של תעשיידע");
+ setPageShareTitle(CATALOG_PAGE_TITLE);
  document.body.classList.add("catalog-view", "catalog-courses-print");
  applyClientModeFromUrl();
  document.querySelector(".nav-toggle")?.setAttribute("hidden", "hidden");
@@ -6350,7 +6362,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=332").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=333").then(registration => registration.update());
     });
   }
 </script>
