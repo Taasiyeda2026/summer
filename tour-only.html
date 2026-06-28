@@ -427,7 +427,6 @@ h1{
 <div class="catalog-extra-controls" aria-label="מה להוסיף לקטלוג">
   <p class="catalog-extra-title">מה להוסיף לקטלוג?</p>
   <div class="catalog-extra-row">
-    <label class="catalog-extra-option"><input id="tourMarketingCheckbox" type="checkbox" /> שיווק</label>
     <label class="catalog-extra-option" for="tourContactSelect">איש קשר
       <select id="tourContactSelect">
         <option value="none">ללא איש קשר</option>
@@ -447,7 +446,6 @@ h1{
   </div>
 
   <section class="hero">
-    <div class="kicker">למידה מחוץ לכיתה</div>
     <h1>התנסות בתעשייה</h1>
     <p class="subtitle">סיור המחבר בין הלמידה בבית הספר לבין עשייה אמיתית, חדשנות ומפגש עם אנשי מקצוע.</p>
   </section>
@@ -545,9 +543,6 @@ h1{
   </div>
 
 
-    <div id="tourMarketingBlock" class="tour-marketing-block" hidden>
-      קטלוג שיווקי של תעשיידע: התנסות בתעשייה מחברת תלמידות ותלמידים לעולמות העבודה, החדשנות והטכנולוגיה דרך מפגש חי, רלוונטי ומעורר השראה.
-    </div>
   <footer class="footer"><div id="tourContactLine" class="tour-contact-line" hidden></div>
       © כל הזכויות שמורות לתעשיידע – תעשייה למען חינוך מתקדם ע״ר</footer>
 </main>
@@ -559,15 +554,13 @@ h1{
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=368").then(registration => registration.update());
+    navigator.serviceWorker.register("./sw.js?v=369").then(registration => registration.update());
   });
 }
 
 (function(){
   const params = new URLSearchParams(window.location.search);
-  const marketing = document.getElementById("tourMarketingCheckbox");
   const contact = document.getElementById("tourContactSelect");
-  const marketingBlock = document.getElementById("tourMarketingBlock");
   const contactLine = document.getElementById("tourContactLine");
   const output = document.getElementById("tourCatalogLinkOutput");
   const linkBtn = document.getElementById("tourCatalogLinkBtn");
@@ -583,18 +576,15 @@ if ("serviceWorker" in navigator) {
   }
   function contactCode(value){ return value === "yael" ? "y" : value === "israa" ? "i" : "none"; }
   function applyTourCatalogOptions(){
-    marketingBlock.hidden = !marketing.checked;
     const selectedContact = normalizeContact(contact.value);
     contact.value = selectedContact;
     contactLine.hidden = selectedContact === "none";
     contactLine.innerHTML = contacts[selectedContact] || "";
   }
-  marketing.checked = params.get("m") === "1" || params.has("marketing");
   contact.value = normalizeContact(params.get("c") || params.get("contact"));
-  [marketing, contact].forEach(el => el.addEventListener("change", applyTourCatalogOptions));
+  contact.addEventListener("change", applyTourCatalogOptions);
   linkBtn.addEventListener("click", async () => {
     const url = new URL(window.location.pathname.split('/').pop() || "./", window.location.href);
-    if (marketing.checked) url.searchParams.set("m", "1");
     const selectedContact = normalizeContact(contact.value);
     if (selectedContact !== "none") url.searchParams.set("c", contactCode(selectedContact));
     const href = url.href;
