@@ -82,6 +82,86 @@ body {
   box-shadow: 0 6px 20px rgba(15,23,42,0.10);
 }
 
+button.btn-main {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Tour modal */
+.tour-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,.45);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  direction: rtl;
+}
+.tour-modal-overlay.is-open { display: flex; }
+.tour-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 28px 24px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(15,23,42,.18);
+  position: relative;
+  text-align: right;
+}
+.tour-modal-title {
+  font-size: 17px;
+  font-weight: 900;
+  color: #1A2F50;
+  margin: 0 0 18px;
+}
+.tour-modal-close {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6A7F96;
+  line-height: 1;
+  padding: 4px 6px;
+}
+.tour-modal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tour-option {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-decoration: none;
+  padding: 16px 18px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  background: #F8FAFC;
+  transition: border-color .15s, background .15s;
+  color: inherit;
+}
+.tour-option:hover {
+  border-color: #203b7a;
+  background: #EFF4FB;
+}
+.tour-option-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1A2F50;
+}
+.tour-option-desc {
+  font-size: 12px;
+  color: #6A7F96;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
 .btn-courses,
 .btn-workshops,
 .btn-tour {
@@ -123,11 +203,28 @@ body {
       <span class="btn-label">סדנאות</span>
       <span class="btn-desc">STEM ומייקרים</span>
     </a>
-    <a class="btn-main btn-tour" href="tour.html">
+    <button class="btn-main btn-tour" onclick="openTourModal()">
       <span class="btn-icon">🏭</span>
       <span class="btn-label">סיור</span>
       <span class="btn-desc">התנסות בתעשייה</span>
-    </a>
+    </button>
+  </div>
+</div>
+
+<div class="tour-modal-overlay" id="tourModal" role="dialog" aria-modal="true" aria-label="בחירת מסלול סיור">
+  <div class="tour-modal">
+    <button class="tour-modal-close" onclick="closeTourModal()" aria-label="סגירה">✕</button>
+    <p class="tour-modal-title">בחרו מסלול סיור</p>
+    <div class="tour-modal-options">
+      <a class="tour-option" href="tour-only.html">
+        <span class="tour-option-title">🏭 סיור בלבד</span>
+        <span class="tour-option-desc">סיור לימודי חד-יומי לחשיפה לעולמות העבודה, הטכנולוגיה והחדשנות.</span>
+      </a>
+      <a class="tour-option" href="tour.html">
+        <span class="tour-option-title">📋 סיור עם הכנה וסיכום</span>
+        <span class="tour-option-desc">תהליך בן 3 מפגשים הכולל הכנה, סיור לימודי ועיבוד תובנות.</span>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -144,9 +241,19 @@ body {
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=357").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=359").then(registration => registration.update());
     });
   }
+
+  function openTourModal() {
+    document.getElementById("tourModal").classList.add("is-open");
+  }
+  function closeTourModal() {
+    document.getElementById("tourModal").classList.remove("is-open");
+  }
+  document.getElementById("tourModal").addEventListener("click", function(e) {
+    if (e.target === this) closeTourModal();
+  });
 </script>
 </body>
 </html>
