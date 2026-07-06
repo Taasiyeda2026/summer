@@ -1,0 +1,117 @@
+צריך לבצע שינוי קוד בלבד במספר גפ״ן של תוכנית “פורצות דרך”.
+
+לא להריץ SQL.
+לא לגעת ב-Supabase.
+לא לשנות תוכן.
+לא לשנות שם תוכנית.
+לא לשנות עיצוב.
+לא לשנות סילבוס.
+לא לשנות מחירים.
+לא לשנות תוכניות אחרות.
+
+השינוי המבוקש בלבד:
+
+בתוכנית:
+פורצות דרך
+
+המצב היום:
+גפ״ן 67861
+
+צריך לשנות ל:
+גפ״ן 3604
+
+יש לבצע חיפוש מלא בריפואים:
+
+1. Taasiyeda2026/summer
+2. Taasiyeda2026/dashboard_system
+
+לחפש:
+67861
+פורצות דרך
+gefen
+gefenNumber
+activityNo
+activity_no
+gapan
+3604
+
+קבצים שצריך לבדוק במיוחד:
+
+בריפו summer:
+
+* catalog-data.json
+* tashpaz/catalog_programs_tashpaz.json
+* workshops.html
+* course-page.html
+* catalog-yael.html
+* catalog-esraa.html
+
+בריפו dashboard_system:
+
+* frontend/public/proposals/Proposaleditor.html
+* frontend/public/catalog/catalog_programs_tashpaz.json
+* frontend/public/catalog_programs_tashpaz.json
+* frontend/public/catalog/summercatalog/catalog-data.json
+* frontend/public/catalog/summercatalog/catalog-data-updated-biomimicry.json
+
+הפעולה:
+בכל מקום שבו תוכנית “פורצות דרך” מופיעה עם מספר גפ״ן/פעילות 67861, להחליף רק את המספר ל-3604.
+
+שדות אפשריים לעדכון:
+gefen
+gefenNumber
+activityNo
+activity_no
+gapan
+programNumber
+activity_number
+
+דוגמה:
+לפני:
+"gefen": "67861"
+"activityNo": "67861"
+
+אחרי:
+"gefen": "3604"
+"activityNo": "3604"
+
+אם בתוכנית “פורצות דרך” מופיע כבר 3604 — לא לשנות כלום.
+
+אם 67861 מופיע בתוכנית אחרת שאינה “פורצות דרך” — לא לשנות בלי בדיקה.
+
+בדיקות אחרי שינוי:
+
+1. לפתוח:
+   https://taasiyeda2026.github.io/summer/workshops.html?catalog=courses
+
+2. לבחור/למצוא את “פורצות דרך”.
+
+3. לוודא שמוצג:
+   גפ״ן 3604
+
+4. לוודא שלא מוצג:
+   גפ״ן 67861
+
+5. לבדוק גם דף קורס שנוצר דרך הקישור:
+   course-page.html
+
+6. לבדוק בדשבורד הצעות מחיר אם “פורצות דרך” מופיעה שם:
+   היא צריכה להיות עם גפ״ן 3604.
+
+7. לבצע חיפוש סופי בכל הקוד:
+   67861
+
+אם 67861 נשאר רק בהיסטוריה, קבצי attached_assets, קבצי paste או מסמכי מקור שלא נטענים בפועל — לא לגעת בהם.
+אם 67861 נשאר בקובץ פעיל שנטען באתר — לתקן ל-3604.
+
+חובה לעדכן Service Worker / Cache אם יש:
+
+* להעלות גרסת CACHE_NAME ב-sw.js.
+* לעדכן גרסת register אם קיימת.
+* לוודא ש-catalog-data.json נטען בגרסה חדשה ולא נשאר מה-cache.
+
+בסיום לדווח:
+
+* באילו קבצים שונה 67861 ל-3604.
+* לוודא שלא בוצעו שינויי Supabase.
+* לוודא שלא בוצעו שינויי תוכן או עיצוב.
