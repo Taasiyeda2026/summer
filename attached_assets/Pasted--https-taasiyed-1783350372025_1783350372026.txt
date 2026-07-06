@@ -1,0 +1,242 @@
+צריך לתקן בעמוד הקטלוג כך שתוכניות לא פעילות לא יוצגו בשום מקום.
+
+הבעיה:
+בעמוד:
+https://taasiyeda2026.github.io/summer/workshops.html?catalog=courses
+
+מופיעה תוכנית:
+אופק לתעשייה (לא פעיל)
+
+אסור להציג אותה בכלל.
+
+השם היחיד שצריך להופיע:
+אופק יזמות פרימיום לתעשייה
+
+קוד:
+52279
+
+התוכנית הישנה:
+אופק לתעשייה (לא פעיל)
+52279_old
+isActive: false
+
+לא צריכה להופיע ברשימה, לא בסיכום הבחירה, לא בקישור שנוצר, לא בקטלוג PDF ולא בדף course-page.
+
+---
+
+## תיקון נדרש בקוד
+
+ריפו:
+Taasiyeda2026/summer
+
+קבצים לבדיקה:
+
+1. workshops.html
+2. course-page.html
+3. catalog-data.json
+4. tashpaz/catalog_programs_tashpaz.json
+5. catalog-yael.html
+6. catalog-esraa.html
+7. sw.js
+
+הבעיה המרכזית ב-workshops.html:
+הפונקציה loadCatalogPrograms טוענת את כל catalog-data.json ומחזירה גם תוכניות לא פעילות.
+
+צריך להוסיף פונקציה מרכזית:
+
+```js
+function isActiveProgram(program = {}) {
+  if (program.isActive === false) return false;
+  if (program.active === false) return false;
+  if (program.is_active === false) return false;
+  if (String(program.activityNo || '').includes('old')) return false;
+  if (String(program.gefen || '').includes('old')) return false;
+  if (String(program.title || '').includes('לא פעיל')) return false;
+  return true;
+}
+```
+
+ואז לעדכן את loadCatalogPrograms כך שיחזיר רק תוכניות פעילות:
+
+```js
+async function loadCatalogPrograms() {
+  const response = await fetch("catalog-data.json", { cache: "no-store" });
+  if (!response.ok) throw new Error(`Failed to load catalog-data.json (${response.status})`);
+  const data = await response.json();
+  if (!Array.isArray(data?.programs)) throw new Error("catalog-data.json is missing programs array");
+
+  return data.programs
+    .map(program => normalizeProgram(program))
+    .filter(program => program.title)
+    .filter(isActiveProgram);
+}
+```
+
+בנוסף, חובה לוודא שכל הפונקציות שמציגות או בוחרות תוכניות משתמשות רק בתוכניות פעילות:
+
+* renderCoursePicker
+* visibleCoursePrograms
+* getSelectedCoursePrograms
+* applyCoursePreset
+* showProgramGateway
+* buildCourseCatalogUrl
+* כל טיפול ב־ids שמגיעים מה־URL
+
+אם URL כולל id של תוכנית לא פעילה, למשל:
+industry-horizon
+
+או קוד:
+52279_old
+
+צריך להתעלם ממנו ולא להוסיף אותו ל-selectedCourses.
+
+---
+
+## תיקון נדרש ב-course-page.html
+
+גם course-page.html צריך לסנן תוכניות לא פעילות.
+
+אם פותחים קישור שנוצר בעבר עם id של:
+industry-horizon
+
+או תוכנית עם:
+isActive: false
+
+או:
+title כולל "לא פעיל"
+
+או:
+activityNo/gefen כולל old
+
+לא להציג אותה בדף הקורס.
+
+אם אין תוכניות פעילות לאחר הסינון — להציג הודעה רגילה שאין תוכניות להצגה, ולא להציג את הלא פעיל.
+
+---
+
+## תיקון בקובץ הנתונים
+
+ב-catalog-data.json:
+
+אפשר להשאיר את האובייקט הישן רק אם הוא לא מוצג:
+
+```json
+{
+  "id": "industry-horizon",
+  "activityNo": "52279_old",
+  "gefen": "52279_old",
+  "title": "אופק לתעשייה (לא פעיל)",
+  "isActive": false
+}
+```
+
+אבל עדיף להסיר אותו לגמרי מהמערך programs אם אין צורך היסטורי בקובץ.
+
+בכל מקרה:
+אסור שהוא יופיע למשתמש.
+
+התוכנית הפעילה היחידה עם הקוד 52279 צריכה להיות:
+אופק יזמות פרימיום לתעשייה
+
+---
+
+## תיקון גם בעותק הדשבורד
+
+ריפו נוסף:
+Taasiyeda2026/dashboard_system
+
+חובה לבצע אותו תיקון גם בעותק המוטמע של הקטלוג:
+
+קבצים לבדיקה:
+frontend/public/catalog/summercatalog/workshops.html
+frontend/public/catalog/summercatalog/course-page.html
+frontend/public/catalog/summercatalog/catalog-data.json
+frontend/public/catalog/summercatalog/catalog-data-updated-biomimicry.json
+
+גם שם:
+לא להציג תוכניות עם:
+isActive: false
+active: false
+is_active: false
+title כולל "לא פעיל"
+activityNo/gefen כולל old
+
+---
+
+## Supabase
+
+אם יש טעינה מ-Supabase באחד המסכים:
+חובה לסנן לפי פעיל בלבד.
+
+בטבלאות:
+public.catalog_program_details
+public.proposal_activity_pricing
+public.lists
+
+לא להציג רשומות שבהן:
+is_active_for_catalog = false
+או is_active_for_proposals = false
+או active = false
+או is_active = false
+או title/label כולל "לא פעיל"
+או activity_no/gefen_number/pricing_key כולל old
+
+בפועל, “אופק לתעשייה (לא פעיל)” לא אמור להיות מוצג למשתמש בכלל.
+
+---
+
+## בדיקות חובה
+
+1. לפתוח:
+   https://taasiyeda2026.github.io/summer/workshops.html?catalog=courses
+
+2. לוודא שברשימת הבחירה מופיע:
+   אופק יזמות פרימיום לתעשייה
+
+3. לוודא שלא מופיע:
+   אופק לתעשייה (לא פעיל)
+
+4. ללחוץ “בחר הכל”.
+   לוודא שעדיין לא נבחרת תוכנית לא פעילה.
+
+5. לפתוח קישור ישן אם קיים עם industry-horizon.
+   לוודא שהתוכנית הלא פעילה לא מוצגת.
+
+6. לבדוק בדשבורד:
+   https://taasiyeda2026.github.io/dashboard_system/
+
+קטלוג → קורסים → בחירה ידנית
+
+לוודא שלא מופיע:
+אופק לתעשייה (לא פעיל)
+
+7. לבדוק בהצעות מחיר:
+   רשימת הקורסים צריכה להציג רק:
+   אופק יזמות פרימיום לתעשייה
+   52279
+
+ולא:
+אופק לתעשייה
+אופק לתעשייה (לא פעיל)
+יזמות פרימיום
+אופק יזמות לתעשייה
+
+---
+
+## Cache
+
+חובה לעדכן Cache / Service Worker:
+
+1. להעלות גרסת CACHE_NAME ב-sw.js.
+2. להוסיף cache buster לטעינת catalog-data.json אם צריך:
+   catalog-data.json?v=20260706-hide-inactive
+3. לבצע hard refresh ולבדוק בחלון פרטי.
+
+---
+
+לא לבצע:
+לא לשנות עיצוב.
+לא לשנות תוכן של תוכניות פעילות.
+לא לשנות מחירים.
+לא לשנות תוכניות אחרות.
+לא לבצע ריפקטורינג.

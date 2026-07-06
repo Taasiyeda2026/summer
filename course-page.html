@@ -7800,6 +7800,10 @@ async function init() {
     }
     const levelOrder = { elementary: 1, "elementary-middle": 2, middle: 3, "middle-high": 4, high: 5 };
     programs = data.programs.map(program => normalizeProgram(program))
+      .filter(p => p.isActive !== false && p.active !== false && p.is_active !== false &&
+        !String(p.activityNo || "").includes("old") &&
+        !String(p.gefen || "").includes("old") &&
+        !String(p.title || "").includes("לא פעיל"))
       .sort((a, b) => (levelOrder[a.audienceLevel] ?? 99) - (levelOrder[b.audienceLevel] ?? 99));
     if (isCatalogModeFromUrl()) {
       const params = new URLSearchParams(window.location.search);
@@ -7925,7 +7929,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=377").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=378").then(registration => registration.update());
     });
   }
 </script>
