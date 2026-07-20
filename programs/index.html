@@ -15,25 +15,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #18365d;
-      --navy-dark: #102846;
-      --blue: #246fba;
-      --blue-soft: #eef6fc;
-      --teal: #159b91;
-      --teal-soft: #e9f8f5;
-      --gold: #d89436;
-      --gold-soft: #fff5e7;
-      --purple: #7157b7;
-      --purple-soft: #f3effc;
-      --green: #3c8e62;
-      --green-soft: #edf8f1;
-      --ink: #20364c;
-      --muted: #63778b;
-      --line: #dfe8ef;
-      --surface: #f5f8fb;
-      --white: #fff;
-      --shadow: 0 18px 50px rgba(20, 48, 75, .12);
-      --container: 1120px;
+      --navy: #1b3553;
+      --navy-soft: #eef2f6;
+      --ink: #283b4d;
+      --muted: #697887;
+      --line: #dfe4e8;
+      --paper: #ffffff;
+      --page: #f3f2ef;
+      --accent: #2c6670;
+      --accent-soft: #edf4f4;
+      --elementary: #5b7969;
+      --elementary-soft: #eef4f0;
+      --secondary: #576982;
+      --secondary-soft: #eef1f5;
+      --shadow: 0 12px 34px rgba(31, 45, 58, .08);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -43,9 +38,9 @@
     body {
       margin: 0;
       color: var(--ink);
-      background: var(--white);
+      background: var(--page);
       font-family: "Assistant", Arial, sans-serif;
-      line-height: 1.75;
+      line-height: 1.72;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -53,341 +48,217 @@
 
     button { font: inherit; }
 
-    .container {
-      width: min(calc(100% - 40px), var(--container));
-      margin-inline: auto;
+    .page {
+      width: min(calc(100% - 32px), 860px);
+      margin: 28px auto;
+      overflow: hidden;
+      border: 1px solid #e5e3df;
+      background: var(--paper);
+      box-shadow: var(--shadow);
     }
 
-    .topbar {
-      position: sticky;
-      z-index: 30;
-      top: 0;
-      border-bottom: 1px solid rgba(223, 232, 239, .9);
-      background: rgba(255, 255, 255, .94);
-      backdrop-filter: blur(14px);
-    }
+    .page-inner { padding: 46px 54px 52px; }
 
-    .topbar-inner {
+    .header {
       display: flex;
-      min-height: 78px;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 13px;
+      gap: 15px;
     }
 
     .brand img {
       width: auto;
-      height: 48px;
+      height: 50px;
       object-fit: contain;
     }
 
-    .brand-copy {
-      display: flex;
-      flex-direction: column;
+    .brand-text strong {
+      display: block;
+      color: var(--navy);
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    .header-note {
+      color: var(--muted);
+      font-size: .8rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .intro {
+      padding: 42px 0 38px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-label {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 22px;
+      color: var(--navy);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -.025em;
       line-height: 1.2;
     }
 
-    .brand-copy strong {
-      color: var(--navy-dark);
-      font-size: 1.22rem;
-      font-weight: 800;
-    }
-
-    .brand-copy span {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: .83rem;
-      font-weight: 600;
-    }
-
-    .top-link {
-      padding: 9px 15px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
+    h2 {
+      margin-bottom: 14px;
       color: var(--navy);
-      background: var(--white);
-      font-size: .92rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: .2s ease;
-    }
-
-    .top-link:hover {
-      border-color: #b9cfdf;
-      background: var(--blue-soft);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 88px 0 82px;
-      background:
-        radial-gradient(circle at 85% 12%, rgba(21, 155, 145, .13), transparent 31%),
-        radial-gradient(circle at 8% 88%, rgba(36, 111, 186, .11), transparent 28%),
-        linear-gradient(180deg, #f7fbfe 0%, #ffffff 100%);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 340px;
-      top: -230px;
-      left: -90px;
-      border: 1px solid rgba(36, 111, 186, .10);
-      border-radius: 50%;
-      box-shadow: 0 0 0 55px rgba(36, 111, 186, .025), 0 0 0 110px rgba(21, 155, 145, .02);
-    }
-
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 230px;
-      gap: 68px;
-      align-items: start;
-    }
-
-    .hero-title {
-      margin: 0 0 28px;
-      color: var(--navy-dark);
-      font-size: clamp(2.7rem, 6vw, 5.2rem);
+      font-size: 1.62rem;
       font-weight: 800;
-      letter-spacing: -.045em;
-      line-height: 1;
-    }
-
-    .hero-copy {
-      max-width: 850px;
-    }
-
-    .hero-copy p {
-      margin: 0 0 20px;
-      color: #49647b;
-      font-size: 1.08rem;
-    }
-
-    .hero-copy p:first-of-type {
-      color: #324f68;
-      font-size: 1.16rem;
-      font-weight: 600;
-    }
-
-    .hero-copy p:last-child { margin-bottom: 0; }
-
-    .hero-side {
-      position: sticky;
-      top: 112px;
-      padding: 27px 24px;
-      border: 1px solid rgba(255, 255, 255, .8);
-      border-radius: 25px;
-      color: var(--white);
-      background: linear-gradient(150deg, var(--navy-dark), var(--blue) 65%, var(--teal));
-      box-shadow: var(--shadow);
-    }
-
-    .hero-side small {
-      display: block;
-      margin-bottom: 28px;
-      color: rgba(255, 255, 255, .72);
-      font-size: .82rem;
-      font-weight: 700;
-      letter-spacing: .02em;
-    }
-
-    .hero-side strong {
-      display: block;
-      font-size: 1.55rem;
-      font-weight: 800;
+      letter-spacing: -.018em;
       line-height: 1.25;
     }
 
-    .hero-side span {
-      display: block;
-      margin-top: 13px;
-      color: rgba(255, 255, 255, .76);
-      font-size: .95rem;
-      line-height: 1.55;
+    .intro p {
+      margin-bottom: 15px;
+      color: #435668;
+      font-size: .97rem;
+      text-align: justify;
     }
 
-    .programs-section {
-      padding: 90px 0 102px;
-      background: var(--surface);
+    .intro p:last-child { margin-bottom: 0; }
+
+    .programs {
+      padding-top: 38px;
     }
 
-    .section-head {
-      max-width: 830px;
-      margin: 0 auto 48px;
-      text-align: center;
+    .programs-head {
+      max-width: 720px;
+      margin-bottom: 25px;
     }
 
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0 0 12px;
-      color: var(--teal);
-      font-size: .9rem;
-      font-weight: 800;
-    }
-
-    .kicker::before,
-    .kicker::after {
-      content: "";
-      width: 25px;
-      height: 2px;
-      border-radius: 999px;
-      background: currentColor;
-      opacity: .45;
-    }
-
-    .section-title {
-      margin: 0 0 17px;
-      color: var(--navy-dark);
-      font-size: clamp(2rem, 4.2vw, 3.3rem);
-      font-weight: 800;
-      letter-spacing: -.035em;
-      line-height: 1.12;
-    }
-
-    .section-head p {
-      margin: 0 0 12px;
+    .programs-head p {
+      margin-bottom: 8px;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: .95rem;
     }
 
-    .section-head p:last-child { margin-bottom: 0; }
+    .programs-head p:last-child { margin-bottom: 0; }
 
     .program-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      gap: 11px;
     }
 
     .program-card {
       position: relative;
       display: flex;
-      min-height: 190px;
+      min-height: 102px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-between;
-      padding: 25px;
-      overflow: hidden;
+      padding: 15px 16px 13px;
       border: 1px solid var(--line);
-      border-radius: 22px;
-      color: var(--ink);
-      background: var(--white);
-      box-shadow: 0 8px 25px rgba(30, 61, 89, .055);
+      border-radius: 7px;
+      color: inherit;
+      background: #fff;
       text-align: right;
       cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-
-    .program-card::before {
-      content: "";
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      top: -74px;
-      left: -52px;
-      border-radius: 50%;
-      background: var(--card-soft, var(--blue-soft));
-      transition: transform .25s ease;
+      transition: border-color .16s ease, background .16s ease, transform .16s ease, box-shadow .16s ease;
     }
 
     .program-card:hover,
     .program-card:focus-visible {
-      transform: translateY(-4px);
-      border-color: var(--card-color, var(--blue));
-      box-shadow: 0 17px 40px rgba(30, 61, 89, .12);
+      z-index: 1;
+      transform: translateY(-2px);
+      border-color: #aebbc4;
+      background: #fbfcfc;
+      box-shadow: 0 7px 18px rgba(31, 45, 58, .07);
       outline: none;
     }
 
-    .program-card:hover::before { transform: scale(1.12); }
+    .program-name {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.28;
+    }
 
-    .program-card-top {
-      position: relative;
-      z-index: 1;
+    .card-footer {
+      display: flex;
       width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 14px;
     }
 
     .age-badge {
       display: inline-flex;
       align-items: center;
-      min-height: 27px;
-      padding: 4px 10px;
+      padding: 2px 8px 3px;
       border-radius: 999px;
-      color: var(--card-color, var(--blue));
-      background: var(--card-soft, var(--blue-soft));
-      font-size: .78rem;
-      font-weight: 800;
-    }
-
-    .program-name {
-      position: relative;
-      z-index: 1;
-      margin: 17px 0 0;
-      color: var(--navy-dark);
-      font-size: 1.42rem;
-      font-weight: 800;
-      line-height: 1.25;
-    }
-
-    .open-label {
-      position: relative;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 27px;
-      color: var(--card-color, var(--blue));
-      font-size: .91rem;
+      font-size: .69rem;
       font-weight: 700;
+      line-height: 1.4;
     }
 
-    .open-label::after {
-      content: "+";
-      display: grid;
-      width: 27px;
-      height: 27px;
-      place-items: center;
-      border: 1px solid currentColor;
-      border-radius: 50%;
-      font-size: 1.05rem;
+    .age-badge.elementary {
+      color: var(--elementary);
+      background: var(--elementary-soft);
+    }
+
+    .age-badge.secondary {
+      color: var(--secondary);
+      background: var(--secondary-soft);
+    }
+
+    .open-mark {
+      color: #83909a;
+      font-size: 1.15rem;
+      font-weight: 400;
       line-height: 1;
     }
 
-    .c1 { --card-color: #2372b9; --card-soft: #edf6fd; }
-    .c2 { --card-color: #39885c; --card-soft: #edf8f1; }
-    .c3 { --card-color: #7157b7; --card-soft: #f3effc; }
-    .c4 { --card-color: #2b7eaa; --card-soft: #edf7fb; }
-    .c5 { --card-color: #d08028; --card-soft: #fff4e4; }
-    .c6 { --card-color: #a24e81; --card-soft: #fbf0f7; }
-    .c7 { --card-color: #4266b1; --card-soft: #eff3fc; }
-    .c8 { --card-color: #168f85; --card-soft: #eaf8f5; }
-    .c9 { --card-color: #aa6532; --card-soft: #fbf1e9; }
-
-    .footer {
-      padding: 31px 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      background: var(--white);
+    .hint {
+      margin: 17px 0 0;
+      color: #8a949d;
+      font-size: .77rem;
+      text-align: center;
     }
 
-    .footer-inner {
+    .footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      font-size: .93rem;
+      margin-top: 38px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: #7b8791;
+      font-size: .78rem;
     }
 
-    .footer strong { color: var(--navy); }
+    .footer strong { color: #506273; }
 
     .modal-overlay {
       position: fixed;
@@ -397,408 +268,350 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
-      background: rgba(11, 29, 49, .68);
-      backdrop-filter: blur(7px);
+      background: rgba(28, 39, 50, .46);
+      backdrop-filter: blur(2px);
     }
 
-    .modal-overlay.is-open { display: flex; }
+    .modal-overlay.open { display: flex; }
 
     .modal {
       position: relative;
-      width: min(100%, 760px);
-      max-height: min(86vh, 820px);
-      overflow: auto;
-      border: 1px solid rgba(255, 255, 255, .7);
-      border-radius: 26px;
-      background: var(--white);
-      box-shadow: 0 28px 85px rgba(5, 22, 39, .28);
-      animation: modalIn .22s ease-out;
+      width: min(100%, 690px);
+      max-height: min(86vh, 760px);
+      overflow-y: auto;
+      border: 1px solid #d8dcdf;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 24px 70px rgba(17, 28, 38, .22);
     }
 
-    @keyframes modalIn {
-      from { opacity: 0; transform: translateY(12px) scale(.985); }
-      to { opacity: 1; transform: none; }
-    }
-
-    .modal-head {
-      position: sticky;
-      z-index: 2;
-      top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 62px;
-      padding: 12px 18px;
+    .modal-header {
+      padding: 28px 32px 22px;
       border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, .95);
-      backdrop-filter: blur(10px);
     }
-
-    .modal-close {
-      display: grid;
-      width: 38px;
-      height: 38px;
-      place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      color: var(--navy);
-      background: var(--surface);
-      font-size: 1.3rem;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .modal-close:hover {
-      border-color: #bfcfdb;
-      background: var(--blue-soft);
-    }
-
-    .modal-content { padding: 34px 38px 40px; }
 
     .modal-age {
       display: inline-flex;
-      margin-bottom: 13px;
-      padding: 5px 11px;
+      margin-bottom: 11px;
+      padding: 3px 9px;
       border-radius: 999px;
-      color: var(--teal);
-      background: var(--teal-soft);
-      font-size: .8rem;
-      font-weight: 800;
-    }
-
-    .modal-content h2 {
-      margin: 0 0 13px;
-      color: var(--navy-dark);
-      font-size: clamp(1.7rem, 4vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -.025em;
-      line-height: 1.2;
-    }
-
-    .modal-meta {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 7px 14px;
-      margin-bottom: 25px;
-      padding: 9px 14px;
-      border-radius: 11px;
-      color: #4e667a;
-      background: var(--blue-soft);
-      font-size: .93rem;
+      color: var(--secondary);
+      background: var(--secondary-soft);
+      font-size: .72rem;
       font-weight: 700;
     }
 
-    .modal-content p {
-      margin: 0 0 17px;
-      color: #516b80;
-      font-size: 1.04rem;
+    .modal-title {
+      margin: 0 42px 10px 0;
+      color: var(--navy);
+      font-size: 1.48rem;
+      font-weight: 800;
+      line-height: 1.3;
     }
 
-    .modal-content p:last-child { margin-bottom: 0; }
+    .modal-meta {
+      color: var(--accent);
+      font-size: .9rem;
+      font-weight: 700;
+    }
 
-    @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-      .hero-side { position: static; max-width: 450px; }
+    .modal-body {
+      padding: 25px 32px 30px;
+    }
+
+    .modal-body p {
+      margin: 0 0 13px;
+      color: #45596a;
+      font-size: .97rem;
+    }
+
+    .modal-body p:last-child { margin-bottom: 0; }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: #61717f;
+      background: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .modal-close:hover {
+      border-color: #b9c2c9;
+      background: #f5f6f7;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(calc(100% - 20px), 860px);
+        margin: 10px auto;
+      }
+
+      .page-inner { padding: 32px 26px 38px; }
+      .header-note { display: none; }
+      .intro { padding: 32px 0 30px; }
+      h1 { font-size: 1.75rem; }
       .program-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 620px) {
-      .container { width: min(calc(100% - 28px), var(--container)); }
-      .topbar-inner { min-height: 70px; }
-      .brand img { height: 40px; }
-      .brand-copy span { display: none; }
-      .top-link { display: none; }
-      .hero { padding: 58px 0 64px; }
-      .hero-title { margin-bottom: 23px; }
-      .hero-copy p, .hero-copy p:first-of-type { font-size: 1rem; }
-      .hero-side { padding: 23px; }
-      .programs-section { padding: 68px 0 78px; }
-      .section-head { margin-bottom: 35px; text-align: right; }
-      .kicker::before, .kicker::after { display: none; }
-      .program-grid { grid-template-columns: 1fr; gap: 13px; }
-      .program-card { min-height: 156px; padding: 21px; }
-      .program-name { font-size: 1.32rem; }
-      .open-label { margin-top: 21px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .modal-overlay { padding: 10px; align-items: flex-end; }
-      .modal { max-height: 92vh; border-radius: 24px 24px 14px 14px; }
-      .modal-content { padding: 27px 22px 32px; }
+    @media (max-width: 500px) {
+      .page { width: 100%; margin: 0; border: 0; }
+      .page-inner { padding: 26px 18px 34px; }
+      .brand img { height: 43px; }
+      .brand-text strong { font-size: 1.1rem; }
+      .intro p { text-align: right; }
+      .program-grid { grid-template-columns: 1fr; gap: 9px; }
+      .program-card { min-height: 86px; }
+      .modal-overlay { padding: 10px; }
+      .modal-header { padding: 24px 21px 19px; }
+      .modal-title { margin-right: 0; padding-left: 38px; font-size: 1.27rem; }
+      .modal-body { padding: 21px; }
+      .modal-close { top: 15px; left: 15px; }
+      .footer { flex-direction: column; align-items: flex-start; gap: 4px; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; margin: 0; border: 0; box-shadow: none; }
+      .page-inner { padding: 0; }
+      .program-card { break-inside: avoid; }
+      .hint { display: none; }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <img src="../logo.png" alt="תעשיידע">
-        <div class="brand-copy">
-          <strong>תעשיידע</strong>
-          <span>תעשייה למען חינוך מתקדם</span>
-        </div>
-      </div>
-      <a class="top-link" href="#programs">לתוכניות החינוכיות</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero" aria-labelledby="about-title">
-      <div class="container hero-grid">
-        <div>
-          <h1 class="hero-title" id="about-title">מי אנחנו</h1>
-          <div class="hero-copy">
-            <p>עמותת תעשיידע הוקמה בשנת 1992 מיסודה של התאחדות התעשיינים בישראל, במטרה ליצור חיבור משמעותי בין מערכת החינוך לבין עולמות התעשייה. מאז הקמתה פועלת העמותה בפריסה ארצית ומקדמת תוכניות חינוכיות עבור תלמידות ותלמידים מבית הספר היסודי ועד התיכון.</p>
-
-            <p>תעשיידע מפתחת ומפעילה תוכניות חינוכיות תהליכיות אשר מקנות לתלמידים כלים ומיומנויות החיוניים לעולם המשתנה ובהם חשיבה ביקורתית ויצירתית, פתרון בעיות, עבודת צוות, תקשורת בין-אישית, הצגת רעיונות, אוריינות מדעית, טכנולוגית ודיגיטלית, יוזמה, אחריות, גמישות, התמדה ולמידה עצמאית. לצד אלה הן מעודדות סקרנות ומוטיבציה ללמידה, מחזקות את תחושת המסוגלות, החוסן האישי ומאפשרות לתלמידים לגלות את יכולותיהם, להתמודד עם אתגרים ולראות אפשרויות חדשות לעתידם.</p>
-
-            <p>תעשיידע פועלת מתוך שליחות ציבורית, חברתית ולאומית להרחבת הזדמנויות חינוכיות, להנגשת ידע ועולמות תוכן מתקדמים ולחיזוק החיבור בין חינוך, השכלה, הכשרה ותעסוקה. חזון העמותה הוא לאפשר לכל תלמידה ותלמיד להכיר את עולמות התעשייה והטכנולוגיה, להתנסות בעשייה חדשנית ולפתח ידע, כלים ומיומנויות שיסייעו להם להשתלב, להתפתח ולהוביל בעולם המשתנה.</p>
-
-            <p>הקשר לתעשייה הוא מרכיב מרכזי בזהותה ובפעילותה של תעשיידע. העמותה פועלת בשיתוף חברות תעשייה והייטק, מפעלים, אנשי מקצוע, רשויות מקומיות, קרנות ותורמים ומחברת בינם לבין בתי ספר וקהילות ברחבי הארץ.</p>
-
-            <p>שיתופי פעולה אלה מאפשרים לשלב בתוכניות ידע מקצועי עדכני, טכנולוגיות מתקדמות, אתגרים מהשטח ותהליכי עבודה מעולם העשייה. החיבור בין מערכת החינוך, התעשייה, הרשויות והקהילה מאפשר לתעשיידע לקדם עשייה חינוכית רלוונטית, מעשית ובעלת השפעה ולהרחיב את ההזדמנויות העומדות בפני תלמידות ותלמידים ברחבי הארץ.</p>
+  <main class="page">
+    <div class="page-inner">
+      <header class="header">
+        <div class="brand">
+          <img src="../logo.png" alt="לוגו תעשיידע">
+          <div class="brand-text">
+            <strong>תעשיידע</strong>
+            <span>תעשייה למען חינוך מתקדם</span>
           </div>
         </div>
+        <div class="header-note">חינוך · תעשייה · חדשנות</div>
+      </header>
 
-        <aside class="hero-side" aria-label="תמצית פעילות העמותה">
-          <small>מאז 1992</small>
-          <strong>חינוך שפוגש תעשייה, טכנולוגיה וחדשנות</strong>
-          <span>תוכניות תהליכיות מבית הספר היסודי ועד התיכון, בפריסה ארצית ובחיבור לעולם העשייה.</span>
-        </aside>
-      </div>
-    </section>
+      <section class="intro" aria-labelledby="about-title">
+        <p class="section-label">אודות העמותה</p>
+        <h1 id="about-title">מי אנחנו</h1>
 
-    <section class="programs-section" id="programs" aria-labelledby="programs-title">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">התוכניות החינוכיות</span>
-          <h2 class="section-title" id="programs-title">תקציר התוכניות החינוכיות של תעשיידע</h2>
+        <p>עמותת תעשיידע הוקמה בשנת 1992 מיסודה של התאחדות התעשיינים בישראל, במטרה ליצור חיבור משמעותי בין מערכת החינוך לבין עולמות התעשייה. מאז הקמתה פועלת העמותה בפריסה ארצית ומקדמת תוכניות חינוכיות עבור תלמידות ותלמידים מבית הספר היסודי ועד התיכון.</p>
+
+        <p>תעשיידע מפתחת ומפעילה תוכניות חינוכיות תהליכיות אשר מקנות לתלמידים כלים ומיומנויות החיוניים לעולם המשתנה ובהם חשיבה ביקורתית ויצירתית, פתרון בעיות, עבודת צוות, תקשורת בין-אישית, הצגת רעיונות, אוריינות מדעית, טכנולוגית ודיגיטלית, יוזמה, אחריות, גמישות, התמדה ולמידה עצמאית. לצד אלה הן מעודדות סקרנות ומוטיבציה ללמידה, מחזקות את תחושת המסוגלות, החוסן האישי ומאפשרות לתלמידים לגלות את יכולותיהם, להתמודד עם אתגרים ולראות אפשרויות חדשות לעתידם.</p>
+
+        <p>תעשיידע פועלת מתוך שליחות ציבורית, חברתית ולאומית להרחבת הזדמנויות חינוכיות, להנגשת ידע ועולמות תוכן מתקדמים ולחיזוק החיבור בין חינוך, השכלה, הכשרה ותעסוקה. חזון העמותה הוא לאפשר לכל תלמידה ותלמיד להכיר את עולמות התעשייה והטכנולוגיה, להתנסות בעשייה חדשנית ולפתח ידע, כלים ומיומנויות שיסייעו להם להשתלב, להתפתח ולהוביל בעולם המשתנה.</p>
+
+        <p>הקשר לתעשייה הוא מרכיב מרכזי בזהותה ובפעילותה של תעשיידע. העמותה פועלת בשיתוף חברות תעשייה והייטק, מפעלים, אנשי מקצוע, רשויות מקומיות, קרנות ותורמים ומחברת בינם לבין בתי ספר וקהילות ברחבי הארץ.</p>
+
+        <p>שיתופי פעולה אלה מאפשרים לשלב בתוכניות ידע מקצועי עדכני, טכנולוגיות מתקדמות, אתגרים מהשטח ותהליכי עבודה מעולם העשייה. החיבור בין מערכת החינוך, התעשייה, הרשויות והקהילה מאפשר לתעשיידע לקדם עשייה חינוכית רלוונטית, מעשית ובעלת השפעה ולהרחיב את ההזדמנויות העומדות בפני תלמידות ותלמידים ברחבי הארץ.</p>
+      </section>
+
+      <section class="programs" aria-labelledby="programs-title">
+        <div class="programs-head">
+          <p class="section-label">התוכניות החינוכיות</p>
+          <h2 id="programs-title">תקציר התוכניות החינוכיות של תעשיידע</h2>
           <p>תוכניות תעשיידע מיועדות לתלמידות ולתלמידים מבית הספר היסודי ועד התיכון ומותאמות לשכבת הגיל, לרמת הידע ולמאפייני הקבוצה.</p>
           <p>כל התוכניות מבוססות על תהליך למידה פעיל והתנסותי ומקנות כלים ומיומנויות בתחומי החשיבה, החקר, פתרון הבעיות, עבודת הצוות, היזמות, היצירתיות והאוריינות המדעית והטכנולוגית.</p>
-        </header>
-
-        <div class="program-grid">
-          <button class="program-card c1" type="button" data-template="program-1" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">יסודי</span>
-              <h3 class="program-name">יזמות ביומימיקרי</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c2" type="button" data-template="program-2" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">יסודי</span>
-              <h3 class="program-name">מנהיגות ירוקה</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c3" type="button" data-template="program-3" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">יסודי</span>
-              <h3 class="program-name">טכנולוגיות החלל</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c4" type="button" data-template="program-4" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">חטיבה</span>
-              <h3 class="program-name">בינה מלאכותית</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c5" type="button" data-template="program-5" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">חטיבות</span>
-              <h3 class="program-name">יזמות פרימיום</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c6" type="button" data-template="program-6" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">חטיבות</span>
-              <h3 class="program-name">פורצות דרך</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c7" type="button" data-template="program-7" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">חטיבות</span>
-              <h3 class="program-name">יישומי AI</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c8" type="button" data-template="program-8" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">חטיבות</span>
-              <h3 class="program-name">ביומימיקרי לחטיבה</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
-
-          <button class="program-card c9" type="button" data-template="program-9" aria-haspopup="dialog">
-            <div class="program-card-top">
-              <span class="age-badge">חטיבות</span>
-              <h3 class="program-name">רוקחים עולם</h3>
-            </div>
-            <span class="open-label">לפרטי התוכנית</span>
-          </button>
         </div>
-      </div>
-    </section>
+
+        <div class="program-grid" id="programGrid"></div>
+        <p class="hint">לחצו על תוכנית לצפייה בפרטים המלאים</p>
+      </section>
+
+      <footer class="footer">
+        <strong>תעשיידע – תעשייה למען חינוך מתקדם</strong>
+        <span>מאז 1992</span>
+      </footer>
+    </div>
   </main>
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <strong>תעשיידע – תעשייה למען חינוך מתקדם</strong>
-      <span>מחברים בין חינוך, תעשייה ועולם המחר</span>
-    </div>
-  </footer>
-
-  <div class="modal-overlay" id="programModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-    <div class="modal" tabindex="-1">
-      <div class="modal-head">
-        <button class="modal-close" id="modalClose" type="button" aria-label="סגירת פרטי התוכנית">×</button>
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <article class="modal">
+      <button class="modal-close" id="modalClose" type="button" aria-label="סגירת החלון">×</button>
+      <div class="modal-header">
+        <span class="modal-age" id="modalAge"></span>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <div class="modal-meta" id="modalMeta"></div>
       </div>
-      <div class="modal-content" id="modalContent"></div>
-    </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
   </div>
 
-  <template id="program-1">
-    <span class="modal-age">יסודי</span>
-    <h2 id="modalTitle">ביומימיקרי – המצאות בהשראת הטבע</h2>
-    <div class="modal-meta">מספר גפ״ן: 6089 | כיתות ד׳–ו׳ | 10 מפגשים</div>
-    <p>תוכנית ביומימיקרי חושפת את התלמידים לעולם שבו הטבע משמש מקור השראה לפיתוח המצאות ופתרונות טכנולוגיים. התלמידים מתבוננים באורגניזמים, חוקרים תכונות, מבנים ומנגנונים טבעיים ולומדים כיצד ניתן לתרגם עיקרון מן הטבע לפתרון הנותן מענה לצורך אנושי.</p>
-    <p>התוכנית מחברת בין מדע, סביבה, טכנולוגיה וחשיבה הנדסית ומובילה את התלמידים מתהליך של סקרנות וחקר לפיתוח רעיון יישומי. כך הם לומדים לזהות בטבע מקור עשיר של ידע, חדשנות ופתרונות אחראיים.</p>
-  </template>
-
-  <template id="program-2">
-    <span class="modal-age">יסודי</span>
-    <h2 id="modalTitle">מנהיגות ירוקה – אחריות סביבתית ויזמות ירוקה</h2>
-    <div class="modal-meta">מספר גפ״ן: 67867 | כיתות ד׳–ו׳ | 10 מפגשים</div>
-    <p>מנהיגות ירוקה היא תוכנית המשלבת קיימות, יזמות, טכנולוגיה וחשיבה סביבתית.</p>
-    <p>התלמידים חוקרים אתגר סביבתי מחיי היום-יום, בוחנים את הגורמים המשפיעים עליו, אוספים מידע, מכירים פתרונות קיימים ומפתחים רעיון יזמי בעל ערך לבית הספר, לקהילה ולסביבה.</p>
-    <p>התהליך מחבר בין אחריות סביבתית, שימוש מושכל בכלים דיגיטליים ויכולת להוביל שינוי. באמצעות עבודת צוות, חקר, תכנון והצגת פתרון, התלמידים לומדים כי גם פעולה מקומית יכולה ליצור השפעה משמעותית.</p>
-  </template>
-
-  <template id="program-3">
-    <span class="modal-age">יסודי</span>
-    <h2 id="modalTitle">טכנולוגיות החלל – חדשנות טכנולוגית בהשראת החלל</h2>
-    <div class="modal-meta">מספר גפ״ן: 57651 | כיתות ד׳–ו׳ | 9 מפגשים</div>
-    <p>תוכנית טכנולוגיות החלל מחברת בין הסקרנות הטבעית של התלמידים כלפי החלל לבין ההבנה שאתגרים מחוץ לכדור הארץ מובילים לפיתוח פתרונות שימושיים בחיי היום-יום.</p>
-    <p>התלמידים נחשפים לתנאי החיים בסביבה קיצונית, לאתגרים העומדים בפני אסטרונאוטים ולמושגים של ספין-אוף והעברה טכנולוגית. הם חוקרים כיצד ידע מדעי וטכנולוגיות שפותחו עבור משימות חלל הופכים למוצרים וליישומים בכדור הארץ.</p>
-    <p>התוכנית מציגה את החלל כמקור השראה לחדשנות ולא רק כנושא מדעי רחוק ומחברת בין חקר, טכנולוגיה, חשיבה הנדסית והמציאות הקרובה לחיי התלמידים.</p>
-  </template>
-
-  <template id="program-4">
-    <span class="modal-age">חטיבה</span>
-    <h2 id="modalTitle">סודות ויסודות הבינה המלאכותית</h2>
-    <div class="modal-meta">מספר גפ״ן: 9545 | כיתות ז׳–ח׳ | 8 מפגשים</div>
-    <p>תוכנית סודות ויסודות הבינה המלאכותית מזמינה את התלמידים להכיר את עולם ה-AI באמצעות התנסות מעשית, חקר וחשיבה ביקורתית.</p>
-    <p>הלמידה משלבת היכרות עם כלי בינה מלאכותית עדכניים, ניסוח הנחיות ופרומפטים, למידת מכונה, ראייה ממוחשבת, יצירת תוכן ושאלות של אתיקה, אמינות ואחריות.</p>
-    <p>לאורך התוכנית התלמידים בונים מאגר כלים, עובדים בקבוצות, מפתחים רעיון לפרויקט גמר ומציגים תוצר מסכם. התוכנית מדגישה כי בינה מלאכותית אינה רק כלי טכנולוגי, אלא מרחב המחייב בחירה מושכלת, יצירתיות ואחריות.</p>
-  </template>
-
-  <template id="program-5">
-    <span class="modal-age">חטיבות</span>
-    <h2 id="modalTitle">אופק יזמות פרימיום לתעשייה – מיומנויות העתיד</h2>
-    <div class="modal-meta">מספר גפ״ן: 52279 | כיתות ז׳–י׳ | 12 מפגשים</div>
-    <p>תוכנית אופק יזמות פרימיום לתעשייה מכניסה את התלמידים למסגרת המדמה אקסלרטור תעשייתי ופועלת בשיתוף חברה או ארגון מאמץ.</p>
-    <p>מתוך היכרות עם העולם המקצועי, התלמידים בוחנים אתגר אמיתי, מזהים צורך, מגדירים קהל יעד, חוקרים פתרונות קיימים ומשווים בין כיווני פעולה אפשריים. בהמשך הם מגבשים פתרון רעיוני ומפתחים הצעת ערך ברורה.</p>
-    <p>החברה המאמצת מעניקה לתלמידים הקשר מציאותי, ידע מקצועי ומשוב ומאפשרת להם להבין כיצד רעיון מתפתח בסביבה תעשייתית בתהליך מדורג, אחראי ומחובר לצורכי השטח.</p>
-  </template>
-
-  <template id="program-6">
-    <span class="modal-age">חטיבות</span>
-    <h2 id="modalTitle">פורצות דרך קדימה - תוכנית יזמות טכנולוגית מעצימה</h2>
-    <div class="modal-meta">מספר גפ״ן: 3604 | כיתות ז׳–י׳ | 12 מפגשים</div>
-    <p>פורצות דרך היא תוכנית המחברת בין העצמה אישית, מנהיגות נשית, יזמות טכנולוגית ועקרונות STEM.</p>
-    <p>המשתתפות יוצאות מתוך עולמן האישי, מזהות אתגר מחיי היום-יום, מגדירות צורך וקהל יעד ועוברות תהליך תיכון הנדסי לפיתוח מיזם. במהלך התהליך הן חוקרות את האתגר, מעלות רעיונות, מתכננות פתרון, מקבלות משוב, משפרות את המיזם ומציגות אותו.</p>
-    <p>התוכנית מאפשרת למשתתפות להבין כיצד קול אישי ורעיון ראשוני יכולים להפוך למיזם בעל משמעות ומחזקת תחושות של מסוגלות, בחירה, מנהיגות והשפעה.</p>
-  </template>
-
-  <template id="program-7">
-    <span class="modal-age">חטיבות</span>
-    <h2 id="modalTitle">יישומי הבינה המלאכותית – יישומי AI בתעשייה</h2>
-    <div class="modal-meta">מספר גפ״ן: 53819 | כיתות ז׳–י׳ | 10 מפגשים</div>
-    <p>תוכנית יישומי הבינה המלאכותית חושפת את התלמידים לאופן שבו מערכות AI משנות את תחומי הרפואה, החקלאות, התעשייה, התחבורה, החינוך והסביבה.</p>
-    <p>התלמידים מכירים עקרונות מרכזיים בתחום הבינה המלאכותית, בוחנים מקרי בוחן מהמציאות ודנים בהזדמנויות, בסיכונים ובשאלות של אחריות, אתיקה והשפעה חברתית.</p>
-    <p>באמצעות חקר, עבודה קבוצתית ופיתוח רעיון יישומי, התוכנית מחברת בין טכנולוגיה מתקדמת, חשיבה ביקורתית ויכולת לדמיין ולתכנן פתרונות לעולם המשתנה.</p>
-  </template>
-
-  <template id="program-8">
-    <span class="modal-age">חטיבות</span>
-    <h2 id="modalTitle">ביומימיקרי – חדשנות סביבתית-טכנולוגית בהשראת הטבע</h2>
-    <div class="modal-meta">מספר גפ״ן: 53828 | כיתות ז׳–י׳ | 10 מפגשים</div>
-    <p>תוכנית ביומימיקרי לחטיבות הביניים ולתיכון מלמדת כיצד הטבע יכול לשמש מקור השראה לפיתוח חדשנות טכנולוגית ומקיימת.</p>
-    <p>התהליך מתחיל בהתבוננות במבנים, במערכות ובמנגנונים טבעיים, ממשיך בחקר בסביבה הקרובה, באיסוף מידע ובניתוח העיקרון הביולוגי ומתקדם לפיתוח יישום טכנולוגי הנותן מענה לאתגר אנושי או סביבתי.</p>
-    <p>התלמידים לומדים לראות בטבע מערכת עשירה של ידע תכנוני ולחבר בין חקר מדעי, קיימות, חשיבה הנדסית ופיתוח פתרונות בעלי ערך מעשי.</p>
-  </template>
-
-  <template id="program-9">
-    <span class="modal-age">חטיבות</span>
-    <h2 id="modalTitle">רוקחים עולם – יזמות לעולם הפרמצבטיקה</h2>
-    <div class="modal-meta">מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים</div>
-    <p>תוכנית רוקחים עולם מכניסה את התלמידים לעולמות הפרמצבטיקה, מדעי החיים והרפואה באמצעות תהליך יזמי המדמה פיתוח של מוצר רפואי.</p>
-    <p>המשתתפים חוקרים מחלה, צורך רפואי או אתגר בריאותי, מגדירים קהל יעד ובונים פרסונה. בהמשך הם מגבשים פתרון, בוחנים היבטים מדעיים, טכנולוגיים ועסקיים, מתייעצים עם מומחים ומפתחים דגם, פוסטר ומצגת.</p>
-    <p>התהליך מסתיים בהצגת המיזם בפני קהל ומחזק את יכולת התלמידים לחקור, לתכנן, לעבוד בצוות ולהציג רעיון מקצועי באופן בהיר ומשכנע.</p>
-  </template>
-
   <script>
-    const overlay = document.getElementById('programModal');
-    const modal = overlay.querySelector('.modal');
-    const modalContent = document.getElementById('modalContent');
-    const closeButton = document.getElementById('modalClose');
-    let activeTrigger = null;
+    const programs = [
+      {
+        short: "יזמות ביומימיקרי",
+        age: "יסודי",
+        ageClass: "elementary",
+        title: "ביומימיקרי – המצאות בהשראת הטבע",
+        meta: "מספר גפ\"ן: 6089 | כיתות ד׳–ו׳ | 10 מפגשים",
+        paragraphs: [
+          "תוכנית ביומימיקרי חושפת את התלמידים לעולם שבו הטבע משמש מקור השראה לפיתוח המצאות ופתרונות טכנולוגיים. התלמידים מתבוננים באורגניזמים, חוקרים תכונות, מבנים ומנגנונים טבעיים ולומדים כיצד ניתן לתרגם עיקרון מן הטבע לפתרון הנותן מענה לצורך אנושי.",
+          "התוכנית מחברת בין מדע, סביבה, טכנולוגיה וחשיבה הנדסית ומובילה את התלמידים מתהליך של סקרנות וחקר לפיתוח רעיון יישומי. כך הם לומדים לזהות בטבע מקור עשיר של ידע, חדשנות ופתרונות אחראיים."
+        ]
+      },
+      {
+        short: "מנהיגות ירוקה",
+        age: "יסודי",
+        ageClass: "elementary",
+        title: "מנהיגות ירוקה – אחריות סביבתית ויזמות ירוקה",
+        meta: "מספר גפ\"ן: 67867 | כיתות ד׳–ו׳ | 10 מפגשים",
+        paragraphs: [
+          "מנהיגות ירוקה היא תוכנית המשלבת קיימות, יזמות, טכנולוגיה וחשיבה סביבתית.",
+          "התלמידים חוקרים אתגר סביבתי מחיי היום-יום, בוחנים את הגורמים המשפיעים עליו, אוספים מידע, מכירים פתרונות קיימים ומפתחים רעיון יזמי בעל ערך לבית הספר, לקהילה ולסביבה.",
+          "התהליך מחבר בין אחריות סביבתית, שימוש מושכל בכלים דיגיטליים ויכולת להוביל שינוי. באמצעות עבודת צוות, חקר, תכנון והצגת פתרון, התלמידים לומדים כי גם פעולה מקומית יכולה ליצור השפעה משמעותית."
+        ]
+      },
+      {
+        short: "טכנולוגיות החלל",
+        age: "יסודי",
+        ageClass: "elementary",
+        title: "טכנולוגיות החלל – חדשנות טכנולוגית בהשראת החלל",
+        meta: "מספר גפ\"ן: 57651 | כיתות ד׳–ו׳ | 9 מפגשים",
+        paragraphs: [
+          "תוכנית טכנולוגיות החלל מחברת בין הסקרנות הטבעית של התלמידים כלפי החלל לבין ההבנה שאתגרים מחוץ לכדור הארץ מובילים לפיתוח פתרונות שימושיים בחיי היום-יום.",
+          "התלמידים נחשפים לתנאי החיים בסביבה קיצונית, לאתגרים העומדים בפני אסטרונאוטים ולמושגים של ספין-אוף והעברה טכנולוגית. הם חוקרים כיצד ידע מדעי וטכנולוגיות שפותחו עבור משימות חלל הופכים למוצרים וליישומים בכדור הארץ.",
+          "התוכנית מציגה את החלל כמקור השראה לחדשנות ולא רק כנושא מדעי רחוק ומחברת בין חקר, טכנולוגיה, חשיבה הנדסית והמציאות הקרובה לחיי התלמידים."
+        ]
+      },
+      {
+        short: "בינה מלאכותית",
+        age: "חטיבה",
+        ageClass: "secondary",
+        title: "סודות ויסודות הבינה המלאכותית",
+        meta: "מספר גפ\"ן: 9545 | כיתות ז׳–ח׳ | 8 מפגשים",
+        paragraphs: [
+          "תוכנית סודות ויסודות הבינה המלאכותית מזמינה את התלמידים להכיר את עולם ה-AI באמצעות התנסות מעשית, חקר וחשיבה ביקורתית.",
+          "הלמידה משלבת היכרות עם כלי בינה מלאכותית עדכניים, ניסוח הנחיות ופרומפטים, למידת מכונה, ראייה ממוחשבת, יצירת תוכן ושאלות של אתיקה, אמינות ואחריות.",
+          "לאורך התוכנית התלמידים בונים מאגר כלים, עובדים בקבוצות, מפתחים רעיון לפרויקט גמר ומציגים תוצר מסכם. התוכנית מדגישה כי בינה מלאכותית אינה רק כלי טכנולוגי, אלא מרחב המחייב בחירה מושכלת, יצירתיות ואחריות."
+        ]
+      },
+      {
+        short: "יזמות פרימיום",
+        age: "חטיבה",
+        ageClass: "secondary",
+        title: "אופק יזמות פרימיום לתעשייה – מיומנויות העתיד",
+        meta: "מספר גפ\"ן: 52279 | כיתות ז׳–י׳ | 12 מפגשים",
+        paragraphs: [
+          "תוכנית אופק יזמות פרימיום לתעשייה מכניסה את התלמידים למסגרת המדמה אקסלרטור תעשייתי ופועלת בשיתוף חברה או ארגון מאמץ.",
+          "מתוך היכרות עם העולם המקצועי, התלמידים בוחנים אתגר אמיתי, מזהים צורך, מגדירים קהל יעד, חוקרים פתרונות קיימים ומשווים בין כיווני פעולה אפשריים. בהמשך הם מגבשים פתרון רעיוני ומפתחים הצעת ערך ברורה.",
+          "החברה המאמצת מעניקה לתלמידים הקשר מציאותי, ידע מקצועי ומשוב ומאפשרת להם להבין כיצד רעיון מתפתח בסביבה תעשייתית בתהליך מדורג, אחראי ומחובר לצורכי השטח."
+        ]
+      },
+      {
+        short: "פורצות דרך",
+        age: "חטיבה",
+        ageClass: "secondary",
+        title: "פורצות דרך קדימה – תוכנית יזמות טכנולוגית מעצימה",
+        meta: "מספר גפ\"ן: 3604 | כיתות ז׳–י׳ | 12 מפגשים",
+        paragraphs: [
+          "פורצות דרך היא תוכנית המחברת בין העצמה אישית, מנהיגות נשית, יזמות טכנולוגית ועקרונות STEM.",
+          "המשתתפות יוצאות מתוך עולמן האישי, מזהות אתגר מחיי היום-יום, מגדירות צורך וקהל יעד ועוברות תהליך תיכון הנדסי לפיתוח מיזם. במהלך התהליך הן חוקרות את האתגר, מעלות רעיונות, מתכננות פתרון, מקבלות משוב, משפרות את המיזם ומציגות אותו.",
+          "התוכנית מאפשרת למשתתפות להבין כיצד קול אישי ורעיון ראשוני יכולים להפוך למיזם בעל משמעות ומחזקת תחושות של מסוגלות, בחירה, מנהיגות והשפעה."
+        ]
+      },
+      {
+        short: "יישומי AI",
+        age: "חטיבה",
+        ageClass: "secondary",
+        title: "יישומי הבינה המלאכותית – יישומי AI בתעשייה",
+        meta: "מספר גפ\"ן: 53819 | כיתות ז׳–י׳ | 10 מפגשים",
+        paragraphs: [
+          "תוכנית יישומי הבינה המלאכותית חושפת את התלמידים לאופן שבו מערכות AI משנות את תחומי הרפואה, החקלאות, התעשייה, התחבורה, החינוך והסביבה.",
+          "התלמידים מכירים עקרונות מרכזיים בתחום הבינה המלאכותית, בוחנים מקרי בוחן מהמציאות ודנים בהזדמנויות, בסיכונים ובשאלות של אחריות, אתיקה והשפעה חברתית.",
+          "באמצעות חקר, עבודה קבוצתית ופיתוח רעיון יישומי, התוכנית מחברת בין טכנולוגיה מתקדמת, חשיבה ביקורתית ויכולת לדמיין ולתכנן פתרונות לעולם המשתנה."
+        ]
+      },
+      {
+        short: "ביומימיקרי לחטיבה",
+        age: "חטיבה",
+        ageClass: "secondary",
+        title: "ביומימיקרי – חדשנות סביבתית-טכנולוגית בהשראת הטבע",
+        meta: "מספר גפ\"ן: 53828 | כיתות ז׳–י׳ | 10 מפגשים",
+        paragraphs: [
+          "תוכנית ביומימיקרי לחטיבות הביניים ולתיכון מלמדת כיצד הטבע יכול לשמש מקור השראה לפיתוח חדשנות טכנולוגית ומקיימת.",
+          "התהליך מתחיל בהתבוננות במבנים, במערכות ובמנגנונים טבעיים, ממשיך בחקר בסביבה הקרובה, באיסוף מידע ובניתוח העיקרון הביולוגי ומתקדם לפיתוח יישום טכנולוגי הנותן מענה לאתגר אנושי או סביבתי.",
+          "התלמידים לומדים לראות בטבע מערכת עשירה של ידע תכנוני ולחבר בין חקר מדעי, קיימות, חשיבה הנדסית ופיתוח פתרונות בעלי ערך מעשי."
+        ]
+      },
+      {
+        short: "רוקחים עולם",
+        age: "חטיבה",
+        ageClass: "secondary",
+        title: "רוקחים עולם – יזמות לעולם הפרמצבטיקה",
+        meta: "מספר גפ\"ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים",
+        paragraphs: [
+          "תוכנית רוקחים עולם מכניסה את התלמידים לעולמות הפרמצבטיקה, מדעי החיים והרפואה באמצעות תהליך יזמי המדמה פיתוח של מוצר רפואי.",
+          "המשתתפים חוקרים מחלה, צורך רפואי או אתגר בריאותי, מגדירים קהל יעד ובונים פרסונה. בהמשך הם מגבשים פתרון, בוחנים היבטים מדעיים, טכנולוגיים ועסקיים, מתייעצים עם מומחים ומפתחים דגם, פוסטר ומצגת.",
+          "התהליך מסתיים בהצגת המיזם בפני קהל ומחזק את יכולת התלמידים לחקור, לתכנן, לעבוד בצוות ולהציג רעיון מקצועי באופן בהיר ומשכנע."
+        ]
+      }
+    ];
 
-    function openProgram(templateId, trigger) {
-      const template = document.getElementById(templateId);
-      if (!template) return;
+    const grid = document.getElementById("programGrid");
+    const overlay = document.getElementById("modalOverlay");
+    const closeButton = document.getElementById("modalClose");
+    const modalAge = document.getElementById("modalAge");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalBody = document.getElementById("modalBody");
+    let lastFocused = null;
 
-      activeTrigger = trigger;
-      modalContent.replaceChildren(template.content.cloneNode(true));
-      overlay.classList.add('is-open');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('modal-open');
-      modal.scrollTop = 0;
+    programs.forEach((program, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "program-card";
+      button.setAttribute("aria-label", `פתיחת פרטי התוכנית ${program.short}`);
+      button.innerHTML = `
+        <span class="program-name">${program.short}</span>
+        <span class="card-footer">
+          <span class="age-badge ${program.ageClass}">${program.age}</span>
+          <span class="open-mark" aria-hidden="true">+</span>
+        </span>
+      `;
+      button.addEventListener("click", () => openModal(index, button));
+      grid.appendChild(button);
+    });
+
+    function openModal(index, trigger) {
+      const program = programs[index];
+      lastFocused = trigger;
+      modalAge.textContent = program.age;
+      modalAge.className = `modal-age ${program.ageClass}`;
+      modalTitle.textContent = program.title;
+      modalMeta.textContent = program.meta;
+      modalBody.innerHTML = program.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("");
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
       closeButton.focus();
     }
 
-    function closeProgram() {
-      overlay.classList.remove('is-open');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('modal-open');
-      modalContent.replaceChildren();
-      if (activeTrigger) activeTrigger.focus();
-      activeTrigger = null;
+    function closeModal() {
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      if (lastFocused) lastFocused.focus();
     }
 
-    document.querySelectorAll('.program-card').forEach(card => {
-      card.addEventListener('click', () => openProgram(card.dataset.template, card));
+    closeButton.addEventListener("click", closeModal);
+
+    overlay.addEventListener("click", event => {
+      if (event.target === overlay) closeModal();
     });
 
-    closeButton.addEventListener('click', closeProgram);
-
-    overlay.addEventListener('click', event => {
-      if (event.target === overlay) closeProgram();
-    });
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
-        closeProgram();
-      }
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && overlay.classList.contains("open")) closeModal();
     });
   </script>
 </body>
