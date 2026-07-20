@@ -134,7 +134,7 @@ const modalTitle = document.getElementById('modalTitle');
 const modalMeta = document.getElementById('modalMeta');
 const modalPrice = document.getElementById('modalPrice');
 const modalPdf = document.getElementById('modalPdf');
-const modalBody = document.getElementById('modalBody');
+const modalSummary = document.getElementById('modalSummary');
 
 programs.forEach((program, index) => {
   const card = document.createElement('button');
@@ -161,8 +161,8 @@ function openModal(index) {
   modalMeta.textContent = program.meta;
   modalPrice.textContent = program.price;
   modalPdf.href = program.pdf;
-  modalPdf.setAttribute('aria-label', `פתיחת קובץ PDF של ${program.shortName}`);
-  modalBody.innerHTML = program.paragraphs.map(p => `<p>${p}</p>`).join('');
+  modalPdf.setAttribute('aria-label', `פתיחת פרטי התוכנית והסילבוס המלאים של ${program.shortName}`);
+  modalSummary.innerHTML = program.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('');
   overlay.classList.add('open');
   overlay.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
