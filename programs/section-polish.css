@@ -1,0 +1,47 @@
+.section + .section{
+  margin-top:20px;
+  padding-top:20px;
+  border-top:none;
+}
+
+.title-mark{
+  width:92px;
+  height:3px;
+  margin:0 auto 10px;
+}
+
+.hint{
+  margin:10px 0 0;
+  color:#91a0ab;
+  font-size:.74rem;
+  font-weight:500;
+  line-height:1.35;
+  text-align:center;
+}
+
+.hint + .program-grid{
+  margin-top:10px;
+}
+
+@media (max-width:760px){
+  .section + .section{
+    margin-top:18px;
+    padding-top:18px;
+  }
+
+  .title-mark{
+    width:82px;
+    height:3px;
+    margin-bottom:9px;
+  }
+
+  .hint{
+    margin-top:8px;
+    font-size:.69rem;
+    color:#98a5af;
+  }
+
+  .hint + .program-grid{
+    margin-top:9px;
+  }
+}
