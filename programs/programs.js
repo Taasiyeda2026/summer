@@ -3,7 +3,8 @@ const programs = [
     shortName: 'יזמות ביומימיקרי',
     badge: 'יסודי',
     badgeClass: 'elementary',
-    fullTitle: 'ביומימיקרי – המצאות בהשראת הטבע',
+    title: 'ביומימיקרי',
+    subtitle: 'המצאות בהשראת הטבע',
     meta: 'מספר גפ״ן: 6089 | כיתות ד׳–ו׳ | 10 מפגשים',
     price: 'עלות לקבוצה: 9,500 ש״ח',
     pdf: './pdfs/6089.pdf',
@@ -16,7 +17,8 @@ const programs = [
     shortName: 'מנהיגות ירוקה',
     badge: 'יסודי',
     badgeClass: 'elementary',
-    fullTitle: 'מנהיגות ירוקה – אחריות סביבתית ויזמות ירוקה',
+    title: 'מנהיגות ירוקה',
+    subtitle: 'אחריות סביבתית ויזמות ירוקה',
     meta: 'מספר גפ״ן: 67867 | כיתות ד׳–ו׳ | 10 מפגשים',
     price: 'עלות לקבוצה: 9,500 ש״ח',
     pdf: './pdfs/67867.pdf',
@@ -30,7 +32,8 @@ const programs = [
     shortName: 'טכנולוגיות החלל',
     badge: 'יסודי',
     badgeClass: 'elementary',
-    fullTitle: 'טכנולוגיות החלל – חדשנות טכנולוגית בהשראת החלל',
+    title: 'טכנולוגיות החלל',
+    subtitle: 'חדשנות טכנולוגית בהשראת החלל',
     meta: 'מספר גפ״ן: 57651 | כיתות ד׳–ו׳ | 9 מפגשים',
     price: 'עלות לקבוצה: 9,000 ש״ח',
     pdf: './pdfs/57651.pdf',
@@ -44,7 +47,8 @@ const programs = [
     shortName: 'בינה מלאכותית',
     badge: 'חטיבה',
     badgeClass: 'secondary',
-    fullTitle: 'סודות ויסודות הבינה המלאכותית',
+    title: 'בינה מלאכותית',
+    subtitle: 'סודות ויסודות הבינה המלאכותית',
     meta: 'מספר גפ״ן: 9545 | כיתות ז׳–ח׳ | 8 מפגשים',
     price: 'עלות לקבוצה: 8,000 ש״ח',
     pdf: './pdfs/9545.pdf',
@@ -58,7 +62,8 @@ const programs = [
     shortName: 'יזמות פרימיום',
     badge: 'חטיבות',
     badgeClass: 'secondary',
-    fullTitle: 'אופק יזמות פרימיום לתעשייה – מיומנויות העתיד',
+    title: 'אופק יזמות פרימיום לתעשייה',
+    subtitle: 'מיומנויות העתיד',
     meta: 'מספר גפ״ן: 52279 | כיתות ז׳–י׳ | 12 מפגשים',
     price: 'עלות לקבוצה: 12,000 ש״ח',
     pdf: './pdfs/52279.pdf',
@@ -72,7 +77,8 @@ const programs = [
     shortName: 'פורצות דרך',
     badge: 'חטיבות',
     badgeClass: 'secondary',
-    fullTitle: 'פורצות דרך קדימה – תוכנית יזמות טכנולוגית מעצימה',
+    title: 'פורצות דרך קדימה',
+    subtitle: 'תוכנית יזמות טכנולוגית מעצימה',
     meta: 'מספר גפ״ן: 3604 | כיתות ז׳–י׳ | 12 מפגשים',
     price: 'עלות לקבוצה: 12,000 ש״ח',
     pdf: './pdfs/3604.pdf',
@@ -86,7 +92,8 @@ const programs = [
     shortName: 'יישומי AI',
     badge: 'חטיבות',
     badgeClass: 'secondary',
-    fullTitle: 'יישומי הבינה המלאכותית – יישומי AI בתעשייה',
+    title: 'יישומי הבינה המלאכותית',
+    subtitle: 'יישומי AI בתעשייה',
     meta: 'מספר גפ״ן: 53819 | כיתות ז׳–י׳ | 10 מפגשים',
     price: 'עלות לקבוצה: 9,000 ש״ח',
     pdf: './pdfs/53819.pdf',
@@ -100,7 +107,8 @@ const programs = [
     shortName: 'ביומימיקרי לחטיבה',
     badge: 'חטיבות',
     badgeClass: 'secondary',
-    fullTitle: 'ביומימיקרי – חדשנות סביבתית-טכנולוגית בהשראת הטבע',
+    title: 'ביומימיקרי',
+    subtitle: 'חדשנות סביבתית-טכנולוגית בהשראת הטבע',
     meta: 'מספר גפ״ן: 53828 | כיתות ז׳–י׳ | 10 מפגשים',
     price: 'עלות לקבוצה: 9,500 ש״ח',
     pdf: './pdfs/53828.pdf',
@@ -114,7 +122,8 @@ const programs = [
     shortName: 'רוקחים עולם',
     badge: 'חטיבות',
     badgeClass: 'secondary',
-    fullTitle: 'רוקחים עולם – יזמות לעולם הפרמצבטיקה',
+    title: 'רוקחים עולם',
+    subtitle: 'יזמות לעולם הפרמצבטיקה',
     meta: 'מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים',
     price: 'עלות לקבוצה: 12,000 ש״ח',
     pdf: './pdfs/46091.pdf',
@@ -131,6 +140,7 @@ const overlay = document.getElementById('overlay');
 const closeBtn = document.getElementById('closeBtn');
 const modalBadge = document.getElementById('modalBadge');
 const modalTitle = document.getElementById('modalTitle');
+const modalSubtitle = document.getElementById('modalSubtitle');
 const modalMeta = document.getElementById('modalMeta');
 const modalPrice = document.getElementById('modalPrice');
 const modalPdf = document.getElementById('modalPdf');
@@ -157,7 +167,8 @@ function openModal(index) {
   const program = programs[index];
   modalBadge.className = `badge ${program.badgeClass}`;
   modalBadge.textContent = program.badge;
-  modalTitle.textContent = program.fullTitle;
+  modalTitle.textContent = program.title;
+  modalSubtitle.textContent = program.subtitle;
   modalMeta.textContent = program.meta;
   modalPrice.textContent = program.price;
   modalPdf.href = program.pdf;
