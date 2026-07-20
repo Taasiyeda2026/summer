@@ -133,24 +133,43 @@
 .support-phone input,
 .support-email input{direction:ltr;text-align:left;}
 
-.support-selection-card{display:block;}
+.support-selection-card{
+  display:block;
+  padding:8px 10px;
+}
+
+.support-selection-card .support-card-heading{
+  margin-bottom:5px;
+  padding-bottom:4px;
+}
+
+.support-selection-card .support-label{
+  margin-bottom:2px;
+  font-size:.57rem;
+}
 
 .support-selection-fields{
   display:grid;
   grid-template-columns:minmax(0,1fr) 72px;
-  gap:7px;
+  gap:4px 7px;
   align-items:end;
 }
 
 .support-program{grid-column:1 / -1;}
 .support-groups input{text-align:center;}
 
+.support-selection-card .support-field input,
+.support-selection-card .support-field select{
+  height:28px;
+  font-size:.69rem;
+}
+
 .support-unit-price{
-  min-height:32px;
+  min-height:28px;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:4px 7px;
+  padding:2px 7px;
   border:1px solid #dbe4e9;
   border-radius:7px;
   background:#f7fafb;
@@ -158,17 +177,17 @@
 
 .support-unit-price span{
   color:#81919d;
-  font-size:.52rem;
+  font-size:.5rem;
   font-weight:700;
-  line-height:1.05;
+  line-height:1;
 }
 
 .support-unit-price output{
   margin-top:1px;
   color:#3a5063;
-  font-size:.67rem;
+  font-size:.64rem;
   font-weight:800;
-  line-height:1.1;
+  line-height:1;
 }
 
 .support-summary{
@@ -176,8 +195,8 @@
   align-items:center;
   justify-content:space-between;
   gap:8px;
-  margin-top:7px;
-  padding:7px 8px;
+  margin-top:4px;
+  padding:5px 7px;
   border:1px solid #bad9e1;
   border-radius:8px;
   background:linear-gradient(135deg,#eef9fb,#fffaf4);
@@ -187,16 +206,16 @@
 .support-summary-label{
   display:block;
   color:#627787;
-  font-size:.57rem;
+  font-size:.55rem;
   font-weight:700;
-  line-height:1.15;
+  line-height:1.1;
 }
 
 .support-amount{
   display:block;
   margin:0;
   color:#116b7d;
-  font-size:.98rem;
+  font-size:.9rem;
   font-weight:800;
   line-height:1;
   white-space:nowrap;
@@ -243,10 +262,13 @@
   }
 
   .support-card{padding:10px;}
+  .support-selection-card{padding:9px 10px;}
   .support-fields-grid{gap:7px;}
   .support-field input,
   .support-field select{height:34px;font-size:.75rem;}
-  .support-unit-price{min-height:34px;}
+  .support-selection-card .support-field input,
+  .support-selection-card .support-field select{height:32px;font-size:.73rem;}
+  .support-unit-price{min-height:32px;}
 }
 
 @media(max-width:520px){
