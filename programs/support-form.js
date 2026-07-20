@@ -12,10 +12,16 @@ function formatShekels(amount) {
   return `${amount.toLocaleString('he-IL')} ₪`;
 }
 
+function formatProgramOption(program) {
+  const programName = program.shortName.replace(/\s+לחטיבה$/, '');
+  const educationLevel = program.badge === 'חטיבות' ? 'חטיבה' : program.badge;
+  return `${programName} | ${educationLevel}`;
+}
+
 programs.forEach((program, index) => {
   const option = document.createElement('option');
   option.value = String(index);
-  option.textContent = program.shortName;
+  option.textContent = formatProgramOption(program);
   option.dataset.price = String(parseProgramPrice(program.price));
   supportProgram.appendChild(option);
 });
