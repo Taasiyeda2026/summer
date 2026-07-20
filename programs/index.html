@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./pdf.css?v=6">
   <link rel="stylesheet" href="./header-compact.css?v=1">
   <link rel="stylesheet" href="./section-polish.css?v=1">
+  <link rel="stylesheet" href="./support-form.css?v=1">
 </head>
 <body>
   <main class="page">
@@ -45,6 +46,65 @@
         <div class="hint">לחצו על כל תוכנית לצפייה בפרטים המלאים</div>
         <div class="program-grid" id="programGrid"></div>
       </section>
+
+      <section class="support-section" aria-labelledby="supportTitle">
+        <div class="support-head">
+          <h2 id="supportTitle">מעוניינים לתמוך בתוכנית?</h2>
+          <p>מלאו את הפרטים וסכום התמיכה יחושב אוטומטית לפי התוכנית ומספר הקבוצות.</p>
+        </div>
+
+        <div class="support-form" role="group" aria-label="פרטי התעניינות בתמיכה בתוכנית">
+          <div class="support-row">
+            <span>אני</span>
+            <label class="support-field support-name">
+              <span class="sr-only">שם מלא</span>
+              <input type="text" id="supportName" name="supportName" placeholder="שם מלא" autocomplete="name">
+            </label>
+            <span>מטעם</span>
+            <label class="support-field support-company">
+              <span class="sr-only">שם החברה או הארגון</span>
+              <input type="text" id="supportCompany" name="supportCompany" placeholder="שם החברה / הארגון" autocomplete="organization">
+            </label>
+            <span>ובתפקיד</span>
+            <label class="support-field support-role">
+              <span class="sr-only">תפקיד</span>
+              <input type="text" id="supportRole" name="supportRole" placeholder="תפקיד" autocomplete="organization-title">
+            </label>
+          </div>
+
+          <div class="support-row">
+            <span>מעוניין/ת לתמוך בתוכנית</span>
+            <label class="support-field support-program">
+              <span class="sr-only">בחירת תוכנית</span>
+              <select id="supportProgram" name="supportProgram">
+                <option value="">בחירת תוכנית</option>
+              </select>
+            </label>
+            <span>עבור</span>
+            <label class="support-field support-groups">
+              <span class="sr-only">מספר קבוצות</span>
+              <input type="number" id="supportGroups" name="supportGroups" value="1" min="1" step="1" inputmode="numeric">
+            </label>
+            <span>קבוצות, בסכום תמיכה מחושב של</span>
+            <output class="support-amount" id="supportAmount" for="supportProgram supportGroups" aria-live="polite">—</output>
+          </div>
+
+          <div class="support-row">
+            <span>ניתן ליצור איתי קשר בטלפון</span>
+            <label class="support-field support-phone">
+              <span class="sr-only">מספר טלפון</span>
+              <input type="tel" id="supportPhone" name="supportPhone" placeholder="מספר טלפון" autocomplete="tel">
+            </label>
+            <span>ובדוא״ל</span>
+            <label class="support-field support-email">
+              <span class="sr-only">כתובת אימייל</span>
+              <input type="email" id="supportEmail" name="supportEmail" placeholder="כתובת אימייל" autocomplete="email">
+            </label>
+          </div>
+
+          <div class="support-note">הסכום מחושב לפי מחיר התוכנית לקבוצה ומספר הקבוצות.</div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -76,5 +136,6 @@
   </div>
 
   <script src="./programs.js?v=7"></script>
+  <script src="./support-form.js?v=1"></script>
 </body>
 </html>
