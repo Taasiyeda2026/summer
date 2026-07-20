@@ -1,0 +1,66 @@
+.modal-tools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.modal-tools .modal-price {
+  margin-top: 0;
+}
+
+.pdf-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 9px 5px;
+  border: 1px solid #d6dee5;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #60717f;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+
+.pdf-link:hover,
+.pdf-link:focus-visible {
+  border-color: #b9c8d2;
+  background: #fff;
+  color: #304b61;
+  outline: none;
+}
+
+.pdf-icon {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 760px) {
+  .modal-tools {
+    gap: 7px;
+    margin-top: 8px;
+  }
+
+  .pdf-link {
+    min-height: 28px;
+    padding: 5px 9px 6px;
+    font-size: 0.72rem;
+  }
+
+  .pdf-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
