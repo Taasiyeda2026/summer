@@ -17,16 +17,6 @@
   text-align:center;
 }
 
-.support-head::before{
-  content:"";
-  display:block;
-  width:58px;
-  height:2px;
-  margin:0 auto 6px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--accent),#52bfd4,var(--accent-2));
-}
-
 .support-head h2{
   margin:0 0 3px;
   font-size:1.18rem;
@@ -252,7 +242,6 @@
   }
 
   .support-head{margin-bottom:10px;}
-  .support-head::before{width:52px;margin-bottom:5px;}
   .support-head h2{font-size:1.05rem;}
   .support-head p{font-size:.68rem;}
 
