@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./pdf.css">
+  <link rel="stylesheet" href="./styles.css?v=5">
+  <link rel="stylesheet" href="./pdf.css?v=5">
 </head>
 <body>
   <main class="page">
@@ -52,23 +52,25 @@
         <div class="modal-badge-wrap"><span id="modalBadge" class="badge"></span></div>
         <h3 class="modal-title" id="modalTitle"></h3>
         <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-summary" id="modalSummary"></div>
         <div class="modal-tools">
           <div class="modal-price" id="modalPrice"></div>
-          <a class="pdf-link" id="modalPdf" href="#" target="_blank" rel="noopener" aria-label="פתיחת קובץ PDF של התוכנית">
+          <a class="pdf-link" id="modalPdf" href="#" target="_blank" rel="noopener" aria-label="פתיחת פרטי התוכנית והסילבוס המלאים">
             <svg class="pdf-icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6 2.75h7.2L18.25 7.8V21.25H6z"></path>
               <path d="M13 2.75V8h5.25"></path>
               <path d="M8.5 16.25h7"></path>
               <path d="M8.5 13.25h7"></path>
             </svg>
-            <span>לצפייה ולהורדה</span>
+            <span>פרטי התוכנית והסילבוס המלאים</span>
           </a>
         </div>
       </div>
-      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 
-  <script src="./programs.js"></script>
+  <script src="./programs.js?v=5"></script>
 </body>
 </html>
