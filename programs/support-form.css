@@ -1,0 +1,203 @@
+.support-section{
+  margin-top:34px;
+  padding:30px 28px 28px;
+  border:1px solid #dbe4e9;
+  border-radius:18px;
+  background:
+    linear-gradient(135deg,rgba(0,167,199,.07),transparent 42%),
+    linear-gradient(315deg,rgba(246,139,31,.07),transparent 38%),
+    #fff;
+  box-shadow:0 10px 26px rgba(31,45,61,.07);
+}
+
+.support-head{
+  max-width:650px;
+  margin:0 auto 22px;
+  text-align:center;
+}
+
+.support-head::before{
+  content:"";
+  display:block;
+  width:92px;
+  height:3px;
+  margin:0 auto 11px;
+  background:linear-gradient(90deg,var(--accent),#52bfd4,var(--accent-2));
+  border-radius:999px;
+}
+
+.support-head h2{
+  margin-bottom:8px;
+  letter-spacing:0;
+}
+
+.support-head p{
+  color:#718391;
+  font-size:.91rem;
+  line-height:1.55;
+}
+
+.support-form{
+  max-width:690px;
+  margin:0 auto;
+  padding:21px 22px;
+  border:1px solid #e1e8ec;
+  border-radius:14px;
+  background:rgba(255,255,255,.88);
+}
+
+.support-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px 7px;
+  color:#34485a;
+  font-size:1rem;
+  line-height:1.7;
+  text-align:center;
+}
+
+.support-row + .support-row{
+  margin-top:14px;
+}
+
+.support-field{
+  display:inline-flex;
+  align-items:center;
+}
+
+.support-field input,
+.support-field select{
+  min-height:38px;
+  border:0;
+  border-bottom:1px solid #aebdc7;
+  border-radius:0;
+  background:transparent;
+  color:#1f2d3d;
+  font:inherit;
+  font-weight:600;
+  text-align:center;
+  outline:none;
+  transition:border-color .16s ease,background .16s ease;
+}
+
+.support-field input::placeholder{
+  color:#9ba8b1;
+  font-weight:500;
+}
+
+.support-field input:focus,
+.support-field select:focus{
+  border-bottom-color:var(--accent);
+  background:rgba(0,167,199,.035);
+}
+
+.support-name input{width:138px;}
+.support-company input{width:165px;}
+.support-role input{width:145px;}
+.support-program select{width:218px;cursor:pointer;}
+.support-groups input{width:62px;}
+.support-phone input{width:138px;direction:ltr;}
+.support-email input{width:196px;direction:ltr;}
+
+.support-amount{
+  display:inline-flex;
+  min-width:112px;
+  min-height:38px;
+  align-items:center;
+  justify-content:center;
+  padding:6px 12px;
+  border:1px solid #bed8df;
+  border-radius:999px;
+  background:#eef9fb;
+  color:#12677a;
+  font-size:1rem;
+  font-weight:800;
+  line-height:1;
+}
+
+.support-note{
+  margin-top:17px;
+  color:#97a4ad;
+  font-size:.72rem;
+  line-height:1.45;
+  text-align:center;
+}
+
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+@media(max-width:760px){
+  .support-section{
+    margin-top:26px;
+    padding:24px 14px 20px;
+    border-radius:15px;
+  }
+
+  .support-head{
+    margin-bottom:18px;
+  }
+
+  .support-head::before{
+    width:82px;
+    margin-bottom:9px;
+  }
+
+  .support-head h2{
+    font-size:1.4rem;
+  }
+
+  .support-head p{
+    font-size:.84rem;
+  }
+
+  .support-form{
+    padding:18px 14px;
+  }
+
+  .support-row{
+    justify-content:flex-start;
+    gap:7px;
+    font-size:.95rem;
+    text-align:right;
+  }
+
+  .support-row + .support-row{
+    margin-top:13px;
+  }
+
+  .support-field{
+    flex:1 1 100%;
+    width:100%;
+  }
+
+  .support-field input,
+  .support-field select{
+    width:100%;
+    min-height:42px;
+    padding-inline:8px;
+    border:1px solid #d6e0e6;
+    border-radius:9px;
+    background:#fff;
+    text-align:right;
+  }
+
+  .support-phone input,
+  .support-email input{
+    text-align:left;
+  }
+
+  .support-amount{
+    min-width:126px;
+  }
+}
