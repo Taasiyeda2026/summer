@@ -1,5 +1,6 @@
 const supportProgram = document.getElementById('supportProgram');
 const supportGroups = document.getElementById('supportGroups');
+const supportUnitPrice = document.getElementById('supportUnitPrice');
 const supportAmount = document.getElementById('supportAmount');
 
 function parseProgramPrice(priceText) {
@@ -22,13 +23,21 @@ programs.forEach((program, index) => {
 function updateSupportAmount() {
   const selectedOption = supportProgram.options[supportProgram.selectedIndex];
   const unitPrice = Number(selectedOption?.dataset.price || 0);
-  const groups = Math.max(0, Number(supportGroups.value || 0));
+  const groups = Number(supportGroups.value || 0);
 
-  supportAmount.textContent = unitPrice && groups
+  supportUnitPrice.textContent = unitPrice ? formatShekels(unitPrice) : '—';
+  supportAmount.textContent = unitPrice && groups > 0
     ? formatShekels(unitPrice * groups)
     : '—';
 }
 
 supportProgram.addEventListener('change', updateSupportAmount);
 supportGroups.addEventListener('input', updateSupportAmount);
+supportGroups.addEventListener('blur', () => {
+  if (!supportGroups.value || Number(supportGroups.value) < 1) {
+    supportGroups.value = '1';
+    updateSupportAmount();
+  }
+});
+
 updateSupportAmount();
