@@ -3,147 +3,291 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="תעשיידע – מרכז התוכניות החינוכיות המחברות בין חינוך, תעשייה, מדע וטכנולוגיה">
-  <title>תעשיידע | מרכז התוכניות</title>
+  <meta name="description" content="מסלולי שותפות חינוכית של תעשיידע לחברות מהתעשייה – השקעה בקהילה, בדור העתיד ובמיומנויות לעולם המשתנה.">
+  <meta name="theme-color" content="#0b2948">
+  <title>תעשיידע | מסלולי שותפות חינוכית לתעשייה</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../programs/styles.css?v=8">
-  <link rel="stylesheet" href="../programs/pdf.css?v=6">
-  <link rel="stylesheet" href="../programs/header-compact.css?v=1">
-  <link rel="stylesheet" href="../programs/section-polish.css?v=1">
-  <link rel="stylesheet" href="../programs/support-form.css?v=3">
-  <link rel="stylesheet" href="../programs/program-grid-polish.css?v=1">
-  <link rel="stylesheet" href="../programs/visual-images.css?v=2">
-  <link rel="stylesheet" href="../programs/redesign.css?v=1">
-  <link rel="stylesheet" href="../programs/compact-tuning.css?v=3">
-  <link rel="stylesheet" href="../programs/inquiry-submit.css?v=1">
+  <link rel="stylesheet" href="./styles.css?v=1">
 </head>
 <body>
-  <main class="page">
-    <header class="header">
-      <a class="brand-lockup" href="#top" aria-label="תעשיידע – חזרה לראש העמוד">
-        <img class="logo" src="../logo.png" alt="תעשיידע">
-        <span class="header-note">תעשייה למען חינוך מתקדם</span>
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="icon-access" viewBox="0 0 24 24"><path d="M12 3v18M4.5 8.5 12 3l7.5 5.5M5 11v7h14v-7M8 18v-4h8v4"/></symbol>
+    <symbol id="icon-skills" viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+    <symbol id="icon-future" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4c2.5 2.4 3.8 5 3.8 8S14.5 17.6 12 20M12 4C9.5 6.4 8.2 9 8.2 12S9.5 17.6 12 20M4 12h16"/></symbol>
+    <symbol id="icon-impact" viewBox="0 0 24 24"><path d="M4 19h16M6 16l4-4 3 2 5-7"/><path d="M15 7h3v3"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/></symbol>
+    <symbol id="icon-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h2a4 4 0 0 0 4-4v-4a4 4 0 0 1 4-4"/></symbol>
+    <symbol id="icon-community" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3.5 19v-2.2A4.8 4.8 0 0 1 8.3 12h1.4a4.8 4.8 0 0 1 4.8 4.8V19M14 13.2h1.2a4.3 4.3 0 0 1 4.3 4.3V19"/></symbol>
+    <symbol id="icon-operate" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="icon-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h4M8 17v-4M12 17V9M16 17v-6"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </svg>
+
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="תעשיידע – חזרה לראש העמוד">
+        <img src="../logo.png" alt="תעשיידע">
+        <span>תעשייה למען חינוך מתקדם</span>
       </a>
-      <nav class="site-nav" aria-label="ניווט ראשי">
-        <a href="#about">אודות</a>
-        <a href="#programs">תוכניות</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="פתיחת התפריט">
+        <svg><use href="#icon-menu"></use></svg>
+      </button>
+      <nav class="main-nav" id="mainNav" aria-label="ניווט ראשי">
+        <a href="#about">מי אנחנו</a>
+        <a href="#partnerships">מסלולים</a>
+        <a href="#process">איך זה עובד</a>
         <a href="#contact">יצירת קשר</a>
       </nav>
-      <a class="header-cta" href="#contact">לקבלת פרטים</a>
-    </header>
+      <a class="header-cta" href="#contact">לתיאום שיחה</a>
+    </div>
+  </header>
 
-    <div class="page-inner">
-      <section class="activity-hero" id="top" aria-label="עשייה חינוכית של תעשיידע">
-        <div class="activity-hero-content">
-          <h1>מחברים בין החינוך לעולמות התעשייה והחדשנות</h1>
-          <p>תוכניות חינוכיות תהליכיות לתלמידות ולתלמידים, המשלבות חקר, התנסות, טכנולוגיה, יזמות ופיתוח מיומנויות לעולם המשתנה.</p>
-          <div class="hero-actions">
-            <a class="hero-cta-primary" href="#programs">לצפייה בתוכניות</a>
-            <a class="hero-cta-secondary" href="#contact">להתאמת תוכנית</a>
+  <main>
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="hero-kicker">שותפות חינוכית עם השפעה בקהילה</p>
+        <h1 id="heroTitle">ההשקעה שלכם.<br>ההזדמנות שלהם.<br>העתיד של כולנו.</h1>
+        <p class="hero-text">תעשיידע מחברת בין מערכת החינוך לעולמות התעשייה, המדע והטכנולוגיה ומאפשרת לחברות להעניק לתלמידות ולתלמידים מהקהילה הזדמנות ללמוד, לחקור, ליצור ולפתח רעיונות לעולם המשתנה.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#partnerships">לבחירת מסלול שותפות</a>
+          <a class="button button-ghost" href="#contact">לתיאום שיחה</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about" aria-labelledby="aboutTitle">
+      <div class="container">
+        <div class="section-heading compact-heading">
+          <p class="eyebrow">מי אנחנו</p>
+          <h2 id="aboutTitle">תעשיידע</h2>
+          <p>תעשיידע היא עמותה ארצית הפועלת משנת 1992 לחיבור בין מערכת החינוך לעולמות התעשייה, המדע, הטכנולוגיה, היזמות והחדשנות. התוכניות שלנו מעניקות לתלמידים למידה פעילה, התנסות מעשית וכלים שיסייעו להם להשתלב, להתפתח ולהוביל בעולם המשתנה.</p>
+        </div>
+        <div class="facts-grid" aria-label="נתונים מרכזיים על תעשיידע">
+          <article class="fact"><strong>משנת 1992</strong><span>עשייה חינוכית מתמשכת</span></article>
+          <article class="fact"><strong>פריסה ארצית</strong><span>תוכניות חינוכיות ברחבי הארץ</span></article>
+          <article class="fact"><strong>יסודי עד תיכון</strong><span>התאמה לקהלים ולמסגרות שונות</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section impact-section" aria-labelledby="impactTitle">
+      <div class="container">
+        <div class="section-heading centered">
+          <p class="eyebrow">השפעה חינוכית מעשית</p>
+          <h2 id="impactTitle">מה התרומה שלכם מאפשרת</h2>
+        </div>
+        <div class="impact-grid">
+          <article class="impact-card">
+            <span class="icon-wrap"><svg><use href="#icon-access"></use></svg></span>
+            <h3>הנגשת הזדמנויות</h3>
+            <p>הפעלת תוכניות חינוכיות מלאות עבור תלמידים מהקהילה.</p>
+          </article>
+          <article class="impact-card">
+            <span class="icon-wrap"><svg><use href="#icon-skills"></use></svg></span>
+            <h3>מיומנויות לעולם המשתנה</h3>
+            <p>חקר, פתרון בעיות, עבודת צוות, יצירתיות, טכנולוגיה והצגת רעיונות.</p>
+          </article>
+          <article class="impact-card">
+            <span class="icon-wrap"><svg><use href="#icon-future"></use></svg></span>
+            <h3>חיבור לעולמות העתיד</h3>
+            <p>חשיפה למדע, חלל, קיימות, בינה מלאכותית, יזמות ותעשייה.</p>
+          </article>
+          <article class="impact-card">
+            <span class="icon-wrap"><svg><use href="#icon-impact"></use></svg></span>
+            <h3>השפעה ברורה ומעשית</h3>
+            <p>כל מסלול מוביל לתהליך חינוכי מלא ולתוצרים שהתלמידים מפתחים ומציגים.</p>
+          </article>
+        </div>
+
+        <aside class="tax-note" aria-label="מידע על הכרה לצורכי מס">
+          <span class="tax-icon"><svg><use href="#icon-check"></use></svg></span>
+          <div><strong>תרומה מוכרת לצורכי מס</strong><p>התרומות לתעשיידע מוכרות לצורכי זיכוי מס בהתאם לאישור העמותה לפי סעיף 46 לפקודת מס הכנסה ומלוות בקבלה כדין.</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section partnerships-section" id="partnerships" aria-labelledby="partnershipsTitle">
+      <div class="container">
+        <div class="section-heading centered partnerships-heading">
+          <p class="eyebrow">חמישה מסלולים לבחירה</p>
+          <h2 id="partnershipsTitle">בוחרים את סוג ההשפעה</h2>
+          <p>אנחנו מציעים לחברות בפארק התעשיות לא רק לתרום לחינוך, אלא לבחור איזו הזדמנות הן רוצות להעניק לילדים ולבני הנוער שגדלים בקהילה שסביבן.</p>
+        </div>
+
+        <div class="partnership-grid">
+          <article class="partnership-card" data-card="inspiration">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-inspiration">
+              <span class="route-number">01</span>
+              <span class="route-label">מסלול השראה</span>
+              <span class="route-description">מימון תוכנית חינוכית מלאה המעניקה לקבוצת תלמידים הזדמנות לחקור, להתנסות ולפתח תוצר בתחום מדעי וטכנולוגי.</span>
+              <span class="route-highlight">תוכנית מלאה עבור קבוצת תלמידים אחת</span>
+              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+            </button>
+            <div class="card-details" id="route-inspiration" hidden>
+              <h3>תוכניות לבחירה</h3>
+              <ul><li>טכנולוגיות החלל</li><li>ביומימיקרי</li><li>מנהיגות ירוקה</li></ul>
+              <p class="detail-note">הפעילות מופעלת באופן מלא על ידי תעשיידע ואינה דורשת מעורבות שוטפת של החברה.</p>
+              <button class="select-route" type="button" data-select-route="מסלול השראה">בחירת מסלול השראה</button>
+            </div>
+          </article>
+
+          <article class="partnership-card" data-card="annual">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-annual">
+              <span class="route-number">02</span>
+              <span class="route-label">מסלול שנתי</span>
+              <span class="route-description">מימון שתי תוכניות חינוכיות לאורך שנת הלימודים ליצירת השפעה רחבה ומתמשכת יותר.</span>
+              <span class="route-highlight">שני תהליכים חינוכיים לאורך השנה</span>
+              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+            </button>
+            <div class="card-details" id="route-annual" hidden>
+              <h3>אפשרויות הפעלה</h3>
+              <ul><li>שתי קבוצות תלמידים</li><li>שני בתי ספר</li><li>שני עולמות תוכן</li><li>תוכנית אחת בכל מחצית</li></ul>
+              <p class="detail-note">ניתן לבחור בין תוכניות לתלמידי היסודי לבין תוכניות לבני ובנות נוער. תעשיידע מפעילה את התוכניות במלואן.</p>
+              <button class="select-route" type="button" data-select-route="מסלול שנתי">בחירת מסלול שנתי</button>
+            </div>
+          </article>
+
+          <article class="partnership-card" data-card="empowerment">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-empowerment">
+              <span class="route-number">03</span>
+              <span class="route-label">מסלול העצמה</span>
+              <span class="route-description">מימון תוכנית פורצות דרך לקידום מנהיגות נשית, מסוגלות ויזמות טכנולוגית בקרב נערות.</span>
+              <span class="route-highlight">תוכנית מלאה ומפגש השראה נקודתי</span>
+              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+            </button>
+            <div class="card-details" id="route-empowerment" hidden>
+              <h3>המסלול כולל</h3>
+              <ul><li>תוכנית חינוכית מלאה</li><li>פיתוח מיזם טכנולוגי</li><li>הרצאת השראה או מפגש עם אישה מהתעשייה</li><li>הצגת תוצרים מסכמת</li></ul>
+              <p class="detail-note">מעורבות החברה היא הרצאת אורחת או פגישת השראה נקודתית ולא ליווי שוטף לאורך הקורס.</p>
+              <button class="select-route" type="button" data-select-route="מסלול העצמה">בחירת מסלול העצמה</button>
+            </div>
+          </article>
+
+          <article class="partnership-card" data-card="innovation">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-innovation">
+              <span class="route-number">04</span>
+              <span class="route-label">מסלול חדשנות</span>
+              <span class="route-description">מימון תוכנית מתקדמת החושפת בני ובנות נוער לתחומים הנמצאים בחזית המדע, הטכנולוגיה והתעשייה.</span>
+              <span class="route-highlight">חקר, פיתוח רעיון והצגת תוצר מסכם</span>
+              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+            </button>
+            <div class="card-details" id="route-innovation" hidden>
+              <h3>תוכניות לבחירה</h3>
+              <ul><li>סודות ויסודות הבינה המלאכותית</li><li>יישומי הבינה המלאכותית</li><li>ביומימיקרי</li><li>רוקחים עולם</li></ul>
+              <p class="detail-note">הפעילות מופעלת באופן מלא על ידי תעשיידע ואינה כוללת מעורבות שוטפת של החברה.</p>
+              <button class="select-route" type="button" data-select-route="מסלול חדשנות">בחירת מסלול חדשנות</button>
+            </div>
+          </article>
+
+          <article class="partnership-card premium-card" data-card="premium">
+            <span class="premium-badge">השותפות המלאה</span>
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-premium">
+              <span class="route-number">05</span>
+              <span class="route-label">מסלול פרימיום תעשייתי</span>
+              <span class="route-description">תוכנית יזמות מתקדמת שבה החברה משתלבת בתהליך ומחברת את התלמידים באופן ישיר לעולם התעשייה.</span>
+              <span class="route-highlight">מעורבות מקצועית של החברה לאורך התוכנית</span>
+              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+            </button>
+            <div class="card-details" id="route-premium" hidden>
+              <h3>המסלול כולל</h3>
+              <ul><li>מפגש פתיחה והיכרות עם החברה</li><li>חשיפה לתחום הפעילות שלה</li><li>הצגת עולם תוכן או אתגר מהתעשייה</li><li>מפגש מנטורינג עם אנשי מקצוע</li><li>משוב מקצועי על המיזמים</li><li>אירוע סיום והצגת התוצרים</li></ul>
+              <p class="detail-note premium-note">זהו המסלול היחיד הכולל מעורבות מקצועית של החברה לאורך התוכנית ולכן הוא מסלול ייחודי ובעל תמחור גבוה יותר.</p>
+              <button class="select-route" type="button" data-select-route="מסלול פרימיום תעשייתי">בחירת מסלול פרימיום</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="comparison-wrap" aria-labelledby="comparisonTitle">
+          <div class="comparison-heading"><p class="eyebrow">מבט מהיר</p><h3 id="comparisonTitle">השוואה בין המסלולים</h3></div>
+          <div class="table-scroll">
+            <table class="comparison-table">
+              <thead><tr><th>מסלול</th><th>מספר תוכניות</th><th>קהל יעד</th><th>מעורבות החברה</th><th>תוצר מרכזי</th></tr></thead>
+              <tbody>
+                <tr><td data-label="מסלול"><strong>השראה</strong></td><td data-label="מספר תוכניות">תוכנית אחת</td><td data-label="קהל יעד">תלמידי יסודי</td><td data-label="מעורבות החברה">ללא מעורבות שוטפת</td><td data-label="תוצר מרכזי">תוצר מדעי או טכנולוגי</td></tr>
+                <tr><td data-label="מסלול"><strong>שנתי</strong></td><td data-label="מספר תוכניות">שתי תוכניות</td><td data-label="קהל יעד">יסודי או חטיבות</td><td data-label="מעורבות החברה">ללא מעורבות שוטפת</td><td data-label="תוצר מרכזי">שני תהליכים חינוכיים</td></tr>
+                <tr><td data-label="מסלול"><strong>העצמה</strong></td><td data-label="מספר תוכניות">תוכנית אחת</td><td data-label="קהל יעד">נערות</td><td data-label="מעורבות החברה">הרצאת אורחת</td><td data-label="תוצר מרכזי">מיזם טכנולוגי</td></tr>
+                <tr><td data-label="מסלול"><strong>חדשנות</strong></td><td data-label="מספר תוכניות">תוכנית אחת</td><td data-label="קהל יעד">בני ובנות נוער</td><td data-label="מעורבות החברה">ללא מעורבות שוטפת</td><td data-label="תוצר מרכזי">פרויקט או אב-טיפוס</td></tr>
+                <tr class="premium-row"><td data-label="מסלול"><strong>פרימיום</strong></td><td data-label="מספר תוכניות">תוכנית אחת מותאמת</td><td data-label="קהל יעד">בני ובנות נוער</td><td data-label="מעורבות החברה">מעורבות מקצועית לאורך התהליך</td><td data-label="תוצר מרכזי">מיזם, אב-טיפוס ופיץ׳</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section intro" id="about">
-        <div class="intro-grid">
-          <div class="intro-copy">
-            <div class="eyebrow">אודות העמותה</div>
-            <h2>תעשיידע</h2>
-            <p class="intro-lead">עמותת תעשיידע הוקמה בשנת 1992 מיסודה של התאחדות התעשיינים בישראל, במטרה ליצור חיבור משמעותי בין מערכת החינוך לבין עולמות התעשייה. מאז הקמתה פועלת העמותה בפריסה ארצית ומקדמת תוכניות חינוכיות עבור תלמידות ותלמידים מבית הספר היסודי ועד התיכון.</p>
-            <p>תעשיידע מפתחת ומפעילה תוכניות חינוכיות תהליכיות אשר מקנות לתלמידים כלים ומיומנויות החיוניים לעולם המשתנה ובהם חשיבה ביקורתית ויצירתית, פתרון בעיות, עבודת צוות, תקשורת בין-אישית, הצגת רעיונות, אוריינות מדעית, טכנולוגית ודיגיטלית, יוזמה, אחריות, גמישות, התמדה ולמידה עצמאית.</p>
-            <details class="intro-more">
-              <summary>קראו עוד</summary>
-              <p>לצד אלה הן מעודדות סקרנות ומוטיבציה ללמידה, מחזקות את תחושת המסוגלות, החוסן האישי ומאפשרות לתלמידים לגלות את יכולותיהם, להתמודד עם אתגרים ולראות אפשרויות חדשות לעתידם.</p>
-              <p>תעשיידע פועלת מתוך שליחות ציבורית, חברתית ולאומית להרחבת הזדמנויות חינוכיות, להנגשת ידע ועולמות תוכן מתקדמים ולחיזוק החיבור בין חינוך, השכלה, הכשרה ותעסוקה. חזון העמותה הוא לאפשר לכל תלמידה ותלמיד להכיר את עולמות התעשייה והטכנולוגיה, להתנסות בעשייה חדשנית ולפתח ידע, כלים ומיומנויות שיסייעו להם להשתלב, להתפתח ולהוביל בעולם המשתנה.</p>
-              <p>הקשר לתעשייה הוא מרכיב מרכזי בזהותה ובפעילותה של תעשיידע. העמותה פועלת בשיתוף חברות תעשייה והייטק, מפעלים, אנשי מקצוע, רשויות מקומיות, קרנות ותורמים ומחברת בינם לבין בתי ספר וקהילות ברחבי הארץ.</p>
-              <p>שיתופי פעולה אלה מאפשרים לשלב בתוכניות ידע מקצועי עדכני, טכנולוגיות מתקדמות, אתגרים מהשטח ותהליכי עבודה מעולם העשייה. החיבור בין מערכת החינוך, התעשייה, הרשויות והקהילה מאפשר לתעשיידע לקדם עשייה חינוכית רלוונטית, מעשית ובעלת השפעה ולהרחיב את ההזדמנויות העומדות בפני תלמידות ותלמידים ברחבי הארץ.</p>
-            </details>
-          </div>
-
-          <div class="intro-facts" aria-label="נתונים מרכזיים על תעשיידע">
-            <article class="fact-card"><span class="fact-value">מאז 1992</span><span class="fact-label">עשייה חינוכית ארוכת שנים וחיבור מתמשך לעולמות התעשייה</span></article>
-            <article class="fact-card"><span class="fact-value">פריסה ארצית</span><span class="fact-label">פעילות בבתי ספר, רשויות וקהילות ברחבי הארץ</span></article>
-            <article class="fact-card"><span class="fact-value">יסודי עד תיכון</span><span class="fact-label">תוכניות מותאמות לגיל המשתתפים ולמטרות המסגרת החינוכית</span></article>
-          </div>
+    <section class="section process-section" id="process" aria-labelledby="processTitle">
+      <div class="container">
+        <div class="section-heading centered">
+          <p class="eyebrow">תהליך פשוט וברור</p>
+          <h2 id="processTitle">איך זה עובד</h2>
         </div>
-      </section>
+        <ol class="process-grid">
+          <li><span class="step-number">1</span><span class="step-icon"><svg><use href="#icon-route"></use></svg></span><h3>בוחרים מסלול</h3><p>מתאימים את סוג ההשפעה להיקף השותפות ולמטרות החברה.</p></li>
+          <li><span class="step-number">2</span><span class="step-icon"><svg><use href="#icon-community"></use></svg></span><h3>מגדירים את הקהילה</h3><p>בוחרים יחד את היישוב, בית הספר או קבוצת התלמידים.</p></li>
+          <li><span class="step-number">3</span><span class="step-icon"><svg><use href="#icon-operate"></use></svg></span><h3>תעשיידע מפעילה</h3><p>העמותה מנהלת ומפעילה את התוכנית החינוכית במלואה.</p></li>
+          <li><span class="step-number">4</span><span class="step-icon"><svg><use href="#icon-report"></use></svg></span><h3>מקבלים סיכום השפעה</h3><p>החברה מקבלת סיכום פעילות ותוצרים מרכזיים מהתהליך.</p></li>
+        </ol>
+        <p class="premium-process-note"><strong>במסלול הפרימיום:</strong> החברה משתלבת במפגשים מקצועיים שנקבעים מראש לאורך התוכנית.</p>
+      </div>
+    </section>
 
-      <section class="section programs-section" id="programs">
-        <div class="section-head">
-          <h2>מרכז התוכניות של תעשיידע</h2>
-          <div class="program-highlights" aria-label="מאפייני התוכניות">
-            <span>כיתות א׳–י״ב</span><span>תהליכי חקר</span><span>התנסות פעילה</span><span>כלים ומיומנויות המאה ה־21</span>
-          </div>
-          <div class="program-filters" id="programFilters" aria-label="סינון תוכניות לפי שכבת גיל">
-            <button class="program-filter active" type="button" data-filter="all" aria-pressed="true">כל התוכניות</button>
-            <button class="program-filter" type="button" data-filter="elementary" aria-pressed="false">יסודי</button>
-            <button class="program-filter" type="button" data-filter="secondary" aria-pressed="false">חטיבת ביניים ותיכון</button>
-          </div>
-          <div class="hint">לחצו על תוכנית כדי לקרוא עליה ולפתוח את פרטי הקורס המלאים</div>
-        </div>
-        <div class="program-grid" id="programGrid"></div>
-      </section>
+    <section class="closing-cta" aria-labelledby="closingTitle">
+      <div class="closing-backdrop"></div>
+      <div class="container closing-content">
+        <p class="eyebrow light">שותפות שמחברת בין קהילה לתעשייה</p>
+        <h2 id="closingTitle">בוחרים כיצד להשפיע על דור העתיד</h2>
+        <p>נשמח להתאים יחד את המסלול, התוכנית וקהל היעד להיקף השותפות ולמטרות החברה בקהילה.</p>
+        <a class="button button-primary" href="#contact">לתיאום שיחת היכרות</a>
+      </div>
+    </section>
 
-      <section class="support-section" id="contact" aria-labelledby="supportTitle">
-        <div class="support-head">
-          <h2 id="supportTitle">מעוניינים להתאים תוכנית למסגרת החינוכית?</h2>
-          <p>בחרו תוכנית והיקף פעילות והשאירו את פרטי איש הקשר. הפנייה תועבר לצוות תעשיידע ונחזור אליכם בהקדם.</p>
+    <section class="section contact-section" id="contact" aria-labelledby="contactTitle">
+      <div class="container contact-layout">
+        <div class="contact-copy">
+          <p class="eyebrow">יצירת קשר</p>
+          <h2 id="contactTitle">מתחילים בשיחת היכרות קצרה</h2>
+          <p>השאירו פרטים ונחזור אליכם כדי להבין את מטרות החברה, הקהילה שבה תרצו לפעול והמסלול המתאים עבורכם.</p>
+          <div class="contact-promise"><span><svg><use href="#icon-check"></use></svg></span><p><strong>ללא התחייבות</strong> – השיחה נועדה לבחון התאמה ולבנות כיוון לשותפות.</p></div>
         </div>
-        <form class="support-form" id="supportInterestForm" action="https://formsubmit.co/office@think.org.il" method="POST" novalidate>
-          <input type="hidden" name="_subject" id="supportSubject" value="פנייה חדשה מאתר מרכז התוכניות של תעשיידע">
+
+        <form class="contact-form" id="partnershipForm" action="https://formsubmit.co/office@think.org.il" method="POST" novalidate>
+          <input type="hidden" name="_subject" id="formSubject" value="פנייה חדשה מדף שותפות עם התעשייה">
           <input type="hidden" name="_cc" value="NOAS@JTLV.CO.IL">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_next" value="https://taasiyeda2026.github.io/summer/programs-center/?submitted=1#contact">
           <input type="hidden" name="_url" value="https://taasiyeda2026.github.io/summer/programs-center/">
-          <input type="hidden" name="מקור הפנייה" value="מרכז התוכניות">
           <input type="hidden" name="_autoresponse" value="שלום, פנייתכם התקבלה בהצלחה. צוות תעשיידע יעבור על הפרטים ויחזור אליכם בהקדם. תודה, תעשיידע – תעשייה למען חינוך מתקדם.">
-          <input type="hidden" name="מחיר לקבוצה" id="supportUnitPriceField" value="לא נבחר">
-          <input type="hidden" name="עלות משוערת" id="supportAmountField" value="לא חושב">
-          <label class="support-honeypot" aria-hidden="true">אין למלא שדה זה<input type="text" id="supportWebsite" name="_honey" tabindex="-1" autocomplete="off"></label>
+          <label class="honeypot" aria-hidden="true">אין למלא שדה זה<input type="text" id="websiteField" name="_honey" tabindex="-1" autocomplete="off"></label>
 
-          <div class="support-form-grid">
-            <div class="support-card support-contact-card">
-              <div class="support-card-heading"><span class="support-card-kicker">פרטי קשר</span><h3>פרטי איש הקשר והמסגרת</h3></div>
-              <div class="support-fields-grid">
-                <label class="support-field support-name"><span class="support-label">שם מלא</span><input type="text" id="supportName" name="שם מלא" placeholder="שם מלא" autocomplete="name" required minlength="2"></label>
-                <label class="support-field support-role"><span class="support-label">תפקיד</span><input type="text" id="supportRole" name="תפקיד" placeholder="תפקיד" autocomplete="organization-title"></label>
-                <label class="support-field support-company support-field-wide"><span class="support-label">בית ספר / רשות / ארגון</span><input type="text" id="supportCompany" name="מסגרת" placeholder="שם המסגרת" autocomplete="organization" required minlength="2"></label>
-                <label class="support-field support-phone"><span class="support-label">מספר טלפון</span><input type="tel" id="supportPhone" name="טלפון" placeholder="050-0000000" autocomplete="tel" required minlength="7"></label>
-                <label class="support-field support-email"><span class="support-label">כתובת דוא״ל</span><input type="email" id="supportEmail" name="email" placeholder="name@company.com" autocomplete="email" required></label>
-              </div>
-            </div>
-            <div class="support-card support-selection-card">
-              <div class="support-card-heading"><span class="support-card-kicker">בחירת פעילות</span><h3>תוכנית ומספר קבוצות</h3></div>
-              <div class="support-selection-fields">
-                <label class="support-field support-program"><span class="support-label">תוכנית</span><select id="supportProgram" name="תוכנית" required><option value="">בחירת תוכנית</option></select></label>
-                <label class="support-field support-program"><span class="support-label">יישוב שבו תרצו לקדם את התוכנית</span><input type="text" id="supportLocality" name="יישוב" placeholder="שם היישוב" autocomplete="address-level2" required></label>
-                <div class="support-unit-price" aria-live="polite"><span>מחיר לקבוצה</span><output id="supportUnitPrice">—</output></div>
-                <label class="support-field support-groups"><span class="support-label">מספר קבוצות</span><input type="number" id="supportGroups" name="מספר קבוצות" value="1" min="1" max="999" step="1" inputmode="numeric" required></label>
-              </div>
-              <div class="support-summary"><span class="support-summary-label">עלות הפעילות המשוערת</span><output class="support-amount" id="supportAmount" for="supportProgram supportGroups" aria-live="polite">—</output><span class="support-summary-note">הסכום מחושב לפי מחיר התוכנית לקבוצה ומספר הקבוצות.</span></div>
-            </div>
+          <div class="form-grid">
+            <label><span>שם מלא</span><input type="text" id="fullName" name="שם מלא" autocomplete="name" required minlength="2"></label>
+            <label><span>חברה</span><input type="text" id="company" name="חברה" autocomplete="organization" required minlength="2"></label>
+            <label><span>תפקיד</span><input type="text" id="role" name="תפקיד" autocomplete="organization-title"></label>
+            <label><span>טלפון</span><input type="tel" id="phone" name="טלפון" autocomplete="tel" required minlength="7"></label>
+            <label class="full-field"><span>אימייל</span><input type="email" id="email" name="email" autocomplete="email" required></label>
+            <label class="full-field"><span>מסלול שמעניין אותי</span><select id="partnershipRoute" name="מסלול שמעניין אותי" required><option value="">בחירת מסלול</option><option>מסלול השראה</option><option>מסלול שנתי</option><option>מסלול העצמה</option><option>מסלול חדשנות</option><option>מסלול פרימיום תעשייתי</option><option>עדיין לא החלטנו</option></select></label>
+            <label class="full-field"><span>הודעה קצרה</span><textarea id="message" name="הודעה" rows="4" placeholder="אפשר לציין קהילה, יישוב או מטרה שחשוב לכם לקדם"></textarea></label>
           </div>
-
-          <div class="support-form-actions">
-            <button class="support-submit" id="supportSubmit" type="submit">שליחת הפנייה</button>
-            <p class="support-form-status" id="supportFormStatus" role="status" aria-live="polite"></p>
-            <div class="support-note">הפרטים יישמרו לצורך טיפול בפנייה ויישלחו לצוות תעשיידע.</div>
-          </div>
+          <button class="form-submit" id="formSubmit" type="submit">אשמח לקבל פרטים <svg><use href="#icon-arrow"></use></svg></button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          <p class="privacy-note">הפרטים יישמרו וישמשו את צוות תעשיידע לצורך טיפול בפנייה בלבד.</p>
         </form>
-      </section>
-      <footer class="site-footer">תעשיידע – תעשייה למען חינוך מתקדם</footer>
-    </div>
+      </div>
+    </section>
   </main>
 
-  <div class="modal-overlay" id="overlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-head"><button class="modal-close" id="closeBtn" aria-label="סגירה">×</button><div class="modal-badge-wrap"><span id="modalBadge" class="badge"></span></div><h3 class="modal-title" id="modalTitle"></h3><div class="modal-subtitle" id="modalSubtitle"></div><div class="modal-meta" id="modalMeta"></div></div>
-      <div class="modal-body"><div class="modal-summary" id="modalSummary"></div><div class="modal-tools"><div class="modal-price" id="modalPrice"></div><a class="pdf-link" id="modalPdf" href="#" target="_blank" rel="noopener" aria-label="פתיחת פרטי הקורס"><svg class="pdf-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.75h7.2L18.25 7.8V21.25H6z"></path><path d="M13 2.75V8h5.25"></path><path d="M8.5 16.25h7"></path><path d="M8.5 13.25h7"></path></svg><span>לפרטי הקורס</span></a></div></div>
-    </div>
-  </div>
-  <script src="./programs.js?v=1"></script>
-  <script src="./support-form.js?v=1"></script>
+  <footer class="site-footer">
+    <div class="container footer-inner"><img src="../logo.png" alt="תעשיידע"><p>תעשיידע – תעשייה למען חינוך מתקדם</p><a href="#top">חזרה לראש העמוד</a></div>
+  </footer>
+
+  <a class="mobile-sticky-cta" href="#contact">לתיאום שיחה</a>
+
+  <script src="./app.js?v=1"></script>
+  <script src="./support-form.js?v=2"></script>
 </body>
 </html>
