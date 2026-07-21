@@ -88,3 +88,10 @@
     border-radius:12px 12px 0 0;
   }
 }
+
+/* Match the visual density of browser zoom set to 75% on desktop. */
+@media (min-width:901px){
+  html{
+    zoom:.75;
+  }
+}
