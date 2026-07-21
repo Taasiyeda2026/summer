@@ -145,22 +145,48 @@ const modalMeta = document.getElementById('modalMeta');
 const modalPrice = document.getElementById('modalPrice');
 const modalPdf = document.getElementById('modalPdf');
 const modalSummary = document.getElementById('modalSummary');
+const filterButtons = document.querySelectorAll('.program-filter');
 
 programs.forEach((program, index) => {
   const card = document.createElement('button');
+  const metaParts = program.meta.split(' | ');
+  const audience = metaParts.find((part) => part.includes('כיתות')) || program.badge;
+  const sessions = metaParts.find((part) => part.includes('מפגשים')) || '';
+
   card.type = 'button';
   card.className = 'program-card';
+  card.dataset.audience = program.badgeClass;
   card.setAttribute('aria-haspopup', 'dialog');
   card.setAttribute('aria-label', `פתיחת ${program.shortName}`);
   card.innerHTML = `
-    <div class="program-name">${program.shortName}</div>
-    <div class="card-footer">
+    <div class="program-card-top">
       <span class="badge ${program.badgeClass}">${program.badge}</span>
-      <span class="plus">+</span>
+    </div>
+    <div class="program-name">${program.shortName}</div>
+    <div class="program-card-description">${program.subtitle}</div>
+    <div class="program-card-meta">${audience}${sessions ? ` · ${sessions}` : ''}</div>
+    <div class="card-footer">
+      <span class="program-link">לפרטי התוכנית</span>
     </div>
   `;
   card.addEventListener('click', () => openModal(index));
   grid.appendChild(card);
+});
+
+filterButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+
+    filterButtons.forEach((item) => {
+      item.classList.toggle('active', item === button);
+      item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+    });
+
+    grid.querySelectorAll('.program-card').forEach((card) => {
+      const shouldShow = filter === 'all' || card.dataset.audience === filter;
+      card.classList.toggle('is-hidden', !shouldShow);
+    });
+  });
 });
 
 function openModal(index) {
@@ -177,6 +203,7 @@ function openModal(index) {
   overlay.classList.add('open');
   overlay.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
+  closeBtn.focus();
 }
 
 function closeModal() {
