@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="מסלולי שותפות חינוכית של תעשיידע לחברות מהתעשייה – השקעה בקהילה, בדור העתיד ובמיומנויות לעולם המשתנה.">
+  <meta name="description" content="מסלולי שותפות חינוכית של תעשיידע לחברות מהתעשייה – בחירת מסלול, תוכנית וסכום תרומה לקידום תלמידות ותלמידים בקהילה.">
   <meta name="theme-color" content="#0b2948">
   <title>תעשיידע | מסלולי שותפות חינוכית לתעשייה</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,8 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css?v=2">
   <link rel="stylesheet" href="./layout-fixes.css?v=5">
-  <link rel="stylesheet" href="./narrow-shell.css?v=3">
-  <link rel="stylesheet" href="./compact-controls.css?v=2">
+  <link rel="stylesheet" href="./narrow-shell.css?v=5">
+  <link rel="stylesheet" href="./compact-controls.css?v=3">
 </head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" focusable="false">
@@ -22,10 +22,6 @@
     <symbol id="icon-future" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4c2.5 2.4 3.8 5 3.8 8S14.5 17.6 12 20M12 4C9.5 6.4 8.2 9 8.2 12S9.5 17.6 12 20M4 12h16"/></symbol>
     <symbol id="icon-impact" viewBox="0 0 24 24"><path d="M4 19h16M6 16l4-4 3 2 5-7"/><path d="M15 7h3v3"/></symbol>
     <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/></symbol>
-    <symbol id="icon-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h2a4 4 0 0 0 4-4v-4a4 4 0 0 1 4-4"/></symbol>
-    <symbol id="icon-community" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3.5 19v-2.2A4.8 4.8 0 0 1 8.3 12h1.4a4.8 4.8 0 0 1 4.8 4.8V19M14 13.2h1.2a4.3 4.3 0 0 1 4.3 4.3V19"/></symbol>
-    <symbol id="icon-operate" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
-    <symbol id="icon-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h4M8 17v-4M12 17V9M16 17v-6"/></symbol>
     <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
   </svg>
@@ -42,7 +38,6 @@
       <nav class="main-nav" id="mainNav" aria-label="ניווט ראשי">
         <a href="#about">מי אנחנו</a>
         <a href="#partnerships">מסלולים</a>
-        <a href="#process">איך זה עובד</a>
         <a href="#contact">יצירת קשר</a>
       </nav>
     </div>
@@ -66,7 +61,7 @@
         <div class="section-heading compact-heading">
           <p class="eyebrow">מי אנחנו</p>
           <h2 id="aboutTitle">תעשיידע</h2>
-          <p>תעשיידע, מיסודה של התאחדות התעשיינים בישראל, פועלת מאז 1992 לחיבור משמעותי בין מערכת החינוך לבין עולם התעשייה. באמצעות תוכניות חינוכיות תהליכיות המתקיימות בפריסה ארצית, תלמידות ותלמידים נחשפים לעולמות המדע, הטכנולוגיה, ההנדסה, היזמות והחדשנות, מתמודדים עם אתגרים מעשיים ומפתחים את הידע, הכלים והמיומנויות הנדרשים להם כדי ליצור, ליזום ולהוביל בעולם המשתנה.</p>
+          <p>תעשיידע היא עמותה חינוכית־טכנולוגית, מיסודה של התאחדות התעשיינים בישראל, הפועלת מאז 1992 לחיבור בין מערכת החינוך לעולמות התעשייה. באמצעות תוכניות חינוכיות תהליכיות המתקיימות בפריסה ארצית, תלמידות ותלמידים חוקרים, מתנסים, מתמודדים עם אתגרים מעשיים ומפתחים ידע, כלים ומיומנויות שיסייעו להם ליצור, ליזום, להוביל ולהשתלב בעולם המשתנה.</p>
         </div>
         <div class="facts-grid" aria-label="נתונים מרכזיים על תעשיידע">
           <article class="fact"><strong>משנת 1992</strong><span>עשייה חינוכית מתמשכת</span></article>
@@ -116,108 +111,184 @@
       <div class="container">
         <div class="section-heading centered partnerships-heading">
           <p class="eyebrow">חמישה מסלולים לבחירה</p>
-          <h2 id="partnershipsTitle">בוחרים את סוג ההשפעה</h2>
-          <p>אנחנו מציעים לחברות בפארק התעשיות לא רק לתרום לחינוך, אלא לבחור איזו הזדמנות הן רוצות להעניק לילדים ולבני הנוער שגדלים בקהילה שסביבן.</p>
+          <h2 id="partnershipsTitle">בוחרים מסלול וסכום תרומה</h2>
+          <p>כל מסלול מציג מראש את סכום התרומה, קהל היעד והתוכנית החינוכית שהתרומה מממנת.</p>
         </div>
 
         <div class="partnership-grid">
-          <article class="partnership-card" data-card="inspiration">
-            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-inspiration">
+          <article class="partnership-card" data-card="elementary">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-elementary">
               <span class="route-number">01</span>
-              <span class="route-label">מסלול השראה</span>
-              <span class="route-description">מימון תוכנית חינוכית מלאה המעניקה לקבוצת תלמידים הזדמנות לחקור, להתנסות ולפתח תוצר בתחום מדעי וטכנולוגי.</span>
-              <span class="route-highlight">תוכנית מלאה עבור קבוצת תלמידים אחת</span>
-              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+              <span class="route-label">מסלול יסודי</span>
+              <span class="route-price-label">סכום התרומה</span>
+              <span class="route-price">9,500 ₪</span>
+              <span class="route-description">מימון תוכנית חינוכית מלאה לקבוצת תלמידים בכיתות ד׳–ו׳.</span>
+              <span class="route-highlight">ביומימיקרי או טכנולוגיות החלל</span>
+              <span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
             </button>
-            <div class="card-details" id="route-inspiration" hidden>
-              <h3>תוכניות לבחירה</h3>
-              <ul><li>טכנולוגיות החלל</li><li>ביומימיקרי</li><li>מנהיגות ירוקה</li></ul>
-              <p class="detail-note">הפעילות מופעלת באופן מלא על ידי תעשיידע ואינה דורשת מעורבות שוטפת של החברה.</p>
-              <button class="select-route" type="button" data-select-route="מסלול השראה">בחירת מסלול השראה</button>
+            <div class="card-details" id="route-elementary" hidden>
+              <div class="details-heading">
+                <h3>תוכניות לבחירה</h3>
+                <p>תוכנית אחת לקבוצת תלמידים בכיתות ד׳–ו׳.</p>
+              </div>
+              <div class="program-list">
+                <article class="program-option">
+                  <h4>ביומימיקרי – המצאות בהשראת הטבע</h4>
+                  <p class="program-meta">מספר גפ״ן: 6089 | כיתות ד׳–ו׳ | 10 מפגשים</p>
+                  <p>תוכנית ביומימיקרי חושפת את התלמידים לעולם שבו הטבע משמש מקור השראה לפיתוח המצאות ופתרונות טכנולוגיים. התלמידים מתבוננים באורגניזמים, חוקרים תכונות, מבנים ומנגנונים טבעיים ולומדים כיצד ניתן לתרגם עיקרון מן הטבע לפתרון הנותן מענה לצורך אנושי.</p>
+                  <p>התוכנית מחברת בין מדע, סביבה, טכנולוגיה וחשיבה הנדסית ומובילה את התלמידים מתהליך של סקרנות וחקר לפיתוח רעיון יישומי.</p>
+                </article>
+                <article class="program-option">
+                  <h4>טכנולוגיות החלל – חדשנות טכנולוגית בהשראת החלל</h4>
+                  <p class="program-meta">מספר גפ״ן: 57651 | כיתות ד׳–ו׳ | 9 מפגשים</p>
+                  <p>תוכנית טכנולוגיות החלל מחברת בין הסקרנות הטבעית של התלמידים כלפי החלל לבין ההבנה שאתגרים מחוץ לכדור הארץ מובילים לפיתוח פתרונות שימושיים בחיי היום־יום.</p>
+                  <p>התלמידים נחשפים לתנאי החיים בסביבה קיצונית, לאתגרים העומדים בפני אסטרונאוטים ולמושגים של ספין־אוף והעברה טכנולוגית וחוקרים כיצד טכנולוגיות שפותחו למשימות חלל הופכות ליישומים בכדור הארץ.</p>
+                </article>
+              </div>
+              <button class="select-route" type="button" data-select-route="מסלול יסודי – 9,500 ₪">בחירת מסלול יסודי</button>
+            </div>
+          </article>
+
+          <article class="partnership-card" data-card="middle-school">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-middle-school">
+              <span class="route-number">02</span>
+              <span class="route-label">מסלול חטיבות</span>
+              <span class="route-price-label">סכום התרומה</span>
+              <span class="route-price">10,000 ₪</span>
+              <span class="route-description">מימון תוכנית חינוכית מלאה לקבוצת תלמידים בחטיבת הביניים או בתיכון.</span>
+              <span class="route-highlight">בינה מלאכותית, ביומימיקרי או פרמצבטיקה</span>
+              <span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
+            </button>
+            <div class="card-details" id="route-middle-school" hidden>
+              <div class="details-heading">
+                <h3>תוכניות לבחירה</h3>
+                <p>תוכנית אחת לקבוצת תלמידים בחטיבת הביניים או בתיכון.</p>
+              </div>
+              <div class="program-list">
+                <article class="program-option">
+                  <h4>סודות ויסודות הבינה המלאכותית</h4>
+                  <p class="program-meta">מספר גפ״ן: 9545 | כיתות ז׳–ח׳ | 8 מפגשים</p>
+                  <p>התוכנית מזמינה את התלמידים להכיר את עולם ה־AI באמצעות התנסות מעשית, חקר וחשיבה ביקורתית. הלמידה משלבת היכרות עם כלי בינה מלאכותית, ניסוח הנחיות ופרומפטים, למידת מכונה, ראייה ממוחשבת, יצירת תוכן ושאלות של אתיקה, אמינות ואחריות.</p>
+                  <p>לאורך התוכנית התלמידים עובדים בקבוצות, מפתחים רעיון לפרויקט גמר ומציגים תוצר מסכם.</p>
+                </article>
+                <article class="program-option">
+                  <h4>יישומי הבינה המלאכותית – AI בתעשייה</h4>
+                  <p class="program-meta">מספר גפ״ן: 53819 | כיתות ז׳–י׳ | 10 מפגשים</p>
+                  <p>התוכנית חושפת את התלמידים לאופן שבו מערכות AI משנות את תחומי הרפואה, החקלאות, התעשייה, התחבורה, החינוך והסביבה.</p>
+                  <p>באמצעות חקר, עבודה קבוצתית ופיתוח רעיון יישומי, התוכנית מחברת בין טכנולוגיה מתקדמת, חשיבה ביקורתית ויכולת לתכנן פתרונות לעולם המשתנה.</p>
+                </article>
+                <article class="program-option">
+                  <h4>ביומימיקרי – חדשנות סביבתית־טכנולוגית בהשראת הטבע</h4>
+                  <p class="program-meta">מספר גפ״ן: 53828 | כיתות ז׳–י׳ | 10 מפגשים</p>
+                  <p>התוכנית מלמדת כיצד הטבע יכול לשמש מקור השראה לפיתוח חדשנות טכנולוגית ומקיימת. התלמידים חוקרים מבנים, מערכות ומנגנונים טבעיים ומפתחים יישום טכנולוגי הנותן מענה לאתגר אנושי או סביבתי.</p>
+                  <p>התהליך מחבר בין חקר מדעי, קיימות, חשיבה הנדסית ופיתוח פתרונות בעלי ערך מעשי.</p>
+                </article>
+                <article class="program-option">
+                  <h4>רוקחים עולם – יזמות לעולם הפרמצבטיקה</h4>
+                  <p class="program-meta">מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים</p>
+                  <p>התוכנית מכניסה את התלמידים לעולמות הפרמצבטיקה, מדעי החיים והרפואה באמצעות תהליך יזמי המדמה פיתוח של מוצר רפואי.</p>
+                  <p>המשתתפים חוקרים צורך רפואי, מגדירים קהל יעד, מגבשים פתרון ומפתחים דגם, פוסטר ומצגת. התהליך מסתיים בהצגת המיזם בפני קהל.</p>
+                </article>
+              </div>
+              <button class="select-route" type="button" data-select-route="מסלול חטיבות – 10,000 ₪">בחירת מסלול חטיבות</button>
             </div>
           </article>
 
           <article class="partnership-card" data-card="annual">
             <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-annual">
-              <span class="route-number">02</span>
+              <span class="route-number">03</span>
               <span class="route-label">מסלול שנתי</span>
-              <span class="route-description">מימון שתי תוכניות חינוכיות לאורך שנת הלימודים ליצירת השפעה רחבה ומתמשכת יותר.</span>
-              <span class="route-highlight">שני תהליכים חינוכיים לאורך השנה</span>
-              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+              <span class="route-price-label">סכום התרומה</span>
+              <span class="route-price route-price-split"><span>יסודי 18,000 ₪</span><span>חטיבות 19,000 ₪</span></span>
+              <span class="route-description">מימון שתי תוכניות חינוכיות במהלך שנת הלימודים.</span>
+              <span class="route-highlight">שני תהליכים חינוכיים לקהילה</span>
+              <span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
             </button>
             <div class="card-details" id="route-annual" hidden>
-              <h3>אפשרויות הפעלה</h3>
-              <ul><li>שתי קבוצות תלמידים</li><li>שני בתי ספר</li><li>שני עולמות תוכן</li><li>תוכנית אחת בכל מחצית</li></ul>
-              <p class="detail-note">ניתן לבחור בין תוכניות לתלמידי היסודי לבין תוכניות לבני ובנות נוער. תעשיידע מפעילה את התוכניות במלואן.</p>
+              <div class="details-heading">
+                <h3>שתי תוכניות לאורך שנת הלימודים</h3>
+                <p>המסלול מאפשר להרחיב את ההשפעה לשתי קבוצות, לשתי שכבות גיל או לשני בתי ספר.</p>
+              </div>
+              <div class="annual-options">
+                <article class="annual-option">
+                  <span class="annual-price">18,000 ₪</span>
+                  <h4>מסלול שנתי – יסודי</h4>
+                  <p>בחירת שתי תוכניות מתוך:</p>
+                  <ul>
+                    <li>יזמות ביומימיקרי – גפ״ן 6089 | כיתות ד׳–ו׳ | 10 מפגשים</li>
+                    <li>מנהיגות ירוקה – גפ״ן 67867 | כיתות ד׳–ו׳ | 10 מפגשים</li>
+                    <li>טכנולוגיות החלל – גפ״ן 57651 | כיתות ד׳–ו׳ | 9 מפגשים</li>
+                  </ul>
+                  <p class="annual-summary">מנהיגות ירוקה משלבת קיימות, יזמות, טכנולוגיה וחשיבה סביבתית. התלמידים חוקרים אתגר סביבתי, מפתחים רעיון יזמי ולומדים כיצד פעולה מקומית יכולה ליצור השפעה משמעותית.</p>
+                </article>
+                <article class="annual-option">
+                  <span class="annual-price">19,000 ₪</span>
+                  <h4>מסלול שנתי – חטיבות</h4>
+                  <p>שתי תוכניות במהלך שנת הלימודים:</p>
+                  <ul>
+                    <li>יישומי הבינה המלאכותית – גפ״ן 53819 | כיתות ז׳–י׳ | 10 מפגשים</li>
+                    <li>ביומימיקרי לחטיבה – גפ״ן 53828 | כיתות ז׳–י׳ | 10 מפגשים</li>
+                  </ul>
+                </article>
+              </div>
               <button class="select-route" type="button" data-select-route="מסלול שנתי">בחירת מסלול שנתי</button>
             </div>
           </article>
 
-          <article class="partnership-card" data-card="empowerment">
-            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-empowerment">
-              <span class="route-number">03</span>
-              <span class="route-label">מסלול העצמה</span>
-              <span class="route-description">מימון תוכנית פורצות דרך לקידום מנהיגות נשית, מסוגלות ויזמות טכנולוגית בקרב נערות.</span>
-              <span class="route-highlight">תוכנית מלאה ומפגש השראה נקודתי</span>
-              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
-            </button>
-            <div class="card-details" id="route-empowerment" hidden>
-              <h3>המסלול כולל</h3>
-              <ul><li>תוכנית חינוכית מלאה</li><li>פיתוח מיזם טכנולוגי</li><li>הרצאת השראה או מפגש עם אישה מהתעשייה</li><li>הצגת תוצרים מסכמת</li></ul>
-              <p class="detail-note">מעורבות החברה היא הרצאת אורחת או פגישת השראה נקודתית ולא ליווי שוטף לאורך הקורס.</p>
-              <button class="select-route" type="button" data-select-route="מסלול העצמה">בחירת מסלול העצמה</button>
-            </div>
-          </article>
-
-          <article class="partnership-card" data-card="innovation">
-            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-innovation">
+          <article class="partnership-card" data-card="trailblazers">
+            <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-trailblazers">
               <span class="route-number">04</span>
-              <span class="route-label">מסלול חדשנות</span>
-              <span class="route-description">מימון תוכנית מתקדמת החושפת בני ובנות נוער לתחומים הנמצאים בחזית המדע, הטכנולוגיה והתעשייה.</span>
-              <span class="route-highlight">חקר, פיתוח רעיון והצגת תוצר מסכם</span>
-              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+              <span class="route-label">מסלול פורצות דרך</span>
+              <span class="route-price-label">סכום התרומה</span>
+              <span class="route-price">12,000 ₪</span>
+              <span class="route-description">תוכנית יזמות טכנולוגית מעצימה לנערות, בשילוב הרצאת אורחת מעוררת השראה מהתעשייה.</span>
+              <span class="route-highlight">12 מפגשים והרצאת השראה</span>
+              <span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
             </button>
-            <div class="card-details" id="route-innovation" hidden>
-              <h3>תוכניות לבחירה</h3>
-              <ul><li>סודות ויסודות הבינה המלאכותית</li><li>יישומי הבינה המלאכותית</li><li>ביומימיקרי</li><li>רוקחים עולם</li></ul>
-              <p class="detail-note">הפעילות מופעלת באופן מלא על ידי תעשיידע ואינה כוללת מעורבות שוטפת של החברה.</p>
-              <button class="select-route" type="button" data-select-route="מסלול חדשנות">בחירת מסלול חדשנות</button>
+            <div class="card-details" id="route-trailblazers" hidden>
+              <div class="details-heading">
+                <h3>פורצות דרך קדימה – תוכנית יזמות טכנולוגית מעצימה</h3>
+                <p class="program-meta">מספר גפ״ן: 3604 | כיתות ז׳–י׳ | 12 מפגשים</p>
+              </div>
+              <div class="single-program-copy">
+                <p>פורצות דרך היא תוכנית המחברת בין העצמה אישית, מנהיגות נשית, יזמות טכנולוגית ועקרונות STEM.</p>
+                <p>המשתתפות יוצאות מתוך עולמן האישי, מזהות אתגר מחיי היום־יום, מגדירות צורך וקהל יעד ועוברות תהליך תיכון הנדסי לפיתוח מיזם. במהלך התהליך הן חוקרות את האתגר, מעלות רעיונות, מתכננות פתרון, מקבלות משוב, משפרות את המיזם ומציגות אותו.</p>
+                <p>המסלול כולל הרצאת אורחת מעוררת השראה של אישה מהתעשייה.</p>
+              </div>
+              <button class="select-route" type="button" data-select-route="מסלול פורצות דרך – 12,000 ₪">בחירת מסלול פורצות דרך</button>
             </div>
           </article>
 
           <article class="partnership-card premium-card" data-card="premium">
-            <span class="premium-badge">השותפות המלאה</span>
+            <span class="premium-badge">שותפות עם החברה</span>
             <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-premium">
               <span class="route-number">05</span>
               <span class="route-label">מסלול פרימיום תעשייתי</span>
-              <span class="route-description">תוכנית יזמות מתקדמת שבה החברה משתלבת בתהליך ומחברת את התלמידים באופן ישיר לעולם התעשייה.</span>
-              <span class="route-highlight">מעורבות מקצועית של החברה לאורך התוכנית</span>
-              <span class="card-action">לפרטים ולבחירת המסלול <svg><use href="#icon-arrow"></use></svg></span>
+              <span class="route-price-label">סכום התרומה</span>
+              <span class="route-price">12,000 ₪</span>
+              <span class="route-description">תוכנית יזמות המותאמת לתחום הפעילות של החברה ומשלבת את נציגיה בשלושה מפגשים.</span>
+              <span class="route-highlight">12 מפגשים | 3 מפגשים עם החברה</span>
+              <span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
             </button>
             <div class="card-details" id="route-premium" hidden>
-              <h3>המסלול כולל</h3>
-              <ul><li>מפגש פתיחה והיכרות עם החברה</li><li>חשיפה לתחום הפעילות שלה</li><li>הצגת עולם תוכן או אתגר מהתעשייה</li><li>מפגש מנטורינג עם אנשי מקצוע</li><li>משוב מקצועי על המיזמים</li><li>אירוע סיום והצגת התוצרים</li></ul>
-              <p class="detail-note premium-note">זהו המסלול היחיד הכולל מעורבות מקצועית של החברה לאורך התוכנית ולכן הוא מסלול ייחודי ובעל תמחור גבוה יותר.</p>
-              <button class="select-route" type="button" data-select-route="מסלול פרימיום תעשייתי">בחירת מסלול פרימיום</button>
+              <div class="details-heading">
+                <h3>אופק יזמות פרימיום לתעשייה – מיומנויות העתיד</h3>
+                <p class="program-meta">מספר גפ״ן: 52279 | כיתות ז׳–י׳ | 12 מפגשים</p>
+              </div>
+              <div class="single-program-copy">
+                <p>התוכנית מכניסה את התלמידים למסגרת המדמה אקסלרטור תעשייתי ופועלת בשיתוף חברה או ארגון מאמץ.</p>
+                <p>מתוך היכרות עם העולם המקצועי, התלמידים בוחנים אתגר אמיתי, מזהים צורך, מגדירים קהל יעד, חוקרים פתרונות קיימים ומגבשים פתרון רעיוני והצעת ערך.</p>
+                <p>נציגי החברה משתתפים בשלושה מפגשים שנקבעים מראש:</p>
+                <ul class="premium-meetings">
+                  <li>מפגש היכרות וחשיפה לתחום הפעילות של החברה</li>
+                  <li>מפגש מקצועי, מנטורינג או משוב על המיזמים</li>
+                  <li>אירוע סיום והצגת התוצרים</li>
+                </ul>
+              </div>
+              <button class="select-route" type="button" data-select-route="מסלול פרימיום תעשייתי – 12,000 ₪">בחירת מסלול פרימיום</button>
             </div>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="section process-section" id="process" aria-labelledby="processTitle">
-      <div class="container">
-        <div class="section-heading centered">
-          <p class="eyebrow">תהליך פשוט וברור</p>
-          <h2 id="processTitle">איך זה עובד</h2>
-        </div>
-        <ol class="process-grid">
-          <li><span class="step-number">1</span><span class="step-icon"><svg><use href="#icon-route"></use></svg></span><h3>בוחרים מסלול</h3><p>מתאימים את סוג ההשפעה להיקף השותפות ולמטרות החברה.</p></li>
-          <li><span class="step-number">2</span><span class="step-icon"><svg><use href="#icon-community"></use></svg></span><h3>מגדירים את הקהילה</h3><p>בוחרים יחד את היישוב, בית הספר או קבוצת התלמידים.</p></li>
-          <li><span class="step-number">3</span><span class="step-icon"><svg><use href="#icon-operate"></use></svg></span><h3>תעשיידע מפעילה</h3><p>העמותה מנהלת ומפעילה את התוכנית החינוכית במלואה.</p></li>
-          <li><span class="step-number">4</span><span class="step-icon"><svg><use href="#icon-report"></use></svg></span><h3>מקבלים סיכום השפעה</h3><p>החברה מקבלת סיכום פעילות ותוצרים מרכזיים מהתהליך.</p></li>
-        </ol>
-        <p class="premium-process-note"><strong>במסלול הפרימיום:</strong> החברה משתלבת במפגשים מקצועיים שנקבעים מראש לאורך התוכנית.</p>
       </div>
     </section>
 
@@ -225,8 +296,8 @@
       <div class="closing-backdrop"></div>
       <div class="container closing-content">
         <p class="eyebrow light">שותפות שמחברת בין קהילה לתעשייה</p>
-        <h2 id="closingTitle">בוחרים כיצד להשפיע על דור העתיד</h2>
-        <p>נשמח להתאים יחד את המסלול, התוכנית וקהל היעד להיקף השותפות ולמטרות החברה בקהילה.</p>
+        <h2 id="closingTitle">בוחרים מסלול וסכום תרומה</h2>
+        <p>נשמח להתאים יחד את התוכנית, קהל היעד והקהילה שבה תרצו לקדם הזדמנות חינוכית.</p>
         <a class="button button-primary" href="#contact">לתיאום שיחת היכרות</a>
       </div>
     </section>
@@ -255,7 +326,7 @@
             <label><span>תפקיד</span><input type="text" id="role" name="תפקיד" autocomplete="organization-title"></label>
             <label><span>טלפון</span><input type="tel" id="phone" name="טלפון" autocomplete="tel" required minlength="7"></label>
             <label class="full-field"><span>אימייל</span><input type="email" id="email" name="email" autocomplete="email" required></label>
-            <label class="full-field"><span>מסלול שמעניין אותי</span><select id="partnershipRoute" name="מסלול שמעניין אותי" required><option value="">בחירת מסלול</option><option>מסלול השראה</option><option>מסלול שנתי</option><option>מסלול העצמה</option><option>מסלול חדשנות</option><option>מסלול פרימיום תעשייתי</option><option>עדיין לא החלטנו</option></select></label>
+            <label class="full-field"><span>מסלול שמעניין אותי</span><select id="partnershipRoute" name="מסלול שמעניין אותי" required><option value="">בחירת מסלול</option><option>מסלול יסודי – 9,500 ₪</option><option>מסלול חטיבות – 10,000 ₪</option><option>מסלול שנתי</option><option>מסלול פורצות דרך – 12,000 ₪</option><option>מסלול פרימיום תעשייתי – 12,000 ₪</option><option>עדיין לא החלטנו</option></select></label>
             <label class="full-field"><span>הודעה קצרה</span><textarea id="message" name="הודעה" rows="4" placeholder="אפשר לציין קהילה, יישוב או מטרה שחשוב לכם לקדם"></textarea></label>
           </div>
           <button class="form-submit" id="formSubmit" type="submit">אשמח לקבל פרטים <svg><use href="#icon-arrow"></use></svg></button>
