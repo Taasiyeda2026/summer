@@ -1,0 +1,88 @@
+/* Strict page-only typography and compact control rules for programs-center. */
+
+*,
+*::before,
+*::after {
+  letter-spacing: normal !important;
+}
+
+.header-cta,
+.button,
+.form-submit,
+.select-route,
+.mobile-sticky-cta {
+  width: fit-content !important;
+  min-width: 0 !important;
+  max-width: 100%;
+  min-height: 40px;
+  padding-inline: 16px;
+  white-space: nowrap;
+}
+
+.hero h1 {
+  max-width: 650px;
+  font-size: clamp(2.65rem, 4.3vw, 3.9rem);
+  line-height: 1.08;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-actions .button {
+  width: 190px !important;
+  min-width: 190px !important;
+  min-height: 42px;
+  padding-inline: 14px;
+}
+
+.card-action {
+  width: auto !important;
+  max-width: 100%;
+  align-self: flex-start;
+  display: inline-flex;
+  justify-content: center;
+  padding-inline: 14px;
+}
+
+.select-route,
+.form-submit,
+.closing-content .button,
+.header-cta {
+  min-width: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .hero-actions {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-actions .button {
+    width: 190px !important;
+    min-width: 190px !important;
+  }
+
+  .form-submit,
+  .select-route {
+    width: fit-content !important;
+  }
+
+  .mobile-sticky-cta {
+    right: 50%;
+    left: auto;
+    width: auto !important;
+    transform: translateX(50%);
+    padding-inline: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .card-action,
+  .select-route {
+    width: fit-content !important;
+  }
+}
