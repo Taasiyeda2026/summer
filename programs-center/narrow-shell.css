@@ -40,3 +40,9 @@
     text-wrap: pretty;
   }
 }
+
+/* The process section was removed from the page flow. */
+.process-section,
+.main-nav a[href="#process"] {
+  display: none !important;
+}
