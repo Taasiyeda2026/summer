@@ -21,6 +21,41 @@ compactDesktopStyle.textContent = `
       max-width: 1600px;
       margin-inline: auto;
     }
+
+    .facts-grid {
+      justify-items: center;
+    }
+
+    .fact {
+      position: relative;
+      width: 50%;
+      min-height: 120px;
+      padding: 22px 25px 22px 28px;
+      overflow: hidden;
+    }
+
+    .fact::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 0;
+      bottom: 18px;
+      display: block;
+      width: 3px;
+      height: auto;
+      margin: 0;
+      border-radius: 3px 0 0 3px;
+      background: var(--navy);
+      opacity: .72;
+    }
+
+    .fact:nth-child(2)::before {
+      background: var(--teal);
+    }
+
+    .fact:nth-child(3)::before {
+      background: var(--gold);
+    }
   }
 `;
 document.head.appendChild(compactDesktopStyle);
