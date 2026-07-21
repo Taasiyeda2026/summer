@@ -1,25 +1,20 @@
-/* Compact, equal partnership cards with responsive 5 / 3 / 2 / 1-column layouts. */
-
-@media (min-width: 1121px) {
-  :root {
-    --container: min(1240px, calc(100% - 48px)) !important;
-  }
-
-  body {
-    max-width: 1360px !important;
-  }
-}
+/* Compact partnership cards: one centered row on desktop, restrained typography and subtle price tags. */
 
 .partnerships-heading {
-  max-width: 680px !important;
+  max-width: 650px !important;
+}
+
+.partnerships-section .container {
+  width: min(960px, calc(100% - 48px)) !important;
 }
 
 .partnership-grid {
   width: 100%;
-  max-width: 1240px !important;
-  margin: 30px auto 0 !important;
-  gap: 16px !important;
+  max-width: 880px !important;
+  margin: 26px auto 0 !important;
+  gap: 10px !important;
   align-items: stretch !important;
+  justify-content: center !important;
 }
 
 .partnership-card,
@@ -28,110 +23,142 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-radius: 16px !important;
+  border-radius: 14px !important;
 }
 
-.card-toggle {
+.card-toggle,
+.premium-card .card-toggle {
   height: 100%;
-  min-height: 300px !important;
-  padding: 20px 18px 18px !important;
+  min-height: 276px !important;
+  padding: 15px 14px 13px !important;
 }
 
 .route-number {
-  font-size: .76rem !important;
+  font-size: .66rem !important;
 }
 
 .route-label {
-  margin-top: 14px !important;
-  font-size: 1.25rem !important;
-  line-height: 1.12 !important;
+  margin-top: 12px !important;
+  font-size: 1.04rem !important;
+  line-height: 1.16 !important;
+  letter-spacing: normal !important;
+  text-wrap: balance;
+}
+
+.route-price-label {
+  display: none !important;
+}
+
+.route-price {
+  display: inline-flex !important;
+  align-items: center;
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 10px !important;
+  padding: 4px 8px !important;
+  border: 1px solid #d9e7ec;
+  border-radius: 999px;
+  color: #176f8c !important;
+  background: #f1f7f9;
+  font-size: .76rem !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: normal !important;
+  white-space: nowrap;
+}
+
+.route-price::before {
+  content: "תרומה";
+  margin-left: 5px;
+  color: #758895;
+  font-size: .64rem;
+  font-weight: 700;
+}
+
+.route-price-split {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 !important;
+  border: 0;
+  background: transparent;
+  white-space: normal;
+}
+
+.route-price-split::before {
+  display: none;
+}
+
+.route-price-split > span {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 7px;
+  border: 1px solid #d9e7ec;
+  border-radius: 999px;
+  background: #f1f7f9;
+  white-space: nowrap;
 }
 
 .route-description {
   margin-top: 10px !important;
-  font-size: .82rem !important;
-  line-height: 1.48 !important;
+  font-size: .74rem !important;
+  line-height: 1.47 !important;
 }
 
 .route-highlight {
-  padding-top: 12px !important;
-  font-size: .78rem !important;
+  padding-top: 11px !important;
+  font-size: .7rem !important;
   line-height: 1.38 !important;
 }
 
 .route-highlight::before {
-  width: 24px !important;
-  margin-bottom: 8px !important;
+  width: 21px !important;
+  margin-bottom: 7px !important;
 }
 
 .card-action {
-  width: 148px !important;
-  min-width: 148px !important;
-  max-width: 148px !important;
-  min-height: 38px !important;
-  margin-top: 12px !important;
-  padding-inline: 10px !important;
+  width: 118px !important;
+  min-width: 118px !important;
+  max-width: 118px !important;
+  min-height: 30px !important;
+  margin-top: 10px !important;
+  padding-inline: 8px !important;
   align-self: center !important;
   justify-content: center !important;
-  gap: 7px !important;
-  font-size: .78rem !important;
+  gap: 5px !important;
+  font-size: .64rem !important;
+  line-height: 1.1 !important;
   white-space: nowrap !important;
 }
 
 .card-action svg {
-  width: 16px !important;
-  height: 16px !important;
+  width: 13px !important;
+  height: 13px !important;
   flex: 0 0 auto;
 }
 
-.premium-card {
-  min-height: 0 !important;
-}
-
-.premium-card .card-toggle {
-  min-height: 300px !important;
-}
-
 .premium-badge {
-  top: 12px !important;
-  left: 12px !important;
-  padding: 4px 9px !important;
-  font-size: .64rem !important;
+  top: 9px !important;
+  left: 9px !important;
+  padding: 3px 7px !important;
+  font-size: .55rem !important;
 }
 
 .route-details-host,
 .comparison-wrap {
-  max-width: 1240px !important;
+  max-width: 880px !important;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 900px) {
   .partnership-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(5, minmax(0, 168px)) !important;
   }
 
   .partnership-card,
   .partnership-card:nth-child(4),
   .partnership-card:nth-child(5) {
     grid-column: auto !important;
-  }
-}
-
-@media (min-width: 900px) and (max-width: 1279px) {
-  .partnership-grid {
-    max-width: 900px !important;
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-  }
-
-  .partnership-card {
-    grid-column: span 2 !important;
-  }
-
-  .partnership-card:nth-child(4) {
-    grid-column: 2 / span 2 !important;
-  }
-
-  .partnership-card:nth-child(5) {
-    grid-column: 4 / span 2 !important;
   }
 }
 
@@ -147,37 +174,44 @@
     grid-column: auto !important;
   }
 
-  .card-toggle,
-  .premium-card .card-toggle {
-    min-height: 285px !important;
+  .partnership-card:last-child {
+    grid-column: 1 / -1 !important;
+    width: calc(50% - 5px);
+    justify-self: center;
   }
 }
 
 @media (max-width: 620px) {
+  .partnerships-section .container {
+    width: min(100% - 28px, 620px) !important;
+  }
+
   .partnership-grid {
     max-width: 440px !important;
     grid-template-columns: 1fr !important;
     gap: 12px !important;
-    margin-top: 24px !important;
+    margin-top: 22px !important;
   }
 
   .partnership-card,
   .partnership-card:nth-child(4),
-  .partnership-card:nth-child(5) {
+  .partnership-card:nth-child(5),
+  .partnership-card:last-child {
     grid-column: auto !important;
+    width: 100%;
   }
 
   .card-toggle,
   .premium-card .card-toggle {
-    min-height: 250px !important;
-    padding: 18px 17px 16px !important;
+    min-height: 246px !important;
+    padding: 17px 16px 15px !important;
   }
 
   .route-label {
-    font-size: 1.22rem !important;
+    font-size: 1.08rem !important;
   }
 
   .route-description {
-    font-size: .84rem !important;
+    font-size: .79rem !important;
   }
 }
