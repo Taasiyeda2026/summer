@@ -1,0 +1,183 @@
+/* Compact, equal partnership cards with responsive 5 / 3 / 2 / 1-column layouts. */
+
+@media (min-width: 1121px) {
+  :root {
+    --container: min(1240px, calc(100% - 48px)) !important;
+  }
+
+  body {
+    max-width: 1360px !important;
+  }
+}
+
+.partnerships-heading {
+  max-width: 680px !important;
+}
+
+.partnership-grid {
+  width: 100%;
+  max-width: 1240px !important;
+  margin: 30px auto 0 !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+}
+
+.partnership-card,
+.partnership-card:nth-child(4),
+.partnership-card:nth-child(5) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 16px !important;
+}
+
+.card-toggle {
+  height: 100%;
+  min-height: 300px !important;
+  padding: 20px 18px 18px !important;
+}
+
+.route-number {
+  font-size: .76rem !important;
+}
+
+.route-label {
+  margin-top: 14px !important;
+  font-size: 1.25rem !important;
+  line-height: 1.12 !important;
+}
+
+.route-description {
+  margin-top: 10px !important;
+  font-size: .82rem !important;
+  line-height: 1.48 !important;
+}
+
+.route-highlight {
+  padding-top: 12px !important;
+  font-size: .78rem !important;
+  line-height: 1.38 !important;
+}
+
+.route-highlight::before {
+  width: 24px !important;
+  margin-bottom: 8px !important;
+}
+
+.card-action {
+  width: 148px !important;
+  min-width: 148px !important;
+  max-width: 148px !important;
+  min-height: 38px !important;
+  margin-top: 12px !important;
+  padding-inline: 10px !important;
+  align-self: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  font-size: .78rem !important;
+  white-space: nowrap !important;
+}
+
+.card-action svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 auto;
+}
+
+.premium-card {
+  min-height: 0 !important;
+}
+
+.premium-card .card-toggle {
+  min-height: 300px !important;
+}
+
+.premium-badge {
+  top: 12px !important;
+  left: 12px !important;
+  padding: 4px 9px !important;
+  font-size: .64rem !important;
+}
+
+.route-details-host,
+.comparison-wrap {
+  max-width: 1240px !important;
+}
+
+@media (min-width: 1280px) {
+  .partnership-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+
+  .partnership-card,
+  .partnership-card:nth-child(4),
+  .partnership-card:nth-child(5) {
+    grid-column: auto !important;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1279px) {
+  .partnership-grid {
+    max-width: 900px !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+
+  .partnership-card {
+    grid-column: span 2 !important;
+  }
+
+  .partnership-card:nth-child(4) {
+    grid-column: 2 / span 2 !important;
+  }
+
+  .partnership-card:nth-child(5) {
+    grid-column: 4 / span 2 !important;
+  }
+}
+
+@media (min-width: 621px) and (max-width: 899px) {
+  .partnership-grid {
+    max-width: 650px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .partnership-card,
+  .partnership-card:nth-child(4),
+  .partnership-card:nth-child(5) {
+    grid-column: auto !important;
+  }
+
+  .card-toggle,
+  .premium-card .card-toggle {
+    min-height: 285px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .partnership-grid {
+    max-width: 440px !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-top: 24px !important;
+  }
+
+  .partnership-card,
+  .partnership-card:nth-child(4),
+  .partnership-card:nth-child(5) {
+    grid-column: auto !important;
+  }
+
+  .card-toggle,
+  .premium-card .card-toggle {
+    min-height: 250px !important;
+    padding: 18px 17px 16px !important;
+  }
+
+  .route-label {
+    font-size: 1.22rem !important;
+  }
+
+  .route-description {
+    font-size: .84rem !important;
+  }
+}
