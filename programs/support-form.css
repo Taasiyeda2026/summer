@@ -38,7 +38,7 @@
 
 .support-form-grid{
   display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(215px,.85fr);
+  grid-template-columns:minmax(0,1.35fr) minmax(185px,.65fr);
   gap:9px;
   align-items:start;
 }
@@ -140,8 +140,8 @@
 
 .support-selection-fields{
   display:grid;
-  grid-template-columns:minmax(0,1fr) 72px;
-  gap:4px 7px;
+  grid-template-columns:minmax(0,1fr) 68px;
+  gap:4px 6px;
   align-items:end;
 }
 
@@ -151,7 +151,7 @@
 .support-selection-card .support-field input,
 .support-selection-card .support-field select{
   height:28px;
-  font-size:.69rem;
+  font-size:.67rem;
 }
 
 .support-unit-price{
@@ -159,7 +159,7 @@
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:2px 7px;
+  padding:2px 6px;
   border:1px solid #dbe4e9;
   border-radius:7px;
   background:#f7fafb;
@@ -167,7 +167,7 @@
 
 .support-unit-price span{
   color:#81919d;
-  font-size:.5rem;
+  font-size:.49rem;
   font-weight:700;
   line-height:1;
 }
@@ -175,7 +175,7 @@
 .support-unit-price output{
   margin-top:1px;
   color:#3a5063;
-  font-size:.64rem;
+  font-size:.62rem;
   font-weight:800;
   line-height:1;
 }
@@ -184,9 +184,9 @@
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:8px;
+  gap:6px;
   margin-top:4px;
-  padding:5px 7px;
+  padding:5px 6px;
   border:1px solid #bad9e1;
   border-radius:8px;
   background:linear-gradient(135deg,#eef9fb,#fffaf4);
@@ -196,7 +196,7 @@
 .support-summary-label{
   display:block;
   color:#627787;
-  font-size:.55rem;
+  font-size:.53rem;
   font-weight:700;
   line-height:1.1;
 }
@@ -205,7 +205,7 @@
   display:block;
   margin:0;
   color:#116b7d;
-  font-size:.9rem;
+  font-size:.86rem;
   font-weight:800;
   line-height:1;
   white-space:nowrap;
