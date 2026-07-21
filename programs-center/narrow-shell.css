@@ -5,14 +5,14 @@
   }
 
   :root {
-    --container: min(920px, calc(100% - 48px));
+    --container: min(820px, calc(100% - 40px));
   }
 
   body {
     width: 100%;
-    max-width: 1080px;
+    max-width: 980px;
     margin-inline: auto;
     background: #fff;
-    box-shadow: 0 0 60px rgba(7, 29, 51, .10);
+    box-shadow: 0 0 48px rgba(7, 29, 51, .09);
   }
 }
