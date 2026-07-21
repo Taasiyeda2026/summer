@@ -39,6 +39,85 @@
     line-height: 1.48 !important;
     text-wrap: pretty;
   }
+
+  /* Keep the partnership choices centered and away from the screen edges. */
+  body .partnerships-section .container {
+    width: min(900px, calc(100% - 64px)) !important;
+  }
+
+  body .partnerships-section .partnerships-heading {
+    max-width: 610px !important;
+  }
+
+  body .partnerships-section .partnership-grid {
+    width: 100% !important;
+    max-width: 850px !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 24px auto 0 !important;
+  }
+
+  body .partnerships-section .partnership-card,
+  body .partnerships-section .partnership-card:nth-child(4),
+  body .partnerships-section .partnership-card:nth-child(5) {
+    grid-column: auto !important;
+    border-radius: 14px !important;
+  }
+
+  body .partnerships-section .card-toggle {
+    min-height: 270px !important;
+    padding: 15px 13px 13px !important;
+  }
+
+  body .partnerships-section .route-number {
+    font-size: .68rem !important;
+  }
+
+  body .partnerships-section .route-label {
+    margin-top: 13px !important;
+    font-size: 1.03rem !important;
+    line-height: 1.14 !important;
+    text-wrap: balance;
+  }
+
+  body .partnerships-section .route-description {
+    margin-top: 9px !important;
+    font-size: .75rem !important;
+    line-height: 1.48 !important;
+  }
+
+  body .partnerships-section .route-highlight {
+    padding-top: 11px !important;
+    font-size: .71rem !important;
+    line-height: 1.38 !important;
+  }
+
+  body .partnerships-section .route-highlight::before {
+    width: 22px !important;
+    margin-bottom: 7px !important;
+  }
+
+  body .partnerships-section .card-action {
+    min-height: 30px !important;
+    margin-top: 10px !important;
+    padding-inline: 10px !important;
+    gap: 5px !important;
+    font-size: .66rem !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+  }
+
+  body .partnerships-section .card-action svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  body .partnerships-section .premium-badge {
+    top: 10px !important;
+    left: 10px !important;
+    padding: 4px 8px !important;
+    font-size: .6rem !important;
+  }
 }
 
 /* The process section was removed from the page flow. */
