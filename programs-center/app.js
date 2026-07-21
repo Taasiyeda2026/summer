@@ -26,6 +26,16 @@ if (aboutParagraph) {
   aboutParagraph.textContent = 'תעשיידע היא עמותה חינוכית־טכנולוגית, מיסודה של התאחדות התעשיינים בישראל, הפועלת מאז 1992 לחיבור בין מערכת החינוך לעולמות התעשייה. באמצעות תוכניות חינוכיות תהליכיות המתקיימות בפריסה ארצית, תלמידות ותלמידים חוקרים, מתנסים, מתמודדים עם אתגרים מעשיים ומפתחים ידע, כלים ומיומנויות שיסייעו להם ליצור, ליזום, להוביל ולהשתלב בעולם המשתנה.';
 }
 
+const partnershipsTitle = document.getElementById('partnershipsTitle');
+if (partnershipsTitle) {
+  partnershipsTitle.textContent = 'בוחרים כיצד להשפיע';
+}
+
+const partnershipsParagraph = document.querySelector('.partnerships-heading > p:last-child');
+if (partnershipsParagraph) {
+  partnershipsParagraph.textContent = 'אנו מזמינים אתכם להיות שותפים ביצירת הזדמנויות חינוכיות משמעותיות, בהתאם לתחום ההשפעה שתרצו לקדם.';
+}
+
 const navToggle = document.querySelector('.nav-toggle');
 const mainNav = document.getElementById('mainNav');
 
