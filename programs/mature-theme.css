@@ -84,7 +84,7 @@ body{
 .program-filter.active{
   border-color:#315f8c;
   background:#315f8c;
-  box-shadow:0 8px 18px rgba(35,73,108,.18);
+  box-shadow:0 5px 12px rgba(35,73,108,.14);
 }
 
 .program-card::before{
@@ -112,7 +112,31 @@ body{
 }
 
 @media (min-width:901px){
+  .programs-section{
+    width:calc(100% - 64px);
+    max-width:1120px;
+    margin-right:auto;
+    margin-left:auto;
+  }
+
   .programs-section::before{
     background:rgba(68,82,96,.05);
+  }
+
+  .program-highlights{
+    margin-top:9px;
+  }
+
+  .program-filters{
+    gap:6px;
+    margin-top:16px;
+  }
+
+  .program-filter{
+    min-height:30px;
+    padding:0 11px;
+    border-radius:999px;
+    font-size:.76rem;
+    font-weight:700;
   }
 }
