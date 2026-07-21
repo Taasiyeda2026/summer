@@ -1,0 +1,118 @@
+:root{
+  --site-bg:#f2f4f6;
+  --surface:#ffffff;
+  --surface-soft:#edf1f5;
+  --surface-warm:#f4f5f7;
+  --ink:#182b3d;
+  --muted:#5f6f7d;
+  --brand:#315f8c;
+  --brand-dark:#23496c;
+  --orange:#74808c;
+  --border:#d5dde4;
+  --shadow-card:0 18px 46px rgba(30,47,63,.09);
+}
+
+body{
+  background:#f2f4f6;
+}
+
+.header{
+  border-bottom-color:rgba(202,210,218,.9);
+  box-shadow:0 7px 24px rgba(31,45,58,.05);
+}
+
+.header-note{
+  color:#536474;
+}
+
+.site-nav a{
+  color:#324a60;
+}
+
+.site-nav a::after,
+.eyebrow::before{
+  background:linear-gradient(90deg,#315f8c,#7b8793);
+}
+
+.header-cta{
+  background:linear-gradient(135deg,#315f8c,#243f59);
+  box-shadow:0 10px 22px rgba(35,73,108,.22);
+}
+
+.hero-cta-primary{
+  background:#315f8c;
+  box-shadow:0 12px 26px rgba(35,73,108,.28);
+}
+
+.hero-cta-primary:hover,
+.header-cta:hover{
+  background:#274f76;
+}
+
+.fact-card{
+  border-color:#d5dde4;
+  box-shadow:0 10px 26px rgba(30,47,63,.055);
+}
+
+.fact-card:nth-child(2){
+  background:#edf1f5;
+}
+
+.fact-card:nth-child(3){
+  background:#f5f6f7;
+}
+
+.programs-section{
+  background:linear-gradient(180deg,#e8eef4 0%,#f4f6f8 100%);
+}
+
+.programs-section::before{
+  background:rgba(68,82,96,.06);
+}
+
+.program-highlights span:not(.divider){
+  border-color:rgba(49,95,140,.18);
+  color:#465a6d;
+  background:rgba(255,255,255,.78);
+}
+
+.program-filter{
+  border-color:#cbd3db;
+  color:#465b6f;
+}
+
+.program-filter.active{
+  border-color:#315f8c;
+  background:#315f8c;
+  box-shadow:0 8px 18px rgba(35,73,108,.18);
+}
+
+.program-card::before{
+  background:linear-gradient(90deg,#315f8c,#70859a,#a0a9b2);
+}
+
+.program-card:hover,
+.program-card:focus-visible{
+  border-color:#b8c5d0;
+  box-shadow:0 20px 42px rgba(30,47,63,.12);
+}
+
+.support-section{
+  background:linear-gradient(135deg,#223b52 0%,#315f8c 58%,#566777 100%);
+}
+
+.support-card,
+.support-selection-card{
+  border-color:rgba(255,255,255,.24);
+  box-shadow:0 16px 38px rgba(18,31,43,.16);
+}
+
+.support-note{
+  color:rgba(255,255,255,.74);
+}
+
+@media (min-width:901px){
+  .programs-section::before{
+    background:rgba(68,82,96,.05);
+  }
+}
