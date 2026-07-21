@@ -13,6 +13,11 @@ compactControlsStyle.rel = 'stylesheet';
 compactControlsStyle.href = './compact-controls.css?v=2';
 document.head.appendChild(compactControlsStyle);
 
+const compactPartnershipCardsStyle = document.createElement('link');
+compactPartnershipCardsStyle.rel = 'stylesheet';
+compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=1';
+document.head.appendChild(compactPartnershipCardsStyle);
+
 const heroKicker = document.querySelector('.hero-kicker');
 heroKicker?.remove();
 
@@ -35,6 +40,12 @@ const partnershipsParagraph = document.querySelector('.partnerships-heading > p:
 if (partnershipsParagraph) {
   partnershipsParagraph.textContent = 'אנו מזמינים אתכם להיות שותפים ביצירת הזדמנויות חינוכיות משמעותיות, בהתאם לתחום ההשפעה שתרצו לקדם.';
 }
+
+document.querySelectorAll('.card-action').forEach((action) => {
+  const icon = action.querySelector('svg');
+  action.replaceChildren(document.createTextNode('לפרטי המסלול'));
+  if (icon) action.appendChild(icon);
+});
 
 const navToggle = document.querySelector('.nav-toggle');
 const mainNav = document.getElementById('mainNav');
