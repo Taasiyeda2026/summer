@@ -1,3 +1,30 @@
+const compactDesktopStyle = document.createElement('style');
+compactDesktopStyle.textContent = `
+  @media (min-width: 901px) {
+    html {
+      zoom: .70;
+      background: #eef2f5;
+    }
+
+    body {
+      width: 100%;
+      max-width: 1600px;
+      margin-inline: auto;
+      background: #fff;
+      box-shadow: 0 0 60px rgba(7, 29, 51, .10);
+    }
+
+    .site-header,
+    main,
+    .site-footer {
+      width: 100%;
+      max-width: 1600px;
+      margin-inline: auto;
+    }
+  }
+`;
+document.head.appendChild(compactDesktopStyle);
+
 const navToggle = document.querySelector('.nav-toggle');
 const mainNav = document.getElementById('mainNav');
 
