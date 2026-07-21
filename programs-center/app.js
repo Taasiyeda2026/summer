@@ -1,7 +1,12 @@
 const pageLayoutStyle = document.createElement('link');
 pageLayoutStyle.rel = 'stylesheet';
-pageLayoutStyle.href = './layout-fixes.css?v=2';
+pageLayoutStyle.href = './layout-fixes.css?v=3';
 document.head.appendChild(pageLayoutStyle);
+
+const narrowShellStyle = document.createElement('link');
+narrowShellStyle.rel = 'stylesheet';
+narrowShellStyle.href = './narrow-shell.css?v=1';
+document.head.appendChild(narrowShellStyle);
 
 const aboutParagraph = document.querySelector('.about-section .compact-heading > p:last-child');
 if (aboutParagraph) {
