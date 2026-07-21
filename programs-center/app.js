@@ -1,12 +1,25 @@
 const pageLayoutStyle = document.createElement('link');
 pageLayoutStyle.rel = 'stylesheet';
-pageLayoutStyle.href = './layout-fixes.css?v=3';
+pageLayoutStyle.href = './layout-fixes.css?v=5';
 document.head.appendChild(pageLayoutStyle);
 
 const narrowShellStyle = document.createElement('link');
 narrowShellStyle.rel = 'stylesheet';
-narrowShellStyle.href = './narrow-shell.css?v=1';
+narrowShellStyle.href = './narrow-shell.css?v=2';
 document.head.appendChild(narrowShellStyle);
+
+const compactControlsStyle = document.createElement('link');
+compactControlsStyle.rel = 'stylesheet';
+compactControlsStyle.href = './compact-controls.css?v=1';
+document.head.appendChild(compactControlsStyle);
+
+const heroKicker = document.querySelector('.hero-kicker');
+heroKicker?.remove();
+
+const heroTitle = document.getElementById('heroTitle');
+if (heroTitle) {
+  heroTitle.textContent = 'שותפות חינוכית לקידום דור העתיד בקהילה';
+}
 
 const aboutParagraph = document.querySelector('.about-section .compact-heading > p:last-child');
 if (aboutParagraph) {
