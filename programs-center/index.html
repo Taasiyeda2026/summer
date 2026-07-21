@@ -143,14 +143,7 @@
       <div class="modal-body"><div class="modal-summary" id="modalSummary"></div><div class="modal-tools"><div class="modal-price" id="modalPrice"></div><a class="pdf-link" id="modalPdf" href="#" target="_blank" rel="noopener" aria-label="פתיחת פרטי הקורס"><svg class="pdf-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.75h7.2L18.25 7.8V21.25H6z"></path><path d="M13 2.75V8h5.25"></path><path d="M8.5 16.25h7"></path><path d="M8.5 13.25h7"></path></svg><span>לפרטי הקורס</span></a></div></div>
     </div>
   </div>
-  <script src="../programs/programs.js?v=8"></script>
-  <script>
-    programs.forEach((program) => {
-      if (program.pdf && program.pdf.startsWith('./')) {
-        program.pdf = `../programs/${program.pdf.slice(2)}`;
-      }
-    });
-  </script>
+  <script src="./programs.js?v=1"></script>
   <script src="./support-form.js?v=1"></script>
 </body>
 </html>
