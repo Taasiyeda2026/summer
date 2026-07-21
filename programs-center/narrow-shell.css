@@ -1,0 +1,18 @@
+/* Keep only the programs-center page compact on wide desktop screens. */
+@media (min-width: 1121px) {
+  html {
+    background: #eef2f5;
+  }
+
+  :root {
+    --container: min(920px, calc(100% - 48px));
+  }
+
+  body {
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+    background: #fff;
+    box-shadow: 0 0 60px rgba(7, 29, 51, .10);
+  }
+}
