@@ -12,11 +12,12 @@
   <link rel="stylesheet" href="./pdf.css?v=6">
   <link rel="stylesheet" href="./header-compact.css?v=1">
   <link rel="stylesheet" href="./section-polish.css?v=1">
-  <link rel="stylesheet" href="./support-form.css?v=2">
+  <link rel="stylesheet" href="./support-form.css?v=3">
   <link rel="stylesheet" href="./program-grid-polish.css?v=1">
   <link rel="stylesheet" href="./visual-images.css?v=2">
   <link rel="stylesheet" href="./redesign.css?v=1">
-  <link rel="stylesheet" href="./compact-tuning.css?v=2">
+  <link rel="stylesheet" href="./compact-tuning.css?v=3">
+  <link rel="stylesheet" href="./inquiry-submit.css?v=1">
 </head>
 <body>
   <main class="page">
@@ -88,32 +89,46 @@
       <section class="support-section" id="contact" aria-labelledby="supportTitle">
         <div class="support-head">
           <h2 id="supportTitle">מעוניינים להתאים תוכנית למסגרת החינוכית?</h2>
-          <p>בחרו תוכנית והיקף פעילות והשאירו את פרטי איש הקשר. הנתונים שלהלן מאפשרים להעריך את היקף הפעילות והעלות.</p>
+          <p>בחרו תוכנית והיקף פעילות והשאירו את פרטי איש הקשר. הפנייה תועבר לצוות תעשיידע ונחזור אליכם בהקדם.</p>
         </div>
-        <form class="support-form" id="supportInterestForm" novalidate>
+        <form class="support-form" id="supportInterestForm" action="https://formsubmit.co/office@think.org.il" method="POST" novalidate>
+          <input type="hidden" name="_subject" id="supportSubject" value="פנייה חדשה מאתר תוכניות תעשיידע">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://taasiyeda2026.github.io/summer/programs/?submitted=1#contact">
+          <input type="hidden" name="_url" value="https://taasiyeda2026.github.io/summer/programs/">
+          <input type="hidden" name="_autoresponse" value="שלום, פנייתכם התקבלה בהצלחה. צוות תעשיידע יעבור על הפרטים ויחזור אליכם בהקדם. תודה, תעשיידע – תעשייה למען חינוך מתקדם.">
+          <input type="hidden" name="מחיר לקבוצה" id="supportUnitPriceField" value="לא נבחר">
+          <input type="hidden" name="עלות משוערת" id="supportAmountField" value="לא חושב">
+          <label class="support-honeypot" aria-hidden="true">אין למלא שדה זה<input type="text" id="supportWebsite" name="_honey" tabindex="-1" autocomplete="off"></label>
+
           <div class="support-form-grid">
             <div class="support-card support-contact-card">
               <div class="support-card-heading"><span class="support-card-kicker">פרטי קשר</span><h3>פרטי איש הקשר והמסגרת</h3></div>
               <div class="support-fields-grid">
-                <label class="support-field support-name"><span class="support-label">שם מלא</span><input type="text" id="supportName" name="supportName" placeholder="שם מלא" autocomplete="name"></label>
-                <label class="support-field support-role"><span class="support-label">תפקיד</span><input type="text" id="supportRole" name="supportRole" placeholder="תפקיד" autocomplete="organization-title"></label>
-                <label class="support-field support-company support-field-wide"><span class="support-label">בית ספר / רשות / ארגון</span><input type="text" id="supportCompany" name="supportCompany" placeholder="שם המסגרת" autocomplete="organization"></label>
-                <label class="support-field support-phone"><span class="support-label">מספר טלפון</span><input type="tel" id="supportPhone" name="supportPhone" placeholder="050-0000000" autocomplete="tel"></label>
-                <label class="support-field support-email"><span class="support-label">כתובת דוא״ל</span><input type="email" id="supportEmail" name="supportEmail" placeholder="name@company.com" autocomplete="email"></label>
+                <label class="support-field support-name"><span class="support-label">שם מלא</span><input type="text" id="supportName" name="שם מלא" placeholder="שם מלא" autocomplete="name" required minlength="2"></label>
+                <label class="support-field support-role"><span class="support-label">תפקיד</span><input type="text" id="supportRole" name="תפקיד" placeholder="תפקיד" autocomplete="organization-title"></label>
+                <label class="support-field support-company support-field-wide"><span class="support-label">בית ספר / רשות / ארגון</span><input type="text" id="supportCompany" name="מסגרת" placeholder="שם המסגרת" autocomplete="organization" required minlength="2"></label>
+                <label class="support-field support-phone"><span class="support-label">מספר טלפון</span><input type="tel" id="supportPhone" name="טלפון" placeholder="050-0000000" autocomplete="tel" required minlength="7"></label>
+                <label class="support-field support-email"><span class="support-label">כתובת דוא״ל</span><input type="email" id="supportEmail" name="email" placeholder="name@company.com" autocomplete="email" required></label>
               </div>
             </div>
             <div class="support-card support-selection-card">
               <div class="support-card-heading"><span class="support-card-kicker">בחירת פעילות</span><h3>תוכנית ומספר קבוצות</h3></div>
               <div class="support-selection-fields">
-                <label class="support-field support-program"><span class="support-label">תוכנית</span><select id="supportProgram" name="supportProgram"><option value="">בחירת תוכנית</option></select></label>
-                <label class="support-field support-program"><span class="support-label">יישוב שבו תרצו לקדם את התוכנית</span><input type="text" id="supportLocality" name="supportLocality" placeholder="שם היישוב" autocomplete="address-level2"></label>
+                <label class="support-field support-program"><span class="support-label">תוכנית</span><select id="supportProgram" name="תוכנית" required><option value="">בחירת תוכנית</option></select></label>
+                <label class="support-field support-program"><span class="support-label">יישוב שבו תרצו לקדם את התוכנית</span><input type="text" id="supportLocality" name="יישוב" placeholder="שם היישוב" autocomplete="address-level2" required></label>
                 <div class="support-unit-price" aria-live="polite"><span>מחיר לקבוצה</span><output id="supportUnitPrice">—</output></div>
-                <label class="support-field support-groups"><span class="support-label">מספר קבוצות</span><input type="number" id="supportGroups" name="supportGroups" value="1" min="1" step="1" inputmode="numeric"></label>
+                <label class="support-field support-groups"><span class="support-label">מספר קבוצות</span><input type="number" id="supportGroups" name="מספר קבוצות" value="1" min="1" max="999" step="1" inputmode="numeric" required></label>
               </div>
               <div class="support-summary"><span class="support-summary-label">עלות הפעילות המשוערת</span><output class="support-amount" id="supportAmount" for="supportProgram supportGroups" aria-live="polite">—</output><span class="support-summary-note">הסכום מחושב לפי מחיר התוכנית לקבוצה ומספר הקבוצות.</span></div>
             </div>
           </div>
-          <div class="support-note">בשלב זה הפרטים אינם נשלחים או נשמרים.</div>
+
+          <div class="support-form-actions">
+            <button class="support-submit" id="supportSubmit" type="submit">שליחת הפנייה</button>
+            <p class="support-form-status" id="supportFormStatus" role="status" aria-live="polite"></p>
+            <div class="support-note">הפרטים יישמרו לצורך טיפול בפנייה ויישלחו לצוות תעשיידע.</div>
+          </div>
         </form>
       </section>
       <footer class="site-footer">תעשיידע – תעשייה למען חינוך מתקדם</footer>
@@ -127,6 +142,6 @@
     </div>
   </div>
   <script src="./programs.js?v=8"></script>
-  <script src="./support-form.js?v=2"></script>
+  <script src="./support-form.js?v=3"></script>
 </body>
 </html>
