@@ -1,4 +1,4 @@
-/* Strict page-only typography and compact control rules for programs-center. */
+/* Strict page-only typography, compact controls and compact layout rules. */
 
 *,
 *::before,
@@ -19,51 +19,448 @@
   white-space: nowrap;
 }
 
+/* Compact page shell */
+@media (min-width: 1121px) {
+  :root {
+    --container: min(820px, calc(100% - 40px)) !important;
+  }
+
+  body {
+    max-width: 980px !important;
+  }
+}
+
+/* Header */
+.header-inner {
+  min-height: 64px !important;
+  gap: 18px !important;
+}
+
+.brand img {
+  height: 38px !important;
+}
+
+.brand span {
+  max-width: 118px !important;
+  font-size: .7rem !important;
+}
+
+.main-nav {
+  gap: 20px !important;
+}
+
+.header-cta {
+  min-height: 38px !important;
+  padding-inline: 15px !important;
+}
+
+/* Hero */
+.hero {
+  min-height: 470px !important;
+}
+
+.hero-content {
+  padding-block: 54px 62px !important;
+}
+
+.hero-content > * {
+  max-width: 580px !important;
+}
+
 .hero h1 {
-  max-width: 650px;
-  font-size: clamp(2.65rem, 4.3vw, 3.9rem);
-  line-height: 1.08;
+  max-width: 580px !important;
+  font-size: clamp(2.45rem, 4vw, 3.45rem) !important;
+  line-height: 1.08 !important;
+}
+
+.hero-text {
+  max-width: 560px !important;
+  margin-top: 18px !important;
+  font-size: 1.02rem !important;
+  line-height: 1.58 !important;
 }
 
 .hero-actions {
-  display: flex;
+  display: flex !important;
   align-items: center;
-  gap: 10px;
+  gap: 9px !important;
+  margin-top: 22px !important;
 }
 
 .hero-actions .button {
-  width: 190px !important;
-  min-width: 190px !important;
-  min-height: 42px;
-  padding-inline: 14px;
+  width: 184px !important;
+  min-width: 184px !important;
+  min-height: 40px !important;
+  padding-inline: 12px !important;
+}
+
+/* Global section spacing */
+.section {
+  padding: 54px 0 !important;
+}
+
+.about-section {
+  padding-top: 50px !important;
+}
+
+.section-heading,
+.section-heading.compact-heading,
+.partnerships-heading {
+  max-width: 650px !important;
+  margin-inline: auto !important;
+}
+
+.section-heading h2,
+.contact-copy h2,
+.closing-content h2 {
+  font-size: clamp(1.85rem, 3vw, 2.45rem) !important;
+  line-height: 1.12 !important;
+}
+
+.section-heading > p:last-child,
+.about-section .compact-heading > p:last-child {
+  max-width: 650px !important;
+  margin: 13px auto 0 !important;
+  font-size: .95rem !important;
+  line-height: 1.62 !important;
+}
+
+.eyebrow {
+  margin-bottom: 8px !important;
+}
+
+/* About facts */
+.facts-grid {
+  max-width: 660px !important;
+  grid-template-columns: repeat(3, minmax(0, 210px)) !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin: 24px auto 0 !important;
+}
+
+.fact {
+  min-height: 94px !important;
+  padding: 14px 16px !important;
+  border-radius: 14px !important;
+}
+
+.fact::before {
+  width: 25px !important;
+  height: 2px !important;
+  margin-bottom: 9px !important;
+}
+
+.fact strong {
+  font-size: 1.08rem !important;
+}
+
+.fact span {
+  margin-top: 4px !important;
+  font-size: .81rem !important;
+}
+
+/* Impact and process cards */
+.impact-grid,
+.process-grid {
+  max-width: 790px !important;
+  gap: 10px !important;
+  margin: 26px auto 0 !important;
+}
+
+.impact-card,
+.process-grid li {
+  min-height: 176px !important;
+  padding: 16px !important;
+  border-radius: 14px !important;
+}
+
+.icon-wrap,
+.tax-icon,
+.step-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 11px !important;
+}
+
+.icon-wrap svg,
+.tax-icon svg,
+.step-icon svg,
+.contact-promise svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.impact-card h3,
+.process-grid h3 {
+  margin-top: 12px !important;
+  font-size: 1.02rem !important;
+}
+
+.impact-card p,
+.process-grid p {
+  margin-top: 6px !important;
+  font-size: .82rem !important;
+  line-height: 1.5 !important;
+}
+
+.tax-note {
+  max-width: 790px !important;
+  margin: 14px auto 0 !important;
+  padding: 13px 16px !important;
+  gap: 12px !important;
+  border-radius: 14px !important;
+}
+
+.tax-note strong {
+  font-size: .92rem !important;
+}
+
+.tax-note p {
+  font-size: .8rem !important;
+}
+
+/* Partnership cards */
+.partnership-grid {
+  max-width: 820px !important;
+  gap: 12px !important;
+  margin: 28px auto 0 !important;
+}
+
+.partnership-card {
+  border-radius: 15px !important;
+}
+
+.card-toggle {
+  min-height: 280px !important;
+  padding: 18px 17px 16px !important;
+}
+
+.route-label {
+  margin-top: 15px !important;
+  font-size: 1.28rem !important;
+}
+
+.route-description {
+  margin-top: 10px !important;
+  font-size: .84rem !important;
+  line-height: 1.5 !important;
+}
+
+.route-highlight {
+  padding-top: 13px !important;
+  font-size: .79rem !important;
+  line-height: 1.4 !important;
+}
+
+.route-highlight::before {
+  width: 25px !important;
+  margin-bottom: 8px !important;
 }
 
 .card-action {
   width: auto !important;
   max-width: 100%;
+  min-height: 35px !important;
+  margin-top: 12px !important;
+  padding-inline: 12px !important;
   align-self: flex-start;
   display: inline-flex;
   justify-content: center;
-  padding-inline: 14px;
+  font-size: .78rem !important;
 }
 
-.select-route,
-.form-submit,
-.closing-content .button,
-.header-cta {
-  min-width: 0 !important;
+.premium-badge {
+  top: 12px !important;
+  left: 12px !important;
+}
+
+.route-details-host,
+.comparison-wrap {
+  max-width: 820px !important;
+}
+
+.route-details-host .card-details {
+  max-width: 650px !important;
+  padding: 19px 21px !important;
+}
+
+.detail-note {
+  margin-top: 12px !important;
+  padding: 10px 12px !important;
+}
+
+.select-route {
+  margin-top: 14px !important;
+}
+
+.comparison-wrap {
+  margin-top: 34px !important;
+  padding: 19px !important;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 10px 11px !important;
+  font-size: .81rem !important;
+}
+
+/* Process */
+.step-number {
+  top: 13px !important;
+  left: 14px !important;
+}
+
+.premium-process-note {
+  max-width: 620px !important;
+  margin-top: 15px !important;
+  padding: 10px 14px !important;
+  font-size: .84rem !important;
+}
+
+/* Closing area */
+.closing-cta {
+  min-height: 290px !important;
+}
+
+.closing-content {
+  padding-block: 44px !important;
+}
+
+.closing-content > * {
+  max-width: 560px !important;
+}
+
+.closing-content > p:not(.eyebrow) {
+  margin-top: 13px !important;
+  font-size: .94rem !important;
+}
+
+.closing-content .button {
+  margin-top: 18px !important;
+}
+
+/* Contact */
+.contact-layout {
+  max-width: 800px !important;
+  grid-template-columns: minmax(0, .78fr) minmax(400px, 1.22fr) !important;
+  gap: 32px !important;
+}
+
+.contact-copy {
+  top: 84px !important;
+}
+
+.contact-copy > p:not(.eyebrow) {
+  margin-top: 13px !important;
+  font-size: .91rem !important;
+}
+
+.contact-promise {
+  margin-top: 16px !important;
+  padding: 12px !important;
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 470px !important;
+  padding: 20px !important;
+}
+
+.form-grid {
+  gap: 11px !important;
+}
+
+.form-grid input,
+.form-grid select {
+  height: 42px !important;
+}
+
+.form-grid textarea {
+  min-height: 88px !important;
+}
+
+.form-submit {
+  margin-top: 15px !important;
+}
+
+.site-footer {
+  padding: 18px 0 !important;
+}
+
+.footer-inner img {
+  height: 33px !important;
+}
+
+@media (max-width: 1050px) {
+  :root {
+    --container: min(820px, calc(100% - 36px)) !important;
+  }
+
+  .contact-layout {
+    max-width: 700px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-copy {
+    max-width: 620px !important;
+  }
+
+  .contact-form {
+    margin-inline: auto;
+  }
 }
 
 @media (max-width: 760px) {
+  :root {
+    --container: min(100% - 28px, 620px) !important;
+  }
+
+  .header-inner {
+    min-height: 64px !important;
+  }
+
+  .hero {
+    min-height: 500px !important;
+  }
+
+  .hero-content {
+    padding-block: 64px 58px !important;
+  }
+
   .hero-actions {
-    display: flex !important;
     flex-direction: column;
     align-items: flex-start;
   }
 
   .hero-actions .button {
-    width: 190px !important;
-    min-width: 190px !important;
+    width: 184px !important;
+    min-width: 184px !important;
+  }
+
+  .section {
+    padding: 46px 0 !important;
+  }
+
+  .about-section {
+    padding-top: 44px !important;
+  }
+
+  .facts-grid,
+  .impact-grid,
+  .partnership-grid,
+  .process-grid {
+    max-width: 440px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .fact,
+  .impact-card,
+  .process-grid li {
+    min-height: 0 !important;
+  }
+
+  .card-toggle {
+    min-height: 250px !important;
   }
 
   .form-submit,
@@ -71,16 +468,25 @@
     width: fit-content !important;
   }
 
+  .contact-form {
+    max-width: 470px !important;
+    padding: 18px 16px !important;
+  }
+
   .mobile-sticky-cta {
     right: 50%;
     left: auto;
     width: auto !important;
     transform: translateX(50%);
-    padding-inline: 20px;
+    padding-inline: 18px;
   }
 }
 
 @media (max-width: 420px) {
+  :root {
+    --container: calc(100% - 22px) !important;
+  }
+
   .card-action,
   .select-route {
     width: fit-content !important;
