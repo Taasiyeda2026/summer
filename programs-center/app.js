@@ -25,6 +25,11 @@ compactDesktopStyle.textContent = `
 `;
 document.head.appendChild(compactDesktopStyle);
 
+const aboutParagraph = document.querySelector('.about-section .compact-heading > p:last-child');
+if (aboutParagraph) {
+  aboutParagraph.textContent = 'תעשיידע, מיסודה של התאחדות התעשיינים בישראל, פועלת מאז 1992 לחיבור משמעותי בין מערכת החינוך לבין עולם התעשייה. באמצעות תוכניות חינוכיות תהליכיות המתקיימות בפריסה ארצית, תלמידות ותלמידים נחשפים לעולמות המדע, הטכנולוגיה, ההנדסה, היזמות והחדשנות, מתמודדים עם אתגרים מעשיים ומפתחים את הידע, הכלים והמיומנויות הנדרשים להם כדי ליצור, ליזום ולהוביל בעולם המשתנה.';
+}
+
 const navToggle = document.querySelector('.nav-toggle');
 const mainNav = document.getElementById('mainNav');
 
