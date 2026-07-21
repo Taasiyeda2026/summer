@@ -1,65 +1,3 @@
-const compactDesktopStyle = document.createElement('style');
-compactDesktopStyle.textContent = `
-  @media (min-width: 901px) {
-    html {
-      zoom: .70;
-      background: #eef2f5;
-    }
-
-    body {
-      width: 100%;
-      max-width: 1600px;
-      margin-inline: auto;
-      background: #fff;
-      box-shadow: 0 0 60px rgba(7, 29, 51, .10);
-    }
-
-    .site-header,
-    main,
-    .site-footer {
-      width: 100%;
-      max-width: 1600px;
-      margin-inline: auto;
-    }
-
-    .facts-grid {
-      justify-items: center;
-    }
-
-    .fact {
-      position: relative;
-      width: 50%;
-      min-height: 120px;
-      padding: 22px 25px 22px 28px;
-      overflow: hidden;
-    }
-
-    .fact::before {
-      content: "";
-      position: absolute;
-      top: 18px;
-      right: 0;
-      bottom: 18px;
-      display: block;
-      width: 3px;
-      height: auto;
-      margin: 0;
-      border-radius: 3px 0 0 3px;
-      background: var(--navy);
-      opacity: .72;
-    }
-
-    .fact:nth-child(2)::before {
-      background: var(--teal);
-    }
-
-    .fact:nth-child(3)::before {
-      background: var(--gold);
-    }
-  }
-`;
-document.head.appendChild(compactDesktopStyle);
-
 const aboutParagraph = document.querySelector('.about-section .compact-heading > p:last-child');
 if (aboutParagraph) {
   aboutParagraph.textContent = 'תעשיידע, מיסודה של התאחדות התעשיינים בישראל, פועלת מאז 1992 לחיבור משמעותי בין מערכת החינוך לבין עולם התעשייה. באמצעות תוכניות חינוכיות תהליכיות המתקיימות בפריסה ארצית, תלמידות ותלמידים נחשפים לעולמות המדע, הטכנולוגיה, ההנדסה, היזמות והחדשנות, מתמודדים עם אתגרים מעשיים ומפתחים את הידע, הכלים והמיומנויות הנדרשים להם כדי ליצור, ליזום ולהוביל בעולם המשתנה.';
@@ -93,23 +31,63 @@ if (navToggle && mainNav) {
 }
 
 const routeCards = [...document.querySelectorAll('.partnership-card')];
+const partnershipGrid = document.querySelector('.partnership-grid');
+const routeDetailsHost = document.createElement('div');
+let activeRouteCard = null;
+
+if (partnershipGrid) {
+  routeDetailsHost.className = 'route-details-host';
+  routeDetailsHost.hidden = true;
+  partnershipGrid.insertAdjacentElement('afterend', routeDetailsHost);
+}
+
+function getCardDetails(card) {
+  const toggle = card?.querySelector('.card-toggle');
+  const detailsId = toggle?.getAttribute('aria-controls');
+  return detailsId ? document.getElementById(detailsId) : null;
+}
+
+function useSharedDetailsPanel() {
+  return window.matchMedia('(min-width: 761px)').matches;
+}
+
+function placeCardDetails(card) {
+  const details = getCardDetails(card);
+  if (!details) return;
+
+  if (useSharedDetailsPanel() && partnershipGrid) {
+    routeDetailsHost.appendChild(details);
+    routeDetailsHost.hidden = false;
+  } else {
+    card.appendChild(details);
+    routeDetailsHost.hidden = true;
+  }
+}
 
 function closeCard(card) {
   const toggle = card.querySelector('.card-toggle');
-  const details = card.querySelector('.card-details');
+  const details = getCardDetails(card);
   if (!toggle || !details) return;
+
   toggle.setAttribute('aria-expanded', 'false');
   details.hidden = true;
   card.classList.remove('is-open');
+
+  if (activeRouteCard === card) activeRouteCard = null;
+  if (!activeRouteCard) routeDetailsHost.hidden = true;
 }
 
 function openCard(card) {
   routeCards.forEach((otherCard) => {
     if (otherCard !== card) closeCard(otherCard);
   });
+
   const toggle = card.querySelector('.card-toggle');
-  const details = card.querySelector('.card-details');
+  const details = getCardDetails(card);
   if (!toggle || !details) return;
+
+  activeRouteCard = card;
+  placeCardDetails(card);
   toggle.setAttribute('aria-expanded', 'true');
   details.hidden = false;
   card.classList.add('is-open');
@@ -118,6 +96,7 @@ function openCard(card) {
 routeCards.forEach((card) => {
   const toggle = card.querySelector('.card-toggle');
   if (!toggle) return;
+
   toggle.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     if (isOpen) closeCard(card);
@@ -142,4 +121,5 @@ document.querySelectorAll('[data-select-route]').forEach((button) => {
 
 window.addEventListener('resize', () => {
   if (window.innerWidth > 760) setNavigationState(false);
+  if (activeRouteCard) placeCardDetails(activeRouteCard);
 });
