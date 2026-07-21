@@ -5,12 +5,12 @@ document.head.appendChild(pageLayoutStyle);
 
 const narrowShellStyle = document.createElement('link');
 narrowShellStyle.rel = 'stylesheet';
-narrowShellStyle.href = './narrow-shell.css?v=2';
+narrowShellStyle.href = './narrow-shell.css?v=3';
 document.head.appendChild(narrowShellStyle);
 
 const compactControlsStyle = document.createElement('link');
 compactControlsStyle.rel = 'stylesheet';
-compactControlsStyle.href = './compact-controls.css?v=1';
+compactControlsStyle.href = './compact-controls.css?v=2';
 document.head.appendChild(compactControlsStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
