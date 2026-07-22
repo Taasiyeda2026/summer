@@ -588,3 +588,19 @@
 .selected-route-summary.has-selection strong {
   color: #0d6276;
 }
+
+/* Center the submit button in the programs-center contact form */
+#partnershipForm {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#partnershipForm #formSubmit {
+  display: inline-flex !important;
+  width: fit-content !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 12px auto 0 !important;
+  align-self: center !important;
+  justify-self: center !important;
+}
