@@ -1,0 +1,140 @@
+יש להעביר את שדה „מספר קבוצות” לתחתית, ליד כפתור בחירת המסלול, בשלושת המסלולים:
+
+מסלול פורצות דרך
+מסלול רוקחים עולם
+מסלול פרימיום תעשייתי
+
+כרגע שדה מספר הקבוצות מופיע בנפרד מתחת לכותרת. יש להשאיר את המחיר במקומו העליון ולהעביר רק את שדה מספר הקבוצות לשורה התחתונה, לצד כפתור הבחירה.
+
+לבצע את השינוי בקובץ:
+
+programs-center/app.js
+
+1. הוספת עיצוב לשורת הפעולות
+
+בתוך uiStyle.textContent, להוסיף:
+
+.special-route-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+
+  width: 100% !important;
+  margin-top: 10px !important;
+
+  direction: rtl !important;
+}
+
+.special-route-actions .select-route {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+
+.special-route-actions .special-quantity-control {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.special-route-actions .special-quantity-control label {
+  margin: 0 !important;
+  white-space: nowrap !important;
+  letter-spacing: normal !important;
+}
+
+@media (max-width: 520px) {
+  .special-route-actions {
+    flex-wrap: wrap !important;
+  }
+}
+
+אין להשתמש בריווח אותיות שלילי.
+
+2. הוספת פונקציה להעברת השדה לתחתית
+
+לאחר יצירת כרטיס רוקחים עולם ולפני עדכון מספרי הכרטיסים, להוסיף:
+
+function placeSpecialRouteActions(card) {
+  if (!card) return;
+
+  const details = card.querySelector('.card-details');
+  const quantityControl = details?.querySelector(
+    '.special-quantity-control'
+  );
+  const selectButton = details?.querySelector(
+    ':scope > .select-route'
+  );
+
+  if (!details || !quantityControl || !selectButton) return;
+
+  let actions = details.querySelector('.special-route-actions');
+
+  if (!actions) {
+    actions = document.createElement('div');
+    actions.className = 'special-route-actions';
+    details.appendChild(actions);
+  }
+
+  actions.append(selectButton, quantityControl);
+}
+
+const pharmaCard = document.querySelector(
+  '.partnership-card[data-card="pharma"]'
+);
+
+[
+  trailblazersCard,
+  pharmaCard,
+  premiumCard
+].forEach(placeSpecialRouteActions);
+3. התוצאה הנדרשת
+
+בתחתית כל אחד משלושת המסלולים תופיע שורה אחת:
+
+[כפתור בחירת המסלול]   [מספר קבוצות] [שדה הכמות]
+
+בכיוון RTL:
+
+כפתור הבחירה יהיה בצד ימין.
+שדה מספר הקבוצות יהיה מיד משמאל לכפתור.
+שניהם יהיו קומפקטיים ובאותה שורה.
+לא למרכז את השורה לרוחב כל התיבה.
+לא להרחיב את הכפתור.
+לא לשנות את גודל הכפתורים הקיים.
+4. אין לשנות
+את מיקום תג המחיר העליון.
+את טבלאות המחירים.
+את ברירת המחדל של קבוצה אחת.
+את טווח הבחירה של 1–6 קבוצות.
+את מנגנון עדכון המחיר.
+את תוכן המסלולים.
+את הכרטיסים החיצוניים.
+את מסלולי היסודי והחטיבות.
+
+העברת רכיבי ה־DOM לא תפגע בעדכון המחיר, משום שהשדות ממשיכים לשמור על data-special-type והמחירים ממשיכים לשמור על data-special-price.
+
+5. עדכון מטמון
+
+בקובץ:
+
+programs-center/index.html
+
+להחליף:
+
+<script src="./app.js?v=28"></script>
+
+ב־:
+
+<script src="./app.js?v=29"></script>
+
+להשאיר ללא שינוי:
+
+<script src="./support-form.js?v=27"></script>
+
+אין צורך לשנות גרסאות CSS חיצוניות, משום שהעיצוב החדש נוסף בתוך app.js.

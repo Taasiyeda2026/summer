@@ -11,6 +11,7 @@ uiStyle.textContent = `
 .scope-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px}.scope-option{display:flex;flex-direction:column;min-width:0;padding:12px;border:1px solid #dfe7ec;border-radius:12px;background:#f8fafb}.scope-option h4{margin:0;color:var(--navy);font-size:.86rem;line-height:1.3}.scope-option p{margin:6px 0 0;color:#596d7c;font-size:.71rem;line-height:1.45}.scope-price{display:inline-flex;align-items:center;width:fit-content;margin:8px 0 0;padding:4px 8px;border:1px solid #d8e5ea;border-radius:999px;background:#f2f7f9;color:#176f8c;font-size:.69rem;font-weight:800;line-height:1.1;letter-spacing:normal;white-space:nowrap}.scope-option .select-route{margin-top:auto!important}.group-control{display:flex;align-items:center;gap:7px;margin-top:8px}.group-control label{color:#596d7c;font-size:.68rem;font-weight:700}.group-count-input,.route-groups-field input{width:62px!important;min-width:62px!important;height:30px!important;min-height:30px!important;padding:3px 7px!important;border:1px solid #ccdbe2!important;border-radius:8px!important;background:#fff!important;color:#173752!important;font-size:.76rem!important;font-weight:700!important;text-align:center}.programs-subheading{margin:2px 0 8px;color:var(--navy);font-size:.86rem;line-height:1.3}.route-groups-field[hidden]{display:none!important}.route-groups-field small{display:block;margin-top:4px;color:#71828e;font-size:.65rem;line-height:1.35}
 @media(min-width:900px){.partnerships-section .partnership-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}@media(max-width:760px){.scope-options{grid-template-columns:1fr}.about-read-more{font-size:.7rem}}
 .special-quantity-control{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;margin:10px auto 12px!important}.special-quantity-control label{margin:0!important;white-space:nowrap!important;letter-spacing:normal!important}
+.special-route-actions{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;width:100%!important;margin-top:10px!important;direction:rtl!important}.special-route-actions .select-route{flex:0 0 auto!important;margin:0!important}.special-route-actions .special-quantity-control{display:flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:flex-start!important;width:auto!important;margin:0!important;padding:0!important}.special-route-actions .special-quantity-control label{margin:0!important;white-space:nowrap!important;letter-spacing:normal!important}@media(max-width:520px){.special-route-actions{flex-wrap:wrap!important}}
 `;
 document.head.appendChild(uiStyle);
 
@@ -160,6 +161,23 @@ if (premiumCard) {
       </div>
     </article>`);
 }
+
+function placeSpecialRouteActions(card) {
+  if (!card) return;
+  const details = card.querySelector('.card-details');
+  const quantityControl = details?.querySelector('.special-quantity-control');
+  const selectButton = details?.querySelector(':scope > .select-route');
+  if (!details || !quantityControl || !selectButton) return;
+  let actions = details.querySelector('.special-route-actions');
+  if (!actions) {
+    actions = document.createElement('div');
+    actions.className = 'special-route-actions';
+    details.appendChild(actions);
+  }
+  actions.append(selectButton, quantityControl);
+}
+const pharmaCard = document.querySelector('.partnership-card[data-card="pharma"]');
+[trailblazersCard, pharmaCard, premiumCard].forEach(placeSpecialRouteActions);
 
 document.querySelectorAll('.partnership-card .route-number').forEach((number, index) => { number.textContent = String(index + 1).padStart(2, '0'); });
 document.querySelectorAll('.card-action').forEach((action) => {
