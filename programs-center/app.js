@@ -1,4 +1,4 @@
-['layout-fixes.css?v=25','narrow-shell.css?v=25','compact-controls.css?v=25','partnership-cards-compact.css?v=25','micro-ui-fixes.css?v=25'].forEach((href) => {
+['layout-fixes.css?v=27','narrow-shell.css?v=27','compact-controls.css?v=27','partnership-cards-compact.css?v=27','micro-ui-fixes.css?v=27'].forEach((href) => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.href = `./${href}`;
@@ -14,6 +14,17 @@ uiStyle.textContent = `
 document.head.appendChild(uiStyle);
 
 const formatPrice = (amount) => `${new Intl.NumberFormat('he-IL').format(amount)} ₪`;
+
+const quantityPrices = Object.freeze({
+  elementary: Object.freeze({ 1: 9500, 2: 18500, 3: 27450, 4: 36000, 5: 45000, 6: 54000, 7: 63000, 8: 72000 }),
+  middle:     Object.freeze({ 1: 10000, 2: 19500, 3: 28500, 4: 37000, 5: 45250, 6: 54000, 7: 63000, 8: 72000 })
+});
+function getQuantityPrice(type, quantity) { return quantityPrices[type]?.[quantity] ?? null; }
+function normalizeGradeQuantity(value) {
+  const quantity = parseInt(value, 10);
+  if (!Number.isFinite(quantity)) return 4;
+  return Math.min(8, Math.max(2, quantity));
+}
 const gradeState = { elementary: 4, middle: 4 };
 
 const heroTitle = document.getElementById('heroTitle');
@@ -52,13 +63,16 @@ if (partnershipsTitle) partnershipsTitle.textContent = 'בוחרים כיצד ל
 if (partnershipsEyebrow) partnershipsEyebrow.textContent = 'חמישה מסלולים לבחירה';
 if (partnershipsParagraph) partnershipsParagraph.textContent = 'בוחרים את קהל היעד ואת היקף הפעילות המתאים, או מסלול ייחודי המשלב תוכן מקצועי ומעורבות של החברה.';
 
-function scopeMarkup(type, singlePrice, annualPrice) {
+function scopeMarkup(type) {
   const label = type === 'elementary' ? 'יסודי' : 'חטיבות';
   const groupText = type === 'elementary' ? 'בכיתות ד׳–ו׳' : 'בחטיבת הביניים או בתיכון';
+  const singlePrice = getQuantityPrice(type, 1);
+  const gradePrice  = getQuantityPrice(type, 4);
+  const annualPrice = getQuantityPrice(type, 2);
   return `
     <div class="scope-options">
       <article class="scope-option"><h4>תוכנית לקבוצה אחת</h4><p>תוכנית חינוכית מלאה לקבוצת תלמידים אחת ${groupText}.</p><span class="scope-price">${formatPrice(singlePrice)}</span><button class="select-route" type="button" data-route-id="${type}-single">בחירת קבוצה אחת</button></article>
-      <article class="scope-option"><h4>פעילות שכבתית</h4><p>אותה תוכנית למספר כיתות מקבילות בבית ספר אחד. ברירת המחדל היא 4 קבוצות.</p><div class="group-control"><label for="${type}GradeGroups">מספר קבוצות</label><input class="group-count-input" id="${type}GradeGroups" type="number" min="2" max="20" step="1" value="4" data-grade-type="${type}"></div><span class="scope-price" data-scope-price="${type}-grade">${formatPrice(singlePrice * 4)}</span><button class="select-route" type="button" data-route-id="${type}-grade">בחירת מסלול שכבתי</button></article>
+      <article class="scope-option"><h4>פעילות שכבתית</h4><p>אותה תוכנית למספר כיתות מקבילות בבית ספר אחד. ברירת המחדל היא 4 קבוצות.</p><div class="group-control"><label for="${type}GradeGroups">מספר קבוצות</label><input class="group-count-input" id="${type}GradeGroups" type="number" min="2" max="8" step="1" value="4" data-grade-type="${type}"></div><span class="scope-price" data-scope-price="${type}-grade">${formatPrice(gradePrice)}</span><button class="select-route" type="button" data-route-id="${type}-grade">בחירת מסלול שכבתי</button></article>
       <article class="scope-option"><h4>מסלול שנתי</h4><p>שתי תוכניות חינוכיות במהלך שנת הלימודים במסלול ${label}.</p><span class="scope-price">${formatPrice(annualPrice)}</span><button class="select-route" type="button" data-route-id="${type}-annual">בחירת מסלול שנתי</button></article>
     </div>`;
 }
@@ -73,7 +87,7 @@ if (elementaryCard) {
   elementaryCard.querySelector('.route-description').textContent = 'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.';
   elementaryCard.querySelector('.details-heading h3').textContent = 'מסלול יסודי';
   elementaryCard.querySelector('.details-heading p').textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
-  elementaryCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('elementary', 9500, 18000));
+  elementaryCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('elementary'));
   elementaryCard.querySelector('.program-list')?.insertAdjacentHTML('beforebegin', '<h4 class="programs-subheading">תוכניות לבחירה</h4>');
   elementaryCard.querySelector('.card-details > .select-route')?.remove();
 }
@@ -83,7 +97,7 @@ if (middleCard) {
   middleCard.querySelector('.route-description').textContent = 'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.';
   middleCard.querySelector('.details-heading h3').textContent = 'מסלול חטיבות';
   middleCard.querySelector('.details-heading p').textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
-  middleCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('middle', 10000, 19000));
+  middleCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('middle'));
   middleCard.querySelector('.program-list')?.insertAdjacentHTML('beforebegin', '<h4 class="programs-subheading">תוכניות לבחירה</h4>');
   middleCard.querySelectorAll('.program-option').forEach((program) => {
     if ((program.querySelector('h4')?.textContent || '').includes('רוקחים עולם')) {
@@ -133,15 +147,15 @@ document.querySelectorAll('.card-action').forEach((action) => {
 });
 
 const routes = {
-  'elementary-single': { label: 'מסלול יסודי – קבוצה אחת', amount: 9500, groups: 1, unitPrice: 9500 },
-  'elementary-grade': { label: 'מסלול יסודי – פעילות שכבתית', amount: 38000, groups: 4, unitPrice: 9500, gradeType: 'elementary' },
-  'elementary-annual': { label: 'מסלול יסודי – שנתי', amount: 18000, groups: 1, unitPrice: null },
-  'middle-single': { label: 'מסלול חטיבות – קבוצה אחת', amount: 10000, groups: 1, unitPrice: 10000 },
-  'middle-grade': { label: 'מסלול חטיבות – פעילות שכבתית', amount: 40000, groups: 4, unitPrice: 10000, gradeType: 'middle' },
-  'middle-annual': { label: 'מסלול חטיבות – שנתי', amount: 19000, groups: 1, unitPrice: null },
-  trailblazers: { label: 'מסלול פורצות דרך', amount: 13000, groups: 1, unitPrice: 13000 },
-  pharma: { label: 'מסלול פארמצבטיקה – רוקחים עולם ואירוח בחברה', amount: 13000, groups: 1, unitPrice: 13000 },
-  premium: { label: 'מסלול פרימיום תעשייתי', amount: 15000, groups: 1, unitPrice: 15000 }
+  'elementary-single': { label: 'מסלול יסודי – קבוצה אחת',      amount: getQuantityPrice('elementary', 1), groups: 1, unitPrice: 9500 },
+  'elementary-grade':  { label: 'מסלול יסודי – פעילות שכבתית',  amount: getQuantityPrice('elementary', 4), groups: 4, unitPrice: null, gradeType: 'elementary' },
+  'elementary-annual': { label: 'מסלול יסודי – שנתי',            amount: getQuantityPrice('elementary', 2), groups: 2, unitPrice: null },
+  'middle-single':     { label: 'מסלול חטיבות – קבוצה אחת',     amount: getQuantityPrice('middle', 1),     groups: 1, unitPrice: 10000 },
+  'middle-grade':      { label: 'מסלול חטיבות – פעילות שכבתית', amount: getQuantityPrice('middle', 4),     groups: 4, unitPrice: null, gradeType: 'middle' },
+  'middle-annual':     { label: 'מסלול חטיבות – שנתי',           amount: getQuantityPrice('middle', 2),     groups: 2, unitPrice: null },
+  trailblazers: { label: 'מסלול פורצות דרך',                              amount: 13000, groups: 1, unitPrice: 13000 },
+  pharma:       { label: 'מסלול פארמצבטיקה – רוקחים עולם ואירוח בחברה', amount: 13000, groups: 1, unitPrice: 13000 },
+  premium:      { label: 'מסלול פרימיום תעשייתי',                         amount: 15000, groups: 1, unitPrice: 15000 }
 };
 
 const routeSelect = document.getElementById('partnershipRoute');
@@ -157,7 +171,7 @@ if (routeSelect) {
   });
 }
 
-routeSelectLabel?.insertAdjacentHTML('afterend', '<label class="full-field route-groups-field" hidden><span>מספר קבוצות במסלול השכבתי</span><input type="number" id="gradeGroupsForm" min="2" max="20" step="1" value="4"><small>ברירת המחדל היא 4 קבוצות. הסכום מתעדכן לפי מספר הקבוצות.</small></label>');
+routeSelectLabel?.insertAdjacentHTML('afterend', '<label class="full-field route-groups-field" hidden><span>מספר קבוצות במסלול השכבתי</span><input type="number" id="gradeGroupsForm" min="2" max="8" step="1" value="4"><small>ניתן לבחור בין 2 ל־8 קבוצות. הסכום מתעדכן לפי טבלת המחירים.</small></label>');
 const partnershipForm = document.getElementById('partnershipForm');
 partnershipForm?.insertAdjacentHTML('afterbegin', '<input type="hidden" id="routeGroups" name="מספר קבוצות" value="1"><input type="hidden" id="routeUnitPrice" name="מחיר לקבוצה" value=""><input type="hidden" id="routeEstimatedAmount" name="סכום התרומה" value="">');
 
@@ -186,14 +200,20 @@ function updateSummary() {
 function refreshGrade(type) {
   const id = `${type}-grade`;
   const route = routes[id];
-  route.groups = gradeState[type];
-  route.amount = route.groups * route.unitPrice;
+  if (!route) return;
+  const quantity = normalizeGradeQuantity(gradeState[type]);
+  const finalAmount = getQuantityPrice(type, quantity);
+  if (finalAmount === null) return;
+  gradeState[type] = quantity;
+  route.groups = quantity;
+  route.amount = finalAmount;
+  route.unitPrice = null;
   const option = getOption(id);
-  if (option) option.value = option.textContent = `${route.label} – ${route.groups} קבוצות – ${formatPrice(route.amount)}`;
+  if (option) { option.value = `${route.label} – ${quantity} קבוצות – ${formatPrice(finalAmount)}`; option.textContent = option.value; }
   const price = document.querySelector(`[data-scope-price="${id}"]`);
-  if (price) price.textContent = formatPrice(route.amount);
+  if (price) price.textContent = formatPrice(finalAmount);
   const cardInput = document.querySelector(`[data-grade-type="${type}"]`);
-  if (cardInput) cardInput.value = route.groups;
+  if (cardInput) cardInput.value = quantity;
   if (routeSelect?.selectedOptions?.[0]?.dataset.routeId === id) updateSummary();
 }
 function selectRoute(id) {
@@ -207,14 +227,14 @@ function selectRoute(id) {
 
 document.querySelectorAll('.group-count-input').forEach((input) => input.addEventListener('change', () => {
   const type = input.dataset.gradeType;
-  gradeState[type] = Math.min(20, Math.max(2, parseInt(input.value, 10) || 4));
+  gradeState[type] = normalizeGradeQuantity(input.value);
   refreshGrade(type);
 }));
 groupsForm?.addEventListener('change', () => {
   const id = routeSelect?.selectedOptions?.[0]?.dataset.routeId || '';
   const type = routes[id]?.gradeType;
   if (!type) return;
-  gradeState[type] = Math.min(20, Math.max(2, parseInt(groupsForm.value, 10) || 4));
+  gradeState[type] = normalizeGradeQuantity(groupsForm.value);
   refreshGrade(type);
 });
 routeSelect?.addEventListener('change', updateSummary);

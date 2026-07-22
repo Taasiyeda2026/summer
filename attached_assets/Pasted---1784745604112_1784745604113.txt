@@ -1,0 +1,399 @@
+יש לעדכן את מנגנון התמחור של מסלול יסודי ושל מסלול חטיבות בהתאם לטבלאות המחיר הסופי שסופקו.
+
+כיום המחיר במסלול השכבתי מחושב באמצעות:
+
+route.groups * route.unitPrice
+
+ולכן לדוגמה מוצגים 38,000 ₪ ו־40,000 ₪. יש לבטל את החישוב הזה לחלוטין ולעבוד לפי טבלת מחיר סופי.
+
+לבצע את השינויים בקבצים:
+
+programs-center/app.js
+programs-center/index.html
+
+אין לשנות את העיצוב או את compact-controls.css.
+
+1. טבלאות המחירים הסופיים
+
+בקובץ:
+
+programs-center/app.js
+
+לאחר הפונקציה formatPrice, להוסיף:
+
+const quantityPrices = Object.freeze({
+  elementary: Object.freeze({
+    1: 9500,
+    2: 18500,
+    3: 27450,
+    4: 36000,
+    5: 45000,
+    6: 54000,
+    7: 63000,
+    8: 72000
+  }),
+
+  middle: Object.freeze({
+    1: 10000,
+    2: 19500,
+    3: 28500,
+    4: 37000,
+    5: 45250,
+    6: 54000,
+    7: 63000,
+    8: 72000
+  })
+});
+
+function getQuantityPrice(type, quantity) {
+  return quantityPrices[type]?.[quantity] ?? null;
+}
+
+function normalizeGradeQuantity(value) {
+  const quantity = parseInt(value, 10);
+
+  if (!Number.isFinite(quantity)) return 4;
+
+  return Math.min(8, Math.max(2, quantity));
+}
+
+const gradeState = {
+  elementary: 4,
+  middle: 4
+};
+
+יש להסיר את ההגדרה הישנה והכפולה:
+
+const gradeState = { elementary: 4, middle: 4 };
+2. עדכון scopeMarkup
+
+להחליף את הפונקציה הקיימת:
+
+scopeMarkup(type, singlePrice, annualPrice)
+
+בפונקציה הבאה:
+
+function scopeMarkup(type) {
+  const label = type === 'elementary' ? 'יסודי' : 'חטיבות';
+  const groupText =
+    type === 'elementary'
+      ? 'בכיתות ד׳–ו׳'
+      : 'בחטיבת הביניים או בתיכון';
+
+  const singlePrice = getQuantityPrice(type, 1);
+  const gradePrice = getQuantityPrice(type, 4);
+  const annualPrice = getQuantityPrice(type, 2);
+
+  return `
+    <div class="scope-options">
+
+      <article class="scope-option">
+        <h4>תוכנית לקבוצה אחת</h4>
+        <p>תוכנית חינוכית מלאה לקבוצת תלמידים אחת ${groupText}.</p>
+        <span class="scope-price">${formatPrice(singlePrice)}</span>
+        <button
+          class="select-route"
+          type="button"
+          data-route-id="${type}-single">
+          בחירת קבוצה אחת
+        </button>
+      </article>
+
+      <article class="scope-option">
+        <h4>פעילות שכבתית</h4>
+        <p>אותה תוכנית למספר כיתות מקבילות בבית ספר אחד. ברירת המחדל היא 4 קבוצות.</p>
+
+        <div class="group-control">
+          <label for="${type}GradeGroups">מספר קבוצות</label>
+          <input
+            class="group-count-input"
+            id="${type}GradeGroups"
+            type="number"
+            min="2"
+            max="8"
+            step="1"
+            value="4"
+            data-grade-type="${type}">
+        </div>
+
+        <span
+          class="scope-price"
+          data-scope-price="${type}-grade">
+          ${formatPrice(gradePrice)}
+        </span>
+
+        <button
+          class="select-route"
+          type="button"
+          data-route-id="${type}-grade">
+          בחירת מסלול שכבתי
+        </button>
+      </article>
+
+      <article class="scope-option">
+        <h4>מסלול שנתי</h4>
+        <p>שתי תוכניות חינוכיות במהלך שנת הלימודים במסלול ${label}.</p>
+        <span class="scope-price">${formatPrice(annualPrice)}</span>
+        <button
+          class="select-route"
+          type="button"
+          data-route-id="${type}-annual">
+          בחירת מסלול שנתי
+        </button>
+      </article>
+
+    </div>`;
+}
+
+לעדכן את הקריאות:
+
+scopeMarkup('elementary')
+scopeMarkup('middle')
+
+במקום הקריאות הקיימות שמקבלות מחירים כפרמטרים. כיום הקריאות משתמשות ב־9500, 18000 וב־10000, 19000.
+
+3. הגדרת המסלולים והמחירים
+
+להחליף את ששת מסלולי היסודי והחטיבות בתוך routes:
+
+const routes = {
+  'elementary-single': {
+    label: 'מסלול יסודי – קבוצה אחת',
+    amount: getQuantityPrice('elementary', 1),
+    groups: 1,
+    unitPrice: 9500
+  },
+
+  'elementary-grade': {
+    label: 'מסלול יסודי – פעילות שכבתית',
+    amount: getQuantityPrice('elementary', 4),
+    groups: 4,
+    unitPrice: null,
+    gradeType: 'elementary'
+  },
+
+  'elementary-annual': {
+    label: 'מסלול יסודי – שנתי',
+    amount: getQuantityPrice('elementary', 2),
+    groups: 2,
+    unitPrice: null
+  },
+
+  'middle-single': {
+    label: 'מסלול חטיבות – קבוצה אחת',
+    amount: getQuantityPrice('middle', 1),
+    groups: 1,
+    unitPrice: 10000
+  },
+
+  'middle-grade': {
+    label: 'מסלול חטיבות – פעילות שכבתית',
+    amount: getQuantityPrice('middle', 4),
+    groups: 4,
+    unitPrice: null,
+    gradeType: 'middle'
+  },
+
+  'middle-annual': {
+    label: 'מסלול חטיבות – שנתי',
+    amount: getQuantityPrice('middle', 2),
+    groups: 2,
+    unitPrice: null
+  },
+
+  trailblazers: {
+    label: 'מסלול פורצות דרך',
+    amount: 13000,
+    groups: 1,
+    unitPrice: 13000
+  },
+
+  pharma: {
+    label: 'מסלול פארמצבטיקה – רוקחים עולם ואירוח בחברה',
+    amount: 13000,
+    groups: 1,
+    unitPrice: 13000
+  },
+
+  premium: {
+    label: 'מסלול פרימיום תעשייתי',
+    amount: 15000,
+    groups: 1,
+    unitPrice: 15000
+  }
+};
+
+המסלול השנתי נשאר מסלול של שתי תוכניות, ולכן מחירו נקבע לפי שורת כמות 2:
+
+יסודי: 18,500 ₪
+חטיבות: 19,500 ₪
+4. ביטול החישוב הכפלי
+
+בתוך:
+
+function refreshGrade(type)
+
+להחליף את הפונקציה במלואה:
+
+function refreshGrade(type) {
+  const id = `${type}-grade`;
+  const route = routes[id];
+
+  if (!route) return;
+
+  const quantity = normalizeGradeQuantity(gradeState[type]);
+  const finalAmount = getQuantityPrice(type, quantity);
+
+  if (finalAmount === null) return;
+
+  gradeState[type] = quantity;
+  route.groups = quantity;
+  route.amount = finalAmount;
+  route.unitPrice = null;
+
+  const option = getOption(id);
+
+  if (option) {
+    option.value =
+      `${route.label} – ${quantity} קבוצות – ${formatPrice(finalAmount)}`;
+
+    option.textContent = option.value;
+  }
+
+  const price = document.querySelector(
+    `[data-scope-price="${id}"]`
+  );
+
+  if (price) {
+    price.textContent = formatPrice(finalAmount);
+  }
+
+  const cardInput = document.querySelector(
+    `[data-grade-type="${type}"]`
+  );
+
+  if (cardInput) {
+    cardInput.value = quantity;
+  }
+
+  if (
+    routeSelect?.selectedOptions?.[0]?.dataset.routeId === id
+  ) {
+    updateSummary();
+  }
+}
+
+אסור להשאיר את השורה:
+
+route.amount = route.groups * route.unitPrice;
+5. הגבלת הכמות ל־8
+
+בשדה שמתווסף לטופס, להחליף:
+
+max="20"
+
+ב־:
+
+max="8"
+
+ולעדכן את ההסבר ל־:
+
+ניתן לבחור בין 2 ל־8 קבוצות. הסכום מתעדכן לפי טבלת המחירים.
+
+לעדכן את יצירת השדה כך:
+
+routeSelectLabel?.insertAdjacentHTML(
+  'afterend',
+  `
+  <label class="full-field route-groups-field" hidden>
+    <span>מספר קבוצות במסלול השכבתי</span>
+    <input
+      type="number"
+      id="gradeGroupsForm"
+      min="2"
+      max="8"
+      step="1"
+      value="4">
+    <small>
+      ניתן לבחור בין 2 ל־8 קבוצות. הסכום מתעדכן לפי טבלת המחירים.
+    </small>
+  </label>
+  `
+);
+6. עדכון אירועי שינוי הכמות
+
+להחליף את שני החישובים שמגבילים כיום את הכמות עד 20:
+
+gradeState[type] = Math.min(
+  20,
+  Math.max(2, parseInt(input.value, 10) || 4)
+);
+
+ב־:
+
+gradeState[type] = normalizeGradeQuantity(input.value);
+
+ובשדה הטופס:
+
+gradeState[type] = normalizeGradeQuantity(groupsForm.value);
+
+הקוד הנוכחי מאפשר עד 20 קבוצות, אף שטבלת המחירים החדשה מסתיימת בכמות 8.
+
+7. עדכון המחירים הסטטיים ב־index.html
+
+בתוך אזור המסלול השנתי בלבד, לעדכן:
+
+18,000 ₪ → 18,500 ₪
+19,000 ₪ → 19,500 ₪
+
+אין לשנות מחירים של מסלולים אחרים.
+
+8. עדכון מטמון מלא
+
+לעדכן את כל הפניות המקומיות ב־:
+
+programs-center/index.html
+
+לגרסה:
+
+v=27
+
+כלומר:
+
+<link rel="stylesheet" href="./styles.css?v=27">
+<link rel="stylesheet" href="./layout-fixes.css?v=27">
+<link rel="stylesheet" href="./narrow-shell.css?v=27">
+<link rel="stylesheet" href="./compact-controls.css?v=27">
+
+ובתחתית העמוד:
+
+<script src="./app.js?v=27"></script>
+<script src="./support-form.js?v=27"></script>
+
+בתחילת programs-center/app.js לעדכן גם את כל קובצי ה־CSS הדינמיים ל־v=27.
+
+בדיקות מחייבות
+
+יש לבדוק בפועל:
+
+מסלול	כמות	מחיר
+יסודי	2	18,500 ₪
+יסודי	3	27,450 ₪
+יסודי	4	36,000 ₪
+יסודי	5	45,000 ₪
+יסודי	8	72,000 ₪
+חטיבות	2	19,500 ₪
+חטיבות	3	28,500 ₪
+חטיבות	4	37,000 ₪
+חטיבות	5	45,250 ₪
+חטיבות	8	72,000 ₪
+
+יש לוודא שהמחיר מתעדכן באותה צורה:
+
+בתווית המחיר בכרטיס
+ברשימת בחירת המסלול בטופס
+בסיכום המסלול שנבחר
+בשדה routeEstimatedAmount
+בנתון שנשמר ב־Supabase
+
+אין לחשב מחיר באמצעות כפל ואין לעגל או להשלים מחירים שאינם מופיעים בטבלה.
