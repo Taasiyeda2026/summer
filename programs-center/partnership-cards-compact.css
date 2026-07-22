@@ -294,6 +294,12 @@
   .partnerships-section .partnership-grid {
     grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   }
+
+  .partnerships-section .premium-card .route-label {
+    white-space: nowrap !important;
+    text-wrap: nowrap !important;
+    font-size: .84rem !important;
+  }
 }
 
 @media (min-width: 621px) and (max-width: 899px) {
