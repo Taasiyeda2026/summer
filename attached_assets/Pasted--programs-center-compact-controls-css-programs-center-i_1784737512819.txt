@@ -1,0 +1,86 @@
+לבצע את השינוי רק בקבצים:
+
+programs-center/compact-controls.css
+programs-center/index.html
+
+אין לשנות קבצים אחרים.
+
+1. עדכון CSS
+
+בסוף הקובץ:
+
+programs-center/compact-controls.css
+
+יש להוסיף:
+
+/* Very small route-selection buttons inside expanded route details */
+.scope-option .select-route {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 132px !important;
+  min-width: 132px !important;
+  max-width: 132px !important;
+
+  height: 30px !important;
+  min-height: 30px !important;
+
+  margin: auto auto 0 !important;
+  padding: 4px 8px !important;
+
+  border-radius: 999px !important;
+  font-size: 0.65rem !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  white-space: nowrap !important;
+}
+
+/* Single-route buttons: trailblazers, pharma and premium */
+.route-details-host .card-details > .select-route,
+.partnership-card .card-details > .select-route {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: fit-content !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  height: 30px !important;
+  min-height: 30px !important;
+
+  margin: 10px auto 0 !important;
+  padding: 4px 11px !important;
+
+  border-radius: 999px !important;
+  font-size: 0.65rem !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  white-space: nowrap !important;
+}
+
+שלושת הכפתורים שמופיעים זה לצד זה במסלולי היסודי והחטיבות חייבים להיות זהים ברוחב ובגובה: 132×30px.
+
+אין להרחיב אותם לפי רוחב התיבה.
+
+2. רענון גרסת הקובץ
+
+בקובץ:
+
+programs-center/index.html
+
+להחליף רק:
+
+<link rel="stylesheet" href="./compact-controls.css?v=10">
+
+ב־:
+
+<link rel="stylesheet" href="./compact-controls.css?v=11">
+חשוב
+לא לשנות את הטקסט בכפתורים.
+לא לשנות את הכרטיסים או את תוכן המסלולים.
+לא לשנות את המחירים.
+לא לשנות את גובה שלוש תיבות הבחירה.
+לא להשתמש בריווח אותיות שלילי.
+הכפתורים צריכים להיות קטנים מאוד, צרים ואחידים — לא כפתורים רחבים.
