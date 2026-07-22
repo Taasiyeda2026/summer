@@ -115,7 +115,7 @@ if (premiumCard) {
     <article class="partnership-card" data-card="pharma">
       <span class="premium-badge">אירוח בחברה</span>
       <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-pharma">
-        <span class="route-number">04</span><span class="route-label">מסלול רוקחים עולם</span><span class="route-description">מימון תוכנית ״רוקחים עולם״, לצד מפגש מקצועי עם אנשי מקצוע מעולם התעשייה.</span><span class="route-highlight" aria-hidden="true"></span><span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
+        <span class="route-number">04</span><span class="route-label">מסלול רוקחים עולם</span><span class="route-description">מימון תוכנית ״רוקחים עולם״ לצד מפגש מקצועי עם אנשי מקצוע מתעשיית הפארמצבטיקה.</span><span class="route-highlight" aria-hidden="true"></span><span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
       </button>
       <div class="card-details" id="route-pharma" hidden>
         <div class="details-heading"><h3>רוקחים עולם – יזמות לעולם הפרמצבטיקה</h3><p class="program-meta">מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים</p><span class="details-price-tag">13,000 ₪</span></div>
