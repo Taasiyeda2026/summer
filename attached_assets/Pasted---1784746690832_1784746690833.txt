@@ -1,0 +1,524 @@
+יש להוסיף אפשרות לבחירת מספר קבוצות בתוך הפרטים הפנימיים של שלושת המסלולים:
+
+מסלול פורצות דרך
+מסלול רוקחים עולם
+מסלול פרימיום תעשייתי
+
+ברירת המחדל בכל מסלול היא קבוצה אחת. ניתן לבחור בין 1 ל־6 קבוצות. המחיר חייב להיקבע לפי טבלת מחיר סופי ולא באמצעות כפל.
+
+כיום שלושת המסלולים מוגדרים עם מחיר וכמות קבועים, בעוד שמנגנון שינוי הכמות פועל רק במסלולי היסודי והחטיבות.
+
+לבצע את השינויים בקבצים:
+
+programs-center/app.js
+programs-center/index.html
+
+אין לשנות את support-form.js, את מבנה Supabase או את הטקסטים של המסלולים.
+
+1. הרחבת טבלאות המחירים
+
+בקובץ:
+
+programs-center/app.js
+
+להחליף את quantityPrices הקיים בגרסה הבאה:
+
+const quantityPrices = Object.freeze({
+  elementary: Object.freeze({
+    1: 9500,
+    2: 18500,
+    3: 27450,
+    4: 36000,
+    5: 45000,
+    6: 54000,
+    7: 63000,
+    8: 72000
+  }),
+
+  middle: Object.freeze({
+    1: 10000,
+    2: 19500,
+    3: 28500,
+    4: 37000,
+    5: 45250,
+    6: 54000,
+    7: 63000,
+    8: 72000
+  }),
+
+  trailblazers: Object.freeze({
+    1: 13000,
+    2: 25200,
+    3: 36000,
+    4: 46000,
+    5: 55000,
+    6: 66000
+  }),
+
+  pharma: Object.freeze({
+    1: 13000,
+    2: 25200,
+    3: 36000,
+    4: 46000,
+    5: 55000,
+    6: 66000
+  }),
+
+  premium: Object.freeze({
+    1: 15000,
+    2: 29000,
+    3: 42600,
+    4: 56000,
+    5: 66250,
+    6: 79500
+  })
+});
+
+לא לחשב את המחירים באמצעות:
+
+quantity * unitPrice
+2. הוספת מצב הכמות למסלולים המיוחדים
+
+לאחר:
+
+const gradeState = {
+  elementary: 4,
+  middle: 4
+};
+
+להוסיף:
+
+const specialQuantityState = {
+  trailblazers: 1,
+  pharma: 1,
+  premium: 1
+};
+
+function normalizeSpecialQuantity(value) {
+  const quantity = parseInt(value, 10);
+
+  if (!Number.isFinite(quantity)) return 1;
+
+  return Math.min(6, Math.max(1, quantity));
+}
+
+function formatGroupQuantity(quantity) {
+  return quantity === 1
+    ? 'קבוצה אחת'
+    : `${quantity} קבוצות`;
+}
+3. יצירת בורר הכמות
+
+להוסיף פונקציה חדשה:
+
+function specialQuantityMarkup(type, routeName) {
+  return `
+    <div class="group-control special-quantity-control">
+      <label for="${type}Groups">מספר קבוצות</label>
+
+      <input
+        class="group-count-input special-group-count-input"
+        id="${type}Groups"
+        type="number"
+        min="1"
+        max="6"
+        step="1"
+        value="1"
+        data-special-type="${type}"
+        aria-label="מספר קבוצות במסלול ${routeName}">
+    </div>
+  `;
+}
+
+בתוך uiStyle.textContent להוסיף:
+
+.special-quantity-control {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin: 10px auto 12px !important;
+}
+
+.special-quantity-control label {
+  margin: 0 !important;
+  white-space: nowrap !important;
+  letter-spacing: normal !important;
+}
+
+אין להוסיף ריווח אותיות שלילי.
+
+4. מסלול פורצות דרך
+
+להחליף את הטיפול הקיים ב־trailblazersCard בגרסה הבאה:
+
+if (trailblazersCard) {
+  const heading = trailblazersCard.querySelector('.details-heading');
+
+  heading?.insertAdjacentHTML(
+    'beforeend',
+    `
+      <span
+        class="details-price-tag"
+        data-special-price="trailblazers">
+        ${formatPrice(getQuantityPrice('trailblazers', 1))}
+      </span>
+    `
+  );
+
+  heading?.insertAdjacentHTML(
+    'afterend',
+    specialQuantityMarkup('trailblazers', 'פורצות דרך')
+  );
+
+  const button = trailblazersCard.querySelector('.select-route');
+
+  if (button) {
+    button.dataset.routeId = 'trailblazers';
+    button.removeAttribute('data-select-route');
+  }
+}
+5. מסלול פרימיום
+
+להחליף את הטיפול הקיים ב־premiumCard בגרסה הבאה:
+
+if (premiumCard) {
+  const heading = premiumCard.querySelector('.details-heading');
+
+  heading?.insertAdjacentHTML(
+    'beforeend',
+    `
+      <span
+        class="details-price-tag"
+        data-special-price="premium">
+        ${formatPrice(getQuantityPrice('premium', 1))}
+      </span>
+    `
+  );
+
+  heading?.insertAdjacentHTML(
+    'afterend',
+    specialQuantityMarkup('premium', 'פרימיום תעשייתי')
+  );
+
+  const button = premiumCard.querySelector('.select-route');
+
+  if (button) {
+    button.dataset.routeId = 'premium';
+    button.removeAttribute('data-select-route');
+  }
+}
+6. מסלול רוקחים עולם
+
+בתוך ה־HTML הדינמי של הכרטיס data-card="pharma":
+
+להחליף את תג המחיר ב־:
+
+<span
+  class="details-price-tag"
+  data-special-price="pharma">
+  13,000 ₪
+</span>
+
+מיד לאחר סגירת:
+
+<div class="details-heading">...</div>
+
+להוסיף:
+
+${specialQuantityMarkup('pharma', 'רוקחים עולם')}
+
+וכן לשנות את הכפתור ל־:
+
+<button
+  class="select-route"
+  type="button"
+  data-route-id="pharma">
+  בחירת מסלול רוקחים עולם
+</button>
+
+אין להשתמש יותר בטקסט „בחירת מסלול פארמצבטיקה”.
+
+7. עדכון אובייקט routes
+
+להחליף את שלושת המסלולים:
+
+trailblazers: {
+  label: 'מסלול פורצות דרך',
+  amount: getQuantityPrice('trailblazers', 1),
+  groups: 1,
+  unitPrice: null,
+  quantityType: 'trailblazers'
+},
+
+pharma: {
+  label: 'מסלול רוקחים עולם',
+  amount: getQuantityPrice('pharma', 1),
+  groups: 1,
+  unitPrice: null,
+  quantityType: 'pharma'
+},
+
+premium: {
+  label: 'מסלול פרימיום תעשייתי',
+  amount: getQuantityPrice('premium', 1),
+  groups: 1,
+  unitPrice: null,
+  quantityType: 'premium'
+}
+
+המחיר לקבוצה אינו קבוע ולכן unitPrice חייב להיות null.
+
+8. פונקציה לעדכון המחיר
+
+להוסיף לאחר refreshGrade:
+
+function refreshSpecialQuantity(type) {
+  const route = routes[type];
+
+  if (!route) return;
+
+  const quantity = normalizeSpecialQuantity(
+    specialQuantityState[type]
+  );
+
+  const finalAmount = getQuantityPrice(type, quantity);
+
+  if (finalAmount === null) return;
+
+  specialQuantityState[type] = quantity;
+  route.groups = quantity;
+  route.amount = finalAmount;
+  route.unitPrice = null;
+
+  const option = getOption(type);
+
+  if (option) {
+    option.value =
+      `${route.label} – ${formatGroupQuantity(quantity)} – ${formatPrice(finalAmount)}`;
+
+    option.textContent = option.value;
+  }
+
+  const priceTag = document.querySelector(
+    `[data-special-price="${type}"]`
+  );
+
+  if (priceTag) {
+    priceTag.textContent = formatPrice(finalAmount);
+  }
+
+  const cardInput = document.querySelector(
+    `[data-special-type="${type}"]`
+  );
+
+  if (cardInput) {
+    cardInput.value = quantity;
+  }
+
+  if (
+    routeSelect?.selectedOptions?.[0]?.dataset.routeId === type
+  ) {
+    updateSummary();
+  }
+}
+9. תיקון מאזיני הכמות
+
+המאזין הקיים של מסלולי היסודי והחטיבות צריך לפעול רק על שדות בעלי data-grade-type.
+
+להחליף:
+
+document.querySelectorAll('.group-count-input')
+
+ב־:
+
+document.querySelectorAll(
+  '.group-count-input[data-grade-type]'
+)
+
+לאחר המאזין הקיים להוסיף:
+
+document.querySelectorAll(
+  '.special-group-count-input[data-special-type]'
+).forEach((input) => {
+  input.addEventListener('change', () => {
+    const type = input.dataset.specialType;
+
+    specialQuantityState[type] =
+      normalizeSpecialQuantity(input.value);
+
+    refreshSpecialQuantity(type);
+  });
+});
+10. שדה מספר הקבוצות בטופס
+
+להחליף את יצירת route-groups-field ב־:
+
+routeSelectLabel?.insertAdjacentHTML(
+  'afterend',
+  `
+    <label class="full-field route-groups-field" hidden>
+      <span id="routeGroupsLabel">מספר קבוצות</span>
+
+      <input
+        type="number"
+        id="gradeGroupsForm"
+        min="1"
+        max="8"
+        step="1"
+        value="1">
+
+      <small id="routeGroupsHelp">
+        הסכום מתעדכן לפי מספר הקבוצות.
+      </small>
+    </label>
+  `
+);
+11. עדכון updateSummary
+
+בתוך updateSummary להחליף את הטיפול ב־groupsField וב־groupsForm ב־:
+
+const quantityType =
+  route?.gradeType || route?.quantityType;
+
+if (groupsField) {
+  groupsField.hidden = !quantityType;
+}
+
+if (quantityType && groupsForm) {
+  const isGradeRoute = Boolean(route.gradeType);
+
+  groupsForm.min = isGradeRoute ? '2' : '1';
+  groupsForm.max = isGradeRoute ? '8' : '6';
+  groupsForm.value = route.groups;
+
+  const label = document.getElementById('routeGroupsLabel');
+  const help = document.getElementById('routeGroupsHelp');
+
+  if (label) {
+    label.textContent = isGradeRoute
+      ? 'מספר קבוצות במסלול השכבתי'
+      : 'מספר קבוצות';
+  }
+
+  if (help) {
+    help.textContent = isGradeRoute
+      ? 'ניתן לבחור בין 2 ל־8 קבוצות. הסכום מתעדכן לפי טבלת המחירים.'
+      : 'ניתן לבחור בין 1 ל־6 קבוצות. הסכום מתעדכן לפי טבלת המחירים.';
+  }
+}
+
+להשאיר את עדכון השדות הנסתרים:
+
+routeGroups
+routeUnitPrice
+routeEstimatedAmount
+
+כך ש־Supabase ו־FormSubmit יקבלו את הכמות ואת המחיר הסופי שנבחרו.
+
+12. שינוי הכמות מתוך הטופס
+
+להחליף את המאזין של groupsForm ב־:
+
+groupsForm?.addEventListener('change', () => {
+  const id =
+    routeSelect?.selectedOptions?.[0]?.dataset.routeId || '';
+
+  const route = routes[id];
+
+  if (!route) return;
+
+  if (route.gradeType) {
+    gradeState[route.gradeType] =
+      normalizeGradeQuantity(groupsForm.value);
+
+    refreshGrade(route.gradeType);
+    return;
+  }
+
+  if (route.quantityType) {
+    specialQuantityState[route.quantityType] =
+      normalizeSpecialQuantity(groupsForm.value);
+
+    refreshSpecialQuantity(route.quantityType);
+  }
+});
+13. אתחול המחירים
+
+לפני updateSummary() להוסיף:
+
+refreshSpecialQuantity('trailblazers');
+refreshSpecialQuantity('pharma');
+refreshSpecialQuantity('premium');
+
+סדר האתחול צריך להיות:
+
+refreshGrade('elementary');
+refreshGrade('middle');
+
+refreshSpecialQuantity('trailblazers');
+refreshSpecialQuantity('pharma');
+refreshSpecialQuantity('premium');
+
+updateSummary();
+14. עדכון מטמון
+
+בקובץ:
+
+programs-center/index.html
+
+להחליף:
+
+<script src="./app.js?v=27"></script>
+
+ב־:
+
+<script src="./app.js?v=28"></script>
+
+להשאיר:
+
+<script src="./support-form.js?v=27"></script>
+
+ללא שינוי.
+
+אין צורך לשנות גרסאות CSS, משום שלא משתנה קובץ CSS חיצוני.
+
+בדיקות מחייבות
+פורצות דרך
+קבוצות	מחיר
+1	13,000 ₪
+2	25,200 ₪
+3	36,000 ₪
+4	46,000 ₪
+5	55,000 ₪
+6	66,000 ₪
+רוקחים עולם
+קבוצות	מחיר
+1	13,000 ₪
+2	25,200 ₪
+3	36,000 ₪
+4	46,000 ₪
+5	55,000 ₪
+6	66,000 ₪
+פרימיום
+קבוצות	מחיר
+1	15,000 ₪
+2	29,000 ₪
+3	42,600 ₪
+4	56,000 ₪
+5	66,250 ₪
+6	79,500 ₪
+
+יש לוודא שהכמות והמחיר מתעדכנים יחד:
+
+בתוך פרטי המסלול
+בתווית המחיר
+ברשימת בחירת המסלול בטופס
+בסיכום המסלול שנבחר
+בשדה routeGroups
+בשדה routeEstimatedAmount
+ברשומה הנשמרת ב־Supabase
+במייל שנשלח באמצעות FormSubmit
+
+אין לשנות את הכרטיסים החיצוניים ואין להציג בהם מחיר או מספר קבוצות.

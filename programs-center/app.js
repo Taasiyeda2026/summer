@@ -10,14 +10,18 @@ uiStyle.textContent = `
 .about-more-intro{margin-top:12px!important}.about-read-more{display:inline-flex;align-items:center;justify-content:center;width:fit-content;min-width:0;min-height:28px;margin:10px auto 0;padding:5px 12px;border:1px solid #d7e2e8;border-radius:999px;background:#fff;box-shadow:0 3px 10px rgba(15,45,70,.08);color:#173752;font:inherit;font-size:.72rem;font-weight:700;line-height:1;letter-spacing:normal;cursor:pointer}.about-read-more:hover,.about-read-more:focus-visible{border-color:#9fcbd4;color:#0f6a7d;box-shadow:0 4px 12px rgba(15,45,70,.12)}.about-more-content{margin-top:12px}.about-more-content[hidden]{display:none!important}.about-more-content p{margin:0 0 10px!important}
 .scope-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px}.scope-option{display:flex;flex-direction:column;min-width:0;padding:12px;border:1px solid #dfe7ec;border-radius:12px;background:#f8fafb}.scope-option h4{margin:0;color:var(--navy);font-size:.86rem;line-height:1.3}.scope-option p{margin:6px 0 0;color:#596d7c;font-size:.71rem;line-height:1.45}.scope-price{display:inline-flex;align-items:center;width:fit-content;margin:8px 0 0;padding:4px 8px;border:1px solid #d8e5ea;border-radius:999px;background:#f2f7f9;color:#176f8c;font-size:.69rem;font-weight:800;line-height:1.1;letter-spacing:normal;white-space:nowrap}.scope-option .select-route{margin-top:auto!important}.group-control{display:flex;align-items:center;gap:7px;margin-top:8px}.group-control label{color:#596d7c;font-size:.68rem;font-weight:700}.group-count-input,.route-groups-field input{width:62px!important;min-width:62px!important;height:30px!important;min-height:30px!important;padding:3px 7px!important;border:1px solid #ccdbe2!important;border-radius:8px!important;background:#fff!important;color:#173752!important;font-size:.76rem!important;font-weight:700!important;text-align:center}.programs-subheading{margin:2px 0 8px;color:var(--navy);font-size:.86rem;line-height:1.3}.route-groups-field[hidden]{display:none!important}.route-groups-field small{display:block;margin-top:4px;color:#71828e;font-size:.65rem;line-height:1.35}
 @media(min-width:900px){.partnerships-section .partnership-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}@media(max-width:760px){.scope-options{grid-template-columns:1fr}.about-read-more{font-size:.7rem}}
+.special-quantity-control{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;margin:10px auto 12px!important}.special-quantity-control label{margin:0!important;white-space:nowrap!important;letter-spacing:normal!important}
 `;
 document.head.appendChild(uiStyle);
 
 const formatPrice = (amount) => `${new Intl.NumberFormat('he-IL').format(amount)} ₪`;
 
 const quantityPrices = Object.freeze({
-  elementary: Object.freeze({ 1: 9500, 2: 18500, 3: 27450, 4: 36000, 5: 45000, 6: 54000, 7: 63000, 8: 72000 }),
-  middle:     Object.freeze({ 1: 10000, 2: 19500, 3: 28500, 4: 37000, 5: 45250, 6: 54000, 7: 63000, 8: 72000 })
+  elementary:   Object.freeze({ 1: 9500,  2: 18500, 3: 27450, 4: 36000, 5: 45000, 6: 54000, 7: 63000, 8: 72000 }),
+  middle:       Object.freeze({ 1: 10000, 2: 19500, 3: 28500, 4: 37000, 5: 45250, 6: 54000, 7: 63000, 8: 72000 }),
+  trailblazers: Object.freeze({ 1: 13000, 2: 25200, 3: 36000, 4: 46000, 5: 55000, 6: 66000 }),
+  pharma:       Object.freeze({ 1: 13000, 2: 25200, 3: 36000, 4: 46000, 5: 55000, 6: 66000 }),
+  premium:      Object.freeze({ 1: 15000, 2: 29000, 3: 42600, 4: 56000, 5: 66250, 6: 79500 })
 });
 function getQuantityPrice(type, quantity) { return quantityPrices[type]?.[quantity] ?? null; }
 function normalizeGradeQuantity(value) {
@@ -26,6 +30,16 @@ function normalizeGradeQuantity(value) {
   return Math.min(8, Math.max(2, quantity));
 }
 const gradeState = { elementary: 4, middle: 4 };
+
+const specialQuantityState = { trailblazers: 1, pharma: 1, premium: 1 };
+function normalizeSpecialQuantity(value) {
+  const quantity = parseInt(value, 10);
+  if (!Number.isFinite(quantity)) return 1;
+  return Math.min(6, Math.max(1, quantity));
+}
+function formatGroupQuantity(quantity) {
+  return quantity === 1 ? 'קבוצה אחת' : `${quantity} קבוצות`;
+}
 
 const heroTitle = document.getElementById('heroTitle');
 const heroText = document.querySelector('.hero-text');
@@ -63,6 +77,9 @@ if (partnershipsTitle) partnershipsTitle.textContent = 'בוחרים כיצד ל
 if (partnershipsEyebrow) partnershipsEyebrow.textContent = 'חמישה מסלולים לבחירה';
 if (partnershipsParagraph) partnershipsParagraph.textContent = 'בוחרים את קהל היעד ואת היקף הפעילות המתאים, או מסלול ייחודי המשלב תוכן מקצועי ומעורבות של החברה.';
 
+function specialQuantityMarkup(type, routeName) {
+  return `<div class="group-control special-quantity-control"><label for="${type}Groups">מספר קבוצות</label><input class="group-count-input special-group-count-input" id="${type}Groups" type="number" min="1" max="6" step="1" value="1" data-special-type="${type}" aria-label="מספר קבוצות במסלול ${routeName}"></div>`;
+}
 function scopeMarkup(type) {
   const label = type === 'elementary' ? 'יסודי' : 'חטיבות';
   const groupText = type === 'elementary' ? 'בכיתות ד׳–ו׳' : 'בחטיבת הביניים או בתיכון';
@@ -113,13 +130,17 @@ annualCard?.remove();
 document.querySelectorAll('.partnership-card .route-price,.partnership-card .route-price-label').forEach((node) => node.remove());
 
 if (trailblazersCard) {
-  trailblazersCard.querySelector('.details-heading')?.insertAdjacentHTML('beforeend', '<span class="details-price-tag">13,000 ₪</span>');
+  const heading = trailblazersCard.querySelector('.details-heading');
+  heading?.insertAdjacentHTML('beforeend', `<span class="details-price-tag" data-special-price="trailblazers">${formatPrice(getQuantityPrice('trailblazers', 1))}</span>`);
+  heading?.insertAdjacentHTML('afterend', specialQuantityMarkup('trailblazers', 'פורצות דרך'));
   const button = trailblazersCard.querySelector('.select-route');
   if (button) { button.dataset.routeId = 'trailblazers'; button.removeAttribute('data-select-route'); }
 }
 
 if (premiumCard) {
-  premiumCard.querySelector('.details-heading')?.insertAdjacentHTML('beforeend', '<span class="details-price-tag">15,000 ₪</span>');
+  const heading = premiumCard.querySelector('.details-heading');
+  heading?.insertAdjacentHTML('beforeend', `<span class="details-price-tag" data-special-price="premium">${formatPrice(getQuantityPrice('premium', 1))}</span>`);
+  heading?.insertAdjacentHTML('afterend', specialQuantityMarkup('premium', 'פרימיום תעשייתי'));
   const button = premiumCard.querySelector('.select-route');
   if (button) { button.dataset.routeId = 'premium'; button.removeAttribute('data-select-route'); }
 }
@@ -132,9 +153,10 @@ if (premiumCard) {
         <span class="route-number">04</span><span class="route-label">מסלול רוקחים עולם</span><span class="route-description">מימון תוכנית ״רוקחים עולם״ לצד מפגש מקצועי עם אנשי מקצוע מתעשיית הפארמצבטיקה.</span><span class="route-highlight" aria-hidden="true"></span><span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
       </button>
       <div class="card-details" id="route-pharma" hidden>
-        <div class="details-heading"><h3>רוקחים עולם – יזמות לעולם הפרמצבטיקה</h3><p class="program-meta">מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים</p><span class="details-price-tag">13,000 ₪</span></div>
+        <div class="details-heading"><h3>רוקחים עולם – יזמות לעולם הפרמצבטיקה</h3><p class="program-meta">מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים</p><span class="details-price-tag" data-special-price="pharma">13,000 ₪</span></div>
+        ${specialQuantityMarkup('pharma', 'רוקחים עולם')}
         <div class="program-list">${pharmaProgramHtml}<article class="program-option"><h4>אירוח מקצועי בחברה התורמת</h4><p>המסלול כולל אירוח של התלמידים בחברה התורמת, היכרות עם סביבת העבודה, תהליכי פיתוח וייצור ומפגש עם אנשי מקצוע מעולמות הפרמצבטיקה, מדעי החיים והרפואה.</p></article></div>
-        <button class="select-route" type="button" data-route-id="pharma">בחירת מסלול פארמצבטיקה</button>
+        <button class="select-route" type="button" data-route-id="pharma">בחירת מסלול רוקחים עולם</button>
       </div>
     </article>`);
 }
@@ -153,9 +175,9 @@ const routes = {
   'middle-single':     { label: 'מסלול חטיבות – קבוצה אחת',     amount: getQuantityPrice('middle', 1),     groups: 1, unitPrice: 10000 },
   'middle-grade':      { label: 'מסלול חטיבות – פעילות שכבתית', amount: getQuantityPrice('middle', 4),     groups: 4, unitPrice: null, gradeType: 'middle' },
   'middle-annual':     { label: 'מסלול חטיבות – שנתי',           amount: getQuantityPrice('middle', 2),     groups: 2, unitPrice: null },
-  trailblazers: { label: 'מסלול פורצות דרך',                              amount: 13000, groups: 1, unitPrice: 13000 },
-  pharma:       { label: 'מסלול פארמצבטיקה – רוקחים עולם ואירוח בחברה', amount: 13000, groups: 1, unitPrice: 13000 },
-  premium:      { label: 'מסלול פרימיום תעשייתי',                         amount: 15000, groups: 1, unitPrice: 15000 }
+  trailblazers: { label: 'מסלול פורצות דרך',        amount: getQuantityPrice('trailblazers', 1), groups: 1, unitPrice: null, quantityType: 'trailblazers' },
+  pharma:       { label: 'מסלול רוקחים עולם',       amount: getQuantityPrice('pharma', 1),       groups: 1, unitPrice: null, quantityType: 'pharma' },
+  premium:      { label: 'מסלול פרימיום תעשייתי',   amount: getQuantityPrice('premium', 1),      groups: 1, unitPrice: null, quantityType: 'premium' }
 };
 
 const routeSelect = document.getElementById('partnershipRoute');
@@ -171,7 +193,7 @@ if (routeSelect) {
   });
 }
 
-routeSelectLabel?.insertAdjacentHTML('afterend', '<label class="full-field route-groups-field" hidden><span>מספר קבוצות במסלול השכבתי</span><input type="number" id="gradeGroupsForm" min="2" max="8" step="1" value="4"><small>ניתן לבחור בין 2 ל־8 קבוצות. הסכום מתעדכן לפי טבלת המחירים.</small></label>');
+routeSelectLabel?.insertAdjacentHTML('afterend', '<label class="full-field route-groups-field" hidden><span id="routeGroupsLabel">מספר קבוצות</span><input type="number" id="gradeGroupsForm" min="1" max="8" step="1" value="1"><small id="routeGroupsHelp">הסכום מתעדכן לפי מספר הקבוצות.</small></label>');
 const partnershipForm = document.getElementById('partnershipForm');
 partnershipForm?.insertAdjacentHTML('afterbegin', '<input type="hidden" id="routeGroups" name="מספר קבוצות" value="1"><input type="hidden" id="routeUnitPrice" name="מחיר לקבוצה" value=""><input type="hidden" id="routeEstimatedAmount" name="סכום התרומה" value="">');
 
@@ -188,14 +210,42 @@ function updateSummary() {
   const text = option?.value || '';
   if (selectedRouteName) selectedRouteName.textContent = text || 'בחרו את מסלול התרומה המבוקש';
   selectedRouteSummary?.classList.toggle('has-selection', Boolean(text));
-  if (groupsField) groupsField.hidden = !route?.gradeType;
-  if (route?.gradeType && groupsForm) groupsForm.value = route.groups;
+  const quantityType = route?.gradeType || route?.quantityType;
+  if (groupsField) groupsField.hidden = !quantityType;
+  if (quantityType && groupsForm) {
+    const isGradeRoute = Boolean(route.gradeType);
+    groupsForm.min = isGradeRoute ? '2' : '1';
+    groupsForm.max = isGradeRoute ? '8' : '6';
+    groupsForm.value = route.groups;
+    const label = document.getElementById('routeGroupsLabel');
+    const help = document.getElementById('routeGroupsHelp');
+    if (label) label.textContent = isGradeRoute ? 'מספר קבוצות במסלול השכבתי' : 'מספר קבוצות';
+    if (help) help.textContent = isGradeRoute ? 'ניתן לבחור בין 2 ל־8 קבוצות. הסכום מתעדכן לפי טבלת המחירים.' : 'ניתן לבחור בין 1 ל־6 קבוצות. הסכום מתעדכן לפי טבלת המחירים.';
+  }
   const groups = document.getElementById('routeGroups');
   const unit = document.getElementById('routeUnitPrice');
   const amount = document.getElementById('routeEstimatedAmount');
   if (groups) groups.value = route?.groups || 1;
   if (unit) unit.value = route?.unitPrice || '';
   if (amount) amount.value = route?.amount || '';
+}
+function refreshSpecialQuantity(type) {
+  const route = routes[type];
+  if (!route) return;
+  const quantity = normalizeSpecialQuantity(specialQuantityState[type]);
+  const finalAmount = getQuantityPrice(type, quantity);
+  if (finalAmount === null) return;
+  specialQuantityState[type] = quantity;
+  route.groups = quantity;
+  route.amount = finalAmount;
+  route.unitPrice = null;
+  const option = getOption(type);
+  if (option) { option.value = `${route.label} – ${formatGroupQuantity(quantity)} – ${formatPrice(finalAmount)}`; option.textContent = option.value; }
+  const priceTag = document.querySelector(`[data-special-price="${type}"]`);
+  if (priceTag) priceTag.textContent = formatPrice(finalAmount);
+  const cardInput = document.querySelector(`[data-special-type="${type}"]`);
+  if (cardInput) cardInput.value = quantity;
+  if (routeSelect?.selectedOptions?.[0]?.dataset.routeId === type) updateSummary();
 }
 function refreshGrade(type) {
   const id = `${type}-grade`;
@@ -225,21 +275,38 @@ function selectRoute(id) {
   window.setTimeout(() => document.getElementById('fullName')?.focus({ preventScroll: true }), 650);
 }
 
-document.querySelectorAll('.group-count-input').forEach((input) => input.addEventListener('change', () => {
+document.querySelectorAll('.group-count-input[data-grade-type]').forEach((input) => input.addEventListener('change', () => {
   const type = input.dataset.gradeType;
   gradeState[type] = normalizeGradeQuantity(input.value);
   refreshGrade(type);
 }));
+document.querySelectorAll('.special-group-count-input[data-special-type]').forEach((input) => {
+  input.addEventListener('change', () => {
+    const type = input.dataset.specialType;
+    specialQuantityState[type] = normalizeSpecialQuantity(input.value);
+    refreshSpecialQuantity(type);
+  });
+});
 groupsForm?.addEventListener('change', () => {
   const id = routeSelect?.selectedOptions?.[0]?.dataset.routeId || '';
-  const type = routes[id]?.gradeType;
-  if (!type) return;
-  gradeState[type] = normalizeGradeQuantity(groupsForm.value);
-  refreshGrade(type);
+  const route = routes[id];
+  if (!route) return;
+  if (route.gradeType) {
+    gradeState[route.gradeType] = normalizeGradeQuantity(groupsForm.value);
+    refreshGrade(route.gradeType);
+    return;
+  }
+  if (route.quantityType) {
+    specialQuantityState[route.quantityType] = normalizeSpecialQuantity(groupsForm.value);
+    refreshSpecialQuantity(route.quantityType);
+  }
 });
 routeSelect?.addEventListener('change', updateSummary);
 refreshGrade('elementary');
 refreshGrade('middle');
+refreshSpecialQuantity('trailblazers');
+refreshSpecialQuantity('pharma');
+refreshSpecialQuantity('premium');
 updateSummary();
 document.querySelectorAll('[data-route-id]').forEach((button) => button.addEventListener('click', () => selectRoute(button.dataset.routeId)));
 
