@@ -1,11 +1,9 @@
 name: Hide mobile navigation and sticky CTA
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - .github/workflows/hide-mobile-nav-and-cta.yml
+  issues:
+    types:
+      - opened
 
 permissions:
   contents: write
@@ -75,5 +73,3 @@ jobs:
           git add programs-center/compact-controls.css programs-center/app.js programs-center/index.html .github/workflows/hide-mobile-nav-and-cta.yml
           git commit -m "Hide mobile navigation and sticky CTA"
           git push origin main
-
-# Triggered intentionally after the workflow existed on main.
