@@ -13,7 +13,18 @@ function setFormStatus(message, type = '') {
   formStatus.className = `form-status${type ? ` is-${type}` : ''}`;
 }
 
+function readNumberField(id) {
+  const value = document.getElementById(id)?.value || '';
+  if (!value) return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 async function saveInquiry() {
+  const groups = readNumberField('routeGroups') || 1;
+  const unitPrice = readNumberField('routeUnitPrice');
+  const estimatedAmount = readNumberField('routeEstimatedAmount');
+
   const payload = {
     full_name: document.getElementById('fullName').value.trim(),
     role: document.getElementById('role').value.trim() || null,
@@ -23,9 +34,9 @@ async function saveInquiry() {
     program: partnershipRoute.value,
     message: document.getElementById('message').value.trim() || null,
     locality: null,
-    groups: 1,
-    unit_price: null,
-    estimated_amount: null,
+    groups,
+    unit_price: unitPrice,
+    estimated_amount: estimatedAmount,
     source: 'programs_site',
     status: 'new',
     page_url: window.location.href,
