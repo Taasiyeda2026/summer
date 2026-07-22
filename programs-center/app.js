@@ -15,7 +15,7 @@ document.head.appendChild(compactControlsStyle);
 
 const compactPartnershipCardsStyle = document.createElement('link');
 compactPartnershipCardsStyle.rel = 'stylesheet';
-compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=4';
+compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=5';
 document.head.appendChild(compactPartnershipCardsStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
@@ -45,6 +45,31 @@ document.querySelectorAll('.card-action').forEach((action) => {
   const icon = action.querySelector('svg');
   action.replaceChildren(document.createTextNode('לפרטי המסלול'));
   if (icon) action.appendChild(icon);
+});
+
+/* Prices belong only to the opened information panel, never to the front card. */
+document.querySelectorAll('.partnership-card').forEach((card) => {
+  const toggle = card.querySelector('.card-toggle');
+  const detailsId = toggle?.getAttribute('aria-controls');
+  const details = detailsId ? document.getElementById(detailsId) : null;
+  const frontPrice = toggle?.querySelector('.route-price');
+
+  if (!frontPrice) return;
+
+  if (card.dataset.card === 'annual') {
+    frontPrice.remove();
+    return;
+  }
+
+  const detailsHeading = details?.querySelector('.details-heading');
+  if (!detailsHeading) {
+    frontPrice.remove();
+    return;
+  }
+
+  frontPrice.classList.add('details-price-tag');
+  frontPrice.classList.remove('route-price-split');
+  detailsHeading.appendChild(frontPrice);
 });
 
 const navToggle = document.querySelector('.nav-toggle');
