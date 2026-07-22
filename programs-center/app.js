@@ -1,4 +1,4 @@
-['layout-fixes.css?v=6','narrow-shell.css?v=7','compact-controls.css?v=10','partnership-cards-compact.css?v=6','micro-ui-fixes.css?v=10'].forEach((href) => {
+['layout-fixes.css?v=13','narrow-shell.css?v=13','compact-controls.css?v=13','partnership-cards-compact.css?v=13','micro-ui-fixes.css?v=13'].forEach((href) => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.href = `./${href}`;

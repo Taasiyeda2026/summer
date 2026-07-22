@@ -1,0 +1,70 @@
+יש לבצע רענון גרסאות מלא לכל קובצי ה־CSS וה־JavaScript של העמוד:
+
+programs-center/
+
+יש להשתמש במספר גרסה אחיד חדש:
+
+v=13
+1. בקובץ programs-center/index.html
+
+להחליף את כל הפניות המקומיות ל־CSS ול־JavaScript כך:
+
+<link rel="stylesheet" href="./styles.css?v=13">
+<link rel="stylesheet" href="./layout-fixes.css?v=13">
+<link rel="stylesheet" href="./narrow-shell.css?v=13">
+<link rel="stylesheet" href="./compact-controls.css?v=13">
+
+ובתחתית העמוד:
+
+<script src="./app.js?v=13"></script>
+<script src="./support-form.js?v=13"></script>
+
+כרגע הקבצים נטענים עם מספרי גרסה שונים, כולל styles.css?v=3,‏ layout-fixes.css?v=6,‏ narrow-shell.css?v=7,‏ compact-controls.css?v=12,‏ app.js?v=9
+
+תכתוב לריפליט כך:
+
+יש לבצע רענון גרסאות מלא לכל קובצי ה־CSS וה־JavaScript של העמוד:
+
+programs-center/
+
+יש להשתמש במספר גרסה אחיד חדש:
+
+v=13
+1. בקובץ programs-center/index.html
+
+להחליף את כל הפניות המקומיות ל־CSS ול־JavaScript כך:
+
+<link rel="stylesheet" href="./styles.css?v=13">
+<link rel="stylesheet" href="./layout-fixes.css?v=13">
+<link rel="stylesheet" href="./narrow-shell.css?v=13">
+<link rel="stylesheet" href="./compact-controls.css?v=13">
+
+ובתחתית העמוד:
+
+<script src="./app.js?v=13"></script>
+<script src="./support-form.js?v=13"></script>
+
+כרגע הקבצים נטענים עם מספרי גרסה שונים, ולכן יש להחליף את כולם ל־v=13.
+
+2. בקובץ programs-center/app.js
+
+בתחילת הקובץ יש מערך שטוען קובצי CSS נוספים באופן דינמי. יש לעדכן גם שם את כל הגרסאות ל־v=13:
+
+[
+  'layout-fixes.css?v=13',
+  'narrow-shell.css?v=13',
+  'compact-controls.css?v=13',
+  'partnership-cards-compact.css?v=13',
+  'micro-ui-fixes.css?v=13'
+].forEach((href) => {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `./${href}`;
+  document.head.appendChild(link);
+});
+חשוב
+לא לשנות תוכן, עיצוב או קוד אחר.
+לא להוסיף קבצים חדשים.
+לא לשנות שמות קבצים.
+רק להעלות את מספר הגרסה של כל קובצי ה־CSS וה־JavaScript של programs-center ל־13.
+יש לעדכן גם את הקבצים שנטענים דינמית מתוך app.js, אחרת חלק מהעיצוב עלול להמשיך להיטען מהמטמון.
