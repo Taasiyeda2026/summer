@@ -1,0 +1,40 @@
+/* Final micro UI adjustments for the programs-center page. */
+
+/* Keep the brand descriptor small and on one line. */
+.site-header .brand {
+  gap: 8px !important;
+}
+
+.site-header .brand span {
+  max-width: none !important;
+  font-size: .66rem !important;
+  line-height: 1.1 !important;
+  letter-spacing: normal !important;
+  white-space: nowrap !important;
+}
+
+/* Make the route-details pill noticeably smaller than the regular copy. */
+.partnerships-section .card-action {
+  width: 96px !important;
+  min-width: 96px !important;
+  max-width: 96px !important;
+  min-height: 24px !important;
+  margin-top: 5px !important;
+  padding-inline: 6px !important;
+  gap: 3px !important;
+  border-top: 0 !important;
+  font-size: .54rem !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.partnerships-section .card-action svg {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+@media (max-width: 760px) {
+  .site-header .brand span {
+    display: none !important;
+  }
+}
