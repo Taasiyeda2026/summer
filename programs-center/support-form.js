@@ -4,6 +4,21 @@ const formStatus = document.getElementById('formStatus');
 const formSubject = document.getElementById('formSubject');
 const partnershipRoute = document.getElementById('partnershipRoute');
 
+/* Route 03 includes a professional lecture delivered by the supporting company. */
+const trailblazersCard = document.querySelector('.partnership-card[data-card="trailblazers"]');
+if (trailblazersCard) {
+  const routeDescription = trailblazersCard.querySelector('.route-description');
+  if (routeDescription) {
+    routeDescription.textContent = 'תוכנית יזמות טכנולוגית לנערות, הכוללת הרצאה מקצועית מטעם החברה התורמת.';
+  }
+
+  const lectureParagraph = [...trailblazersCard.querySelectorAll('.single-program-copy > p')]
+    .find((paragraph) => paragraph.textContent.includes('הרצאת'));
+  if (lectureParagraph) {
+    lectureParagraph.textContent = 'המסלול כולל הרצאה מקצועית מטעם החברה התורמת, בהשתתפות נציגה או נציג מהחברה.';
+  }
+}
+
 const SUPABASE_URL = 'https://szinlhjuwyiyszdpsdop.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6aW5saGp1d3lpeXN6ZHBzZG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NzIyOTgsImV4cCI6MjA5MzU0ODI5OH0.yOK5rkApbYd4jbLAA_FR3F9JvBXJU_6wWCiReu0k70Q';
 
