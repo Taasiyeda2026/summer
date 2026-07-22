@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-07-22-v379";
+const CACHE_NAME = "summer-catalog-v2026-07-22-v380";
 
 const CORE_ASSETS = [
   "./",
@@ -55,11 +55,6 @@ self.addEventListener("activate", event => {
   );
 });
 
-function networkOnlyWithFallback(request) {
-  return fetch(request, { cache: "no-store" })
-    .catch(() => caches.match(request));
-}
-
 function cacheFresh(request) {
   return fetch(request, { cache: "no-store" })
     .then(response => {
@@ -88,6 +83,11 @@ function cacheOnDemand(request) {
       return response;
     });
   });
+}
+
+function networkOnlyWithFallback(request) {
+  return fetch(request, { cache: "no-store" })
+    .catch(() => caches.match(request));
 }
 
 self.addEventListener("fetch", event => {
