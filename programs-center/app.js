@@ -23,6 +23,32 @@ microUiStyle.rel = 'stylesheet';
 microUiStyle.href = './micro-ui-fixes.css?v=9';
 document.head.appendChild(microUiStyle);
 
+const gradeRouteStyle = document.createElement('style');
+gradeRouteStyle.textContent = `
+  @media (min-width: 980px) {
+    .partnerships-section .container {
+      width: min(980px, calc(100% - 40px)) !important;
+    }
+
+    .partnerships-section .partnership-grid,
+    .route-details-host {
+      max-width: 930px !important;
+    }
+
+    .partnerships-section .partnership-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (min-width: 900px) and (max-width: 979px) {
+    .partnerships-section .partnership-grid {
+      max-width: 720px !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+`;
+document.head.appendChild(gradeRouteStyle);
+
 const heroKicker = document.querySelector('.hero-kicker');
 heroKicker?.remove();
 
@@ -46,9 +72,53 @@ if (partnershipsTitle) {
   partnershipsTitle.textContent = 'בוחרים כיצד להשפיע';
 }
 
+const partnershipsEyebrow = document.querySelector('.partnerships-heading .eyebrow');
+if (partnershipsEyebrow) {
+  partnershipsEyebrow.textContent = 'שישה מסלולים לבחירה';
+}
+
 const partnershipsParagraph = document.querySelector('.partnerships-heading > p:last-child');
 if (partnershipsParagraph) {
   partnershipsParagraph.textContent = 'אנו מזמינים אתכם להיות שותפים ביצירת הזדמנויות חינוכיות משמעותיות, בהתאם לתחום ההשפעה שתרצו לקדם.';
+}
+
+const annualRouteCard = document.querySelector('.partnership-card[data-card="annual"]');
+if (annualRouteCard && !document.querySelector('.partnership-card[data-card="grade-level"]')) {
+  annualRouteCard.insertAdjacentHTML('beforebegin', `
+    <article class="partnership-card" data-card="grade-level">
+      <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-grade-level">
+        <span class="route-number">03</span>
+        <span class="route-label">מסלול שכבתי</span>
+        <span class="route-price-label">סכום התרומה</span>
+        <span class="route-price">לפי מספר הקבוצות</span>
+        <span class="route-description">מימון תוכנית חינוכית לשכבת גיל שלמה בבית ספר אחד, במספר קבוצות מקבילות.</span>
+        <span class="route-highlight" aria-hidden="true"></span>
+        <span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
+      </button>
+      <div class="card-details" id="route-grade-level" hidden>
+        <div class="details-heading">
+          <h3>פעילות לשכבת גיל שלמה</h3>
+          <p>אותה תוכנית חינוכית למספר כיתות מקבילות בבית ספר אחד.</p>
+        </div>
+        <div class="single-program-copy">
+          <p>המסלול מאפשר להרחיב את הפעילות לכל כיתות השכבה וליצור חוויית למידה משותפת והשפעה רחבה בבית הספר.</p>
+          <p>ניתן לבחור תוכנית המתאימה ליסודי או לחטיבות. מספר הקבוצות וסכום התרומה ייקבעו בהתאם למבנה השכבה ולתוכנית הנבחרת.</p>
+        </div>
+        <button class="select-route" type="button" data-select-route="מסלול שכבתי – לפי מספר הקבוצות">בחירת מסלול שכבתי</button>
+      </div>
+    </article>
+  `);
+}
+
+document.querySelectorAll('.partnership-card .route-number').forEach((number, index) => {
+  number.textContent = String(index + 1).padStart(2, '0');
+});
+
+const partnershipRouteSelect = document.getElementById('partnershipRoute');
+if (partnershipRouteSelect && ![...partnershipRouteSelect.options].some((option) => option.value.startsWith('מסלול שכבתי'))) {
+  const gradeRouteOption = new Option('מסלול שכבתי – לפי מספר הקבוצות', 'מסלול שכבתי – לפי מספר הקבוצות');
+  const annualRouteOption = [...partnershipRouteSelect.options].find((option) => option.value === 'מסלול שנתי');
+  partnershipRouteSelect.insertBefore(gradeRouteOption, annualRouteOption || null);
 }
 
 document.querySelectorAll('.card-action').forEach((action) => {
