@@ -736,3 +736,18 @@
   letter-spacing: normal !important;
   white-space: nowrap !important;
 }
+
+/* Remove unnecessary empty space below the contact-form button */
+.form-status:empty {
+  display: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+
+.contact-form {
+  padding-bottom: 16px !important;
+}
+
+.contact-section {
+  padding-bottom: 22px !important;
+}
