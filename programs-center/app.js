@@ -20,7 +20,7 @@ document.head.appendChild(compactPartnershipCardsStyle);
 
 const microUiStyle = document.createElement('link');
 microUiStyle.rel = 'stylesheet';
-microUiStyle.href = './micro-ui-fixes.css?v=3';
+microUiStyle.href = './micro-ui-fixes.css?v=4';
 document.head.appendChild(microUiStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
