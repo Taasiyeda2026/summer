@@ -5,7 +5,7 @@ document.head.appendChild(pageLayoutStyle);
 
 const narrowShellStyle = document.createElement('link');
 narrowShellStyle.rel = 'stylesheet';
-narrowShellStyle.href = './narrow-shell.css?v=3';
+narrowShellStyle.href = './narrow-shell.css?v=6';
 document.head.appendChild(narrowShellStyle);
 
 const compactControlsStyle = document.createElement('link');
@@ -15,7 +15,7 @@ document.head.appendChild(compactControlsStyle);
 
 const compactPartnershipCardsStyle = document.createElement('link');
 compactPartnershipCardsStyle.rel = 'stylesheet';
-compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=3';
+compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=4';
 document.head.appendChild(compactPartnershipCardsStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
