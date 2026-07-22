@@ -1,0 +1,113 @@
+יש לבצע שני תיקונים ממוקדים בעמוד הנחיתה הבא בלבד:
+
+עמוד: מסלולי שותפות חינוכית לתעשייה
+קישור:
+https://taasiyeda2026.github.io/summer/programs-center/
+
+תיקייה בפרויקט:
+programs-center/
+
+1. צמצום כרטיסי מסלולי התרומה במובייל
+
+כרגע כרטיסי המסלולים רחבים מדי וכמעט נוגעים בשולי המסך.
+
+במובייל יש:
+
+להקטין את רוחב כל כרטיס.
+למרכז כל כרטיס בעמוד.
+להשאיר שוליים ברורים משני הצדדים.
+לא להשתמש ברוחב מלא.
+לשמור על עמודה אחת.
+לצמצם מעט גם את הריפוד הפנימי.
+אין לשנות את גרסת הדסקטופ.
+
+להוסיף או לעדכן:
+
+@media (max-width: 760px) {
+  .partnership-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: auto !important;
+    padding-inline: 0 !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 12px !important;
+  }
+
+  .partnership-card {
+    width: calc(100% - 40px) !important;
+    max-width: 360px !important;
+    min-width: 0 !important;
+    margin-inline: auto !important;
+  }
+
+  .partnership-card .card-toggle {
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 15px 16px 13px !important;
+  }
+}
+
+ברוחבים צרים מאוד:
+
+@media (max-width: 390px) {
+  .partnership-card {
+    width: calc(100% - 32px) !important;
+    max-width: 340px !important;
+  }
+}
+
+יש לבדוק בפועל ברוחבים:
+
+320px
+360px
+390px
+430px
+
+הכרטיסים צריכים להיות צרים, ממורכזים ובעלי שוליים שווים.
+
+2. תיקון החץ בפוטר
+
+החץ בפוטר חייב להחזיר את המשתמש לתחילת העמוד גם במובייל וגם בדסקטופ.
+
+יש לוודא שבתחילת העמוד קיים יעד תקין:
+
+<body id="top">
+
+או לחלופין:
+
+<div id="top"></div>
+
+החץ בפוטר צריך להיות קישור אמיתי:
+
+<a class="footer-top-link" href="#top" aria-label="חזרה לראש העמוד">
+  <span aria-hidden="true">↑</span>
+</a>
+
+בנוסף, יש להוסיף גלילה חלקה:
+
+html {
+  scroll-behavior: smooth;
+}
+
+אם בגלל JavaScript, תפריט קבוע או מבנה העמוד הקישור #top אינו מגיע ממש לתחילת העמוד, יש להוסיף גם טיפול מפורש:
+
+document.querySelector('.footer-top-link')?.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  history.replaceState(null, '', '#top');
+});
+
+יש לוודא:
+
+שהחץ עובד בלחיצה אחת.
+שהעמוד מגיע ממש לחלק העליון.
+שהפעולה עובדת ב־Safari באייפון, Chrome במובייל ובדסקטופ.
+שהחץ נשאר קטן ועדין.
+שאין טקסט „חזרה לראש העמוד”.
+שאין שינוי בשאר הפוטר.

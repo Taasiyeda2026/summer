@@ -20,7 +20,7 @@ document.head.appendChild(compactPartnershipCardsStyle);
 
 const microUiStyle = document.createElement('link');
 microUiStyle.rel = 'stylesheet';
-microUiStyle.href = './micro-ui-fixes.css?v=8';
+microUiStyle.href = './micro-ui-fixes.css?v=9';
 document.head.appendChild(microUiStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
@@ -214,4 +214,10 @@ document.querySelectorAll('[data-select-route]').forEach((button) => {
 window.addEventListener('resize', () => {
   if (window.innerWidth > 760) setNavigationState(false);
   if (activeRouteCard) placeCardDetails(activeRouteCard);
+});
+
+document.querySelector('.footer-top-link')?.addEventListener('click', (event) => {
+  event.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  history.replaceState(null, '', '#top');
 });

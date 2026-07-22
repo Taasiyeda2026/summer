@@ -201,11 +201,31 @@
     font-size: clamp(1.4rem, 5.5vw, 1.9rem) !important;
   }
 
-  /* Partnership cards: height by content on mobile */
+  /* Partnership cards: narrow, centered, with clear margins */
+  .partnership-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: auto !important;
+    padding-inline: 0 !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 12px !important;
+  }
+
+  .partnership-card {
+    width: calc(100% - 40px) !important;
+    max-width: 360px !important;
+    min-width: 0 !important;
+    margin-inline: auto !important;
+  }
+
   .partnerships-section .card-toggle,
-  .partnerships-section .premium-card .card-toggle {
+  .partnerships-section .premium-card .card-toggle,
+  .partnership-card .card-toggle {
+    width: 100% !important;
     min-height: 0 !important;
     height: auto !important;
+    padding: 15px 16px 13px !important;
   }
 
   /* Tax note stacks vertically */
@@ -383,6 +403,15 @@
   color: #176f8c !important;
   border-color: #9fcbd4 !important;
   outline: none !important;
+}
+
+/* Very narrow screens (≤375px): stack hero buttons */
+/* Narrow screens (≤390px): tighter card margins */
+@media (max-width: 390px) {
+  .partnership-card {
+    width: calc(100% - 32px) !important;
+    max-width: 340px !important;
+  }
 }
 
 /* Very narrow screens (≤375px): stack hero buttons */
