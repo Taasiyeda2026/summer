@@ -1,0 +1,57 @@
+יש לעדכן את תצוגת השיתוף של העמוד ב־WhatsApp.
+
+לבצע שינוי רק בקובץ:
+
+programs-center/index.html
+
+התמונה כבר הועלתה במידות הנכונות ונמצאת בנתיב:
+
+programs-center/share-banner.png
+
+אין ליצור תמונה חדשה, אין לשנות את שמה ואין להעביר אותה לתיקייה אחרת.
+
+בתוך <head> יש לוודא שמופיעות התגיות הבאות:
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="תעשיידע">
+<meta property="og:url" content="https://taasiyeda2026.github.io/summer/programs-center/">
+
+<meta property="og:title" content="שותפות חינוכית | תעשיידע">
+
+<meta property="og:description" content="שותפות חינוכית המאפשרת קידום תוכניות מדע וטכנולוגיה עבור תלמידות ותלמידים, באמצעות מסלולי תמיכה לבחירה.">
+
+<meta property="og:image" content="https://taasiyeda2026.github.io/summer/programs-center/share-banner.png">
+<meta property="og:image:secure_url" content="https://taasiyeda2026.github.io/summer/programs-center/share-banner.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="תעשיידע – שותפות חינוכית לקידום תוכניות מדע וטכנולוגיה">
+
+יש לוודא שגם תגיות Twitter מפנות לאותה תמונה:
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="שותפות חינוכית | תעשיידע">
+<meta name="twitter:description" content="שותפות חינוכית המאפשרת קידום תוכניות מדע וטכנולוגיה עבור תלמידות ותלמידים, באמצעות מסלולי תמיכה לבחירה.">
+<meta name="twitter:image" content="https://taasiyeda2026.github.io/summer/programs-center/share-banner.png">
+
+בנוסף יש לוודא שקיימות:
+
+<title>שותפות חינוכית | תעשיידע</title>
+
+<meta name="description" content="שותפות חינוכית המאפשרת קידום תוכניות מדע וטכנולוגיה עבור תלמידות ותלמידים, באמצעות מסלולי תמיכה לבחירה.">
+
+<link rel="canonical" href="https://taasiyeda2026.github.io/summer/programs-center/">
+
+חשוב:
+
+להסיר תגיות Open Graph כפולות או ישנות.
+לא לשנות את תוכן העמוד.
+לא לשנות CSS או JavaScript.
+לא לשנות את התמונה.
+לא ליצור קובץ בשם אחר.
+לבצע את השינוי רק ב־programs-center/index.html.
+
+לאחר הפרסום לבדוק ב־WhatsApp באמצעות:
+
+https://taasiyeda2026.github.io/summer/programs-center/?v=3
