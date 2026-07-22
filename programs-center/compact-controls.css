@@ -751,3 +751,16 @@
 .contact-section {
   padding-bottom: 22px !important;
 }
+
+/* Mobile only: hide navigation menu and sticky CTA */
+@media (max-width: 760px) {
+  body {
+    padding-bottom: 0 !important;
+  }
+
+  .nav-toggle,
+  .main-nav,
+  .mobile-sticky-cta {
+    display: none !important;
+  }
+}
