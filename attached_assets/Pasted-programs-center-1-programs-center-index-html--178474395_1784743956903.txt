@@ -1,0 +1,85 @@
+programs-center/
+
+1. החלפת הטקסט המלא של מסלול פרימיום
+
+בקובץ:
+
+programs-center/index.html
+
+לאתר את:
+
+<article class="partnership-card premium-card" data-card="premium">
+
+ובתוך פרטי המסלול לאתר את:
+
+<div class="single-program-copy">
+
+יש למחוק את כל הפסקאות והרשימה הקיימות בתוך אזור זה ולהחליף את הטקסט בלבד בתוכן הבא:
+
+<p>פרימיום היא תוכנית יזמות מתקדמת המדמה אקסלרטור תעשייתי ומחברת בין התלמידים לבין חברה מאמצת, תוך התאמת התוכנית לתחום פעילותה של החברה.</p>
+
+<p>המשתתפים נחשפים לעולמה של החברה ועוברים תהליך מלא של פיתוח מוצר המבוסס על תיכון הנדסי: זיהוי צורך, הגדרת קהל יעד, חקר פתרונות קיימים, ניסוח דרישות, העלאת רעיונות, תכנון, פיתוח אבטיפוס, בדיקה, קבלת משוב ושיפור.</p>
+
+חשוב:
+
+להסיר את רשימת שלושת המפגשים הקיימת.
+לא להוסיף טקסט אחר.
+לא לשנות את כותרת המסלול.
+לא לשנות את מספר גפ״ן, הכיתות, מספר המפגשים או המחיר.
+להשאיר את כפתור לפרטי הקורס לאחר שתי הפסקאות.
+להשאיר את כפתור בחירת המסלול ללא שינוי.
+2. עדכון מלא של גרסאות המטמון ל־25
+
+בקובץ:
+
+programs-center/index.html
+
+יש לעדכן את כל הפניות המקומיות לקובצי CSS ו־JavaScript לגרסה אחידה:
+
+v=25
+
+ההפניות צריכות להיות:
+
+<link rel="stylesheet" href="./styles.css?v=25">
+<link rel="stylesheet" href="./layout-fixes.css?v=25">
+<link rel="stylesheet" href="./narrow-shell.css?v=25">
+<link rel="stylesheet" href="./compact-controls.css?v=25">
+
+ובתחתית העמוד:
+
+<script src="./app.js?v=25"></script>
+<script src="./support-form.js?v=25"></script>
+3. עדכון הקבצים הנטענים מתוך app.js
+
+בקובץ:
+
+programs-center/app.js
+
+בתחילת הקובץ יש מערך שטוען קובצי CSS באופן דינמי.
+
+יש לעדכן את כל הקבצים במערך לגרסה v=25:
+
+[
+  'layout-fixes.css?v=25',
+  'narrow-shell.css?v=25',
+  'compact-controls.css?v=25',
+  'partnership-cards-compact.css?v=25',
+  'micro-ui-fixes.css?v=25'
+].forEach((href) => {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `./${href}`;
+  document.head.appendChild(link);
+});
+4. בדיקה מחייבת
+
+לאחר העדכון יש לוודא שב־GitHub מופיעות בפועל ההפניות:
+
+compact-controls.css?v=25
+app.js?v=25
+
+וכן שכל שאר קובצי ה־CSS וה־JavaScript של העמוד נטענים עם v=25.
+
+אין לשנות קבצים מחוץ לתיקיית:
+
+programs-center/
