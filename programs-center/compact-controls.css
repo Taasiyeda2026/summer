@@ -752,15 +752,52 @@
   padding-bottom: 22px !important;
 }
 
-/* Mobile only: hide navigation menu and sticky CTA */
+/* Mobile navigation opens as an overlay without moving the hero. */
 @media (max-width: 760px) {
   body {
     padding-bottom: 0 !important;
   }
 
-  .nav-toggle,
-  .main-nav,
   .mobile-sticky-cta {
     display: none !important;
+  }
+
+  .nav-toggle {
+    display: inline-flex !important;
+  }
+
+  .main-nav {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 14px !important;
+    left: 14px !important;
+    z-index: 1000 !important;
+    padding: 10px !important;
+    border: 1px solid #dce6eb !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 12px 30px rgba(7, 35, 58, 0.14) !important;
+  }
+
+  .main-nav.open {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  .main-nav a {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 36px !important;
+    padding: 7px 12px !important;
+    border-radius: 9px !important;
+    text-align: center !important;
+    font-size: .78rem !important;
+  }
+
+  body.nav-open {
+    overflow: hidden;
   }
 }

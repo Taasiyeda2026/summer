@@ -332,17 +332,46 @@ document.querySelectorAll('[data-route-id]').forEach((button) => button.addEvent
 
 const navToggle = document.querySelector('.nav-toggle');
 const mainNav = document.getElementById('mainNav');
-function setNavigationState(open) {
-  if (!navToggle || !mainNav) return;
-  navToggle.setAttribute('aria-expanded', String(open));
-  navToggle.setAttribute('aria-label', open ? 'סגירת התפריט' : 'פתיחת התפריט');
-  mainNav.classList.toggle('open', open);
-  document.body.classList.toggle('nav-open', open);
-  navToggle.querySelector('use')?.setAttribute('href', open ? '#icon-close' : '#icon-menu');
+
+function closeMobileNav() {
+  mainNav?.classList.remove('open');
+  navToggle?.setAttribute('aria-expanded', 'false');
+  navToggle?.setAttribute('aria-label', 'פתיחת התפריט');
+  navToggle?.querySelector('use')?.setAttribute('href', '#icon-menu');
+  document.body.classList.remove('nav-open');
 }
-navToggle?.addEventListener('click', () => setNavigationState(navToggle.getAttribute('aria-expanded') !== 'true'));
-mainNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setNavigationState(false)));
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setNavigationState(false); });
+
+navToggle?.addEventListener('click', (event) => {
+  event.stopPropagation();
+
+  const isOpen = mainNav.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+  navToggle.setAttribute('aria-label', isOpen ? 'סגירת התפריט' : 'פתיחת התפריט');
+  navToggle.querySelector('use')?.setAttribute('href', isOpen ? '#icon-close' : '#icon-menu');
+  document.body.classList.toggle('nav-open', isOpen);
+});
+
+mainNav?.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', closeMobileNav);
+});
+
+document.addEventListener('click', (event) => {
+  if (
+    mainNav?.classList.contains('open') &&
+    !mainNav.contains(event.target) &&
+    !navToggle.contains(event.target)
+  ) {
+    closeMobileNav();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMobileNav();
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 760) closeMobileNav();
+});
 
 const routeCards = [...document.querySelectorAll('.partnership-card')];
 const partnershipGrid = document.querySelector('.partnership-grid');
