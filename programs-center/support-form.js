@@ -1,3 +1,52 @@
+const mobileHeaderOverride = document.createElement('style');
+mobileHeaderOverride.textContent = `
+@media (max-width: 760px) {
+  .site-header {
+    position: relative !important;
+    top: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .site-header .header-inner {
+    min-height: 52px !important;
+    height: 52px !important;
+    padding: 6px 16px !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .site-header .main-nav,
+  .site-header .nav-toggle,
+  .site-header .header-cta {
+    display: none !important;
+  }
+
+  .site-header .brand {
+    margin: 0 !important;
+  }
+
+  .site-header .brand img {
+    height: 34px !important;
+    width: auto !important;
+  }
+
+  .site-header .brand span {
+    display: none !important;
+  }
+
+  body.nav-open {
+    overflow: auto !important;
+  }
+
+  .site-header + main,
+  main .hero {
+    margin-top: 0 !important;
+  }
+}
+`;
+document.head.appendChild(mobileHeaderOverride);
+
 const supportPartnershipForm = document.getElementById('partnershipForm');
 const formSubmit = document.getElementById('formSubmit');
 const formStatus = document.getElementById('formStatus');
