@@ -140,13 +140,95 @@
     display: none !important;
   }
 
+  /* Hero: smaller title, tighter padding */
+  .hero {
+    min-height: 380px !important;
+  }
+
+  .hero h1 {
+    max-width: 100% !important;
+    font-size: clamp(2rem, 8.5vw, 3rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .hero-content {
+    padding-block: 50px 44px !important;
+  }
+
+  .hero-text {
+    max-width: 100% !important;
+    font-size: .9rem !important;
+    margin-top: 14px !important;
+    line-height: 1.52 !important;
+  }
+
+  /* Buttons: equal-width side-by-side */
   .hero-actions {
+    display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    align-items: stretch !important;
   }
 
   .hero-actions .button {
     width: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
+    white-space: normal !important;
+    text-align: center !important;
+    justify-content: center !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Section spacing */
+  .section {
+    padding: 38px 0 !important;
+  }
+
+  .about-section {
+    padding-top: 36px !important;
+  }
+
+  /* Section heading */
+  .section-heading h2,
+  .contact-copy h2,
+  .closing-content h2 {
+    font-size: clamp(1.65rem, 5.5vw, 2.1rem) !important;
+  }
+
+  /* Impact title pseudo-element */
+  .impact-section #impactTitle::after {
+    font-size: clamp(1.4rem, 5.5vw, 1.9rem) !important;
+  }
+
+  /* Partnership cards: height by content on mobile */
+  .partnerships-section .card-toggle,
+  .partnerships-section .premium-card .card-toggle {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  /* Tax note stacks vertically */
+  .tax-note {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+}
+
+/* Very narrow screens (≤375px): stack hero buttons */
+@media (max-width: 375px) {
+  .hero-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero-actions .button {
+    width: fit-content !important;
+    min-width: 160px !important;
+    max-width: 100% !important;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.85rem, 8vw, 2.2rem) !important;
   }
 }
