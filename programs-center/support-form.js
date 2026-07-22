@@ -4,19 +4,50 @@ const formStatus = document.getElementById('formStatus');
 const formSubject = document.getElementById('formSubject');
 const partnershipRoute = document.getElementById('partnershipRoute');
 
-/* Route 03 includes a professional lecture delivered by the supporting company. */
-const trailblazersCard = document.querySelector('.partnership-card[data-card="trailblazers"]');
-if (trailblazersCard) {
-  const routeDescription = trailblazersCard.querySelector('.route-description');
-  if (routeDescription) {
-    routeDescription.textContent = 'תוכנית יזמות טכנולוגית לנערות, הכוללת הרצאה מקצועית מטעם החברה התורמת.';
+/* Final front-card wording for all five partnership routes. */
+const routeCardCopy = {
+  elementary: {
+    title: 'מסלול יסודי',
+    description: 'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.'
+  },
+  'middle-school': {
+    title: 'מסלול חטיבות',
+    description: 'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.'
+  },
+  trailblazers: {
+    title: 'מסלול פורצות דרך',
+    description: 'מימון תוכנית יזמות טכנולוגית לנערות, לצד הרצאת אורחת מעוררת השראה אישית.'
+  },
+  pharma: {
+    title: 'מסלול רוקחים עולם',
+    description: 'מימון תוכנית ״רוקחים עולם״, לצד מפגש מקצועי עם אנשי מקצוע מעולם התעשייה.'
+  },
+  premium: {
+    title: 'מסלול פרימיום תעשייתי',
+    description: 'מימון תוכנית יזמות המותאמת לחברה, בליווי פעיל של נציגיה לאורך כל התהליך.'
   }
+};
 
-  const lectureParagraph = [...trailblazersCard.querySelectorAll('.single-program-copy > p')]
-    .find((paragraph) => paragraph.textContent.includes('הרצאת'));
-  if (lectureParagraph) {
-    lectureParagraph.textContent = 'המסלול כולל הרצאה מקצועית מטעם החברה התורמת, בהשתתפות נציגה או נציג מהחברה.';
-  }
+Object.entries(routeCardCopy).forEach(([cardName, copy]) => {
+  const card = document.querySelector(`.partnership-card[data-card="${cardName}"]`);
+  if (!card) return;
+
+  const title = card.querySelector('.route-label');
+  const description = card.querySelector('.route-description');
+
+  if (title) title.textContent = copy.title;
+  if (description) description.textContent = copy.description;
+});
+
+/* Keep the route name consistent in the contact-form selection. */
+if (partnershipRoute) {
+  [...partnershipRoute.options].forEach((option) => {
+    if (option.textContent.includes('מסלול פארמצבטיקה')) {
+      const updatedText = option.textContent.replace(/מסלול פארמצבטיקה[^–]*–?\s*/, 'מסלול רוקחים עולם – ');
+      option.textContent = updatedText;
+      option.value = updatedText;
+    }
+  });
 }
 
 const SUPABASE_URL = 'https://szinlhjuwyiyszdpsdop.supabase.co';
