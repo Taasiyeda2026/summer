@@ -1,0 +1,95 @@
+יש לתקן את התקלה רק בשני הקבצים הבאים:
+
+programs-center/app.js
+programs-center/support-form.js
+
+אין לחפש או לשנות קבצים אחרים.
+
+1. תיקון ההתנגשות ב־support-form.js
+
+בקובץ:
+
+programs-center/support-form.js
+
+להחליף:
+
+const partnershipForm = document.getElementById('partnershipForm');
+
+ב־:
+
+const supportPartnershipForm = document.getElementById('partnershipForm');
+
+ולשנות באותו קובץ בלבד את כל ההפניות מ־:
+
+partnershipForm
+
+ל־:
+
+supportPartnershipForm
+
+לרבות:
+
+if (supportPartnershipForm) {
+  supportPartnershipForm.addEventListener('submit', async (event) => {
+if (!supportPartnershipForm.reportValidity()) return;
+HTMLFormElement.prototype.submit.call(supportPartnershipForm);
+
+אין לשנות את שם ה־HTML ID:
+
+partnershipForm
+2. תיקון מקור הניסוחים ב־app.js
+
+בקובץ:
+
+programs-center/app.js
+
+להחליף את ניסוח המסלול היסודי ל־:
+
+elementaryCard.querySelector('.route-description').textContent =
+  'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.';
+
+להחליף את ניסוח מסלול החטיבות ל־:
+
+middleCard.querySelector('.route-description').textContent =
+  'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.';
+
+בתוך ה־HTML הדינמי של כרטיס data-card="pharma" להחליף:
+
+<span class="route-label">מסלול פארמצבטיקה</span>
+
+ב־:
+
+<span class="route-label">מסלול רוקחים עולם</span>
+
+ולהחליף את התיאור ל־:
+
+<span class="route-description">מימון תוכנית ״רוקחים עולם״, לצד מפגש מקצועי עם אנשי מקצוע מעולם התעשייה.</span>
+3. הניסוחים הסופיים שחייבים להופיע
+מסלול יסודי
+מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.
+
+מסלול חטיבות
+מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.
+
+מסלול פורצות דרך
+מימון תוכנית יזמות טכנולוגית לנערות, לצד הרצאת אורחת מעוררת השראה אישית.
+
+מסלול רוקחים עולם
+מימון תוכנית ״רוקחים עולם״, לצד מפגש מקצועי עם אנשי מקצוע מעולם התעשייה.
+
+מסלול פרימיום תעשייתי
+מימון תוכנית יזמות המותאמת לחברה, בליווי פעיל של נציגיה לאורך כל התהליך.
+4. עדכון גרסת JavaScript
+
+בקובץ:
+
+programs-center/index.html
+
+יש לשנות רק את מספרי הגרסאות:
+
+<script src="./app.js?v=9"></script>
+<script src="./support-form.js?v=7"></script>
+
+לא לשנות תוכן אחר ב־index.html.
+
+התקלה אינה בעיצוב ואינה במטמון של ה־CSS. היא נגרמת מכך ש־support-form.js קורס לפני שהוא מפעיל את הניסוחים ואת קוד השמירה לטופס.

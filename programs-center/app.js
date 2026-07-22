@@ -70,7 +70,7 @@ const trailblazersCard = document.querySelector('.partnership-card[data-card="tr
 const premiumCard = document.querySelector('.partnership-card[data-card="premium"]');
 
 if (elementaryCard) {
-  elementaryCard.querySelector('.route-description').textContent = 'תוכניות לכיתות ד׳–ו׳: קבוצה אחת, פעילות שכבתית או מסלול שנתי.';
+  elementaryCard.querySelector('.route-description').textContent = 'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.';
   elementaryCard.querySelector('.details-heading h3').textContent = 'מסלול יסודי';
   elementaryCard.querySelector('.details-heading p').textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
   elementaryCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('elementary', 9500, 18000));
@@ -80,7 +80,7 @@ if (elementaryCard) {
 
 let pharmaProgramHtml = '';
 if (middleCard) {
-  middleCard.querySelector('.route-description').textContent = 'תוכניות לחטיבת הביניים ולתיכון: קבוצה אחת, פעילות שכבתית או מסלול שנתי.';
+  middleCard.querySelector('.route-description').textContent = 'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.';
   middleCard.querySelector('.details-heading h3').textContent = 'מסלול חטיבות';
   middleCard.querySelector('.details-heading p').textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
   middleCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('middle', 10000, 19000));
@@ -115,7 +115,7 @@ if (premiumCard) {
     <article class="partnership-card" data-card="pharma">
       <span class="premium-badge">אירוח בחברה</span>
       <button class="card-toggle" type="button" aria-expanded="false" aria-controls="route-pharma">
-        <span class="route-number">04</span><span class="route-label">מסלול פארמצבטיקה</span><span class="route-description">תוכנית רוקחים עולם בשילוב אירוח מקצועי בחברה התורמת.</span><span class="route-highlight" aria-hidden="true"></span><span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
+        <span class="route-number">04</span><span class="route-label">מסלול רוקחים עולם</span><span class="route-description">מימון תוכנית ״רוקחים עולם״, לצד מפגש מקצועי עם אנשי מקצוע מעולם התעשייה.</span><span class="route-highlight" aria-hidden="true"></span><span class="card-action">לפרטי המסלול <svg><use href="#icon-arrow"></use></svg></span>
       </button>
       <div class="card-details" id="route-pharma" hidden>
         <div class="details-heading"><h3>רוקחים עולם – יזמות לעולם הפרמצבטיקה</h3><p class="program-meta">מספר גפ״ן: 46091 | כיתות ז׳–י׳ | 14 מפגשים</p><span class="details-price-tag">13,000 ₪</span></div>

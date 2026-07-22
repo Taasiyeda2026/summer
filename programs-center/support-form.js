@@ -1,4 +1,4 @@
-const partnershipForm = document.getElementById('partnershipForm');
+const supportPartnershipForm = document.getElementById('partnershipForm');
 const formSubmit = document.getElementById('formSubmit');
 const formStatus = document.getElementById('formStatus');
 const formSubject = document.getElementById('formSubject');
@@ -105,11 +105,11 @@ async function saveInquiry() {
   }
 }
 
-if (partnershipForm) {
-  partnershipForm.addEventListener('submit', async (event) => {
+if (supportPartnershipForm) {
+  supportPartnershipForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (!partnershipForm.reportValidity()) return;
+    if (!supportPartnershipForm.reportValidity()) return;
     if (document.getElementById('websiteField').value) return;
 
     const routeName = partnershipRoute.value || 'ללא בחירת מסלול';
@@ -125,7 +125,7 @@ if (partnershipForm) {
       // שליחת המייל נשארת פעילה גם אם השמירה במסד הנתונים אינה זמינה זמנית.
     }
 
-    HTMLFormElement.prototype.submit.call(partnershipForm);
+    HTMLFormElement.prototype.submit.call(supportPartnershipForm);
   });
 }
 
