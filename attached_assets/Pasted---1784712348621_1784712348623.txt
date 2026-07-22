@@ -1,0 +1,174 @@
+יש לצמצם משמעותית את כל אזור יצירת הקשר בעמוד הבא בלבד:
+
+עמוד: מסלולי שותפות חינוכית לתעשייה
+קישור:
+https://taasiyeda2026.github.io/summer/programs-center/
+
+תיקייה:
+programs-center/
+
+אין לשנות עמודים אחרים ואין לשנות את פעולת הטופס.
+
+מטרה
+
+להפוך את כל תיבת הפרטים לטופס קומפקטי, קצר ונקי יותר. כרגע התיבה גבוהה מדי, השדות גדולים מדי ויש רווחים מיותרים בין כל הרכיבים.
+
+תיקונים נדרשים
+תיבת הטופס
+להקטין את הרוחב המרבי של התיבה.
+לצמצם את ה־padding מכל הצדדים.
+לצמצם את הרווחים בין שורות השדות.
+לצמצם את הרווח מעל ומתחת לטופס.
+להסיר כל min-height מיותר.
+גובה התיבה צריך להיקבע לפי התוכן בלבד.
+שדות הקלט
+להקטין את גובה כל שדות הטקסט והרשימה הנפתחת.
+להקטין מעט את גודל כותרות השדות.
+לצמצם רווח בין כותרת השדה לשדה עצמו.
+לשמור בדסקטופ על שתי עמודות שוות.
+במובייל לעבור לעמודה אחת.
+אין לשנות את שמות השדות או את דרישות החובה.
+תיבת ההודעה
+להקטין משמעותית את הגובה.
+להשאיר 2 שורות בלבד כברירת מחדל.
+לצמצם את גודל טקסט ה־placeholder.
+לצמצם את הריפוד הפנימי.
+כפתור השליחה
+להשאיר את הטקסט: „שליחת הפנייה”.
+להקטין עוד את הכפתור.
+למקם אותו במרכז.
+רוחב לפי התוכן בלבד.
+להקטין גם את החץ ואת הטקסט.
+אין להפוך אותו לכפתור רחב.
+טקסט הפרטיות
+
+הטקסט:
+
+„הפרטים יישמרו וישמשו את צוות תעשיידע לצורך טיפול בפנייה בלבד.”
+
+צריך להיות קטן מאוד ועדין.
+
+לצמצם את הרווח מעליו.
+להקטין את גודל הטקסט.
+לצמצם את השטח שמתחתיו.
+מידות מומלצות
+.contact-section {
+  padding: 30px 0 !important;
+}
+
+.contact-layout {
+  max-width: 560px !important;
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 520px !important;
+  padding: 16px 18px 14px !important;
+  border-radius: 18px !important;
+}
+
+.selected-route-summary {
+  margin-bottom: 12px !important;
+  padding: 9px 12px !important;
+}
+
+.selected-route-summary strong {
+  font-size: .82rem !important;
+}
+
+.form-grid {
+  gap: 8px 12px !important;
+}
+
+.form-grid label {
+  gap: 4px !important;
+}
+
+.form-grid label > span {
+  font-size: .72rem !important;
+  line-height: 1.2 !important;
+}
+
+.form-grid input,
+.form-grid select {
+  height: 36px !important;
+  padding-inline: 10px !important;
+  font-size: .82rem !important;
+  border-radius: 11px !important;
+}
+
+.form-grid textarea {
+  min-height: 64px !important;
+  height: 64px !important;
+  padding: 9px 10px !important;
+  font-size: .78rem !important;
+  line-height: 1.4 !important;
+  border-radius: 11px !important;
+}
+
+.form-grid textarea::placeholder {
+  font-size: .74rem !important;
+}
+
+.form-submit {
+  width: fit-content !important;
+  min-width: 0 !important;
+  min-height: 29px !important;
+  margin: 10px auto 0 !important;
+  padding: 0 12px !important;
+  gap: 4px !important;
+  font-size: .66rem !important;
+  line-height: 1 !important;
+}
+
+.form-submit svg {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.privacy-note {
+  margin: 8px 0 0 !important;
+  font-size: .58rem !important;
+  line-height: 1.3 !important;
+}
+מובייל
+
+ברוחב עד 760px:
+
+@media (max-width: 760px) {
+  .contact-section {
+    padding: 24px 0 !important;
+  }
+
+  .contact-form {
+    max-width: calc(100% - 24px) !important;
+    padding: 14px !important;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .form-grid input,
+  .form-grid select {
+    height: 36px !important;
+  }
+
+  .form-grid textarea {
+    min-height: 60px !important;
+    height: 60px !important;
+  }
+}
+בדיקה
+
+בסיום יש לוודא:
+
+שכל הטופס נראה קומפקטי משמעותית.
+שאין שטחים ריקים גדולים.
+שהכפתור קטן וממורכז.
+שהטופס עדיין שולח מייל.
+שהטופס עדיין נשמר ב־Supabase.
+שאין גלילה אופקית.
+שהמובייל נשאר קריא ונוח לשימוש.
+שלא שונו שדות, כתובות מייל או פעולת השליחה.
