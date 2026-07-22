@@ -26,7 +26,7 @@ async function saveInquiry() {
     groups: 1,
     unit_price: null,
     estimated_amount: null,
-    source: 'industry_partnerships_site',
+    source: 'programs_site',
     status: 'new',
     page_url: window.location.href,
     user_agent: navigator.userAgent
