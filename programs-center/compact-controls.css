@@ -619,9 +619,10 @@
 .site-header .main-nav {
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: flex-end !important;
   gap: 6px !important;
-  margin-inline: auto !important;
+  margin-inline-start: auto !important;
+  margin-inline-end: 0 !important;
 }
 
 .site-header .main-nav a {
