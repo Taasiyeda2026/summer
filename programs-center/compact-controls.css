@@ -553,3 +553,38 @@
   width: 100%;
   justify-self: center !important;
 }
+
+
+/* Selected donation route context */
+.selected-route-summary {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #dce7ec;
+  border-radius: 13px;
+  background: #f6f9fa;
+  text-align: center;
+}
+
+.selected-route-summary span {
+  display: block;
+  color: #718594;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.selected-route-summary strong {
+  display: block;
+  margin-top: 3px;
+  color: #52697a;
+  font-size: .94rem;
+  line-height: 1.35;
+}
+
+.selected-route-summary.has-selection {
+  border-color: #8fc9d5;
+  background: #eef9fb;
+}
+
+.selected-route-summary.has-selection strong {
+  color: #0d6276;
+}
