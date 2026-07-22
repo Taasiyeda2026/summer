@@ -589,6 +589,16 @@
   color: #0d6276;
 }
 
+/* Required field asterisk */
+.required-mark {
+  color: #d32f2f;
+  font-size: 0.72em;
+  font-weight: 700;
+  margin-inline-start: 2px;
+  vertical-align: top;
+  letter-spacing: normal;
+}
+
 /* Center the submit button in the programs-center contact form */
 #partnershipForm {
   display: flex !important;
