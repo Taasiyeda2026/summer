@@ -1,0 +1,148 @@
+יש לעדכן את כרטיס „פעילות שכבתית” גם במסלול יסודי וגם במסלול חטיבות, כך ש־מספר הקבוצות והמחיר יוצגו באותה שורה.
+
+בנוסף, יש לצמצם את רוחב שדה מספר הקבוצות מ־62px ל־48px. כיום הרוחב מוגדר בתוך app.js.
+
+לבצע את השינוי בקובץ:
+
+programs-center/app.js
+
+1. שינוי המבנה בתוך scopeMarkup
+
+בתוך הפונקציה:
+
+function scopeMarkup(type)
+
+להחליף את הכרטיס הקיים של פעילות שכבתית ב־:
+
+<article class="scope-option">
+  <h4>פעילות שכבתית</h4>
+
+  <p>
+    אותה תוכנית למספר כיתות מקבילות בבית ספר אחד.
+    ברירת המחדל היא 4 קבוצות.
+  </p>
+
+  <div class="scope-grade-row">
+    <div class="group-control">
+      <label for="${type}GradeGroups">מספר קבוצות</label>
+
+      <input
+        class="group-count-input"
+        id="${type}GradeGroups"
+        type="number"
+        min="2"
+        max="8"
+        step="1"
+        value="4"
+        data-grade-type="${type}">
+    </div>
+
+    <span
+      class="scope-price"
+      data-scope-price="${type}-grade">
+      ${formatPrice(gradePrice)}
+    </span>
+  </div>
+
+  <button
+    class="select-route"
+    type="button"
+    data-route-id="${type}-grade">
+    בחירת מסלול שכבתי
+  </button>
+</article>
+
+השינוי הזה חייב לחול אוטומטית גם על:
+
+מסלול יסודי
+מסלול חטיבות
+2. הוספת העיצוב
+
+בתוך uiStyle.textContent, בסוף כללי העיצוב ולפני סגירת ה־template string, להוסיף:
+
+.scope-grade-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+
+  width: 100% !important;
+  margin-top: 9px !important;
+
+  direction: rtl !important;
+}
+
+.scope-grade-row .group-control {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+
+  width: auto !important;
+  margin: 0 !important;
+}
+
+.scope-grade-row .group-control label {
+  margin: 0 !important;
+  white-space: nowrap !important;
+  letter-spacing: normal !important;
+}
+
+.scope-grade-row .group-count-input {
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+
+  margin: 0 !important;
+  padding: 2px 4px !important;
+
+  text-align: center !important;
+}
+
+.scope-grade-row .scope-price {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+3. התוצאה הנדרשת
+
+בתוך הכרטיס השכבתי תופיע שורה אחת:
+
+מספר קבוצות  [4]     37,000 ₪
+
+או במסלול יסודי:
+
+מספר קבוצות  [4]     36,000 ₪
+
+ומתחתיה יופיע הכפתור:
+
+בחירת מסלול שכבתי
+4. חשוב
+שדה הכמות יהיה ברוחב 48px.
+מספר הקבוצות והמחיר לא ירדו לשתי שורות במחשב.
+הכפתור יישאר ממורכז בתחתית הכרטיס.
+כל שלושת הכפתורים בכרטיסי המסלול יישארו באותו קו תחתון.
+לא להרחיב את הכפתורים.
+לא לשנות את טבלאות המחירים.
+לא לשנות את מנגנון עדכון המחיר.
+לא להשפיע על שדות הכמות של פורצות דרך, רוקחים עולם ופרימיום.
+לא לשנות את שדה מספר הקבוצות שמופיע בתוך טופס יצירת הקשר.
+5. עדכון מטמון
+
+בקובץ:
+
+programs-center/index.html
+
+להחליף את הגרסה הנוכחית:
+
+<script src="./app.js?v=29"></script>
+
+ב־:
+
+<script src="./app.js?v=30"></script>
+
+להשאיר ללא שינוי:
+
+<script src="./support-form.js?v=27"></script>
