@@ -20,7 +20,7 @@ document.head.appendChild(compactPartnershipCardsStyle);
 
 const microUiStyle = document.createElement('link');
 microUiStyle.rel = 'stylesheet';
-microUiStyle.href = './micro-ui-fixes.css?v=1';
+microUiStyle.href = './micro-ui-fixes.css?v=2';
 document.head.appendChild(microUiStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
@@ -28,7 +28,12 @@ heroKicker?.remove();
 
 const heroTitle = document.getElementById('heroTitle');
 if (heroTitle) {
-  heroTitle.textContent = 'שותפות חינוכית לקידום דור העתיד בקהילה';
+  heroTitle.textContent = 'דור העתיד';
+}
+
+const heroText = document.querySelector('.hero-text');
+if (heroText) {
+  heroText.textContent = 'תעשיידע מחברת בין מערכת החינוך לעולמות התעשייה ומאפשרת לתלמידות ולתלמידים להיחשף לעולמות תוכן עדכניים במגוון תחומי המדע והטכנולוגיה, להתנסות בלמידה מעשית ולפתח ידע ומיומנויות הנדרשים בעולם המשתנה. באמצעות פעילותה, תעשיידע מקדמת שוויון הזדמנויות ומרחיבה את הנגישות לחינוך מדעי וטכנולוגי איכותי.';
 }
 
 const aboutParagraph = document.querySelector('.about-section .compact-heading > p:last-child');
