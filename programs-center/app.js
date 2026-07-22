@@ -175,6 +175,19 @@ routeCards.forEach((card) => {
 
 const routeSelect = document.getElementById('partnershipRoute');
 const contactSection = document.getElementById('contact');
+const selectedRouteSummary = document.getElementById('selectedRouteSummary');
+const selectedRouteName = document.getElementById('selectedRouteName');
+
+function updateSelectedRouteSummary() {
+  const route = routeSelect?.value || '';
+  if (selectedRouteName) {
+    selectedRouteName.textContent = route || 'בחרו את מסלול התרומה המבוקש';
+  }
+  selectedRouteSummary?.classList.toggle('has-selection', Boolean(route));
+}
+
+routeSelect?.addEventListener('change', updateSelectedRouteSummary);
+updateSelectedRouteSummary();
 
 document.querySelectorAll('[data-select-route]').forEach((button) => {
   button.addEventListener('click', () => {
