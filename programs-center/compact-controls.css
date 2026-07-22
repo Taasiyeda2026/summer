@@ -630,22 +630,22 @@
   align-items: center !important;
   justify-content: center !important;
 
-  width: 84px !important;
-  min-width: 84px !important;
-  max-width: 84px !important;
+  width: 68px !important;
+  min-width: 68px !important;
+  max-width: 68px !important;
 
-  height: 29px !important;
-  min-height: 29px !important;
+  height: 22px !important;
+  min-height: 22px !important;
 
   margin: 0 !important;
-  padding: 3px 7px !important;
+  padding: 2px 5px !important;
 
   border: 1px solid #dce5eb !important;
   border-radius: 999px !important;
   background: #ffffff !important;
 
   color: #29465f !important;
-  font-size: 0.66rem !important;
+  font-size: 0.58rem !important;
   font-weight: 700 !important;
   line-height: 1 !important;
   letter-spacing: normal !important;
