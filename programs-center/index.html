@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./styles.css?v=2">
   <link rel="stylesheet" href="./layout-fixes.css?v=5">
   <link rel="stylesheet" href="./narrow-shell.css?v=6">
-  <link rel="stylesheet" href="./compact-controls.css?v=5">
+  <link rel="stylesheet" href="./compact-controls.css?v=6">
 </head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" focusable="false">
@@ -303,6 +303,10 @@
     <section class="section contact-section" id="contact" aria-label="יצירת קשר">
       <div class="container contact-layout">
         <form class="contact-form" id="partnershipForm" action="https://formsubmit.co/office@think.org.il" method="POST" novalidate>
+          <div class="selected-route-summary" id="selectedRouteSummary" aria-live="polite">
+            <span>פנייה עבור</span>
+            <strong id="selectedRouteName">בחרו את מסלול התרומה המבוקש</strong>
+          </div>
           <input type="hidden" name="_subject" id="formSubject" value="פנייה חדשה מדף שותפות עם התעשייה">
           <input type="hidden" name="_cc" value="NOAS@JTLV.CO.IL">
           <input type="hidden" name="_template" value="table">
@@ -317,7 +321,7 @@
             <label><span>תפקיד</span><input type="text" id="role" name="תפקיד" autocomplete="organization-title"></label>
             <label><span>טלפון</span><input type="tel" id="phone" name="טלפון" autocomplete="tel" required minlength="7"></label>
             <label class="full-field"><span>אימייל</span><input type="email" id="email" name="email" autocomplete="email" required></label>
-            <label class="full-field"><span>מסלול שמעניין אותי</span><select id="partnershipRoute" name="מסלול שמעניין אותי" required><option value="">בחירת מסלול</option><option>מסלול יסודי – 9,500 ₪</option><option>מסלול חטיבות – 10,000 ₪</option><option>מסלול שנתי</option><option>מסלול פורצות דרך – 12,000 ₪</option><option>מסלול פרימיום תעשייתי – 12,000 ₪</option><option>עדיין לא החלטנו</option></select></label>
+            <label class="full-field"><span>מסלול התרומה המבוקש</span><select id="partnershipRoute" name="מסלול התרומה המבוקש" required><option value="">בחירת מסלול תרומה</option><option>מסלול יסודי – 9,500 ₪</option><option>מסלול חטיבות – 10,000 ₪</option><option>מסלול שנתי</option><option>מסלול פורצות דרך – 12,000 ₪</option><option>מסלול פרימיום תעשייתי – 12,000 ₪</option></select></label>
             <label class="full-field"><span>הודעה קצרה</span><textarea id="message" name="הודעה" rows="4" placeholder="אפשר לציין קהילה, יישוב או מטרה שחשוב לכם לקדם"></textarea></label>
           </div>
           <button class="form-submit" id="formSubmit" type="submit">אשמח לקבל פרטים <svg><use href="#icon-arrow"></use></svg></button>
@@ -334,7 +338,7 @@
 
   <a class="mobile-sticky-cta" href="#contact">לתיאום שיחה</a>
 
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
   <script src="./support-form.js?v=3"></script>
 </body>
 </html>
