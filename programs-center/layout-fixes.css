@@ -313,3 +313,27 @@ body{
   .card-action{width:100%}
   .select-route{width:100%}
 }
+
+/* Compact scope-choice buttons: only slightly larger than the price tag. */
+.scope-option .select-route{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:fit-content!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:26px!important;
+  height:26px!important;
+  margin:8px auto 0!important;
+  padding:3px 9px!important;
+  gap:3px!important;
+  border-radius:999px!important;
+  font-size:.62rem!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+/* Do not display the explanatory default-groups note below the form field. */
+.route-groups-field small{
+  display:none!important;
+}
