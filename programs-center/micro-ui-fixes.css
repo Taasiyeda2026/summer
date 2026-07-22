@@ -46,6 +46,26 @@
   white-space: nowrap !important;
 }
 
+/* Present the impact section with one heading only. */
+.impact-section .section-heading .eyebrow {
+  display: none !important;
+}
+
+.impact-section #impactTitle {
+  font-size: 0 !important;
+  line-height: 1 !important;
+}
+
+.impact-section #impactTitle::after {
+  content: "השפעה חינוכית מעשית";
+  display: block;
+  color: var(--navy);
+  font-size: clamp(2.15rem, 4vw, 3.45rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: normal;
+}
+
 /* Slightly shorter route cards and no decorative line above the action area. */
 .partnerships-section .card-toggle,
 .partnerships-section .premium-card .card-toggle {
@@ -94,10 +114,5 @@
     width: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
-  }
-
-  .partnerships-section .card-toggle,
-  .partnerships-section .premium-card .card-toggle {
-    min-height: 190px !important;
   }
 }
