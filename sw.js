@@ -1,4 +1,4 @@
-const CACHE_NAME = "summer-catalog-v2026-07-06-v378";
+const CACHE_NAME = "summer-catalog-v2026-07-22-v379";
 
 const CORE_ASSETS = [
   "./",
@@ -55,6 +55,11 @@ self.addEventListener("activate", event => {
   );
 });
 
+function networkOnlyWithFallback(request) {
+  return fetch(request, { cache: "no-store" })
+    .catch(() => caches.match(request));
+}
+
 function cacheFresh(request) {
   return fetch(request, { cache: "no-store" })
     .then(response => {
@@ -90,6 +95,13 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
+
+  // The partnership landing page changes frequently. Never serve stale HTML,
+  // JavaScript or CSS for this directory.
+  if (url.pathname.includes("/summer/programs-center/")) {
+    event.respondWith(networkOnlyWithFallback(event.request));
+    return;
+  }
 
   if (
     event.request.mode === "navigate" ||
