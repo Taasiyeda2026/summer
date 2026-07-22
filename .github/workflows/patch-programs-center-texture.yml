@@ -1,0 +1,66 @@
+name: Patch programs-center special route texture
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/patch-programs-center-texture.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply subtle texture and bump asset version
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          app_path = Path('programs-center/app.js')
+          index_path = Path('programs-center/index.html')
+          workflow_path = Path('.github/workflows/patch-programs-center-texture.yml')
+
+          app = app_path.read_text(encoding='utf-8')
+
+          marker = ".scope-grade-row{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;width:100%!important;margin-top:9px!important;margin-bottom:12px!important;direction:rtl!important}.scope-grade-row .group-control{display:flex!important;align-items:center!important;gap:6px!important;width:auto!important;margin:0!important}.scope-grade-row .group-control label{margin:0!important;white-space:nowrap!important;letter-spacing:normal!important}.scope-grade-row .group-count-input{width:48px!important;min-width:48px!important;max-width:48px!important;height:28px!important;min-height:28px!important;max-height:28px!important;margin:0!important;padding:2px 4px!important;text-align:center!important}.scope-grade-row .scope-price{flex:0 0 auto!important;margin:0!important}\n"
+
+          texture_css = """#route-trailblazers .single-program-copy,#route-premium .single-program-copy{position:relative!important;overflow:hidden!important;border-color:#d6e3e8!important;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(243,248,250,.98))!important;box-shadow:inset -3px 0 0 rgba(47,159,163,.28),0 7px 20px rgba(15,45,70,.055)!important}#route-trailblazers .single-program-copy::before,#route-premium .single-program-copy::before{content:\"\";position:absolute;top:0;right:0;left:0;height:2px;background:linear-gradient(90deg,rgba(47,159,163,0),rgba(47,159,163,.58),rgba(47,159,163,0))}#route-trailblazers .single-program-copy>p:first-child,#route-premium .single-program-copy>p:first-child{color:#345469!important;font-weight:600!important}#route-trailblazers .special-route-actions,#route-premium .special-route-actions{position:relative!important;padding:9px 11px!important;border:1px solid #d8e5e9!important;border-radius:11px!important;background:linear-gradient(180deg,#f9fbfc 0%,#eef5f7 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 13px rgba(15,45,70,.06)!important}#route-trailblazers .special-route-actions .special-quantity-control label,#route-premium .special-route-actions .special-quantity-control label{color:#36566b!important;font-weight:800!important}#route-trailblazers .special-route-actions .special-group-count-input,#route-premium .special-route-actions .special-group-count-input{border-color:#bcd2da!important;box-shadow:0 2px 7px rgba(15,45,70,.07)!important}#route-trailblazers .special-route-actions .select-route,#route-premium .special-route-actions .select-route{box-shadow:0 5px 13px rgba(7,29,51,.17)!important}\n"""
+
+          if '#route-trailblazers .single-program-copy' not in app:
+              if marker not in app:
+                  raise SystemExit('Could not find the expected CSS insertion marker in app.js')
+              app = app.replace(marker, marker + texture_css, 1)
+              app_path.write_text(app, encoding='utf-8')
+
+          index = index_path.read_text(encoding='utf-8')
+          index, replacements = re.subn(
+              r'(<script src="\./app\.js\?v=)\d+("(?:></script>))',
+              r'\g<1>33\g<2>',
+              index,
+              count=1,
+          )
+          if replacements != 1:
+              raise SystemExit('Could not update the app.js cache-busting version in index.html')
+          index_path.write_text(index, encoding='utf-8')
+
+          workflow_path.unlink()
+          PY
+
+      - name: Commit completed correction
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add programs-center/app.js programs-center/index.html .github/workflows/patch-programs-center-texture.yml
+          git commit -m "Polish trailblazers and premium details"
+          git push origin main
