@@ -46,7 +46,7 @@
   white-space: nowrap !important;
 }
 
-/* Present the impact section with one heading only. */
+/* Present the impact section with one smaller heading only. */
 .impact-section .section-heading .eyebrow {
   display: none !important;
 }
@@ -60,9 +60,9 @@
   content: "השפעה חינוכית מעשית";
   display: block;
   color: var(--navy);
-  font-size: clamp(2.15rem, 4vw, 3.45rem);
+  font-size: clamp(1.65rem, 2.6vw, 2.2rem) !important;
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: normal;
 }
 
@@ -99,6 +99,40 @@
 .partnerships-section .card-action svg {
   width: 10px !important;
   height: 10px !important;
+}
+
+/* Match the GEFEN line in single-program details to the elementary program cards. */
+.route-details-host .details-heading > .program-meta,
+.partnership-card .card-details .details-heading > .program-meta {
+  color: #176f8c !important;
+  font-size: .67rem !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+
+/* Very small and discreet course-details pill. */
+.route-details-host .program-pdf-link,
+.partnership-card .card-details .program-pdf-link {
+  min-height: 21px !important;
+  margin-top: 6px !important;
+  padding: 2px 6px !important;
+  gap: 3px !important;
+  border-radius: 999px !important;
+  font-size: .56rem !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+}
+
+.route-details-host .program-pdf-link .pdf-icon,
+.partnership-card .card-details .program-pdf-link .pdf-icon {
+  width: 9px !important;
+  height: 9px !important;
+}
+
+.route-details-host .annual-pdf-link,
+.partnership-card .card-details .annual-pdf-link {
+  display: inline-flex !important;
+  margin-top: 4px !important;
 }
 
 @media (max-width: 760px) {
