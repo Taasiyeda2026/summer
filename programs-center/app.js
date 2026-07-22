@@ -15,7 +15,7 @@ document.head.appendChild(compactControlsStyle);
 
 const compactPartnershipCardsStyle = document.createElement('link');
 compactPartnershipCardsStyle.rel = 'stylesheet';
-compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=2';
+compactPartnershipCardsStyle.href = './partnership-cards-compact.css?v=3';
 document.head.appendChild(compactPartnershipCardsStyle);
 
 const heroKicker = document.querySelector('.hero-kicker');
