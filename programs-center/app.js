@@ -104,20 +104,28 @@ const trailblazersCard = document.querySelector('.partnership-card[data-card="tr
 const premiumCard = document.querySelector('.partnership-card[data-card="premium"]');
 
 if (elementaryCard) {
-  elementaryCard.querySelector('.route-description').textContent = 'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.';
-  elementaryCard.querySelector('.details-heading h3').textContent = 'מסלול יסודי';
-  elementaryCard.querySelector('.details-heading p').textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
-  elementaryCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('elementary'));
+  const description = elementaryCard.querySelector('.route-description');
+  const heading = elementaryCard.querySelector('.details-heading');
+  if (description) description.textContent = 'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.';
+  const title = heading?.querySelector('h3');
+  const subtitle = heading?.querySelector('p');
+  if (title) title.textContent = 'מסלול יסודי';
+  if (subtitle) subtitle.textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
+  heading?.insertAdjacentHTML('afterend', scopeMarkup('elementary'));
   elementaryCard.querySelector('.program-list')?.insertAdjacentHTML('beforebegin', '<h4 class="programs-subheading">תוכניות לבחירה</h4>');
   elementaryCard.querySelector('.card-details > .select-route')?.remove();
 }
 
 let pharmaProgramHtml = '';
 if (middleCard) {
-  middleCard.querySelector('.route-description').textContent = 'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.';
-  middleCard.querySelector('.details-heading h3').textContent = 'מסלול חטיבות';
-  middleCard.querySelector('.details-heading p').textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
-  middleCard.querySelector('.details-heading').insertAdjacentHTML('afterend', scopeMarkup('middle'));
+  const description = middleCard.querySelector('.route-description');
+  const heading = middleCard.querySelector('.details-heading');
+  if (description) description.textContent = 'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.';
+  const title = heading?.querySelector('h3');
+  const subtitle = heading?.querySelector('p');
+  if (title) title.textContent = 'מסלול חטיבות';
+  if (subtitle) subtitle.textContent = 'בחרו את היקף הפעילות המתאים לבית הספר ולקהילה.';
+  heading?.insertAdjacentHTML('afterend', scopeMarkup('middle'));
   middleCard.querySelector('.program-list')?.insertAdjacentHTML('beforebegin', '<h4 class="programs-subheading">תוכניות לבחירה</h4>');
   middleCard.querySelectorAll('.program-option').forEach((program) => {
     if ((program.querySelector('h4')?.textContent || '').includes('רוקחים עולם')) {
@@ -404,5 +412,8 @@ function openCard(card) {
   card.classList.add('is-open');
 }
 routeCards.forEach((card) => card.querySelector('.card-toggle')?.addEventListener('click', () => card.classList.contains('is-open') ? closeCard(card) : openCard(card)));
-window.addEventListener('resize', () => { if (innerWidth > 760) setNavigationState(false); if (activeCard) placeDetails(activeCard); });
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 760) closeMobileNav();
+  if (activeCard) placeDetails(activeCard);
+});
 document.querySelector('.footer-top-link')?.addEventListener('click', (event) => { event.preventDefault(); scrollTo({ top: 0, behavior: 'smooth' }); history.replaceState(null, '', '#top'); });
