@@ -79,7 +79,7 @@ const programs = [
     badgeClass: 'secondary',
     title: 'פורצות דרך קדימה',
     subtitle: 'תוכנית יזמות טכנולוגית מעצימה',
-    meta: 'מספר גפ״ן: 3604 | כיתות ז׳–י׳ | 12 מפגשים',
+    meta: 'מספר גפ״ן: 3604 | כיתות ז׳–י׳ | 14 מפגשים',
     price: 'עלות לקבוצה: 12,000 ש״ח',
     pdf: '../programs/pdfs/3604.pdf',
     paragraphs: [
