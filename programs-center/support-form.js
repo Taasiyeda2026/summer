@@ -54,7 +54,7 @@ const formSubject = document.getElementById('formSubject');
 const partnershipRoute = document.getElementById('partnershipRoute');
 
 const SUPABASE_URL = 'https://szinlhjuwyiyszdpsdop.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFub2VzZHBzZG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NzIyOTgsImV4cCI6MjA5MzU0ODI5OH0.yOK5rkApbYd4jbLAA_FR3F9JvBXJU_6wWCiReu0k70Q';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6aW5saGp1d3lpeXN6ZHBzZG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NzIyOTgsImV4cCI6MjA5MzU0ODI5OH0.yOK5rkApbYd4jbLAA_FR3F9JvBXJU_6wWCiReu0k70Q';
 
 function setFormStatus(message, type = '') {
   if (!formStatus) return;
