@@ -53,54 +53,8 @@ const formStatus = document.getElementById('formStatus');
 const formSubject = document.getElementById('formSubject');
 const partnershipRoute = document.getElementById('partnershipRoute');
 
-/* Final front-card wording for all five partnership routes. */
-const routeCardCopy = {
-  elementary: {
-    title: 'מסלול יסודי',
-    description: 'מימון תוכנית חינוכית לכיתות ד׳–ו׳, לקבוצה אחת, לשכבה או למסלול שנתי מלא.'
-  },
-  'middle-school': {
-    title: 'מסלול חטיבות',
-    description: 'מימון תוכנית חינוכית לחטיבה ולתיכון, לקבוצה אחת, לשכבה או לפעילות שנתית.'
-  },
-  trailblazers: {
-    title: 'מסלול פורצות דרך',
-    description: 'מימון תוכנית יזמות טכנולוגית לנערות, לצד הרצאת אורחת מעוררת השראה אישית.'
-  },
-  pharma: {
-    title: 'מסלול רוקחים עולם',
-    description: 'מימון תוכנית ״רוקחים עולם״ לצד מפגש מקצועי עם אנשי מקצוע מתעשיית הפארמצבטיקה.'
-  },
-  premium: {
-    title: 'מסלול פרימיום תעשייתי',
-    description: 'מימון תוכנית יזמות המותאמת לתחום הפעילות ולאופי של החברה, בליווי נציגיה לאורך תהליך מלא של פיתוח מוצר הנדסי.'
-  }
-};
-
-Object.entries(routeCardCopy).forEach(([cardName, copy]) => {
-  const card = document.querySelector(`.partnership-card[data-card="${cardName}"]`);
-  if (!card) return;
-
-  const title = card.querySelector('.route-label');
-  const description = card.querySelector('.route-description');
-
-  if (title) title.textContent = copy.title;
-  if (description) description.textContent = copy.description;
-});
-
-/* Keep the route name consistent in the contact-form selection. */
-if (partnershipRoute) {
-  [...partnershipRoute.options].forEach((option) => {
-    if (option.textContent.includes('מסלול פארמצבטיקה')) {
-      const updatedText = option.textContent.replace(/מסלול פארמצבטיקה[^–]*–?\s*/, 'מסלול רוקחים עולם – ');
-      option.textContent = updatedText;
-      option.value = updatedText;
-    }
-  });
-}
-
 const SUPABASE_URL = 'https://szinlhjuwyiyszdpsdop.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6aW5saGp1d3lpeXN6ZHBzZG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NzIyOTgsImV4cCI6MjA5MzU0ODI5OH0.yOK5rkApbYd4jbLAA_FR3F9JvBXJU_6wWCiReu0k70Q';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFub2VzZHBzZG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NzIyOTgsImV4cCI6MjA5MzU0ODI5OH0.yOK5rkApbYd4jbLAA_FR3F9JvBXJU_6wWCiReu0k70Q';
 
 function setFormStatus(message, type = '') {
   if (!formStatus) return;
@@ -128,7 +82,7 @@ async function saveInquiry() {
     email: document.getElementById('email').value.trim(),
     program: partnershipRoute.value,
     message: document.getElementById('message').value.trim() || null,
-    locality: null,
+    locality: document.getElementById('locality')?.value.trim() || null,
     groups,
     unit_price: unitPrice,
     estimated_amount: estimatedAmount,
@@ -162,10 +116,10 @@ if (supportPartnershipForm) {
     if (document.getElementById('websiteField').value) return;
 
     const routeName = partnershipRoute.value || 'ללא בחירת מסלול';
-    formSubject.value = `פנייה חדשה מדף שותפות עם התעשייה – ${routeName}`;
+    formSubject.value = `פנייה חדשה מדף תרומה לתוכניות חינוכיות – ${routeName}`;
     formSubmit.disabled = true;
     formSubmit.setAttribute('aria-busy', 'true');
-    setFormStatus('הפנייה נשלחת…');
+    setFormStatus('הפרטים נשלחים…');
 
     try {
       await saveInquiry();
@@ -180,7 +134,7 @@ if (supportPartnershipForm) {
 
 const params = new URLSearchParams(window.location.search);
 if (params.get('submitted') === '1') {
-  setFormStatus('הפנייה נשלחה בהצלחה. צוות תעשיידע יחזור אליכם בהקדם.', 'success');
+  setFormStatus('הפרטים נשלחו בהצלחה. צוות תעשיידע יחזור אליכם לתיאום המשך התהליך.', 'success');
   params.delete('submitted');
   const cleanQuery = params.toString();
   const cleanUrl = `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ''}${window.location.hash || '#contact'}`;
