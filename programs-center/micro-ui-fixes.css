@@ -69,12 +69,20 @@
 /* Slightly shorter route cards and no decorative line above the action area. */
 .partnerships-section .card-toggle,
 .partnerships-section .premium-card .card-toggle {
-  min-height: 194px !important;
-  padding-bottom: 9px !important;
+  min-height: 182px !important;
+  padding: 10px 11px 8px !important;
+}
+
+.partnerships-section .route-label {
+  margin-top: 7px !important;
+}
+
+.partnerships-section .route-description {
+  margin-top: 6px !important;
 }
 
 .partnerships-section .route-highlight {
-  padding-top: 3px !important;
+  padding-top: 2px !important;
 }
 
 .partnerships-section .route-highlight::before {
@@ -87,7 +95,7 @@
   min-width: 96px !important;
   max-width: 96px !important;
   min-height: 24px !important;
-  margin-top: 4px !important;
+  margin-top: 3px !important;
   padding-inline: 6px !important;
   gap: 3px !important;
   border-top: 0 !important;
