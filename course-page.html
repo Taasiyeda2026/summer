@@ -5950,8 +5950,9 @@ body.catalog-courses-print .a4:not(.index-page) {
   }
 }
 
-/* ── Client catalog mobile (client=1) — screen only, print untouched ── */
-@media screen and (max-width: 768px) {
+/* Legacy responsive client layout is intentionally disabled.
+   Catalog pages must preserve their print document geometry on every screen. */
+@media screen and (max-width: 0px) {
   body.client-view.catalog-view,
   body.client-view.catalog-view html {
     width: 100%;
@@ -6015,8 +6016,8 @@ body.catalog-courses-print .a4:not(.index-page) {
     overflow: hidden;
   }
 
-  body.client-view.catalog-view .a4,
-  body.client-view.catalog-view .index-page {
+  body.catalog-view .a4,
+  body.catalog-view .index-page {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -6665,6 +6666,39 @@ body.catalog-courses-print .a4:not(.index-page) {
     color: #7a8a9a !important;
     text-align: center !important;
     width: 100% !important;
+  }
+}
+
+/* Screen preview mirrors the fixed A4 print layout and only scales uniformly. */
+@media screen {
+  body.catalog-view {
+    --catalog-screen-scale: 1;
+    overflow-x: hidden;
+  }
+
+  body.catalog-view .page-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  body.catalog-view .a4,
+  body.catalog-view .index-page,
+  body.catalog-view .catalog-opening-frame {
+    flex: 0 0 auto;
+    zoom: var(--catalog-screen-scale);
+  }
+
+  body.catalog-view .a4,
+  body.catalog-view .index-page {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    transform: none !important;
   }
 }
 
@@ -7319,6 +7353,25 @@ function findProgramIndexesFromUrl() {
  return ids.map(id => indexById.get(id)).filter(index => index !== undefined);
 }
 
+function applyCustomCatalogDrafts() {
+  const params = new URLSearchParams(window.location.search);
+  const draftKey = params.get("draft");
+  if (!draftKey) return;
+  try {
+    const raw = sessionStorage.getItem("taasiyeda-custom-catalog:" + draftKey);
+    if (!raw) return;
+    const drafts = JSON.parse(raw);
+    if (!Array.isArray(drafts)) return;
+    const draftsById = new Map(drafts.filter(item => item && item.id).map(item => [String(item.id), item]));
+    programs = programs.map(program => {
+      const draft = draftsById.get(String(program.id));
+      return draft ? normalizeProgram(JSON.parse(JSON.stringify(draft))) : program;
+    });
+  } catch (error) {
+    console.warn("Could not load temporary custom catalog data.", error);
+  }
+}
+
 function isCatalogModeFromUrl() {
  const params = new URLSearchParams(window.location.search);
  return params.get("catalog") === "1" || params.has("ids");
@@ -7805,6 +7858,7 @@ async function init() {
         !String(p.gefen || "").includes("old") &&
         !String(p.title || "").includes("לא פעיל"))
       .sort((a, b) => (levelOrder[a.audienceLevel] ?? 99) - (levelOrder[b.audienceLevel] ?? 99));
+    applyCustomCatalogDrafts();
     if (isCatalogModeFromUrl()) {
       const params = new URLSearchParams(window.location.search);
       const requestedIndexes = findProgramIndexesFromUrl();
@@ -7897,7 +7951,20 @@ function clearLegacyA4FitClasses(a4) {
 function applyCourseSkeletonLayout() {
  const warning = document.getElementById("fit-warning");
  document.querySelectorAll(".a4.a4-course-skeleton").forEach(clearLegacyA4FitClasses);
+  applyCatalogScreenScale();
  if (warning) warning.classList.remove("show");
+}
+
+function applyCatalogScreenScale() {
+  if (!document.body.classList.contains("catalog-view") || !window.matchMedia("screen").matches) {
+    document.body.style.removeProperty("--catalog-screen-scale");
+    return;
+  }
+  const viewportWidth = window.visualViewport?.width || window.innerWidth;
+  const horizontalPadding = viewportWidth <= 768 ? 24 : 40;
+  const a4WidthPx = 210 * 96 / 25.4;
+  const scale = Math.min(1, Math.max(0.2, (viewportWidth - horizontalPadding) / a4WidthPx));
+  document.body.style.setProperty("--catalog-screen-scale", scale.toFixed(4));
 }
 
 function scheduleA4Fit() {

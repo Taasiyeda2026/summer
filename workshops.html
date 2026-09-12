@@ -206,6 +206,91 @@
       box-sizing: border-box;
     }
 
+    .course-interface .final-actions-row {
+      align-items: stretch;
+    }
+
+    .course-interface .final-options {
+      flex: 1 1 720px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(210px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .catalog-option-group {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid rgba(32,59,122,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.72);
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .catalog-option-group-title {
+      margin: 0;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .catalog-option-group-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .course-interface .catalog-option-group .cover-letter-toggle,
+    .course-interface .catalog-option-group .marketer-field {
+      flex: 1 1 130px;
+      width: auto;
+      min-width: 0;
+      min-height: 42px;
+      height: auto;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .course-interface .catalog-option-group .marketer-field {
+      flex-basis: 100%;
+      justify-content: space-between;
+    }
+
+    .course-interface .catalog-option-group .marketer-field span {
+      white-space: normal;
+    }
+
+    .course-interface .final-actions-row > .course-link-actions {
+      flex: 0 1 250px;
+      align-self: center;
+      justify-content: flex-end;
+    }
+
+    @media screen and (max-width: 1040px) {
+      .course-interface .final-options {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+      }
+    }
+
+    @media screen and (max-width: 620px) {
+      .course-interface .final-options {
+        grid-template-columns: 1fr;
+      }
+
+      .course-interface .final-actions-row > .course-link-actions {
+        flex: 1 1 100%;
+        justify-content: stretch;
+      }
+
+      .course-interface .final-actions-row > .course-link-actions > button {
+        flex: 1 1 180px;
+      }
+    }
+
     .marketer-field {
       display: inline-flex;
       align-items: center;
@@ -759,6 +844,121 @@
     .course-option .option-meta {
       font-size: 11px;
       line-height: 1.35;
+    }
+
+    .course-option .option-card {
+      gap: 12px;
+    }
+
+    .course-option-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .custom-syllabus-btn {
+      flex: 0 0 auto;
+      border: 1px solid rgba(32,59,122,.22);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: #fff;
+      color: #203b7a;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .custom-syllabus-btn.is-customized {
+      border-color: #17865f;
+      background: #e8f8f1;
+      color: #116b4b;
+    }
+
+    .custom-course-badge {
+      display: inline-block;
+      margin-inline-start: 6px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #17865f;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    body.custom-course-editor-open { overflow: hidden; }
+    .custom-course-editor-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(19, 31, 55, .68);
+      backdrop-filter: blur(6px);
+    }
+    .custom-course-editor {
+      width: min(980px, 96vw);
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      direction: rtl;
+      border-radius: 22px;
+      background: #f7f9fc;
+      box-shadow: 0 24px 80px rgba(0,0,0,.3);
+    }
+    .custom-course-editor-header,
+    .custom-course-editor-footer {
+      padding: 16px 20px;
+      background: #fff;
+      border-bottom: 1px solid #dfe5ef;
+    }
+    .custom-course-editor-header { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .custom-course-editor-header h2 { margin:0; color:#203b7a; font-size:22px; }
+    .custom-course-editor-header p { margin:4px 0 0; color:#61708a; font-size:13px; }
+    .custom-course-editor-close { border:0; background:transparent; font-size:28px; cursor:pointer; color:#203b7a; }
+    .custom-course-editor-body { padding:18px 20px; overflow:auto; }
+    .custom-course-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .custom-course-field { display:flex; flex-direction:column; gap:6px; font-weight:800; color:#263a61; }
+    .custom-course-field.is-wide { grid-column:1/-1; }
+    .custom-course-field input,
+    .custom-course-field textarea {
+      width:100%;
+      box-sizing:border-box;
+      border:1px solid #cbd5e1;
+      border-radius:10px;
+      padding:10px 11px;
+      background:#fff;
+      color:#172033;
+      font:inherit;
+      font-weight:500;
+    }
+    .custom-course-field textarea { min-height:88px; resize:vertical; }
+    .custom-syllabus-editor { margin-top:20px; }
+    .custom-syllabus-editor h3 { color:#203b7a; }
+    .custom-syllabus-row {
+      display:grid;
+      grid-template-columns:70px minmax(140px,.8fr) minmax(220px,1.5fr) auto auto auto;
+      gap:8px;
+      align-items:start;
+      margin-bottom:9px;
+    }
+    .custom-syllabus-row input,
+    .custom-syllabus-row textarea {
+      box-sizing:border-box; width:100%; border:1px solid #cbd5e1; border-radius:9px;
+      padding:9px; background:#fff; font:inherit;
+    }
+    .custom-syllabus-row textarea { min-height:58px; resize:vertical; }
+    .custom-row-action { border:0; border-radius:9px; padding:9px 10px; cursor:pointer; font-weight:900; }
+    .custom-row-delete { background:#feecec; color:#a32626; }
+    .custom-row-move { background:#e8eef9; color:#203b7a; }
+    .custom-course-editor-footer { border-top:1px solid #dfe5ef; border-bottom:0; display:flex; justify-content:space-between; gap:10px; }
+    @media (max-width: 760px) {
+      .custom-course-fields { grid-template-columns:1fr; }
+      .custom-course-field.is-wide { grid-column:auto; }
+      .custom-syllabus-row { grid-template-columns:55px 1fr auto; }
+      .custom-syllabus-row textarea { grid-column:1/-1; }
     }
 
     .is-hidden {
@@ -4077,33 +4277,48 @@
           <h3 class="workflow-subheading">מה להוסיף לקטלוג?</h3>
           <div class="final-actions-row">
             <div class="final-options">
-              <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
-                <input id="courseCoverLetterCheckbox" type="checkbox" />
-                <span>מכתב מקדים</span>
-              </label>
-              <label class="cover-letter-toggle" for="courseMarketerNone">
-                <input type="radio" id="courseMarketerNone" name="courseMarketerRadio" value="none" checked />
-                <span>ללא שיווק</span>
-              </label>
-              <label class="cover-letter-toggle" for="courseMarketerYael">
-                <input type="radio" id="courseMarketerYael" name="courseMarketerRadio" value="yael" />
-                <span>יעל אביב</span>
-              </label>
-              <label class="cover-letter-toggle" for="courseMarketerIsraa">
-                <input type="radio" id="courseMarketerIsraa" name="courseMarketerRadio" value="israa" />
-                <span>איסראא אבו-ראס</span>
-              </label>
-              <label class="cover-letter-toggle" for="courseIndexCheckbox">
-                <input id="courseIndexCheckbox" type="checkbox" />
-                <span>מקרא</span>
-              </label>
-              <label class="marketer-field" for="courseCatalogMarketerSelect">
-                <span>בחרו איש קשר לקטלוג</span>
-                <select id="courseCatalogMarketerSelect" name="courseCatalogMarketerSelect">
-                  <option value="yael" selected>יעל</option>
-                  <option value="israa">איסראא</option>
-                </select>
-              </label>
+              <section class="catalog-option-group" aria-labelledby="coverOptionTitle">
+                <h4 class="catalog-option-group-title" id="coverOptionTitle">מכתב מקדים</h4>
+                <div class="catalog-option-group-controls">
+                  <label class="cover-letter-toggle" for="courseCoverLetterCheckbox">
+                    <input id="courseCoverLetterCheckbox" type="checkbox" />
+                    <span>מכתב מקדים</span>
+                  </label>
+                </div>
+              </section>
+              <section class="catalog-option-group" aria-labelledby="marketingOptionTitle">
+                <h4 class="catalog-option-group-title" id="marketingOptionTitle">שיווק</h4>
+                <div class="catalog-option-group-controls">
+                  <label class="cover-letter-toggle" for="courseMarketerNone">
+                    <input type="radio" id="courseMarketerNone" name="courseMarketerRadio" value="none" checked />
+                    <span>ללא שיווק</span>
+                  </label>
+                  <label class="cover-letter-toggle" for="courseMarketerYael">
+                    <input type="radio" id="courseMarketerYael" name="courseMarketerRadio" value="yael" />
+                    <span>יעל אביב</span>
+                  </label>
+                  <label class="cover-letter-toggle" for="courseMarketerIsraa">
+                    <input type="radio" id="courseMarketerIsraa" name="courseMarketerRadio" value="israa" />
+                    <span>איסראא אבו-ראס</span>
+                  </label>
+                  <label class="marketer-field" for="courseCatalogMarketerSelect">
+                    <span>בחרו איש קשר לקטלוג</span>
+                    <select id="courseCatalogMarketerSelect" name="courseCatalogMarketerSelect">
+                      <option value="yael" selected>יעל</option>
+                      <option value="israa">איסראא</option>
+                    </select>
+                  </label>
+                </div>
+              </section>
+              <section class="catalog-option-group" aria-labelledby="indexOptionTitle">
+                <h4 class="catalog-option-group-title" id="indexOptionTitle">מקרא</h4>
+                <div class="catalog-option-group-controls">
+                  <label class="cover-letter-toggle" for="courseIndexCheckbox">
+                    <input id="courseIndexCheckbox" type="checkbox" />
+                    <span>מקרא</span>
+                  </label>
+                </div>
+              </section>
             </div>
             <div class="course-link-actions">
               <button class="print-btn" id="courseCatalogModeBtn" type="button" disabled>הפקת קטלוג PDF</button>
@@ -4254,6 +4469,8 @@
 
     const selected = new Set();
     const selectedCourses = new Set();
+    const customizedCourses = new Map();
+    const CUSTOM_CATALOG_SESSION_PREFIX = "taasiyeda-custom-catalog:";
     let selectedCoursePreset = null;
     let courseManualOpen = false;
 
@@ -4493,14 +4710,16 @@
         const label = document.createElement("label");
         label.className = `activity-option course-option ${selectedCourses.has(program.id) ? "selected" : ""}`;
         label.style.setProperty("--option-accent", program.c1 || "#203b7a");
+        const isCustomized = customizedCourses.has(program.id);
         label.innerHTML = `
           <input type="checkbox" data-course-id="${escapeHTML(program.id)}" ${selectedCourses.has(program.id) ? "checked" : ""} />
           <span class="option-card">
             <span class="checkmark" aria-hidden="true"></span>
-            <span>
-              <span class="option-title">${escapeHTML(program.title)}</span>
+            <span class="course-option-content">
+              <span class="option-title">${escapeHTML(program.title)}${isCustomized ? '<span class="custom-course-badge">מותאם</span>' : ""}</span>
               <span class="option-meta">${escapeHTML(courseLevelLabel(program))}${program.gefen ? ` · <span class="gefen-meta">גפ״ן ${escapeHTML(String(program.gefen))}</span>` : ""}</span>
             </span>
+            <button class="custom-syllabus-btn ${isCustomized ? "is-customized" : ""}" type="button" data-customize-course="${escapeHTML(program.id)}">${isCustomized ? "עריכת סילבוס מותאם" : "סילבוס מותאם"}</button>
           </span>`;
         coursePicker.appendChild(label);
       });
@@ -4551,8 +4770,145 @@
       const marketer = getCourseMarketer();
       if (marketer !== "none") params.push(`marketer=${encodeURIComponent(marketer)}`);
       if (client) params.push("client=1");
+      const draftKey = storeCustomCatalogSnapshot();
+      if (draftKey) params.push(`draft=${encodeURIComponent(draftKey)}`);
       const relativeUrl = `./course-page.html?${params.join("&")}`;
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
+    }
+
+    function deepClone(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    function storeCustomCatalogSnapshot() {
+      const customPrograms = [...selectedCourses]
+        .map(id => customizedCourses.get(id))
+        .filter(Boolean)
+        .map(deepClone);
+      if (!customPrograms.length) return "";
+      const key = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      sessionStorage.setItem(CUSTOM_CATALOG_SESSION_PREFIX + key, JSON.stringify(customPrograms));
+      return key;
+    }
+
+    const CUSTOM_COURSE_FIELDS = [
+      ["title", "שם הקורס", false], ["subtitle", "כותרת משנה", false],
+      ["grades", "שכבות גיל / קהל יעד", false], ["audienceLevel", "סיווג קהל יעד", false],
+      ["domain", "תחום", false], ["gefen", "מספר גפ״ן", false],
+      ["catalogSection", "קטגוריה במקרא", false], ["sessions", "מספר מפגשים", false],
+      ["duration", "משך מפגש", false], ["opening", "משפט פתיחה", true],
+      ["short", "תיאור התוכנית / תקציר", true], ["core", "הרעיון המרכזי", true],
+      ["goals", "מטרות ותוכן / תיאור הקורס", true], ["flow", "מהלך / ערך התוכנית", true],
+      ["school", "ערך לבית הספר", true], ["skills", "מיומנויות (אחת בכל שורה)", true],
+      ["skillGroups", "קבוצות מיומנויות (כותרת: פריט | פריט)", true],
+      ["develops", "מיומנויות נוספות", true], ["outcome", "תוצרים", true]
+    ];
+
+    function customFieldValue(program, key) {
+      const value = program[key];
+      if (key === "skillGroups" && Array.isArray(value)) {
+        return value.map(group => `${group.title || ""}: ${(group.items || []).join(" | ")}`).join("\n");
+      }
+      return Array.isArray(value) ? value.join("\n") : String(value ?? "");
+    }
+
+    function customSyllabusRowHtml(row = {}, index = 0) {
+      return `<div class="custom-syllabus-row" data-syllabus-row>
+        <input name="n" aria-label="מספר מפגש" value="${escapeHTML(String(row.n ?? index + 1))}">
+        <input name="topic" aria-label="נושא המפגש" value="${escapeHTML(String(row.topic ?? ""))}">
+        <textarea name="desc" aria-label="תיאור המפגש">${escapeHTML(String(row.desc ?? ""))}</textarea>
+        <button type="button" class="custom-row-action custom-row-move" data-row-move="-1" aria-label="העברה למעלה">↑</button>
+        <button type="button" class="custom-row-action custom-row-move" data-row-move="1" aria-label="העברה למטה">↓</button>
+        <button type="button" class="custom-row-action custom-row-delete" data-row-delete aria-label="מחיקת מפגש">מחק</button>
+      </div>`;
+    }
+
+    function closeCustomCourseEditor() {
+      document.querySelector(".custom-course-editor-overlay")?.remove();
+      document.body.classList.remove("custom-course-editor-open");
+    }
+
+    function openCustomCourseEditor(courseId) {
+      const source = catalogPrograms.find(program => program.id === courseId);
+      if (!source) return;
+      const draft = deepClone(customizedCourses.get(courseId) || source);
+      const overlay = document.createElement("div");
+      overlay.className = "custom-course-editor-overlay";
+      overlay.innerHTML = `<form class="custom-course-editor">
+        <div class="custom-course-editor-header">
+          <div><h2>סילבוס מותאם</h2><p>עותק זמני של כל עמוד הקורס. הקורס המקורי לא ישתנה.</p></div>
+          <button type="button" class="custom-course-editor-close" aria-label="סגירה">×</button>
+        </div>
+        <div class="custom-course-editor-body">
+          <div class="custom-course-fields">${CUSTOM_COURSE_FIELDS.map(([key,label,wide]) => {
+            const value = customFieldValue(draft, key);
+            const control = wide ? `<textarea name="${key}">${escapeHTML(value)}</textarea>` : `<input name="${key}" value="${escapeHTML(value)}">`;
+            return `<label class="custom-course-field ${wide ? "is-wide" : ""}"><span>${label}</span>${control}</label>`;
+          }).join("")}</div>
+          <section class="custom-syllabus-editor">
+            <h3>מפגשי הסילבוס</h3>
+            <div data-syllabus-rows>${(draft.syllabus || []).map(customSyllabusRowHtml).join("")}</div>
+            <button type="button" class="action-btn secondary-action" data-add-syllabus-row>הוספת מפגש</button>
+          </section>
+        </div>
+        <div class="custom-course-editor-footer">
+          <button type="button" class="action-btn secondary-action" data-reset-custom-course ${customizedCourses.has(courseId) ? "" : "hidden"}>ביטול ההתאמה וחזרה למקור</button>
+          <div><button type="button" class="action-btn secondary-action custom-course-editor-close">ביטול</button> <button type="submit" class="action-btn">שמירת ההתאמות</button></div>
+        </div>
+      </form>`;
+      document.body.appendChild(overlay);
+      document.body.classList.add("custom-course-editor-open");
+      overlay.querySelectorAll(".custom-course-editor-close").forEach(button => button.addEventListener("click", closeCustomCourseEditor));
+      overlay.addEventListener("click", event => { if (event.target === overlay) closeCustomCourseEditor(); });
+      overlay.querySelector("[data-add-syllabus-row]").addEventListener("click", () => {
+        const rows = overlay.querySelector("[data-syllabus-rows]");
+        rows.insertAdjacentHTML("beforeend", customSyllabusRowHtml({}, rows.children.length));
+      });
+      overlay.addEventListener("click", event => {
+        const row = event.target.closest("[data-syllabus-row]");
+        if (event.target.closest("[data-row-delete]")) row?.remove();
+        const moveButton = event.target.closest("[data-row-move]");
+        if (row && moveButton) {
+          const direction = Number(moveButton.dataset.rowMove);
+          const sibling = direction < 0 ? row.previousElementSibling : row.nextElementSibling;
+          if (sibling) direction < 0 ? row.parentNode.insertBefore(row, sibling) : row.parentNode.insertBefore(sibling, row);
+        }
+      });
+      overlay.querySelector("[data-reset-custom-course]")?.addEventListener("click", () => {
+        customizedCourses.delete(courseId);
+        closeCustomCourseEditor();
+        renderCourseSelection();
+      });
+      overlay.querySelector("form").addEventListener("submit", event => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        CUSTOM_COURSE_FIELDS.forEach(([key]) => {
+          const raw = form.elements[key].value;
+          if (key === "skills") {
+            draft[key] = raw.split("\n").map(item => item.trim()).filter(Boolean);
+          } else if (key === "skillGroups") {
+            draft[key] = raw.split("\n").map(line => {
+              const [title, ...itemsText] = line.split(":");
+              return {
+                title: title.trim(),
+                items: itemsText.join(":").split("|").map(item => item.trim()).filter(Boolean)
+              };
+            }).filter(group => group.title || group.items.length);
+          } else {
+            draft[key] = raw;
+          }
+        });
+        draft.syllabus = [...form.querySelectorAll("[data-syllabus-row]")].map((row, index) => ({
+          n: row.querySelector('[name="n"]').value.trim() || String(index + 1),
+          topic: row.querySelector('[name="topic"]').value.trim(),
+          desc: row.querySelector('[name="desc"]').value.trim()
+        }));
+        draft.id = source.id;
+        selectedCourses.add(courseId);
+        customizedCourses.set(courseId, draft);
+        closeCustomCourseEditor();
+        renderCourseSelection();
+      });
     }
 
     function buildClientCatalogShortUrl(absolute = false, marketer = "yael") {
@@ -4595,6 +4951,14 @@
         courseCatalogLinkName.removeAttribute("href");
         courseCatalogLinkUrl.textContent = "";
         showCourseCatalogMessage("יש לבחור לפחות קורס אחד לקטלוג.", true);
+        return;
+      }
+      if ([...selectedCourses].some(id => customizedCourses.has(id))) {
+        generatedCourseCatalogUrl = "";
+        courseCatalogLinkCard.classList.remove("is-hidden");
+        courseCatalogLinkName.removeAttribute("href");
+        courseCatalogLinkUrl.textContent = "";
+        showCourseCatalogMessage("לא ניתן ליצור קישור קבוע עם התאמות זמניות. אפשר להפיק את הקטלוג כעת; שמירת התאמות בקישור דורשת החלטה נפרדת על אחסון מתמשך.", true);
         return;
       }
       generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseCatalogLinkMarketer());
@@ -6186,6 +6550,14 @@ function chunkActivities(items, size) {
       renderCourseSelection();
     });
 
+    coursePicker.addEventListener("click", event => {
+      const button = event.target.closest("[data-customize-course]");
+      if (!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      openCustomCourseEditor(button.dataset.customizeCourse);
+    });
+
     courseLevelFilter.addEventListener("change", renderCourseSelection);
 
     toggleCoursePickerBtn.addEventListener("click", () => {
@@ -6196,6 +6568,7 @@ function chunkActivities(items, size) {
 
     courseClearBtn.addEventListener("click", () => {
       selectedCourses.clear();
+      customizedCourses.clear();
       selectedCoursePreset = null;
       renderCourseSelection();
     });

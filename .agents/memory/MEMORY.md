@@ -1,0 +1,1 @@
+- [Customized catalog persistence](customized-catalog-persistence.md) — customized course copies stay temporary until a separate product decision defines durable storage and sharing.
