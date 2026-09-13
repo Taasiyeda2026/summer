@@ -260,23 +260,10 @@
       justify-content: space-between;
     }
 
-    .catalog-marketing-group .catalog-option-group-controls {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
     .course-interface .catalog-marketing-group .cover-letter-toggle {
       width: 100%;
       min-width: 0;
       padding-inline: 8px;
-    }
-
-    .course-interface .catalog-marketing-group .marketer-field {
-      grid-column: 1;
-      width: 100%;
-      margin-top: 2px;
-      border-radius: 14px;
     }
 
     .course-interface .catalog-option-group .marketer-field span {
@@ -309,13 +296,6 @@
         flex: 1 1 180px;
       }
 
-      .catalog-marketing-group .catalog-option-group-controls {
-        grid-template-columns: 1fr;
-      }
-
-      .course-interface .catalog-marketing-group .marketer-field {
-        grid-column: 1;
-      }
     }
 
     .marketer-field {
@@ -4341,13 +4321,6 @@
                     <input type="radio" id="courseMarketerIsraa" name="courseMarketerRadio" value="israa" />
                     <span>איסראא אבו-ראס</span>
                   </label>
-                  <label class="marketer-field" for="courseCatalogMarketerSelect">
-                    <span>בחרו איש קשר לקטלוג</span>
-                    <select id="courseCatalogMarketerSelect" name="courseCatalogMarketerSelect">
-                      <option value="yael" selected>יעל</option>
-                      <option value="israa">איסראא</option>
-                    </select>
-                  </label>
                 </div>
               </section>
               <section class="catalog-option-group" aria-labelledby="indexOptionTitle">
@@ -4487,7 +4460,6 @@
     let generatedCourseCatalogUrl = "";
     const courseCoverLetterCheckbox = document.getElementById("courseCoverLetterCheckbox");
     const getCourseMarketer = () => document.querySelector('input[name="courseMarketerRadio"]:checked')?.value || "none";
-    const getCourseCatalogLinkMarketer = () => document.getElementById("courseCatalogMarketerSelect")?.value || "yael";
     const courseIndexCheckbox = document.getElementById("courseIndexCheckbox");
     const courseLevelFilter = document.getElementById("courseLevelFilter");
     const toggleCoursePickerBtn = document.getElementById("toggleCoursePickerBtn");
@@ -4951,8 +4923,12 @@
       });
     }
 
-    function buildClientCatalogShortUrl(absolute = false, marketer = "yael") {
-      const relativeUrl = marketer === "israa" ? "./catalog-esraa.html" : "./catalog-yael.html";
+    function buildClientCatalogShortUrl(absolute = false, marketer = "none") {
+      const relativeUrl = marketer === "israa"
+        ? "./catalog-esraa.html"
+        : marketer === "yael"
+          ? "./catalog-yael.html"
+          : "./catalog.html";
       return absolute ? new URL(relativeUrl, window.location.href).href : relativeUrl;
     }
 
@@ -5001,7 +4977,7 @@
         showCourseCatalogMessage("לא ניתן ליצור קישור קבוע עם התאמות זמניות. אפשר להפיק את הקטלוג כעת; שמירת התאמות בקישור דורשת החלטה נפרדת על אחסון מתמשך.", true);
         return;
       }
-      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseCatalogLinkMarketer());
+      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseMarketer());
       courseCatalogLinkName.href = generatedCourseCatalogUrl;
       courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
       courseCatalogLinkCard.classList.remove("is-hidden");
@@ -6620,11 +6596,13 @@ function chunkActivities(items, size) {
 
     courseCatalogLinkBtn.addEventListener("click", createCourseCatalogLink);
 
-    document.getElementById("courseCatalogMarketerSelect")?.addEventListener("change", () => {
-      if (!generatedCourseCatalogUrl || courseCatalogLinkCard.classList.contains("is-hidden")) return;
-      generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseCatalogLinkMarketer());
-      courseCatalogLinkName.href = generatedCourseCatalogUrl;
-      courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
+    document.querySelectorAll('input[name="courseMarketerRadio"]').forEach(input => {
+      input.addEventListener("change", () => {
+        if (!generatedCourseCatalogUrl || courseCatalogLinkCard.classList.contains("is-hidden")) return;
+        generatedCourseCatalogUrl = buildClientCatalogShortUrl(true, getCourseMarketer());
+        courseCatalogLinkName.href = generatedCourseCatalogUrl;
+        courseCatalogLinkUrl.textContent = generatedCourseCatalogUrl;
+      });
     });
 
     copyCourseCatalogLinkBtn.addEventListener("click", async () => {
@@ -6751,7 +6729,7 @@ ${generatedCourseCatalogUrl}`);
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=423").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=424").then(registration => registration.update());
       });
     }
 
