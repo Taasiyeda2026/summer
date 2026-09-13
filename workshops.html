@@ -260,6 +260,25 @@
       justify-content: space-between;
     }
 
+    .catalog-marketing-group .catalog-option-group-controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .course-interface .catalog-marketing-group .cover-letter-toggle {
+      width: 100%;
+      min-width: 0;
+      padding-inline: 8px;
+    }
+
+    .course-interface .catalog-marketing-group .marketer-field {
+      grid-column: 1;
+      width: 100%;
+      margin-top: 2px;
+      border-radius: 14px;
+    }
+
     .course-interface .catalog-option-group .marketer-field span {
       white-space: normal;
     }
@@ -288,6 +307,14 @@
 
       .course-interface .final-actions-row > .course-link-actions > button {
         flex: 1 1 180px;
+      }
+
+      .catalog-marketing-group .catalog-option-group-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .course-interface .catalog-marketing-group .marketer-field {
+        grid-column: 1;
       }
     }
 
@@ -832,9 +859,10 @@
     }
 
     .course-option .option-card {
-      grid-template-columns: 18px 1fr;
+      grid-template-columns: 18px minmax(0, 1fr);
+      grid-template-rows: auto auto;
       align-items: start;
-      min-height: 58px;
+      min-height: 94px;
     }
 
     .course-option .option-title {
@@ -851,12 +879,22 @@
     }
 
     .course-option-content {
+      grid-column: 2;
+      grid-row: 1;
       min-width: 0;
       flex: 1;
     }
 
     .custom-syllabus-btn {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: end;
+      justify-self: start;
       flex: 0 0 auto;
+      width: 118px;
+      min-width: 118px;
+      max-width: 118px;
+      min-height: 32px;
       border: 1px solid rgba(32,59,122,.22);
       border-radius: 999px;
       padding: 7px 12px;
@@ -865,6 +903,8 @@
       font: inherit;
       font-size: 12px;
       font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
       cursor: pointer;
     }
 
@@ -4286,7 +4326,7 @@
                   </label>
                 </div>
               </section>
-              <section class="catalog-option-group" aria-labelledby="marketingOptionTitle">
+              <section class="catalog-option-group catalog-marketing-group" aria-labelledby="marketingOptionTitle">
                 <h4 class="catalog-option-group-title" id="marketingOptionTitle">שיווק</h4>
                 <div class="catalog-option-group-controls">
                   <label class="cover-letter-toggle" for="courseMarketerNone">
@@ -6711,7 +6751,7 @@ ${generatedCourseCatalogUrl}`);
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js?v=422").then(registration => registration.update());
+        navigator.serviceWorker.register("./sw.js?v=423").then(registration => registration.update());
       });
     }
 
