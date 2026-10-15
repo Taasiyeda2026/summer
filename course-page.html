@@ -7662,11 +7662,17 @@ function renderClientDigitalCatalog(selectedPrograms, includeCover = false, incl
 }
 
 function renderCourseCatalog(indexes, includeCover = false, includeIndex = false, marketer = "none") {
- const selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
+ let selectedPrograms = indexes.map(index => programs[index]).filter(Boolean);
  if (isClientModeFromUrl()) {
    renderClientDigitalCatalog(selectedPrograms, includeCover, includeIndex, marketer);
    return;
  }
+ // Display override for the printable/PDF catalog only; do not alter the source data or client catalog.
+ selectedPrograms = selectedPrograms.map(program =>
+   program.id === "portzot-derech" && program.gefen === "3604"
+     ? { ...program, title: "פורצות דרך (אופק)", gefen: "52279" }
+     : program
+ );
  setPageShareTitle(CATALOG_PAGE_TITLE);
  document.body.classList.add("catalog-view", "catalog-courses-print");
  applyClientModeFromUrl();
