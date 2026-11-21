@@ -6927,6 +6927,10 @@ body.client-view.catalog-view .client-syllabus-desc {
     padding-top: 2px !important;
     padding-bottom: 2px !important;
   }
+  table[data-syllabus-course="portzot-derech"] tr.syllabus-modular {
+    outline: 0.5pt solid var(--c1);
+    outline-offset: -0.5pt;
+  }
 }
 </style>
 </head>
@@ -7175,7 +7179,7 @@ function buildSyllabus(p, clientFormat = false) {
  <div class="syllabus-body" style="display:none">
  <table class="syllabus-table"${p.id === "portzot-derech" ? ' data-syllabus-course="portzot-derech"' : ""}>
  <thead><tr><th>מפגש</th><th style="text-align:right">נושא</th><th style="text-align:right">תיאור</th></tr></thead>
- <tbody>${rows.map(r=>`<tr class="${syllabusStageClass(r.n)}">
+ <tbody>${rows.map(r=>`<tr class="${syllabusStageClass(r.n)}${String(r.n).trim() === "מודולרי" ? " syllabus-modular" : ""}">
  <td class="syl-num">${escapeHtml(r.n)}</td>
  <td class="syl-topic">${escapeHtml(r.topic)}</td>
  <td class="syl-desc">${escapeHtml(r.desc)}</td>
@@ -8014,7 +8018,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=426").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=427").then(registration => registration.update());
     });
   }
 </script>
