@@ -6916,6 +6916,18 @@ body.client-view.catalog-view .client-syllabus-desc {
   }
 }
 
+/* Only this course's printed table: give the description more space. */
+@media print {
+  .a4.a4-course-skeleton table[data-syllabus-course="portzot-derech"] th:nth-child(2),
+  .a4.a4-course-skeleton table[data-syllabus-course="portzot-derech"] td:nth-child(2) {
+    width: 135px !important;
+    max-width: 135px !important;
+  }
+  .a4.a4-course-skeleton table.syllabus-table[data-syllabus-course="portzot-derech"] td {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -7161,7 +7173,7 @@ function buildSyllabus(p, clientFormat = false) {
  return `<div class="syllabus-wrap ${rowsClass}">
  <div class="syllabus-header syllabus-toggle" role="button" tabindex="0" aria-expanded="false">סילבוס הקורס</div>
  <div class="syllabus-body" style="display:none">
- <table class="syllabus-table">
+ <table class="syllabus-table"${p.id === "portzot-derech" ? ' data-syllabus-course="portzot-derech"' : ""}>
  <thead><tr><th>מפגש</th><th style="text-align:right">נושא</th><th style="text-align:right">תיאור</th></tr></thead>
  <tbody>${rows.map(r=>`<tr class="${syllabusStageClass(r.n)}">
  <td class="syl-num">${escapeHtml(r.n)}</td>
@@ -8002,7 +8014,7 @@ document.addEventListener("click", function(event) {
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js?v=425").then(registration => registration.update());
+      navigator.serviceWorker.register("./sw.js?v=426").then(registration => registration.update());
     });
   }
 </script>
